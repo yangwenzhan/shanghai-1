@@ -1,0 +1,7 @@
+#数据库环境
+spring:
+  datasource:
+    url: jdbc:sqlserver://101.200.165.61:1433;Database=sh_weaving
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: zzictec
