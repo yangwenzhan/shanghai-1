@@ -5,3 +5,17 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: zzictec
+
+
+#  BJW 2019-03-09
+Picanol:
+  #是否启动必佳乐采集程序的服务  true是开启，false关闭,不设置默认是false关闭的
+  is-start-server : false
+  #配置分发器需要分发controller的命名规范，* 代表请求头中的功能码。
+  #例如：010代表运行状态报文，controller命名为PCN010Controller
+  #分发器会自动找到分发的Controller层去执行
+  controller-standard : PCN*Controller
+  #必佳乐采集程序服务器监听端口，不设置默认是8004。
+  server-port : 8004
+  #请求必佳乐织机获取参数，设置多少台车一个线程。 默认是10台车一个线程
+  how-many-machines-a-thread : 10

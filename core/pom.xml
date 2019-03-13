@@ -16,6 +16,13 @@
 
     <dependencies>
 
+        <!-- 必佳乐织机纺织程序加密解密所需包 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-ext-jdk15on</artifactId>
+            <version>1.55</version>
+        </dependency>
+
         <!--数据相关操作-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
