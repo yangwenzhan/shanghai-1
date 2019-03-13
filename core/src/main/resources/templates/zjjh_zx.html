@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<link rel="stylesheet" href="../../css/main.css" media="all" />
+	</head>
+
+	<body>
+		<!-- 通用文件引入 -->
+		<!--<div th:replace="common"></div>-->
+		<!-- 通用文件引入结束 -->
+		<div class="layui-fluid">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">日期范围</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="required" placeholder="日期" id="rqfw" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">合约号</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="hyh" lay-filter="hyh">
+
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">浆纱缸号</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="jsgh" lay-filter="jsgh">
+
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="wczt" lay-filter="wczt">
+
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn" style="margin-left: 66px;">查询</button>
+						<button class="layui-btn">新增整经计划</button>
+					</div>
+				</div>
+			</div>
+
+			<table class="layui-table" lay-filter="dataGrid" id="dataGrid"></table>
+			<div id="ts" style="width: 100%;text-align: center;background-color:#009688;color: #fff;"></div>
+		</div>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="xq">详情</a>
+			<a class="layui-btn layui-btn-xs" lay-event="xg">修改</a>
+		</script>
+		<!--新增整经计划弹出框-->
+		<div class="tnone" id="add_zjjh_tck">
+			<form class="layui-form" action="">
+						<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">日期</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="required" placeholder="日期范围" id="add_rq" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">班次</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="add_bc" lay-filter="add_bc">
+
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">合约号</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="add_hyh" lay-filter="add_hyh">
+
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">总经长</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="add_zjc" lay-verify="required" autocomplete="off" placeholder="请输入总经长"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">总经根数</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="add_zjgs" lay-verify="required" autocomplete="off" placeholder="请输入总经根数"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">单轴头份</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="add_dztf" lay-verify="required" autocomplete="off" placeholder="请输入单轴头份"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">总织轴数</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="add_zzzs" lay-verify="required" autocomplete="off" placeholder="请输入总织轴数"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-inline">
+							<textarea type="text" class="layui-input" id="add_bz" lay-verify="required" autocomplete="off" placeholder="请输入备注"></textarea>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">录入人</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="add_llr" disabled="disabled" lay-verify="required" autocomplete="off" placeholder="录入人"/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+				<!--修改整经计划弹出框-->
+		<div class="tnone" id="xg_zjjh_tck">
+			<form class="layui-form" action="">
+						<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">日期</label>
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="required" placeholder="日期范围" id="xg_rq" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">班次</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="xg_bc" lay-filter="xg_bc">
+
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">合约号</label>
+						<div class="layui-input-inline">
+							<select name="modules" lay-verify="required" lay-search="" id="xg_hyh" lay-filter="xg_hyh">
+
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">总经长</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="xg_zjc" lay-verify="required" autocomplete="off" placeholder="请输入总经长"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">总经根数</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="xg_zjgs" lay-verify="required" autocomplete="off" placeholder="请输入总经根数"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">单轴头份</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="xg_dztf" lay-verify="required" autocomplete="off" placeholder="请输入单轴头份"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">总织轴数</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="xg_zzzs" lay-verify="required" autocomplete="off" placeholder="请输入总织轴数"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-inline">
+							<textarea type="text" class="layui-input" id="xg_bz" lay-verify="required" autocomplete="off" placeholder="请输入备注"></textarea>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">录入人</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" id="xg_llr" disabled="disabled" lay-verify="required" autocomplete="off" placeholder="录入人"/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--详情弹出框-->
+		<div class="tnone" id="xq_tck">
+			<table class="layui-table" lay-filter="xq_dataGrid" id="xq_dataGrid"></table>
+		</div>
+		<script type="text/html" id="xq_barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="xq_xg">修改</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="xq_del">删除</a>
+		</script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="../../js/pc/zhou/jz_ls_gl.js"></script>
+	</body>
+
+</html>
