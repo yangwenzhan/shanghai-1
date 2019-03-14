@@ -35,7 +35,7 @@ import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerTest {
+public class UserController2Test {
 
 
     @Autowired
