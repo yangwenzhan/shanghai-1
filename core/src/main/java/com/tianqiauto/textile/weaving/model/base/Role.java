@@ -30,7 +30,7 @@ public class Role {
     private Long id;
     private String name;
 
-
+    private String beizhu;
 
     @JsonIgnoreProperties("roles")
     @ManyToMany(mappedBy = "roles")
