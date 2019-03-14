@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class UserController2 {
 
     @Autowired
     private UserRepository userJpaRepository;
@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping("findAll")
     @Logger
     @ApiOperation(value = "用户查询服务")
-    @PreAuthorize("hasAuthority('USER_VIEW')")
+//    @PreAuthorize("hasAuthority('USER_VIEW')")
 //    @PreAuthorize("hasAnyAuthority('ROLE_RR1')")
     public List<User> findAll(@PageableDefault(size = 15,page = 0,sort = "username,asc") Pageable pageable, Principal principal){
 
@@ -48,9 +48,7 @@ public class UserController {
     @Logger(msg = "根据姓名查询员工信息")
     @ApiOperation(value = "根据姓名进行用户查询")
     public User findByName(@PathVariable(name = "name") @ApiParam("用户姓名") String username){
-         userJpaRepository.findByUsername(username);
-
-         return new User();
+         return userJpaRepository.findByUsername(username);
     }
 
 
@@ -65,6 +63,9 @@ public class UserController {
         String encryptPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptPwd);
         userJpaRepository.save(user);
+
+
+
         return Result.ok("新增用户成功",user);
     }
 

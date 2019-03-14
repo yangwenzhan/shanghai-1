@@ -56,6 +56,7 @@ public class Dict {
 
 
 
+
 //    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 //    @JoinColumn(name = "type_id")
 //    private Dict_Type type;
