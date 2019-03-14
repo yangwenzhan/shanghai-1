@@ -40,9 +40,9 @@ public class LoginController {
 
 
 
-    @GetMapping("index")
-    public String index(){
-        return "/index";
+    @RequestMapping("/")
+    public String index(Model model){
+        return "/main";
     }
 
 
