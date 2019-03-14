@@ -79,9 +79,4 @@ public class BytesUtil {
         buffer.flip();//need flip
         return buffer.getShort();
     }
-
-    public static void main(String[] args) {
-        System.out.println((byte)129);
-    }
-
 }
