@@ -1,21 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css"  th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css"  th:href="@{/layuiadmin/style/admin.css}" media="all">
+    <link rel="stylesheet" type="text/css"  th:href="@{/layuiadmin/style/login.css}" media="all">
     <meta charset="UTF-8"/>
-    <title>登陆页面</title>
+    <title>登陆</title>
 </head>
+
 <body>
-<h1>登陆页面</h1>
-<p th:if="${loginError}">错误的用户名或密码</p>
-<form th:action="@{/authentication/form}" method="post">
-    <label for="username">用户名</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
 
-    <label for="password">密码</label>:
-    <input type="password" id="password" name="password" /> <br />
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 
-    <button type="submit">登录</button>
-</form>
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>上海纺织</h2>
+            <p>上海纺织织造</p>
+        </div>
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+        <p>© 2019 <a href="http://www.tianqiauto.com/" target="_blank">郑州天启自动化系统有限公司</a></p>
+        <p>
+            <span><a href="https://github.com/xxsvip/shanghai/issues/new" target="_blank">问题反馈</a></span>
+        </p>
+    </div>
+
+
 
 </body>
+
+
+<!--<body>-->
+<!--<p th:if="${loginError}">错误的用户名或密码</p>-->
+<!--<form th:action="@{/authentication/form}" method="post">-->
+    <!--<label for="username">用户名</label>:-->
+    <!--<input type="text" id="username" name="username" autofocus="autofocus" /> <br />-->
+
+    <!--<label for="password">密码</label>:-->
+    <!--<input type="password" id="password" name="password" /> <br />-->
+
+    <!--<button type="submit">登录</button>-->
+<!--</form>-->
+
+<!--</body>-->
 </html>
