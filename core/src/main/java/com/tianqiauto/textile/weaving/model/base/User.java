@@ -36,6 +36,14 @@ public class User {
 
     private Date birthday;
 
+    //是否在职
+    private Integer shifouzaizhi;
+
+    //一对一关系
+    @OneToOne
+    @JoinColumn(name = "user_yuangong_id")
+    private User_YuanGong user_yuanGong;
+
     @JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "base_user_role", joinColumns = @JoinColumn(name = "user_id"),

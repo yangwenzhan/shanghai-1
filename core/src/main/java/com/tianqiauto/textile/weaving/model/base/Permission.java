@@ -28,7 +28,9 @@ public class Permission {
 
     private String permissionCode;
 
-
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Permission parent_id; //父节点
 
 
 

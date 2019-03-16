@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.controller.procedure;
+package com.tianqiauto.textile.weaving.util.procedure.core;
 
 import com.alibaba.fastjson.JSON;
 

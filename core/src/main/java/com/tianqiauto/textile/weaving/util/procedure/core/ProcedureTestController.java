@@ -1,10 +1,10 @@
-package com.tianqiauto.textile.weaving.controller.procedure;
+package com.tianqiauto.textile.weaving.util.procedure.core;
 
 
-import com.tianqiauto.textile.weaving.model.procedure.AjaxResult;
-import com.tianqiauto.textile.weaving.model.procedure.ProcedureContext;
-import com.tianqiauto.textile.weaving.model.procedure.ProcedureParam;
-import com.tianqiauto.textile.weaving.service.procedure.BaseService;
+import com.tianqiauto.textile.weaving.util.procedure.model.AjaxResult;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureParam;
+import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
