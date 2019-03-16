@@ -36,6 +36,9 @@ public class User {
 
     private Date birthday;
 
+    //是否在职
+    private Integer shifouzaizhi;
+
     //一对一关系
     @OneToOne
     @JoinColumn(name = "user_yuangong_id")

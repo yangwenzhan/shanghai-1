@@ -1,7 +1,7 @@
-package com.tianqiauto.textile.weaving.controller.procedure;
+package com.tianqiauto.textile.weaving.util.procedure.core;
 
-import com.tianqiauto.textile.weaving.controller.util.StringUtils;
-import com.tianqiauto.textile.weaving.model.procedure.ProcedureParam;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureParam;
+import org.springframework.util.StringUtils;
 
 import java.sql.Types;
 import java.util.ArrayList;

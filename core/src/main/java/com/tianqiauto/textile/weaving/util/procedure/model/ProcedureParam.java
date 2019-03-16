@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.model.procedure;
+package com.tianqiauto.textile.weaving.util.procedure.model;
 
 
 public class ProcedureParam {

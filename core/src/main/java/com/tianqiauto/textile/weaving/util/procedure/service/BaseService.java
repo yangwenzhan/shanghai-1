@@ -1,9 +1,9 @@
-package com.tianqiauto.textile.weaving.service.procedure;
+package com.tianqiauto.textile.weaving.util.procedure.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.tianqiauto.textile.weaving.model.procedure.ProcedureContext;
-import com.tianqiauto.textile.weaving.model.procedure.ProcedureParam;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class BaseService {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ProcedureContext callProcedure(final String procedureName,
-                                          final List<ProcedureParam> pm) {
+										  final List<ProcedureParam> pm) {
 		final List<ProcedureParam> inParams = new ArrayList();
 		final List<ProcedureParam> outParams = new ArrayList();
 		// 将输入in输出out参数分开
