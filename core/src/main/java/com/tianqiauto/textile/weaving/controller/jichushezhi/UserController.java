@@ -11,11 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -51,7 +49,7 @@ public class UserController {
 
     @PostMapping("saveUser")
     @ApiOperation(value = "新增用户")
-    public Result saveUser(User user, User_YuanGong user_yuanGong){
+    public Result saveUser(@Valid @RequestBody User user, @RequestBody User_YuanGong user_yuanGong){
         String pwd = user.getPassword();
         String encryptPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptPwd);
@@ -78,7 +76,7 @@ public class UserController {
 
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息",notes = "工号不可修改,姓名不能为空")
-    public Result updateUserInfo(User user,User_YuanGong user_yuanGong){
+    public Result updateUserInfo(@RequestBody User user,@RequestBody User_YuanGong user_yuanGong){
 
         //判断user_yuangong是否为空 true 全为空
         Boolean flag = (user_yuanGong.getZu()==null || user_yuanGong.getZu().equals(""))

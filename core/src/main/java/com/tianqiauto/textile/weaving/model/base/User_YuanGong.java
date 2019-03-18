@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"user","gongxu","lunban"})
 public class User_YuanGong {
 
     @Id
@@ -17,6 +20,7 @@ public class User_YuanGong {
     private Long id;
 
     //一对一
+    @JsonIgnoreProperties("user_yuanGong")
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

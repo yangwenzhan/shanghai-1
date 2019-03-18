@@ -16,7 +16,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"roles"})
+@EqualsAndHashCode(exclude = {"roles","user_yuanGong"})
 public class User {
 
     @Id
@@ -40,6 +40,7 @@ public class User {
     private Integer shifouzaizhi;
 
     //一对一关系
+    @JsonIgnoreProperties("user")
     @OneToOne
     @JoinColumn(name = "user_yuangong_id")
     private User_YuanGong user_yuanGong;

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission,Long> {
 
-    List<Permission> findAllByParent_idOrderByPermissionName(Long parent_id);
+    List<Permission> findAllByParentId(Long parent_id);
 
     @Query(value = "update base_permission set permission_name=?1 where id=?2",nativeQuery = true)
     @Modifying

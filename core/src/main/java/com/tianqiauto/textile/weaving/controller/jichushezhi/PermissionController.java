@@ -7,10 +7,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,20 +31,20 @@ public class PermissionController {
     @GetMapping("findAllByParent_id")
     @ApiOperation(value = "根据节点查询权限")
     public Result findAllByParent_id(Long parent_id){
-        List<Permission> list = permissionRepository.findAllByParent_idOrderByPermissionName(parent_id);
+        List<Permission> list = permissionRepository.findAllByParentId(parent_id);
         return Result.ok("查询成功!",list);
     }
 
-    @GetMapping("savePermission")
+    @PostMapping("savePermission")
     @ApiOperation(value = "新增权限")
-    public Result savePermission(Permission permission){
+    public Result savePermission(@Valid @RequestBody Permission permission){
         permissionRepository.save(permission);
         return Result.ok("新增成功!",permission);
     }
 
-    @GetMapping("updatePermission")
+    @PostMapping("updatePermission")
     @ApiOperation(value = "修改权限",notes = "只修改权限名称，code和父节点不能修改")
-    public Result updatePermission(Permission permission){
+    public Result updatePermission(@Valid @RequestBody Permission permission){
         permissionRepository.updatePermission(permission.getPermissionName(),permission.getId());
         return Result.ok("修改成功!",permission);
     }
@@ -54,7 +53,7 @@ public class PermissionController {
     @GetMapping("deletePermission")
     @ApiOperation(value = "删除权限")
     public Result deletePermission(Long id){
-        List<Permission> list = permissionRepository.findAllByParent_idOrderByPermissionName(id);
+        List<Permission> list = permissionRepository.findAllByParentId(id);
         if(list.size()==0){
             permissionRepository.deleteById(id);
             permissionRepository.deleteRoleByPermission(id);

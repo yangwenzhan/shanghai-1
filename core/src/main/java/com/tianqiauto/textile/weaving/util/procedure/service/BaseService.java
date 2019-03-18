@@ -1,5 +1,6 @@
 package com.tianqiauto.textile.weaving.util.procedure.service;
 
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
@@ -141,7 +142,7 @@ public class BaseService {
 	}
 
 	
-	/** 
+	/**
 	* @Title: callProcedureWithOutParams 
 	* @Description: 调用无参数的存储过程
 	* @param @param procedureName

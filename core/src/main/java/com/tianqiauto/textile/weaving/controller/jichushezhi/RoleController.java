@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi;
 
 
-import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.repository.RoleRepository;
 import com.tianqiauto.textile.weaving.service.RoleService;
@@ -10,9 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,16 +32,16 @@ public class RoleController {
         return Result.ok("查询成功!",list);
     }
 
-    @GetMapping("saveRole")
+    @PostMapping("saveRole")
     @ApiOperation(value = "新增角色",notes = "name,beizhu")
-    public Result saveRle(Role role){
+    public Result saveRle(@RequestBody Role role){
         roleRepository.save(role);
         return Result.ok("新增成功!",role);
     }
 
-    @GetMapping("updateRole")
+    @PostMapping("updateRole")
     @ApiOperation(value = "修改角色")
-    public Result updateRole(Role role){
+    public Result updateRole(@RequestBody Role role){
         roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
         return Result.ok("修改成功!",role);
     }

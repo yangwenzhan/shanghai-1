@@ -1,10 +1,13 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @ClassName Permission
@@ -17,6 +20,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"roles"})
 public class Permission {
 
     @Id
@@ -28,13 +32,13 @@ public class Permission {
 
     private String permissionCode;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Permission parent_id; //父节点
+
+    private Long parentId; //父节点
 
 
-
-
+    @JsonIgnoreProperties("permissions")
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Role> roles;
 
 
 }
