@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/common/links::header"></div>
+    <title>盘存月管理</title>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">年份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nian" placeholder="年份" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">月份</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="yue" placeholder="月份" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-admin">删除</button>
+                <button class="layui-btn layuiadmin-btn-admin">添加</button>
+            </div>
+            <table id="table" lay-filter="table"></table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="/common/links::js_footer"></div>
+<script>
+    layui.config({
+        base:"/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index','jichushezhi/pancunyue'],function () {
+
+    });
+</script>
+</body>
+</html>
+
