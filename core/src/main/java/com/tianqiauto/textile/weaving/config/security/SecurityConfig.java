@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 //                    .defaultSuccessUrl("/", true)
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/login.html","/login-error.html","/layuiadmin/**").permitAll()  //不permit login.html页面会出现重定向次数过多错误
+                    .antMatchers("/login.html","/login-error.html","/layuiadmin/**","js/**","css/**").permitAll()  //不permit login.html页面会出现重定向次数过多错误
                     .anyRequest()
                     .authenticated()
                 .and()

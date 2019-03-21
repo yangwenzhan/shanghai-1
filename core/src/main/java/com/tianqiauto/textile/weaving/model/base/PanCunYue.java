@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -28,6 +30,18 @@ public class PanCunYue {
     private String nian; //年
 
     private String yue;  //月
+
+    private String kaishiriqi;
+
+    @ManyToOne
+    @JoinColumn(name = "kaishibanci_id")
+    private Dict kaishibanci;
+
+    private String jieshuriqi;
+
+    @ManyToOne
+    @JoinColumn(name = "jieshubanci_id")
+    private Dict jieshubanci;
 
 
     private String kaishi; //开始时间+班次
