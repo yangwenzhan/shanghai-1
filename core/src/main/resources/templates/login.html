@@ -8,36 +8,35 @@
     <link rel="stylesheet" type="text/css"  th:href="@{/layuiadmin/style/login.css}" media="all">
 </head>
 <body>
-    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
 
-        <div class="layadmin-user-login-main">
-            <div class="layadmin-user-login-box layadmin-user-login-header">
-                <h2>上海纺织织造项目</h2>
-                <p th:if="${loginError}">错误的用户名或密码</p>
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>上海纺织织造项目</h2>
+        </div>
+        <form class="layadmin-user-login-box layadmin-user-login-body" th:action="@{/authentication/form}" method="post">
+
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input" autofocus="autofocus" autocomplete="off"/>
             </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input" autocomplete="off"/>
+            </div>
+            <p th:if="${loginError}" style="color:red">错误的用户名或密码</p>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" type="submit">登 录</button>
+            </div>
+        </form>
+    </div>
 
-<form class="layadmin-user-login-box layadmin-user-login-body" th:action="@{/authentication/form}" method="post">
-    <div class="layui-form-item">
-        <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-        <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input" autofocus="autofocus" autocomplete="off"/>
+    <div class="layui-trans layadmin-user-login-footer">
+        <p>@2019 <a href="http://www.tianqiauto.com" target="_blank">郑州天启自动化系统有限公司</a></p >
+        <p>
+            <span><a href="https://github.com/xxsvip/shanghai/issues/new" target="_blank">问题反馈</a></span>
+        </p >
     </div>
-    <div class="layui-form-item">
-        <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-        <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input" autocomplete="off"/>
-    </div>
-
-    <div class="layui-form-item">
-        <button class="layui-btn layui-btn-fluid" type="submit">登 录</button>
-    </div>
-</form>
-        </div>
-
-        <div class="layui-trans layadmin-user-login-footer">
-            <p>@2019 <a href="http://www.tianqiauto.com" target="_blank">郑州天启自动化系统有限公司</a></p >
-            <p>
-                <span><a href="https://github.com/xxsvip/shanghai/issues/new" target="_blank">问题反馈</a></span>
-            </p >
-        </div>
-    </div>
+</div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.tianqiauto.textile.weaving.util.result;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 /**
  * @ClassName Result
@@ -19,12 +20,31 @@ public class Result {
     private int code;
     private String message;
     private Object data;
+    private Long count;
 
     public static Result ok(String message, Object data) {
         Result result = new Result();
-        result.setCode(200);
+        result.setCode(0);
         result.setMessage(message);
-        result.setData(data);
+
+        if(data instanceof Page){
+            result.setCount(((Page) data).getTotalElements());
+            result.setData(((Page) data).getContent());
+        }else{
+            result.setData(data);
+        }
+
+        return result;
+    }
+    public static Result ok(Object data) {
+        Result result = new Result();
+        result.setCode(0);
+        if(data instanceof Page){
+            result.setCount(((Page) data).getTotalElements());
+            result.setData(((Page) data).getContent());
+        }else{
+            result.setData(data);
+        }
         return result;
     }
     public static Result error(String message, Object data) {
@@ -38,7 +58,14 @@ public class Result {
         Result result = new Result();
         result.setCode(code);
         result.setMessage(message);
-        result.setData(data);
+
+        if(data instanceof Page){
+            result.setCount(((Page) data).getTotalElements());
+            result.setData(((Page) data).getContent());
+        }else{
+            result.setData(data);
+        }
+
         return result;
     }
 

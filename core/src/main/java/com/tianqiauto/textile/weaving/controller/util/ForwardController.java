@@ -3,7 +3,6 @@ package com.tianqiauto.textile.weaving.controller.util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @ClassName ForwardController
@@ -15,11 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ForwardController {
 
-
-    @RequestMapping("forward/{path}")
-    public String forward(@PathVariable("path") String path){
-        return "views/"+path;
+    @RequestMapping("forward/{path1}/{path2}")
+    public String forward(@PathVariable("path1") String path1,@PathVariable("path2") String path2){
+        return "views/"+path1+"/"+path2;
     }
-
 
 }
