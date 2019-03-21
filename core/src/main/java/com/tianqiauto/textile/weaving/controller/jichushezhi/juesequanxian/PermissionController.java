@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.controller.jichushezhi;
+package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.repository.PermissionRepository;
@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
+/**
+ * @ClassName PermissionController
+ * @Description 权限管理
+ * @Author lrj
+ * @Date 2019/3/21 10:08
+ * @Version 1.0
+ **/
 @RestController
-@RequestMapping("permission")
+@RequestMapping("jichushuju/juesequanxian/permission")
 @Api(description = "权限管理")
 public class PermissionController {
 

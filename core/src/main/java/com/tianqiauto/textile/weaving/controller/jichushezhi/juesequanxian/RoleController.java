@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.controller.jichushezhi;
+package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 
 import com.tianqiauto.textile.weaving.model.base.Role;
@@ -13,8 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @ClassName RoleController
+ * @Description 角色管理
+ * @Author lrj
+ * @Date 2019/3/21 10:08
+ * @Version 1.0
+ **/
 @RestController
-@RequestMapping("role")
+@RequestMapping("jichushezhi/juesequanxian/role")
 @Api(description = "角色管理")
 public class RoleController {
 

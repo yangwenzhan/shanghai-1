@@ -32,4 +32,6 @@ public class PB_YunZhuanFangShi_Xiangqing_Gongxu {
     @JoinColumn(name = "gongxu_id")
     private Gongxu gongxu;
 
+    private Integer sort;//当前运转位置
+
 }

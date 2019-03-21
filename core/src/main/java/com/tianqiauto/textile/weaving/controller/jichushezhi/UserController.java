@@ -44,7 +44,7 @@ public class UserController {
     @ApiOperation(value = "查询所有用户信息")
     public Result findAllUser(String gx_id, String lb_id, String zu, String sfzz,String js_id,String ghxm){
         ProcedureResult users = userService.findAllUser(gx_id, lb_id, zu, sfzz, js_id, ghxm);
-        return Result.ok("查询成功",users);
+        return Result.ok("查询成功!",users);
     }
 
     @PostMapping("saveUser")
