@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,6 +22,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"heyuehao_jingsha","heyuehao_weisha"})
 @Entity(name = "sys_heyuehao_yuansha")
 //合约号可以直接关联原纱表，但是考虑到合约号关联原纱还有根数等其他信息，中间又多了这个表
 public class Heyuehao_YuanSha {
@@ -51,9 +54,16 @@ public class Heyuehao_YuanSha {
     private Date lastModifyTime;
     private String lastModifyRen;
 
+    @JsonIgnoreProperties("yuansha_jingsha")
+    @ManyToMany
+    @JoinTable(name = "sys_heyuehao_yuansha_jingsha",joinColumns = @JoinColumn(name = "jingsha_id"),
+            inverseJoinColumns = @JoinColumn(name = "heyuehao_id"))
+    private Set<Heyuehao> jingsha; //经纱
 
-
-
-
+    @JsonIgnoreProperties("yuansha_weisha")
+    @ManyToMany
+    @JoinTable(name = "sys_heyuehao_yuansha_weisha",joinColumns = @JoinColumn(name = "weisha_id"),
+            inverseJoinColumns = @JoinColumn(name = "heyuehao_id"))
+    private Set<Heyuehao> weisha; //纬纱
 
 }
