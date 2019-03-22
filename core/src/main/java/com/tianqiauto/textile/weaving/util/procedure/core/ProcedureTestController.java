@@ -22,7 +22,6 @@ public class ProcedureTestController {
     @Autowired
     BaseService baseService;
 
-
     /**
      * 现存储过程调用方式一
      * @param startPage

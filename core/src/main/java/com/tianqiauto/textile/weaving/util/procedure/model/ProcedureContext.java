@@ -12,6 +12,7 @@ public class ProcedureContext {
 	private List<Object> columns;
 	
 	private List<Object> otherDatas;
+
  
 	public List<ProcedureParam> getParams() {
 		return params;
@@ -29,6 +30,7 @@ public class ProcedureContext {
 		this.datas = datas;
 	}
 
+
 	public List<Object> getColumns() {
 		return columns;
 	}
@@ -36,6 +38,7 @@ public class ProcedureContext {
 	public void setColumns(List<Object> columns) {
 		this.columns = columns;
 	}
+
 
 	public List<Object> getOtherDatas() {
 		return otherDatas;
