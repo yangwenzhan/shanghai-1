@@ -1,8 +1,6 @@
 package com.tianqiauto.textile.weaving.util.procedure.service;
 
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureParam;
 import org.slf4j.Logger;
@@ -17,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BaseService {
@@ -85,7 +85,7 @@ public class BaseService {
                             DataAccessException {
 
 						ProcedureContext pro = new ProcedureContext();
-						JSONArray array = new JSONArray();
+						List<Object> array = new ArrayList<>();
 						boolean hashResult = cs.execute();
 						while (true) {
 							// 判断本次循环是否为数据集
@@ -94,10 +94,10 @@ public class BaseService {
 								// 获取列数
 								ResultSetMetaData metaData = rs.getMetaData();
 								// json数组
-								JSONArray innerResult = new JSONArray();
+								List<Object> innerResult = new ArrayList<>();
 								while (rs.next()) {
 									// 遍历每一列
-									JSONObject jsonObj = new JSONObject();
+									Map<String,Object> jsonObj = new HashMap<>();
 									for (int i = 1; i <= metaData.getColumnCount(); i++) {
 										String columnName = metaData.getColumnLabel(i);
 										jsonObj.put(columnName,rs.getObject(columnName));
@@ -121,16 +121,16 @@ public class BaseService {
 						}
 						pro.setParams(pm);
 						if (array.size() == 1) {
-							pro.setDatas((JSONArray) array.get(0));
+							pro.setDatas((List<Object>) array.get(0));
 						} else if (array.size() == 2) {
-							pro.setColumns((JSONArray) array.get(0));
-							pro.setDatas((JSONArray) array.get(1));
+							pro.setColumns((List<Object>) array.get(0));
+							pro.setDatas((List<Object>) array.get(1));
 						} else if (array.size() > 2) {
-							pro.setColumns((JSONArray) array.get(0));
-							pro.setDatas((JSONArray) array.get(1));
-							List<JSONArray> otherDatas = new ArrayList<JSONArray>();
+							pro.setColumns((List<Object>) array.get(0));
+							pro.setDatas((List<Object>) array.get(1));
+							List<Object> otherDatas = new ArrayList<>();
 							for (int i = 2; i < array.size(); i++) {
-								otherDatas.add((JSONArray) array.get(i));
+								otherDatas.add((List<Object>) array.get(i));
 							}
 							pro.setOtherDatas(otherDatas);
 							log.info("存储过程【"+procedureName+"】返回多个数据集，请注意数据的使用顺序！");

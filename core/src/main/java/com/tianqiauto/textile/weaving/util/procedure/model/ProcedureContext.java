@@ -1,19 +1,17 @@
 package com.tianqiauto.textile.weaving.util.procedure.model;
 
 
-import com.alibaba.fastjson.JSONArray;
-
 import java.util.List;
 
 public class ProcedureContext {
 
 	private List<ProcedureParam> params;
 
-	private JSONArray datas;
+	private List<Object> datas;
 
-	private JSONArray columns;
+	private List<Object> columns;
 	
-	private List<JSONArray> otherDatas;
+	private List<Object> otherDatas;
  
 	public List<ProcedureParam> getParams() {
 		return params;
@@ -23,27 +21,27 @@ public class ProcedureContext {
 		this.params = params;
 	}
 
-	public JSONArray getDatas() {
+	public List<Object> getDatas() {
 		return datas;
 	}
 
-	public void setDatas(JSONArray datas) {
+	public void setDatas(List<Object> datas) {
 		this.datas = datas;
 	}
 
-	public JSONArray getColumns() {
+	public List<Object> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(JSONArray columns) {
+	public void setColumns(List<Object> columns) {
 		this.columns = columns;
 	}
 
-	public List<JSONArray> getOtherDatas() {
+	public List<Object> getOtherDatas() {
 		return otherDatas;
 	}
 
-	public void setOtherDatas(List<JSONArray> otherDatas) {
+	public void setOtherDatas(List<Object> otherDatas) {
 		this.otherDatas = otherDatas;
 	}
 

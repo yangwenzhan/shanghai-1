@@ -3,10 +3,9 @@ package com.tianqiauto.textile.weaving.service;
 
 import com.tianqiauto.textile.weaving.model.sys.Param;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
-import com.tianqiauto.textile.weaving.util.procedure.core.ResultGenerator;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
+import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class SheBeiParamService {
     private BaseService baseService;
 
     //根据工序机型参数类别查询参数
-    public ProcedureResult findAll(String gx_id, String jx_id, String cslb_id){
+    public Result findAll(String gx_id, String jx_id, String cslb_id){
         gx_id = StringUtils.isEmpty(gx_id)?null:gx_id;
         jx_id = StringUtils.isEmpty(jx_id)?null:jx_id;
         cslb_id = StringUtils.isEmpty(cslb_id)?null:cslb_id;
@@ -30,7 +29,7 @@ public class SheBeiParamService {
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInVarchar(gx_id).addInVarchar(jx_id).addInVarchar(cslb_id);
         ProcedureContext pro=baseService.callProcedure("pc_base_shebei_param", ppu.getList());
-        return ResultGenerator.genSuccessResult(pro);
+        return Result.ok(pro.getDatas());
     }
 
     //修改设备参数
@@ -55,8 +54,8 @@ public class SheBeiParamService {
     }
 
     //批量修改设备参数
-    public ProcedureResult updSheBeiParam_Batch(String idStr,String sfbj,String sfzs,String sfjlqx,String dw,
-                                        String cslb_id,String ccsc,String cczq){
+    public Result updSheBeiParam_Batch(String idStr, String sfbj, String sfzs, String sfjlqx, String dw,
+                                       String cslb_id, String ccsc, String cczq){
 
         sfbj = StringUtils.isEmpty(sfbj) ? null : sfbj;
         sfzs = StringUtils.isEmpty(sfzs) ? null : sfzs;
@@ -71,7 +70,7 @@ public class SheBeiParamService {
                 .addInVarchar(dw).addInVarchar(cslb_id).addInVarchar(ccsc).addInVarchar(cczq)
                 .addOut();
         ProcedureContext pro=baseService.callProcedure("pc_upd_shebei_param", ppu.getList());
-        return ResultGenerator.genSuccessResult(pro);
+        return Result.ok(pro.getDatas());
     }
 
 

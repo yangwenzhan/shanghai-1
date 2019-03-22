@@ -39,11 +39,18 @@ public class RoleController {
         return Result.ok("查询成功!",list);
     }
 
-    @PostMapping("saveRole")
+    @GetMapping("saveRole")
     @ApiOperation(value = "新增角色",notes = "name,beizhu")
-    public Result saveRle(@RequestBody Role role){
-        roleRepository.save(role);
-        return Result.ok("新增成功!",role);
+    public Result saveRole(@RequestBody Role role){
+        System.out.println("-------------------");
+        System.out.println(role);
+        boolean flag = roleRepository.existsByName(role.getName());
+        if(!flag){
+            roleRepository.save(role);
+            return Result.ok("新增成功!",role);
+        }else{
+            return Result.error("该角色名称已存在！",role);
+        }
     }
 
     @PostMapping("updateRole")

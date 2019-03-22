@@ -1,10 +1,10 @@
 package com.tianqiauto.textile.weaving.util.procedure.core;
 
 
-import com.tianqiauto.textile.weaving.util.procedure.model.AjaxResult;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureParam;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
+import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,26 +22,6 @@ public class ProcedureTestController {
     @Autowired
     BaseService baseService;
 
-	@GetMapping(value = "queryMessage")
-    public ProcedureResult queryMessage() {
-        ProcedureContext pro=baseService.callProcedureWithOutParams("PC_PAIBAN_YZFS_SEL");
-        return ResultGenerator.genSuccessResult(pro);
-    }
-
-    @GetMapping(value = "queryInfo")
-    public AjaxResult queryInfo() {
-        AjaxResult result = new AjaxResult();
-        try {
-            ProcedureContext pro=baseService.callProcedureWithOutParams("PC_PAIBAN_YZFS_SEL");
-            result.setData(pro);
-            result.setSuccess(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setSuccess(false);
-            result.setMessage(e.getMessage());
-        }
-        return result;
-    }
 
     /**
      * 现存储过程调用方式一
@@ -54,11 +34,11 @@ public class ProcedureTestController {
      * @return
      */
     @GetMapping(value = "queryBcyzInfo")
-    public ProcedureResult queryBcyzInfo(String startPage, String pageSize, String startTime, String endTime, String lbid, String gcId) {
+    public Result queryBcyzInfo(String startPage, String pageSize, String startTime, String endTime, String lbid, String gcId) {
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.batchInAdd(startPage,pageSize,startTime,endTime,lbid).addOut().batchInAdd(gcId);
         ProcedureContext pro=baseService.callProcedure("PC_PAIBAN_BCYZ", ppu.getList());
-        return ResultGenerator.genSuccessResult(pro);
+        return Result.ok(pro.getDatas());
     }
 
     /**
@@ -72,7 +52,7 @@ public class ProcedureTestController {
      * @return
      */
     @GetMapping(value = "queryBcyzMes")
-    public ProcedureResult queryBcyzMes(String startPage, String pageSize, String startTime, String endTime, String lbid, String gcId) {
+    public Result queryBcyzMes(String startPage, String pageSize, String startTime, String endTime, String lbid, String gcId) {
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInInteger(startPage);
         ppu.addInInteger(pageSize);
@@ -82,7 +62,7 @@ public class ProcedureTestController {
         ppu.addOut();
         ppu.addInVarchar(gcId);
         ProcedureContext pro=baseService.callProcedure("PC_PAIBAN_BCYZ", ppu.getList());
-        return ResultGenerator.genSuccessResult(pro);
+        return Result.ok(pro.getDatas());
     }
 
     /**
