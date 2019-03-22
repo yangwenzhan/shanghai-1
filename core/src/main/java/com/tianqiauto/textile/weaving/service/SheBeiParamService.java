@@ -54,8 +54,10 @@ public class SheBeiParamService {
     }
 
     //批量修改设备参数
-    public Result updSheBeiParam_Batch(String idStr,String sfbj,String sfzs,String sfjlqx,String dw,
-                                        String cslb_id,String ccsc,String cczq){
+
+    public Result updSheBeiParam_Batch(String idStr, String sfbj, String sfzs, String sfjlqx, String dw,
+                                       String cslb_id, String ccsc, String cczq){
+
 
         sfbj = StringUtils.isEmpty(sfbj) ? null : sfbj;
         sfzs = StringUtils.isEmpty(sfzs) ? null : sfzs;

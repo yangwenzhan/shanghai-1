@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.shishishuju;
 
 import com.tianqiauto.textile.weaving.service.CurDataService;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +27,7 @@ public class CurYuanShaKuCunController {
     @GetMapping("cur_yuansha_kucun")
     @ApiOperation(value = "原纱实时库存")
     public Result cur_yuansha_kucun(String pihao, String pinming, String zhishu){
-        ProcedureResult procedureResult = curDataService.cur_yuansha_kucun(pihao, pinming, zhishu);
-        return Result.ok("查询成功!",procedureResult);
+        return curDataService.cur_yuansha_kucun(pihao, pinming, zhishu);
     }
 
 }

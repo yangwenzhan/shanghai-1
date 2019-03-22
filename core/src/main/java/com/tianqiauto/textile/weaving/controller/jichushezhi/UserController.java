@@ -5,7 +5,6 @@ import com.tianqiauto.textile.weaving.model.base.User_YuanGong;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.UserYuanGongRepository;
 import com.tianqiauto.textile.weaving.service.UserService;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +42,8 @@ public class UserController {
     @GetMapping("findAllUser")
     @ApiOperation(value = "查询所有用户信息")
     public Result findAllUser(String gx_id, String lb_id, String zu, String sfzz,String js_id,String ghxm){
-        ProcedureResult users = userService.findAllUser(gx_id, lb_id, zu, sfzz, js_id, ghxm);
-        return Result.ok("查询成功!",users);
+        return  userService.findAllUser(gx_id, lb_id, zu, sfzz, js_id, ghxm);
+
     }
 
     @PostMapping("saveUser")

@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.shishishuju;
 
 import com.tianqiauto.textile.weaving.service.CurDataService;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,22 +27,19 @@ public class CurJingZhouController {
     @GetMapping("cur_jingzhou")
     @ApiOperation(value = "经轴实时状态查询")
     public Result cur_jingzhou(String zt_id, String heyuehao, String zhouhao){
-        ProcedureResult procedureResult = curDataService.cur_jingzhou(zt_id, heyuehao, zhouhao);
-        return Result.ok("查询成功!",procedureResult);
+        return curDataService.cur_jingzhou(zt_id, heyuehao, zhouhao);
     }
 
     @GetMapping("cur_jingzhou_hyshz")
     @ApiOperation(value = "经轴实时状态-按合约号汇总")
     public Result cur_jingzhou_hyshz(){
-        ProcedureResult procedureResult = curDataService.cur_jingzhou_hyshz();
-        return Result.ok("查询成功!",procedureResult);
+        return curDataService.cur_jingzhou_hyshz();
     }
 
     @GetMapping("cur_jingzhou_zthz")
     @ApiOperation(value = "经轴实时状态-按经轴状态汇总")
     public Result cur_jingzhou_zthz(){
-        ProcedureResult procedureResult = curDataService.cur_jingzhou_zthz();
-        return Result.ok("查询成功!",procedureResult);
+        return curDataService.cur_jingzhou_zthz();
     }
 
 
