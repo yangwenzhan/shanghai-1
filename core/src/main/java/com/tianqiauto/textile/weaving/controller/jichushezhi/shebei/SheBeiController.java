@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi.shebei;
 
 import com.tianqiauto.textile.weaving.service.SheBeiService;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,8 +24,7 @@ public class SheBeiController {
     @GetMapping("findAllSheBei")
     @ApiOperation(value = "查询所有设备信息")
     public Result findAllSheBei(String gx_id, String jx_id){
-        ProcedureResult procedureResult = sheBeiService.findAllSheBei(gx_id, jx_id);
-        return Result.ok("查询成功!",procedureResult);
+        return sheBeiService.findAllSheBei(gx_id, jx_id);
     }
 
     @GetMapping("updateJHTC")
