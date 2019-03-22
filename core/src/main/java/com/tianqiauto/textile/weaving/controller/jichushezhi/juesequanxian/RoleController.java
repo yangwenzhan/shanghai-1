@@ -41,7 +41,10 @@ public class RoleController {
 
     @PostMapping("saveRole")
     @ApiOperation(value = "新增角色",notes = "name,beizhu")
-    public Result saveRle(@RequestBody Role role){
+    public Result saveRle(Role role){
+        System.out.println("in..........");
+        System.out.println(role);
+        System.out.println("role.......");
         roleRepository.save(role);
         return Result.ok("新增成功!",role);
     }

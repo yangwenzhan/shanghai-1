@@ -5,10 +5,9 @@ import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureResult;
-import com.tianqiauto.textile.weaving.util.procedure.core.ResultGenerator;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
+import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -63,7 +62,7 @@ public class UserService {
     }
 
     //查询用户
-    public ProcedureResult findAllUser(String gx_id, String lb_id, String zu, String sfzz, String js_id, String ghxm){
+    public Result findAllUser(String gx_id, String lb_id, String zu, String sfzz, String js_id, String ghxm){
 
         gx_id = StringUtils.isEmpty(gx_id)?null:gx_id;
         lb_id = StringUtils.isEmpty(lb_id)?null:lb_id;
@@ -75,7 +74,7 @@ public class UserService {
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInVarchar(gx_id).addInVarchar(lb_id).addInVarchar(zu).addInInteger(sfzz).addInInteger(js_id).addInVarchar(ghxm);
         ProcedureContext pro=baseService.callProcedure("pc_base_yuangong", ppu.getList());
-        return ResultGenerator.genSuccessResult(pro);
+        return Result.ok(pro.getDatas());
     }
 
     //修改用户
