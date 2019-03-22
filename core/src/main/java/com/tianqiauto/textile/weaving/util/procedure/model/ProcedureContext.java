@@ -9,11 +9,11 @@ public class ProcedureContext {
 
 	private List<ProcedureParam> params;
 
-	private JSONArray datas;
+	private List datas;
 
-	private JSONArray columns;
+	private List columns;
 	
-	private List<JSONArray> otherDatas;
+	private List otherDatas;
  
 	public List<ProcedureParam> getParams() {
 		return params;
@@ -23,7 +23,7 @@ public class ProcedureContext {
 		this.params = params;
 	}
 
-	public JSONArray getDatas() {
+	public List getDatas() {
 		return datas;
 	}
 
@@ -31,7 +31,7 @@ public class ProcedureContext {
 		this.datas = datas;
 	}
 
-	public JSONArray getColumns() {
+	public List getColumns() {
 		return columns;
 	}
 
@@ -39,11 +39,11 @@ public class ProcedureContext {
 		this.columns = columns;
 	}
 
-	public List<JSONArray> getOtherDatas() {
+	public List getOtherDatas() {
 		return otherDatas;
 	}
 
-	public void setOtherDatas(List<JSONArray> otherDatas) {
+	public void setOtherDatas(List otherDatas) {
 		this.otherDatas = otherDatas;
 	}
 
