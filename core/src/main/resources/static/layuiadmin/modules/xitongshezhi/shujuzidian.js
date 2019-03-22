@@ -24,7 +24,6 @@ layui.define(['table', 'form'], function(exports){
                ajaxSuccess(data,table);
            }
        });
-
    });
 
 

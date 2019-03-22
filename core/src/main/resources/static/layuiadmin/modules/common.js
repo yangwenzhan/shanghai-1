@@ -93,6 +93,33 @@ layui.define(function(exports){
 
 
 
+
+
+
+  searchForm = function(){
+    var args = Array.from(arguments);   //arguments不是Array类型，此方法是将arguments转换为Array。
+    if(args.indexOf("轮班") != -1){
+
+    }
+    if(args.indexOf('工序') != -1){
+
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   //退出
