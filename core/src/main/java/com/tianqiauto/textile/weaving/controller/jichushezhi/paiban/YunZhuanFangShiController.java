@@ -1,7 +1,5 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi.paiban;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.tianqiauto.textile.weaving.model.base.PB_YunZhuanFangShi;
 import com.tianqiauto.textile.weaving.repository.YunZhuanFangShi_Repository;
 import com.tianqiauto.textile.weaving.service.PaiBanService;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName YunZhuanFangShiController
@@ -46,29 +45,27 @@ public class YunZhuanFangShiController {
 
     @PostMapping("add_new_yzfs")
     @ApiOperation(value="新增运转方式",notes = "json对象和数组：conditions")
-    public Result add_new_yzfs(String conditions){
-        paiBanService.add_new_yzfs(conditions);
+    public Result add_new_yzfs(Map<String,Object> paibanName,List<Map<String,Object>> banciTime,List<Map<String,Object>> paibanRole){
+        paiBanService.add_new_yzfs(paibanName,banciTime,paibanRole);
         return Result.ok("新增成功!",true);
     }
 
     @PostMapping("upd_yzfs_Info")
-    @ApiOperation(value="修改运转方式的排班信息",notes = "js将每条数据封装成object，字符串传过来。参数：jsonArry对象  conditions")
-    public Result upd_yzfs_Info(String conditions){
-        JSONArray conditionArry = JSONArray.parseArray(conditions);
+    @ApiOperation(value="修改运转方式的排班信息")
+    public Result upd_yzfs_Info(List<Map<String,Object>> paibanRole){
+
         List<Object[]> list = new ArrayList<>();
-        if(conditionArry.size()>0){
-            for(int i=0;i<conditionArry.size();i++){
-                // 遍历 jsonarray 数组，把每一个对象转成 json 对象
-                JSONObject job = conditionArry.getJSONObject(i);
-                String[] arr = new String[3];
-                arr[0] = job.getString("lunban_id");
-//                arr[1] = job.getString("start_time");
-//                arr[2] = job.getString("end_time");
-                arr[1] = job.getString("yzfs_id");
-                arr[2] = job.getString("pxh");
-                list.add(arr);
-            }
+        for(int i=0;i<paibanRole.size();i++){
+
+            Map<String,Object> pbMap = paibanRole.get(i);
+
+            String[] arr = new String[3];
+            arr[0] = pbMap.get("lunban_id").toString();
+            arr[1] = pbMap.get("yzfs_id").toString();
+            arr[2] = pbMap.get("pxh").toString();
+            list.add(arr);
         }
+
         paiBanService.upd_yzfs_Info(list);
         return Result.ok("修改成功!",true);
     }

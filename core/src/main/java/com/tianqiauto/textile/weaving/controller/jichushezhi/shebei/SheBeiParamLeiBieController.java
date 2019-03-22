@@ -39,7 +39,7 @@ public class SheBeiParamLeiBieController {
     @ApiOperation(value = "修改设备数据类别")
     public Result updParamLeiBie(@RequestBody Param_LeiBie param_leiBie){
         boolean flag = sheBeiParamLeiBieRepository.existsByName(param_leiBie.getName());
-        if(flag){
+        if(!flag){
             sheBeiParamLeiBieRepository.updParamLeiBie(param_leiBie.getName(),param_leiBie.getXuhao(),param_leiBie.getId());
             return Result.ok("修改设备数据类别成功！",param_leiBie);
         }else{
@@ -51,7 +51,7 @@ public class SheBeiParamLeiBieController {
     @ApiOperation(value = "新增设备数据类别")
     public Result addParamLeibie(@RequestBody Param_LeiBie param_leiBie){
         boolean flag = sheBeiParamLeiBieRepository.existsByName(param_leiBie.getName());
-        if(flag){
+        if(!flag){
             sheBeiParamLeiBieRepository.save(param_leiBie);
             return Result.ok("新增设备数据类别成功！",param_leiBie);
         }else{
