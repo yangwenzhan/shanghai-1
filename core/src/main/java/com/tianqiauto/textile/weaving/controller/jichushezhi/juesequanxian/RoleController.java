@@ -50,6 +50,7 @@ public class RoleController {
         }else{
             return Result.error("该角色名称已存在！",role);
         }
+
     }
 
     @PostMapping("updateRole")
