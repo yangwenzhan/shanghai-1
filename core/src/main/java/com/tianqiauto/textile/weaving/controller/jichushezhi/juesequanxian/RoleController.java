@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName RoleController
@@ -39,11 +40,9 @@ public class RoleController {
         return Result.ok("查询成功!",list);
     }
 
-    @GetMapping("saveRole")
+    @PostMapping("saveRole")
     @ApiOperation(value = "新增角色",notes = "name,beizhu")
     public Result saveRole(@RequestBody Role role){
-        System.out.println("-------------------");
-        System.out.println(role);
         boolean flag = roleRepository.existsByName(role.getName());
         if(!flag){
             roleRepository.save(role);
@@ -67,6 +66,28 @@ public class RoleController {
         roleService.updateRolePermission(role_id, permission_ids);
         return Result.ok("修改成功!",role_id);
     }
+
+    @GetMapping("deleteRole")
+    @ApiOperation(value = "删除角色",notes = "对应的权限，用户角色也删除掉")
+    public Result deleteRole(String role_id){
+        roleService.deleteRole(role_id);
+        return Result.ok("删除成功!",role_id);
+    }
+
+    @GetMapping("deleteUserFromRole")
+    @ApiOperation(value = "将用户从角色中移除",notes = "用户id，角色id")
+    public Result deleteUserFromRole(String role_id,String user_id){
+        roleService.deleteUserFromRole(role_id,user_id);
+        return Result.ok("移除成功!");
+    }
+
+    @GetMapping("getTree")
+    @ApiOperation(value = "获取角色对应的权限树")
+    public Result getTree(String role_id){
+        List<Map<String,Object>> list = roleService.getTree(role_id);
+        return Result.ok("查询成功!",list);
+    }
+
 
 
 }
