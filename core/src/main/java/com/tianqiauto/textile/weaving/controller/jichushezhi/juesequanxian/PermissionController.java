@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.repository.PermissionRepository;
+import com.tianqiauto.textile.weaving.service.PermissionService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+
 /**
  * @ClassName PermissionController
  * @Description 权限管理
@@ -19,12 +22,15 @@ import java.util.List;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("jichushuju/juesequanxian/permission")
+@RequestMapping("jichushezhi/juesequanxian/permission")
 @Api(description = "权限管理")
 public class PermissionController {
 
     @Autowired
     private PermissionRepository permissionRepository;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @GetMapping("findAll")
     @ApiOperation(value = "查询所有权限")
@@ -36,16 +42,25 @@ public class PermissionController {
 
     @GetMapping("findAllByParent_id")
     @ApiOperation(value = "根据节点查询权限")
-    public Result findAllByParent_id(Long parent_id){
-        List<Permission> list = permissionRepository.findAllByParentId(parent_id);
+    public Result findAllByParent_id(String id){
+        List<Permission> list = permissionRepository.findAllByParentId(Long.parseLong(id));
         return Result.ok("查询成功!",list);
     }
 
     @PostMapping("savePermission")
     @ApiOperation(value = "新增权限")
     public Result savePermission(@Valid @RequestBody Permission permission){
-        permissionRepository.save(permission);
-        return Result.ok("新增成功!",permission);
+        boolean flag = permissionRepository.existsByParentIdAndPermissionCodeAndPermissionName(
+                permission.getParentId(),
+                permission.getPermissionCode(),
+                permission.getPermissionName()
+        );
+        if(!flag){
+            permissionRepository.save(permission);
+            return Result.ok("新增成功!",permission);
+        }else{
+            return Result.error("该权限已存在！",permission);
+        }
     }
 
     @PostMapping("updatePermission")
@@ -65,7 +80,7 @@ public class PermissionController {
             permissionRepository.deleteRoleByPermission(id);
             return Result.ok("删除成功!",id);
         }else {
-            return Result.ok("请先删除子节点!",id);
+            return Result.error("请先删除子节点!",id);
         }
     }
 
@@ -77,7 +92,19 @@ public class PermissionController {
         return Result.ok("移除成功!",true);
     }
 
+    @GetMapping("getTree")
+    @ApiOperation(value = "获取权限树")
+    public Result getTree(){
+        List<Map<String,Object>> list = permissionService.getTree();
+        return Result.ok("查询成功!",list);
+    }
 
+    @GetMapping("getSelectTree")
+    @ApiOperation(value = "获取下拉框的树")
+    public List<Map<String,Object>> getSelectTree(){
+        List<Map<String,Object>> list = permissionService.getSelectTree();
+        return list;
+    }
 
 
 

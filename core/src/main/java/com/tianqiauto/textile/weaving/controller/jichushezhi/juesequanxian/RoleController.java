@@ -50,14 +50,18 @@ public class RoleController {
         }else{
             return Result.error("该角色名称已存在！",role);
         }
-
     }
 
     @PostMapping("updateRole")
     @ApiOperation(value = "修改角色")
     public Result updateRole(@RequestBody Role role){
-        roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
-        return Result.ok("修改成功!",role);
+        boolean flag = roleService.existRoleByName(role.getName());
+        if(!flag){
+            roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
+            return Result.ok("修改成功!",role);
+        }else{
+            return Result.error("该角色名称已存在！",role);
+        }
     }
 
     @GetMapping("updateRolePermission")
