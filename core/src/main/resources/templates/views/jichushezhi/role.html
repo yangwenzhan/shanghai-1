@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/demo.css}" media="all">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/metroStyle.css}" media="all">
+	<div th:replace="/common/links::header"></div>
+	<title>角色管理</title>
+</head>
+
+	<body>
+
+  		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<div class="layui-btn-group">
+							<button class="layui-btn" id="add_role_btn"><i class="layui-icon">&#xe608;</i> 添加角色</button>
+						</div>
+					</div>
+				</div>
+				<table class="layui-table" id="table" lay-filter="table"></table>
+			</div>
+		</div>
+
+		<!--添加角色弹出框-->
+		<div  style="display: none" id="div_form_add">
+			<div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+					<label class="layui-form-label">角色名称</label>
+					<div class="layui-input-inline">
+						<input type="text"  name="name" placeholder="请输入角色名称" class="layui-input" lay-verify="required" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">描述</label>
+					<div class="layui-input-inline">
+						<input type="text"  name="beizhu" placeholder="请输入角色描述" class="layui-input" lay-verify="required" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+
+		<!--修改角色弹出框-->
+		<div  style="display: none" id="div_form_edit">
+			<div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+					<label class="layui-form-label">角色名称</label>
+					<div class="layui-input-inline">
+						<input type="text"  name="name" class="layui-input" lay-verify="required" autocomplete="off" disabled/>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">描述</label>
+					<div class="layui-input-inline">
+						<input type="text"  name="beizhu" placeholder="请输入角色描述" class="layui-input" lay-verify="required" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+
+		<!--角色用户列表弹出框-->
+		<div style="display: none" id="user_list_window">
+			<form class="layui-form">
+				<div class="layui-form-item layui-inline" id="user_list_container" style="padding: 0 10px">
+				</div>
+			</form>
+		</div>
+		<script type="text/html" id="user_list_tpl">
+			{{#  layui.each(d, function(idx, it){ }}
+				<div class="layui-input-inline">
+					 <input type="checkbox" title="{{it.username+it.xingming}}" checked value="{{it.id}}" lay-filter="delete_user_from_role"/>
+				</div>
+			{{#  }); }}
+		</script>
+
+
+		<!--权限配置 弹窗  div-->
+		<div id="div_power_edit" style="display: none;">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="zTreeDemoBackground left">
+						<ul id="treeDemo" class="ztree"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-util"></i>权限配置</a>
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="user"><i class="layui-icon layui-icon-group"></i>用户列表</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+
+		</script>
+
+		<div th:replace="/common/links::js_footer"></div>
+		<script th:src="@{/js/ztree/jquery.ztree.core.js}"></script>
+		<script th:src="@{/js/ztree/jquery.ztree.excheck.js}"></script>
+		<script th:src="@{/js/ztree/jquery.ztree.exedit.js}"></script>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+				,role: 'jichushezhi/juesequanxian/role'
+            }).use(['index','role'],function () {
+
+            });
+		</script>
+
+	</body>
+
+</html>

@@ -22,3 +22,4 @@ spring:
       pageable:
         one-indexed-parameters: true  #true认为是基于1开始的分页，默认是从0开始的
         size-parameter: limit  #默认为size，可以重新命名（layui默认为limit）
+
