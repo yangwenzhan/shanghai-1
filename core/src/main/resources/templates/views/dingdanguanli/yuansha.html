@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="yuanshaFragment">
+
+    <div class="layui-card" style="display: none" id="yuanshaxinxiXZ">
+        <!-- 查询条件 -->
+        <div class="layui-card-body layui-fluid layui-form">
+            <div class="layui-form-item">
+            <!-- 品名 -->
+            <div class="layui-inline">
+                <label class="layui-form-label">品名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="pinming" placeholder="品名" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <!-- 批号 -->
+            <div class="layui-inline">
+                <label class="layui-form-label leftsou">批号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="pihao" placeholder="批号" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <!-- 支数 -->
+            <div class="layui-inline">
+                <label class="layui-form-label leftsou">支数</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="zhishu" placeholder="支数" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <!-- 色号 -->
+            <div class="layui-inline">
+                <label class="layui-form-label leftsou">色号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="sehao" placeholder="色号" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <!-- 色别 -->
+            <div class="layui-inline">
+                <label class="layui-form-label leftsou">色别</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="sebie" placeholder="色别" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <button class="layui-btn"><i class="layui-icon">&#xe615;</i> 查询订单</button>
+            </div>
+            </div>
+        </div>
+
+        <!--查询表格-->
+        <div class="layui-card-body">
+            <table id="yuansha_table" lay-filter="yuansha_table"></table>
+            <script type="text/html" id="yuansha_caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="xuanzeYS"><i
+                        class="layui-icon layui-icon-ok"></i>选择</a>
+            </script>
+        </div>
+    </div>
+
+</div>
+</html>

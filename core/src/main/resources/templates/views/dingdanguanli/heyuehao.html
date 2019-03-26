@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/common/links::header"></div>
+    <title>合约号管理</title>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- 查询条件 -->
+        <div class="layui-card-body layui-fluid layui-form layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label leftsou">订单号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="dingdanhao_sele" class="layui-input" autocomplete="off" disabled/>
+                </div>
+            </div>
+            <div class="layui-btn-group layui-inline">
+                <button class="layui-btn" id="wsxz">换纬纱新增合约号</button>
+                <button class="layui-btn" id="jsxz">换经纱新增合约号</button>
+            </div>
+            <!--查询表格-->
+            <table id="hyh_table" lay-filter="hyh_table"></table>
+            <script type="text/html" id="hyh_caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="hyh_edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="hyh_dele"> <i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+
+
+            <div class="layui-collapse" style="margin-top: 20px;">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号对应经纱信息</h2>
+                    <div class="layui-colla-content layui-show" style="padding: 0">
+                        <table id="jsxx_table" lay-filter="jsxx_table"></table>
+                        <button class="layui-btn" id="jsxx_add"><i class="layui-icon">&#xe654;</i>添加经纱</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-collapse" style="margin-top: 20px;">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号对应纬纱信息</h2>
+                    <div class="layui-colla-content layui-show" style="padding: 0">
+                        <table id="wsxx_table" lay-filter="wsxx_table"></table>
+                        <button class="layui-btn" id="wsxx_add"><i class="layui-icon">&#xe654;</i>添加纬纱</button>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/html" id="caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="jws_edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="jws_dele"> <i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+
+        </div>
+    </div>
+</div>
+
+<!-- 添加合约号 -->
+<div th:include="/views/dingdanguanli/addHeyuehao::addHYHFragment"></div>
+
+<!-- 原纱信息选择 -->
+<div th:include="/views/dingdanguanli/yuansha::yuanshaFragment"></div>
+
+<div th:replace="/common/links::js_footer"></div>
+<script th:inline="javascript">
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , heyuehao: 'dingdanguanli/heyuehao'
+    }).use(['index', 'heyuehao'], function () {
+
+    });
+    var order = [[${order}]];
+    var heyuehaos = order.heyuehaos;
+    //合约号全局变量
+    var heyuehao_temp = null;
+    //选中原纱时的全局变量
+    var yuansha_temp = null;
+
+    $(function () {
+        if (heyuehaos == undefined || null == heyuehaos) {
+            heyuehaos = [];
+        }
+        $("#dingdanhao_sele").val(order.dingdanhao);
+    });
+
+</script>
+</body>
+</html>

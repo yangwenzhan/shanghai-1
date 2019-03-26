@@ -1,18 +1,22 @@
-package com.tianqiauto.textile.weaving.controller;
+package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Order;
 import com.tianqiauto.textile.weaving.service.HeyuehaoService;
+import com.tianqiauto.textile.weaving.service.OrderService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,11 +24,24 @@ import java.util.List;
  * @Date 2019/3/11 16:17
  */
 @Controller
-@RequestMapping("heyuehao")
+@RequestMapping("dingdanguanli/heyuehaoguanli")
 public class HeYueHaoController {
 
     @Autowired
     private HeyuehaoService heyuehaoService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @RequestMapping("/heyuehao")
+    public String loginError(Model model,Long id) {
+        Order order = new Order();
+        if(null != id){
+           order = orderService.findByid(id);
+        }
+        model.addAttribute("order", order);
+        return "/views/dingdanguanli/heyuehao";
+    }
 
     @PostMapping("findByOrderid")
     @ApiOperation("合约号管理-根据订单id查询合约号")
@@ -47,6 +64,7 @@ public class HeYueHaoController {
     @ApiOperation("合约号管理-添加合约号信息")
     @ResponseBody
     public Result addHeyuegao(@RequestBody Heyuehao heyuehao){
+        heyuehao.setCreateTime(new Date());
         heyuehao = heyuehaoService.save(heyuehao);
         return Result.ok("添加成功！",heyuehao);
     }
@@ -66,6 +84,7 @@ public class HeYueHaoController {
     @ResponseBody
     public Result update(@RequestBody Heyuehao heyuehao){
         int ret = heyuehaoService.update(heyuehao);
-        return Result.ok("更新成功！",ret);
+        heyuehao = heyuehaoService.findByid(heyuehao.getId());
+        return Result.ok("更新成功！",heyuehao);
     }
 }

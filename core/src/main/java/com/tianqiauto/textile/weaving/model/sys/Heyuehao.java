@@ -23,7 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_heyuehao")
-@EqualsAndHashCode(exclude = {"orders","yuansha_jingsha","yuansha_weisha"})
+@EqualsAndHashCode(exclude = {"order","jingsha","weisha"})
 public class Heyuehao {
     /**
      *
@@ -45,25 +45,21 @@ public class Heyuehao {
 
     private String name; //合约号
 
-    @JsonIgnoreProperties("heyuehao_jingsha")
+    private String kehubianhaomiaoshu;//客户编号描述
+
+    @JsonIgnoreProperties("jingsha")
     @ManyToMany
     @JoinTable(name = "sys_heyuehao_yuansha_jingsha",joinColumns = @JoinColumn(name = "heyuehao_id"),
             inverseJoinColumns = @JoinColumn(name = "jingsha_id"))
     private Set<Heyuehao_YuanSha> jingsha; //经纱
 
-    @JsonIgnoreProperties("heyuehao_weisha")
+    @JsonIgnoreProperties("weisha")
     @ManyToMany
     @JoinTable(name = "sys_heyuehao_yuansha_weisha",joinColumns = @JoinColumn(name = "heyuehao_id"),
             inverseJoinColumns = @JoinColumn(name = "weisha_id"))
     private Set<Heyuehao_YuanSha> weisha; //纬纱
 
-
-
-
-
-
     private String beizhu; //备注
-
 
     @CreatedDate
     private Date createTime;
@@ -71,10 +67,5 @@ public class Heyuehao {
     @LastModifiedDate
     private Date lastModifyTime;
     private String lastModifyRen;
-
-
-
-
-
 
 }

@@ -26,7 +26,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_order")
-@EqualsAndHashCode(exclude = {"heyuehaos"})
+@EqualsAndHashCode(exclude = {"heyuehaos","yuanliaoleixing","chengpinyongtu","yingxiaoyuan","jingli","kehuxinxi","status"})
 public class Order {
     /**
      * 新增合约号（新增、换经纱、换纬纱）
@@ -49,7 +49,7 @@ public class Order {
 
     private String dingdanhao; //订单号
 
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties("order")
     @OneToMany
     @JoinColumn(name = "order_id")
     private Set<Heyuehao> heyuehaos; //合约号
@@ -66,6 +66,7 @@ public class Order {
 
     private Date xiadanriqi; //下单日期
 
+//    @Temporal(TemporalType.DATE)
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量
