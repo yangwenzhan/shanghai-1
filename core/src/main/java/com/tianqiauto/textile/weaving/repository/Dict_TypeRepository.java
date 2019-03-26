@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface Dict_TypeRepository extends JpaRepository<Dict_Type,Long> {
 
 
+     Dict_Type findByCode(String code);
 
 }

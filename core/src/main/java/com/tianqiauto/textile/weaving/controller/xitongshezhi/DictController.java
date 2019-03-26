@@ -36,7 +36,10 @@ public class DictController {
 
 
     @GetMapping("query_page")
-    public Result query_page(Pageable pageable){
+    public Result query_page(Dict_Type dict_type,Pageable pageable){
+
+
+        System.out.println(dict_type);
 
         return Result.ok(dict_typeRepository.findAll(pageable));
     }
@@ -68,6 +71,20 @@ public class DictController {
         return Result.ok("修改成功",dict_typeRepository.save(former));
 
     }
+
+
+
+
+
+
+
+    //select下拉数据加载
+
+    @GetMapping("formSelect")
+    public Result formSelect(String code){
+        return Result.ok(dict_typeRepository.findByCode(code));
+    }
+
 
 
 }

@@ -2,6 +2,10 @@ layui.define(['table', 'form'], function(exports){
         var table = layui.table
             ,form = layui.form;
 
+    searchForm("lunban","gongxu");
+
+
+
 
     var cols =  [[
         {field: 'id', title: 'id',hide:true}
@@ -10,8 +14,18 @@ layui.define(['table', 'form'], function(exports){
         ,{field:'fixed',title:'用户不可编辑',templet: '#tpl_edit'}
         ,{title: '操作', toolbar: '#caozuo'}
     ]]
-    initTable ("table", 'xitongshezhi/shujuzidian/query_page', 'get',cols, table);
 
+
+    initTable ("table", 'xitongshezhi/shujuzidian/query_page', 'get',cols, table,"form");
+
+
+    //监听搜索
+    form.on('submit(form_search)', function(data){
+        var field = data.field;
+        table.reload('table', {
+            where: field
+        });
+    });
 
    form.on('switch(form_fixed)',function(data){
        var id = data.elem.id;
