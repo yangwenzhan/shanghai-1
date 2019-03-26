@@ -1,11 +1,7 @@
 layui.define(['table', 'form'], function(exports){
         var table = layui.table
             ,form = layui.form;
-
     searchForm("lunban","gongxu");
-
-
-
 
     var cols =  [[
         {field: 'id', title: 'id',hide:true}
@@ -25,6 +21,7 @@ layui.define(['table', 'form'], function(exports){
         table.reload('table', {
             where: field
         });
+        return false;
     });
 
    form.on('switch(form_fixed)',function(data){
