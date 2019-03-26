@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<link rel="stylesheet" href="../../js/pc/ztree/css/demo.css" type="text/css">
+		<link rel="stylesheet" href="../../js/pc/ztree/css/metroStyle/metroStyle.css" type="text/css">
+		<link rel="stylesheet" href="../../css/main.css" media="all" />
+	</head>
+
+	<body>
+		<!-- 通用文件引入 -->
+		<!--<div th:replace="common"></div>-->
+		<!-- 通用文件引入结束 -->
+		<div class="layui-fluid">
+			<div class="content_wrap">
+				<div class="zTreeDemoBackground2 left">
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>
+				<div class="inforight">
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend> <button class="layui-btn" id="add">增&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加</button></legend>
+					</fieldset>
+
+					<table class="layui-table" id="qxpz_table" lay-filter="qxpz_table">
+					</table>
+					<div id="page" lay-filter="page"></div>
+				</div>
+			</div>
+		</div>
+		<!--增加   div-->
+		<div id="add_ym_tck" class="tnone">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">权限编码</label>
+						<div class="layui-input-inline">
+							<input type="text" id="qxbm" autocomplete="off" lay-verify="required" placeholder="权限编码" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限名称</label>
+						<div class="layui-input-inline">
+							<input type="text" id="qxmc" autocomplete="off" lay-verify="required" placeholder="权限名称" class="layui-input" />
+						</div>
+					</div>
+					</div>
+					<div class="layui-form-item">
+					<div class="layui-inline">
+						<!--id="ytj_none"-->
+						<label class="layui-form-label">权限父节点</label>
+						<div class="layui-input-inline">
+							<input type="text" id="fjd" autocomplete="off" lay-verify="required" readonly  value="" onclick="showMenu();" placeholder="权限父节点" class="layui-input" />
+							<!--<ul id="treeDemo_fjd" class="ztree"></ul>-->
+						</div>
+						<label class="layui-form-label" id="menuBtn"  onclick="showMenu(); return false;" style="width: auto;padding:9px 0px;" >点击选择权限父节点</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--选择父级节点-->
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+			<ul id="treeDemo_fjd" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+		</div>
+		<!--修改 弹窗  div-->
+		<div id="xg_ym_tck" class="tnone">
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">权限编码</label>
+						<div class="layui-input-inline">
+							<input type="text" id="qxbm" autocomplete="off" lay-verify="required" placeholder="权限编码" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限名称</label>
+						<div class="layui-input-inline">
+							<input type="text" id="qxmc" autocomplete="off" lay-verify="required" placeholder="权限名称" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-inline">
+						<!--id="ytj_none"-->
+						<label class="layui-form-label">权限父节点</label>
+						<div class="layui-input-inline">
+							<input type="text" id="fjd" autocomplete="off" lay-verify="required" placeholder="权限父节点" class="layui-input" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//查看角色-->
+		<div class="tnone" id="user_list_window">
+			<form class="layui-form">
+				<div class="layui-form-item layui-inline" id="user_list_container" style="padding: 0 10px">
+				</div>
+		</div>
+		<script type="text/html" id="user_list_tpl">
+			{{# layui.each(d, function(idx, it){ }}
+			<div class="layui-input-inline">
+				<input type="checkbox" title="{{it.jsmc}}" checked="" value="{{it.jsid}}" lay-filter="delete_user_from_role" />
+			</div>
+			{{# }); }}
+		</script>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="user">用户列表</a>
+			<a class="layui-btn layui-btn-xs" lay-event="xg">修改</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删 除</a>
+		</script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="../../js/pc/ztree/js/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="../../js/pc/ztree/js/jquery.ztree.core.js"></script>
+		<script type="text/javascript" src="../../js/pc/ztree/js/jquery.ztree.excheck.js"></script>
+		<script type="text/javascript" src="../../js/pc/ztree/js/jquery.ztree.exedit.js"></script>
+		<script src="../../js/pc/yg/qx_gl.js"></script>
+	</body>
+
+</html>

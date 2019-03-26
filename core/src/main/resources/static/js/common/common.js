@@ -11,16 +11,7 @@ var Common = function () {
         });
     };
 
-    var getParams = function (formId) {
-        var $ = layui.jquery;
-        var _params = {};
-        $.each($('#' + formId).serializeArray(), function (i, field) {
-            if (null != field.value && "" != field.value) {
-                _params[field.name] = field.value;
-            }
-        });
-        return _params;
-    };
+
 
 
 
