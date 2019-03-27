@@ -46,7 +46,7 @@ public class ProcedureParamUtlis {
      * @param parms 输入参数集
      * @return 当前对象
      */
-    public ProcedureParamUtlis batchInAdd(String... parms){
+    public  ProcedureParamUtlis batchInAdd(String... parms){
         for (String param:parms) {
             addIn(param,Types.VARCHAR);
         }

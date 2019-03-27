@@ -52,6 +52,8 @@ public class ProcedureTestController {
      */
     @GetMapping(value = "queryBcyzMes")
     public Result queryBcyzMes(String startPage, String pageSize, String startTime, String endTime, String lbid, String gcId) {
+
+
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInInteger(startPage);
         ppu.addInInteger(pageSize);

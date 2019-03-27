@@ -20,6 +20,22 @@ layui.define(function(exports){
   //……
 
 
+
+  getParams = function (formId) {
+    var _params = {};
+
+    console.info("aaaa"+$('#' + formId).serializeArray());
+
+    $.each($('#' + formId).serializeArray(), function (i, field) {
+      // if (null != field.value && "" != field.value) {
+      _params[field.name] = field.value;
+      // }
+    });
+    console.info(_params);
+    return _params;
+  };
+
+
   //ajax请求成功处理函数
   ajaxSuccess = function(data,table){
     table.reload('table');
@@ -54,7 +70,7 @@ layui.define(function(exports){
 
 
   //初始化table
-   initTable = function (ele, url, method,cols, table, doneCallBack) {
+   initTable = function (ele, url, method,cols, table,formId, doneCallBack) {
     return table.render({
       elem: "#"+ele
       ,id: ele
@@ -62,6 +78,7 @@ layui.define(function(exports){
       , method: method
       , cellMinWidth: 80
       , cols: cols
+      ,where:getParams(formId)
       ,page:{
         limits:[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90]
         ,limit:20
@@ -75,7 +92,7 @@ layui.define(function(exports){
   };
 
   //初始化table(不带分页)
-  initTable_all = function (ele, url, method,cols, table, doneCallBack) {
+  initTable_all = function (ele, url, method,cols, table,formId, doneCallBack) {
     return table.render({
       elem: "#"+ele
       ,id: ele
@@ -83,6 +100,7 @@ layui.define(function(exports){
       , method: method
       , cellMinWidth: 80
       , cols: cols
+      ,where:getParams(formId)
       , done: function (res) {
         if (typeof(doneCallBack) === "function") {
           doneCallBack(res);
@@ -90,6 +108,61 @@ layui.define(function(exports){
       }
     });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+  //动态参数
+  searchForm = function(){
+    var args = Array.from(arguments);   //arguments不是Array类型，此方法是将arguments转换为Array。
+    searchForm_dict(args,"lunban");
+  }
+
+
+
+  searchForm_dict = function(params,code){
+      if(params.indexOf(code) != -1){
+         $.ajax({
+          type:'get',
+          async:false,
+          url:layui.setter.host+'xitongshezhi/shujuzidian/formSelect?code='+code,
+          success:function(data){
+            createOption_dict(data,code);
+          }
+        });
+    }
+  }
+  //动态创建option dict
+  createOption_dict = function(data,code){
+    var html = '';
+    var dicts = data.data.dicts;
+    for(var i = 0;i<dicts.length;i++){
+      html+='<option value= "'+dicts[i].value+'" >'+dicts[i].name+'</option>';
+    }
+    console.info(html);
+    $("#"+code).append(html);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

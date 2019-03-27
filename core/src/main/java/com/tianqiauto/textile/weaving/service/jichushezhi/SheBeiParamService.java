@@ -26,6 +26,7 @@ public class SheBeiParamService {
         jx_id = StringUtils.isEmpty(jx_id)?null:jx_id;
         cslb_id = StringUtils.isEmpty(cslb_id)?null:cslb_id;
 
+
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInVarchar(gx_id).addInVarchar(jx_id).addInVarchar(cslb_id);
         ProcedureContext pro=baseService.callProcedure("pc_base_shebei_param", ppu.getList());
