@@ -1,27 +1,30 @@
-layui.define(['table', 'form'], function(exports){
+layui.define(['table', 'form', 'laytpl'], function(exports){
     var $ = layui.$
         ,table = layui.table
         ,form = layui.form
         ,laytpl = layui.laytpl;
 
     //表格初始化
-    table.render({
-        elem: '#table'
-        ,method:'GET'
-        ,url: layui.setter.host + 'jichushezhi/juesequanxian/role/findAll'
-        ,cols: [[
-            {field: 'id', title: 'id',hide:true}
-            ,{field: 'name', title: '角色名'}
-            ,{field: 'beizhu', title: '角色描述'}
-            ,{fixed: 'right',width: 350,align: 'center',title: '操作',toolbar: '#barDemo'}
-        ]]
-    });
+    initTable();
+    function initTable(){
+        table.render({
+            elem: '#table'
+            ,method:'GET'
+            ,url: layui.setter.host + 'jichushezhi/juesequanxian/role/findAll'
+            ,cols: [[
+                {field: 'id', title: 'id',hide:true}
+                ,{field: 'name', title: '角色名'}
+                ,{field: 'beizhu', title: '角色描述'}
+                ,{fixed: 'right',width: 350,align: 'center',title: '操作',toolbar: '#barDemo'}
+            ]]
+        });
+    }
 
     //添加角色
     $("#add_role_btn").on("click", function() {
         layer.open({
             type: 1,
-            title: ['增加角色 ', 'font-size:12px;'],
+            title: ['添加角色', 'font-size:12px;'],
             content: $("#div_form_add"),
             shadeClose: true, //点击遮罩关闭层
             shade: 0.8,
@@ -58,7 +61,7 @@ layui.define(['table', 'form'], function(exports){
         var data = obj.data;
         if(obj.event === 'del'){
             layer.confirm(
-                "确定要删除"+data.name+'?',
+                "确定要删除  "+data.name+'?',
                 {title:'删除提示'},function (index){
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/juesequanxian/role/deleteRole',
@@ -73,7 +76,7 @@ layui.define(['table', 'form'], function(exports){
         }else if(obj.event === 'edit'){
             layer.open({
                 type: 1
-                ,title: '编辑角色'
+                ,title: '编辑角色  '+data.name
                 ,content: $('#div_form_edit')
                 ,area: ['60%', '60%']
                 ,btn: ['修改', '取消']
@@ -109,7 +112,7 @@ layui.define(['table', 'form'], function(exports){
             initTree(data);
             layer.open({
                 type: 1,
-                title: ['权限配置 ', 'font-size:12px;'],
+                title: ['权限配置  '+data.name, 'font-size:12px;'],
                 content: $("#div_power_edit"),
                 shadeClose: true, //点击遮罩关闭层
                 shade: 0.8,
@@ -131,7 +134,7 @@ layui.define(['table', 'form'], function(exports){
                     //选中的权限id
                     str = str.substring(0, str.length-1);
 
-                    console.log(str);
+                    // console.log(str);
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/juesequanxian/role/updateRolePermission',
                         type:'get',
@@ -176,9 +179,10 @@ layui.define(['table', 'form'], function(exports){
                             $(userdata.elem).remove();
                             $(userdata.othis).remove();
                             form.render();
+                            initTable();
                             layer.open({
                                 title:"消息提醒",
-                                content:data.message,
+                                content:msg.message,
                                 skin:"layui-layer-molv",
                                 offset: 'rb',
                                 time:3000,
@@ -197,7 +201,7 @@ layui.define(['table', 'form'], function(exports){
 
             layer.open({
                 type : 1,
-                title : [ data.name + '用户列表 '],
+                title : [ data.name + '  用户列表 '],
                 content : $("#user_list_window"),
                 shadeClose : true, //点击遮罩关闭层
                 shade : 0.6,

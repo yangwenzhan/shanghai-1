@@ -2,7 +2,7 @@ package com.tianqiauto.textile.weaving.controller.jichushezhi.paiban;
 
 import com.tianqiauto.textile.weaving.model.base.PB_YunZhuanFangShi;
 import com.tianqiauto.textile.weaving.repository.YunZhuanFangShi_Repository;
-import com.tianqiauto.textile.weaving.service.PaiBanService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.PaiBanService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

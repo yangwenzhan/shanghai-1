@@ -1,10 +1,11 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi;
 
+import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.base.User_YuanGong;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.UserYuanGongRepository;
-import com.tianqiauto.textile.weaving.service.UserService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @ClassName UserController
@@ -48,26 +50,37 @@ public class UserController {
 
     @PostMapping("saveUser")
     @ApiOperation(value = "新增用户")
-    public Result saveUser(@Valid @RequestBody User user, @RequestBody User_YuanGong user_yuanGong){
-        String pwd = user.getPassword();
+    public Result saveUser(@RequestBody User user){
+
+        //判断工号是否唯一
+        boolean exist = userJpaRepository.existsByUsername(user.getUsername());
+        if(exist){
+            return Result.error("工号已存在!",user);
+        }
+
+        User_YuanGong user_yuanGong= user.getUser_yuanGong();
+        Set<Role> roles = user.getRoles();
+
+        String pwd = "123456";
         String encryptPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptPwd);
+        user.setUser_yuanGong(null);
         User newUser = userJpaRepository.save(user);
 
-        //判断user_yuangong是否为空，若全是空，不进行操作
-        Boolean flag = (user_yuanGong.getZu()==null || user_yuanGong.getZu().equals(""))
-                && (user_yuanGong.getLunban()==null || user_yuanGong.getLunban().equals(""))
-                && (user_yuanGong.getGongxu()==null || user_yuanGong.getGongxu().equals(""));
-
+        //判断user_yuangong是否为空，若是空，不进行操作
+        Boolean flag = (StringUtils.isEmpty(user_yuanGong.getZu())
+                && StringUtils.isEmpty(user_yuanGong.getGongxu().getId())
+                && StringUtils.isEmpty(user_yuanGong.getLunban().getId()));
         if(!flag){
-
+            user_yuanGong.setUser(newUser);
             User_YuanGong newUser_yuanGong = userYuanGongRepository.save(user_yuanGong);
 
             newUser.setUser_yuanGong(newUser_yuanGong);
             userJpaRepository.save(newUser);
-
-            newUser_yuanGong.setUser(newUser);
-            userYuanGongRepository.save(newUser_yuanGong);
+        }
+        //判断角色
+        if(roles.size()>0){
+            userService.addUser_setRole(newUser.getId().toString(),roles);
         }
 
         return Result.ok("新增成功!",newUser);
@@ -75,28 +88,34 @@ public class UserController {
 
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息",notes = "工号不可修改,姓名不能为空")
-    public Result updateUserInfo(@RequestBody User user,@RequestBody User_YuanGong user_yuanGong){
+    public Result updateUserInfo(@RequestBody User user){
 
-        //判断user_yuangong是否为空 true 全为空
-        Boolean flag = (user_yuanGong.getZu()==null || user_yuanGong.getZu().equals(""))
-                && (user_yuanGong.getLunban()==null || user_yuanGong.getLunban().equals(""))
-                && (user_yuanGong.getGongxu()==null || user_yuanGong.getGongxu().equals(""));
+        User_YuanGong user_yuanGong= user.getUser_yuanGong();
+        Set<Role> roles = user.getRoles();
+
+        //判断user_yuangong是否为空 true 空
+        boolean flag = (StringUtils.isEmpty(user_yuanGong.getZu())
+                && StringUtils.isEmpty(user_yuanGong.getGongxu().getId())
+                && StringUtils.isEmpty(user_yuanGong.getLunban().getId()));
 
         String xm = user.getXingming();
-        Date birth = user.getBirthday();
-        String birthday = StringUtils.isEmpty(birth)?null:birth.toString();
 
-        String user_yg_id = null;
-
-        if(!flag){
-            user_yg_id = user.getUser_yuanGong().getId().toString();
+        //判断生日是否为空
+        String birthday = null;
+        if(!StringUtils.isEmpty(user.getBirthday())){
+            Date birth = user.getBirthday();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            birthday = sdf.format(birth);
         }
 
-        int zu = user_yuanGong.getZu();
-        Long gx_id = user_yuanGong.getGongxu().getId();
-        Long lb_id = user_yuanGong.getLunban().getId();
+        String sex = StringUtils.isEmpty(user.getSex())?null:user.getSex().toString();
+        String email = StringUtils.isEmpty(user.getEmail())?null:user.getEmail();
+        String phone = StringUtils.isEmpty(user.getMobile())?null:user.getMobile();
+        String zu = StringUtils.isEmpty(user_yuanGong.getZu())?null:user_yuanGong.getZu().toString();
+        String gx_id = StringUtils.isEmpty(user_yuanGong.getGongxu().getId())?null:user_yuanGong.getGongxu().getId().toString();
+        String lb_id = StringUtils.isEmpty(user_yuanGong.getLunban().getId())?null:user_yuanGong.getLunban().getId().toString();
 
-        userService.updateUserInfo(xm,birthday,user_yg_id,user.getId(),zu,gx_id,lb_id,flag);
+        userService.updateUserInfo(xm,birthday,sex,email,phone,user.getId(),zu,gx_id,lb_id,roles,flag);
 
         return Result.ok("修改成功!",user);
     }
@@ -104,16 +123,16 @@ public class UserController {
     @GetMapping("updateUserZaiZhi")
     @ApiOperation(value = "修改员工在职离职")
     public Result updateUserZaiZhi(int zaizhi,Long user_id){
-        User user = userJpaRepository.updateUserZaiZhi(zaizhi, user_id);
-        return Result.ok("修改成功!",user);
+        userJpaRepository.updateUserZaiZhi(zaizhi, user_id);
+        return Result.ok("修改成功!",user_id);
     }
 
     @GetMapping("updateUserPwd")
     @ApiOperation(value = "重置密码")
     public Result updateUserPwd(String pwd,Long user_id){
         String encryptPwd = passwordEncoder.encode(pwd);
-        User user = userJpaRepository.updateUserPwd(encryptPwd,user_id);
-        return Result.ok("重置密码成功!",user);
+        userJpaRepository.updateUserPwd(encryptPwd,user_id);
+        return Result.ok("重置密码成功!",user_id);
     }
 
     //设置组

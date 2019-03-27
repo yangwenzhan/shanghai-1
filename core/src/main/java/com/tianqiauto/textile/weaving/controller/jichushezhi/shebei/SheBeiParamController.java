@@ -1,7 +1,7 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi.shebei;
 
 import com.tianqiauto.textile.weaving.model.sys.Param;
-import com.tianqiauto.textile.weaving.service.SheBeiParamService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.SheBeiParamService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

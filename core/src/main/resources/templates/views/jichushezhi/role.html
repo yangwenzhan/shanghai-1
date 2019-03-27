@@ -52,7 +52,7 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">角色名称</label>
 					<div class="layui-input-inline">
-						<input type="text"  name="name" class="layui-input" lay-verify="required" autocomplete="off" disabled/>
+						<input type="text"  name="name" class="layui-input" lay-verify="required" autocomplete="off"/>
 					</div>
 				</div>
 
@@ -80,7 +80,7 @@
 		<script type="text/html" id="user_list_tpl">
 			{{#  layui.each(d, function(idx, it){ }}
 				<div class="layui-input-inline">
-					 <input type="checkbox" title="{{it.username+it.xingming}}" checked value="{{it.id}}" lay-filter="delete_user_from_role"/>
+					 <input type="checkbox" title="{{it.username+'  '+it.xingming}}" checked value="{{it.id}}" lay-filter="delete_user_from_role"/>
 				</div>
 			{{#  }); }}
 		</script>
