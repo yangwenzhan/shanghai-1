@@ -134,7 +134,7 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
                     //选中的权限id
                     str = str.substring(0, str.length-1);
 
-                    console.log(str);
+                    // console.log(str);
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/juesequanxian/role/updateRolePermission',
                         type:'get',

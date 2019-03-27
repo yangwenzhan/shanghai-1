@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.jichushezhi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

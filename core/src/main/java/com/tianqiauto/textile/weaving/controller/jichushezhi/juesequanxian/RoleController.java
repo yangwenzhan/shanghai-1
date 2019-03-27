@@ -3,7 +3,7 @@ package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.repository.RoleRepository;
-import com.tianqiauto.textile.weaving.service.RoleService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.RoleService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

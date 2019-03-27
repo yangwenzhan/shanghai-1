@@ -2,7 +2,7 @@ package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.repository.PermissionRepository;
-import com.tianqiauto.textile.weaving.service.PermissionService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.PermissionService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

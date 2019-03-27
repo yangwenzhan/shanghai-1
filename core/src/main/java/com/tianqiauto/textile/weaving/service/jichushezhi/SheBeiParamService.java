@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.jichushezhi;
 
 
 import com.tianqiauto.textile.weaving.model.sys.Param;
