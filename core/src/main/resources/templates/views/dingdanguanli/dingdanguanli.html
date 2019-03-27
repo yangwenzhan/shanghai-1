@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/common/links::header"></div>
+    <title>订单管理</title>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width: auto;">下单开始日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="xiadankaishiriqi" name="xiadankaishiriqi" placeholder="日期范围" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width: auto;">下单结束日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="xiadanjieshuriqi" name="xiadanjieshuriqi" placeholder="日期范围" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label leftsou">订单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="dingdanhao" placeholder="订单号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label leftsou">订单状态</label>
+                    <div class="layui-input-inline">
+                        <select name="status.id" id="status" lay-verify="required" lay-search="">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width: auto;">要求交货日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="jiaohuoriqi" name="jiaohuoriqi" placeholder="要求交货日期" class="layui-input"
+                               autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label leftsou">坯布规格</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="pibuguige" name="pibuguige" placeholder="坯布规格" class="layui-input"
+                               autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">客户信息</label>
+                    <div class="layui-input-inline">
+                        <select name="kehuxinxi.id" lay-verify="required" lay-search="" id="kehuxinxi" >
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询订单</i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <!--查询表格-->
+        <div class="layui-card-body">
+            <div class="layui-btn-group layui-inline">
+                <button class="layui-btn" id="add"><i class="layui-icon">&#xe608;</i> 添加订单</button>
+                <button class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>订单导入</button>
+                <button class="layui-btn" id="download"><i class="layui-icon">&#xe601;</i>导出模板</button>
+            </div>
+            <table id="table" lay-filter="table"></table>
+            <script type="text/html" id="caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="heyuehao" href="javascript:;" lay-href="/dingdanguanli/heyuehaoguanli/heyuehao?id={{= d.id }}"><i
+                        class="layui-icon layui-icon-note"></i>合约号</a>
+            </script>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- 添加订单 -->
+<div th:include="/views/dingdanguanli/addOrder::addFragment"></div>
+
+<!-- 修改订单 -->
+<div th:include="/views/dingdanguanli/editOrder::editFragment"></div>
+
+<div th:replace="/common/links::js_footer"></div>
+<script>
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , dingdanguanli: 'dingdanguanli/dingdanguanli'
+    }).use(['index', 'dingdanguanli'], function () {
+
+    });
+</script>
+
+
+</body>
+
+</html>
