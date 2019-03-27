@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.jichushezhi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -82,6 +82,17 @@ public class RoleService {
     public List<Map<String,Object>> getZYJSDY(String id){
         String sql = "select role_id,permission_id from base_role_permission where role_id=?";
         return jdbcTemplate.queryForList(sql,id);
+    }
+
+    /*修改角色时，判断角色名称是否重复*/
+    public boolean existRoleByName(String name){
+        String sql = "select count(*) from base_role where name=? and name !=?";
+        int num = jdbcTemplate.queryForObject(sql,Integer.class,name,name);
+        if(num==0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

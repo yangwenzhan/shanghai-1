@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.jichushezhi;
 
 import com.tianqiauto.textile.weaving.repository.YunZhuanFangShi_GongXu_Repository;
 import org.springframework.beans.factory.annotation.Autowired;

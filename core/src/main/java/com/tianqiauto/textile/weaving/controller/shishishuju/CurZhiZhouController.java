@@ -1,6 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.shishishuju;
 
-import com.tianqiauto.textile.weaving.service.CurDataService;
+import com.tianqiauto.textile.weaving.service.shishishuju.CurDataService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

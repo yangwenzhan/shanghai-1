@@ -1,6 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi.shebei;
 
-import com.tianqiauto.textile.weaving.service.SheBeiService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.SheBeiService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

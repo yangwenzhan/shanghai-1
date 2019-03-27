@@ -3,7 +3,7 @@ package com.tianqiauto.textile.weaving.controller.jichushezhi.juesequanxian;
 
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.repository.RoleRepository;
-import com.tianqiauto.textile.weaving.service.RoleService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.RoleService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,14 +50,18 @@ public class RoleController {
         }else{
             return Result.error("该角色名称已存在！",role);
         }
-
     }
 
     @PostMapping("updateRole")
     @ApiOperation(value = "修改角色")
     public Result updateRole(@RequestBody Role role){
-        roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
-        return Result.ok("修改成功!",role);
+        boolean flag = roleService.existRoleByName(role.getName());
+        if(!flag){
+            roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
+            return Result.ok("修改成功!",role);
+        }else{
+            return Result.error("该角色名称已存在！",role);
+        }
     }
 
     @GetMapping("updateRolePermission")

@@ -13,7 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,13 +34,20 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    @NotBlank(message = "密码不能为空")
     private String password;
 
     @Column(nullable = false)
     private  String xingming;
 
     private Date birthday;
+
+    @Email(message = "不是有效的邮箱地址")
+    private String email;
+
+    private String mobile;
+
+    //性别
+    private Integer sex;
 
     //是否在职
     private Integer shifouzaizhi;
@@ -58,18 +65,20 @@ public class User {
     private Set<Role> roles;
 
 
-
-
-
-
-
-
+    @Transient
+    private String ghxm;
 
 
 //        @Transient          //不映射生成数据库对应字段
 //    private Integer ageFrom;
 //    @Transient
 //    private Integer ageTo;
+
+
+
+    public void setGhxm(String ghxm){
+        this.ghxm=username+" "+xingming;
+    }
 
 
 
