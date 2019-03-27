@@ -14,6 +14,7 @@ layui.define(function(exports){
   ,setter = layui.setter
   ,view = layui.view
   ,admin = layui.admin
+  ,form = layui.form;
 
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
@@ -185,6 +186,75 @@ layui.define(function(exports){
     });
   };
 
+
+  //ajax请求成功处理下拉框函数
+  initDownList = function(data,downID,selectedId,valueName,valueID,isall){
+      $('#' + downID).html("");
+      if(data.code == 0) {
+          if(data.data.length == 0) {
+              return false;
+          }
+          var reg = RegExp(/,/);
+          var selectedArr=[];
+          if(selectedId==null){
+              selectedArr=null;
+          }else if(reg.test(selectedId)){
+              selectedArr = selectedId.split(',');
+          }else{
+              selectedArr.push(selectedId);
+          }
+
+          var str = "";
+          if(!isall) {
+              for(var i = 0; i < data.data.length; i++) {
+                  str += "<option value='" + data.data[i][valueName] + "'>"
+                      + data.data[i].valueName
+                      + "</option>";
+              }
+              $('#' + downID).html(str);
+          } else {
+              str += "<option value=''>全部</option>";
+              for(var i = 0; i < data.data.length; i++) {
+
+                  if(selectedArr==null){
+                      str += "<option value='" + data.data[i][valueID] + "'>"
+                          + data.data[i][valueName]
+                          + "</option>";
+                  }else{
+                      for(var j=0;j< selectedArr.length;j++){
+                          if(data.data[i][valueID]==selectedArr[j]){
+                              str += "<option value='" + data.data[i][valueID] + "' selected='selected'>"
+                                  + data.data[i][valueName]
+                                  + "</option>";
+                              break;
+                          }
+                          if(j==selectedArr.length-1 && data.data[i][valueID]!=selectedArr[j]){
+                              str += "<option value='" + data.data[i][valueID] + "'>"
+                                  + data.data[i][valueName]
+                                  + "</option>";
+                              break;
+                          }
+                      }
+                  }
+              }
+              $('#' + downID).html(str);
+          }
+
+      } else {
+          layer.open({
+              title:"消息提醒",
+              content:data.message,
+              skin:"layui-layer-molv",
+              btn:["查看错误信息"],
+              anim: -1,
+              icon:5,
+              btn1:function(index){
+                  layer.open({content:data.data})
+                  layer.close(index);
+              }
+          });
+      }
+  }
   
   //对外暴露的接口
   exports('common', {});

@@ -1,10 +1,345 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>用户管理</title>
+    <div th:replace="/common/links::header"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/formSelects.css}" media="all">
+    <title>员工管理</title>
 </head>
 <body>
-    用户管理页面
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">工序</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="gx" lay-filter="gx">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="role" lay-filter="role">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">轮班</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="lb" lay-filter="lb">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">组</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="zu" lay-filter="zu">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">是否在职</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="sfzz" lay-filter="sfzz">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">工号姓名</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="yg" lay-filter="yg">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+                    </button>
+
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="excelBtn">
+                        <i class="layui-icon layui-icon-download-circle layuiadmin-button-btn">导出</i>
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-admin" id="set_zu_btn"><i class="layui-icon layui-icon-util">设置组</i></button>
+                <button class="layui-btn layuiadmin-btn-admin" id="set_role_btn"><i class="layui-icon layui-icon-group">设置角色</i></button>
+                <button class="layui-btn layuiadmin-btn-admin" id="add_user_btn"><i class="layui-icon layui-icon-add-circle">新增员工</i></button>
+            </div>
+            <table id="table" lay-filter="table"></table>
+        </div>
+
+    </div>
+</div>
+
+<!--新增员工弹出框-->
+<div style="display: none" id="div_form_add">
+    <form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">工号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" placeholder="请输入工号" class="layui-input" autocomplete="off" lay-verify="required"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">姓名<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="xingming" placeholder="请输入姓名" class="layui-input" autocomplete="off" lay-verify="required"/>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">工序</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="gongxu" id="add_gongxu">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">轮班</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="lunban" id="add_lunban">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">组</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="zu" id="add_zu" lay-filter="zu">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline">
+                    <select xm-select="add_select_role" lay-search="" name="roles" id="add_role">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">在职</label>
+                <div class="layui-input-inline">
+                    <select lay-verify="required" lay-search="" name="shifouzaizhi">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">出生日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="birthday" id="add_birthday" placeholder="请选择出生日期" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <select lay-verify="required" lay-search="" name="sex">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" lay_verify="number" name="mobile" placeholder="请输入手机号" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" lay-verify="email" name="email" placeholder="请输入邮箱" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!--修改员工弹出框-->
+<div style="display: none" id="div_form_edit">
+    <form class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <div class="layui-inline" style="display: none">
+                <div class="layui-input-inline">
+                    <input type="text" name="id"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">工号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" placeholder="请输入工号" class="layui-input" autocomplete="off" lay-verify="required" disabled/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">姓名<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="xingming" placeholder="请输入姓名" class="layui-input" autocomplete="off" lay-verify="required"/>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">工序</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="gongxu" id="edit_gongxu">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">轮班</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="lunban" id="edit_lunban">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">组</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" name="zu" id="edit_zu" lay-filter="zu">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline">
+                    <select xm-select="edit_select_role" lay-search="" name="rolename" id="edit_role">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <select lay-verify="required" lay-search="" name="sex">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">出生日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="birthday" id="edit_birthday" placeholder="请选择出生日期" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" lay_verify="number" name="mobile" placeholder="请输入手机号" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" lay-verify="email" name="email" placeholder="请输入邮箱" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+<!--设置角色弹出框-->
+<div style="display:none;" id="set_role_div">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" xm-select="selectRole" id="set_role" lay-filter="set_role">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--设置组弹出框-->
+<div style="display: none;" id="set_zu_div">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">组</label>
+                <div class="layui-input-inline">
+                    <select lay-search="" id="set_zu" lay-filter="set_zu">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div th:replace="/common/links::js_footer"></div>
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    {{# if (d.shifouzaizhi=="1") { }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="lizhi"><i class="layui-icon layui-icon-delete"></i>离职</a>
+    {{# }else{}}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="fuzhi"><i class="layui-icon layui-icon-group"></i>复职</a>
+    {{# }}}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset"> <i class="layui-icon layui-icon-tips"></i>重置密码</a>
+</script>
+
+<script>
+    layui.config({
+        base:"/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        ,user:'jichushezhi/user'
+    }).use(['index','user','formSelects'],function () {
+
+    });
+</script>
 </body>
+
 </html>
