@@ -4,8 +4,6 @@ import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
-
 /**
  * @ClassName Dict_TypeRepository
  * @Author xingxiaoshuai

@@ -42,7 +42,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
             success: function (data) {
                 var dict_data = {
                     code: 0,
-                    data: data.data[0].dicts,
+                    data: data.data.dicts,
                     message: "查询成功"
                 };
                 initDownList(dict_data, eleId, selectedId, 'name', 'value', true);

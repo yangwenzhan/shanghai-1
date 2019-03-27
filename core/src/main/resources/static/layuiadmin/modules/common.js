@@ -207,7 +207,7 @@ layui.define(function(exports){
           var str = "";
           if(!isall) {
               for(var i = 0; i < data.data.length; i++) {
-                  str += "<option value='" + data.data[i][valueName] + "'>"
+                  str += "<option value='" + data.data[i][valueID] + "'>"
                       + data.data[i].valueName
                       + "</option>";
               }

@@ -64,8 +64,8 @@
                             <cite th:text="${#authentication.getPrincipal().getUser().getXingming()}"></cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd><a lay-href="/forward/jichushezhi/info">基本资料</a></dd>
+                            <dd><a lay-href="/forward/jichushezhi/password">修改密码</a></dd>
                             <hr>
                             <dd style="text-align: center;"><a th:href="@{/logout}">退出</a></dd>
                         </dl>
@@ -440,8 +440,8 @@
                                 <dd class="layui-nav-itemed">
                                     <a href="javascript:;">我的设置</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                                        <dd><a lay-href="/forward/jichushezhi/info">基本资料</a></dd>
+                                        <dd><a lay-href="/forward/jichushezhi/password">修改密码</a></dd>
                                     </dl>
                                 </dd>
                             </dl>

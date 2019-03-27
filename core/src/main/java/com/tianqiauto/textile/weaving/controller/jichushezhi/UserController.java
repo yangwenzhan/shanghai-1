@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -151,6 +152,41 @@ public class UserController {
         return Result.ok("设置角色成功!",true);
     }
 
+    @GetMapping("findByUserId")
+    @ApiOperation(value = "根据用户id查询信息")
+    public Result findByUserId(Long id){
+        User user = userJpaRepository.findAllById(id);
+        return Result.ok("查询成功!",user);
+    }
+
+    @GetMapping("setUserInfo")
+    @ApiOperation(value = "修改当前登录用户基本资料")
+    public Result setUserInfo(String id,String xingming,String sex,String birthday,String mobile,String email){
+        birthday = StringUtils.isEmpty(birthday)?null:birthday;
+        mobile = StringUtils.isEmpty(mobile)?null:mobile;
+        email = StringUtils.isEmpty(email)?null:email;
+        userService.setUserInfo(id, xingming, sex, birthday, mobile, email);
+        return Result.ok("修改成功!",id);
+    }
+
+    @GetMapping("resetPwd")
+    @ApiOperation(value = "重置密码")
+    public Result resetPwd(String id,String oldpwd,String newpwd){
+
+        //新密码加密
+        String encryptPwd = passwordEncoder.encode(newpwd);
+        Map<String,Object> map = userService.getPwd(id);
+        //旧密码加密
+        String sql_oldpwd = passwordEncoder.encode(map.get("password").toString());
+        //新旧密码对比
+        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        if(flag){
+            userService.updateUserPwd(id,encryptPwd);
+            return Result.ok("密码修改成功!",id);
+        }else{
+            return Result.error("原始密码输入错误!",id);
+        }
+    }
 
 
 }
