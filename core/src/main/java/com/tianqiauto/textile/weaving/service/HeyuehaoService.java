@@ -5,6 +5,9 @@ import com.tianqiauto.textile.weaving.model.sys.Order;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
 import com.tianqiauto.textile.weaving.util.JPASql.DynamicUpdateSQL;
+import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
+import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
+import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -44,5 +47,20 @@ public class HeyuehaoService {
     public int update(Heyuehao heyuehao) {
         Container RUSql = new DynamicUpdateSQL<>(heyuehao).getUpdateSql();
         return jdbcTemplate.update(RUSql.getSql(),RUSql.getParam());
+    }
+
+    @Autowired
+    private BaseService baseService;
+
+    /**
+     * 获取生成的合约号
+     * @Author bjw
+     * @Date 2019/3/26 21:01
+     **/
+    public Object create_heyuehao(String order_id, String flag) {
+        ProcedureParamUtlis ppu=new ProcedureParamUtlis();
+        ppu.batchInAdd(order_id,flag);
+        ProcedureContext pro=baseService.callProcedure("pc_create_heyuehao", ppu.getList());
+        return  pro.getDatas();
     }
 }

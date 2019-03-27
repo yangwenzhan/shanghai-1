@@ -49,6 +49,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         //重新渲染纬纱表格
         var wsData = obj.data.weisha;
         initTableTemp('wsxx_table',wsData,jws_cols);
+
+        $('#hyhxx_jsxx,#hyhxx_wsxx').html(heyuehao_temp.name);
     });
 
     //合约号删除和修改
@@ -132,6 +134,26 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //添加合约号
     $("#wsxz,#jsxz").click(function () {
+        var thisId = $(this).attr('id');
+        var flag = null;
+        if(thisId == 'wsxz'){
+            flag = 'huanwei';
+        }else if(thisId == 'jsxz'){
+            flag = 'huanjing';
+        }
+        $.ajax({
+            url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/create_heyuehao',
+            type: 'get',
+            data: {'order_id': order.id,'flag':flag},
+            success: function (data) {
+                if(data.code == 0){
+                    $('#name_add').val(data.data[0].heyuehao);
+                    $('#kehubianhaomiaoshu_add').val(data.data[0].heyuehao);
+                }else{
+                    ajaxSuccess(data,table,tableId)
+                }
+            }
+        });
         layer.open({
             type: 1
             , title: '添加合约号信息！'
@@ -172,6 +194,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         })
     });
 
+
     table.on('tool(wsxx_table)', function(obj){
         jwstableOnClick(obj,"wsxx_table");
     });
@@ -191,13 +214,6 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         data: {'id': data.id},
                         success: function (data) {
                             if(data.code == 0){
-                                // if(onClickId == 'jsxx_add'){//渲染经纱
-                                //     heyuehao_temp.jingsha.push(data.data);
-                                //     initTableTemp('jsxx_table',heyuehao_temp.jingsha,jws_cols);
-                                // }else if(onClickId == 'wsxx_add'){//渲染纬纱
-                                //     heyuehao_temp.weisha.push(data.data);
-                                //     initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
-                                // }
                                 if(tableId == 'wsxx_table'){
                                     heyuehao_temp.weisha.splice(jQuery.inArray(data,heyuehao_temp.weisha),1);
                                     initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
@@ -215,7 +231,71 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                     });
                 });
         } else if (obj.event === 'jws_edit') {
-
+            yuansha_temp_edit = data.yuanSha;
+            fromSetVel(form,'form_jws_edit',data);
+            $("#heyuehao_ys_edit").val(heyuehao_temp.name);
+            layer.open({
+                type: 1
+                , title: '编辑经纬纱信息！'
+                , content: $('#div_form_jws_edit')
+                , area: ['50%', '50%']
+                , btn: ['修改', '取消']
+                , btn1: function (index, layero) {
+                    layer.confirm('确定要修改经纬纱信息么?'
+                        , function (i) {
+                            form.on('submit(form_jws_submit_edit)', function (data) {
+                                var formData = data.field;
+                                formData.yuanSha = yuansha_temp_edit;
+                                $.ajax({
+                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/update',
+                                    contentType: "application/json;charset=utf-8",
+                                    type: 'POST',
+                                    data: JSON.stringify(formData),
+                                    success: function (data) {
+                                        if(data.code == 0){
+                                            if(tableId == 'jsxx_table'){//渲染经纱
+                                                var jingsha = data.data;
+                                                for(var i=0; i<heyuehao_temp.jingsha.length; i++ ){
+                                                    if(jingsha.id == heyuehao_temp.jingsha[i].id){
+                                                        heyuehao_temp.jingsha[i] = jingsha;
+                                                    }
+                                                }
+                                                initTableTemp('jsxx_table',heyuehao_temp.jingsha,jws_cols);
+                                            }else if(tableId == 'wsxx_table'){//渲染纬纱
+                                                var weisha = data.data;
+                                                for(var i=0; i<heyuehao_temp.weisha.length; i++ ){
+                                                    if(weisha.id == heyuehao_temp.weisha[i].id){
+                                                        heyuehao_temp.weisha[i] = weisha;
+                                                    }
+                                                }
+                                                initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
+                                            }
+                                        }
+                                        if(tableId == 'jsxx_table'){//渲染经纱
+                                            ajaxSuccess(data, table,"jsxx_table");
+                                        }else if(tableId == 'wsxx_table'){//渲染纬纱
+                                            ajaxSuccess(data, table,"wsxx_table");
+                                        }
+                                    }
+                                });
+                                layer.close(index);
+                            });
+                            $("#form_jws_submit_edit").trigger('click');
+                            layer.close(i);
+                        })
+                }
+                , success: function () {
+                    fromSetVel(form,'form_edit', data);
+                    laydate.render({
+                        elem: '#xiadanriqi_edit',
+                        min:0
+                    });
+                    laydate.render({
+                        elem: '#jiaohuoriqi_edit',
+                        min:0
+                    });
+                }
+            })
         }
     }
 
@@ -289,7 +369,6 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 }else if(onClickId == 'wsxx_add'){//渲染纬纱
                                     ajaxSuccess(data, table,"wsxx_table");
                                 }
-
                                 layer.close(index);
                             }
                         });
@@ -317,7 +396,9 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '操作', toolbar: '#yuansha_caozuo', fixed: 'right'}
     ]];
     var layerOpenYuansha;
-    $('#xzys').click(function(){
+    var xzysId;
+    $('#xzys,#xzys_edit').click(function(){
+        xzysId = $(this).attr('id');
         layerOpenYuansha = layer.open({
             type: 1
             , title: '原纱信息！'
@@ -332,8 +413,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     table.on('tool(yuansha_table)', function(obj) {
         var data = obj.data;
         if (obj.event === 'xuanzeYS') {
-           yuansha_temp = data;
-            fromSetVel(form,'form_ysxx',yuansha_temp);
+           if(xzysId == 'xzys'){
+               yuansha_temp = data;
+               fromSetVel(form,'form_ysxx',yuansha_temp);
+           }
+           if(xzysId == 'xzys_edit'){
+               yuansha_temp_edit = data;
+               fromSetVel(form,'form_ysxx_edit',yuansha_temp);
+           }
            layer.close(layerOpenYuansha);
         }
     });
@@ -353,6 +440,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             var currentObj = obj; //当前对象
             for (var i = 0; i < arr.length; i++) {
                 if (i == arr.length - 1) {
+                    val = val == '' ? "''" : val;
                     eval(textObj+"."+arr[i]+"="+val);
                 } else{
                     textObj += '.' + arr[i];
@@ -449,6 +537,15 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             /^([0-9]{5})([A-Z]{1})([0-9]{1})$/,
             '合约号格式不正确！'
         ]
+    });
+
+    //监听搜索
+    form.on('submit(form_search)', function(data){
+        var field = data.field;
+        table.reload('yuansha_table', {
+            where: field
+        });
+        return false;
     });
 
     exports('heyuehao', {})

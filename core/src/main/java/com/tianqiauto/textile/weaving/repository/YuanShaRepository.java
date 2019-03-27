@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.repository;
 
 import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @Author bjw
  * @Date 2019/3/19 14:42
  */
-public interface YuanShaRepository extends JpaRepository<YuanSha,Long> {
+public interface YuanShaRepository extends JpaRepository<YuanSha,Long> ,JpaSpecificationExecutor<YuanSha> {
 
     @Query(value = "select * from sys_yuansha where pihao=isnull(?1,pihao) and pinming=isnull(?2,pinming) and zhishu=isnull(?3,zhishu)",nativeQuery = true)
     List<YuanSha> findAllByPihaoAndPinmingAndZhishu(String pihao, String pinming, Integer zhishu);

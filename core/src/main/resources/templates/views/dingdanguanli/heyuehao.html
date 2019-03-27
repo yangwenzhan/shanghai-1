@@ -32,7 +32,7 @@
 
             <div class="layui-collapse" style="margin-top: 20px;">
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号对应经纱信息</h2>
+                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号<span id="hyhxx_jsxx"></span>对应经纱信息</h2>
                     <div class="layui-colla-content layui-show" style="padding: 0">
                         <table id="jsxx_table" lay-filter="jsxx_table"></table>
                         <button class="layui-btn" id="jsxx_add"><i class="layui-icon">&#xe654;</i>添加经纱</button>
@@ -41,7 +41,7 @@
             </div>
             <div class="layui-collapse" style="margin-top: 20px;">
                 <div class="layui-colla-item">
-                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号对应纬纱信息</h2>
+                    <h2 class="layui-colla-title" style="color: #01AAED;">合约号<span id="hyhxx_wsxx"></span>对应纬纱信息</h2>
                     <div class="layui-colla-content layui-show" style="padding: 0">
                         <table id="wsxx_table" lay-filter="wsxx_table"></table>
                         <button class="layui-btn" id="wsxx_add"><i class="layui-icon">&#xe654;</i>添加纬纱</button>
@@ -82,6 +82,8 @@
     var heyuehao_temp = null;
     //选中原纱时的全局变量
     var yuansha_temp = null;
+    //选中的edit原纱
+    var yuansha_temp_edit = null;
 
     $(function () {
         if (heyuehaos == undefined || null == heyuehaos) {

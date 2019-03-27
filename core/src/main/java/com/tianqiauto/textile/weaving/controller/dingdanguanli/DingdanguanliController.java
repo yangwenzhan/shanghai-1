@@ -55,16 +55,14 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-添加订单")
     public Result addOrder(@Valid @RequestBody Order order) {
         //order.setStatus(); fixme 添加默认（已创建）先查詢出默认状态然后set进去
-        order.setCreateTime(new Date());
         order.setRukuguige(order.getPibuguige());
         order = orderService.save(order);
         return Result.ok("新增订单成功！", order);
     }
 
     @GetMapping("query_page")
-    @ApiOperation("订单管理-查询订单")
-    public Result findAll(Pageable pageable) {
-        return Result.ok(orderService.findAll(pageable));
+    public Result findAll(Order order,Pageable pageable) {
+        return Result.ok(orderService.findAll(order,pageable));
     }
 
     @GetMapping("deleteOrder")

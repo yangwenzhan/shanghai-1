@@ -31,8 +31,9 @@ public class HeYueHaoYuanShaService {
         heyuehaoYuanShaRepository.deleteById(id);
     }
 
-    public int update(Heyuehao_YuanSha heyuehaoYuanSha) {
+    public Heyuehao_YuanSha update(Heyuehao_YuanSha heyuehaoYuanSha) {
         Container RUSql = new DynamicUpdateSQL<>(heyuehaoYuanSha).getUpdateSql();
-        return jdbcTemplate.update(RUSql.getSql(),RUSql.getParam());
+        jdbcTemplate.update(RUSql.getSql(),RUSql.getParam());
+        return heyuehaoYuanShaRepository.findById(heyuehaoYuanSha.getId()).get();
     }
 }

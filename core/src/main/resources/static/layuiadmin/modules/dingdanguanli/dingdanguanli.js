@@ -5,6 +5,21 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , upload = layui.upload
         , laydate = layui.laydate;
 
+    $(function(){
+        laydate.render({
+            elem: '#xiadankaishiriqi',
+            min:0
+        });
+        laydate.render({
+            elem: '#xiadanjieshuriqi',
+            min:0
+        });
+        laydate.render({
+            elem: '#jiaohuoriqi',
+            min:0
+        });
+    });
+
     //设置表格头
     var cols = [[
         {field: 'id', title: 'id', hide: true}
@@ -122,7 +137,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //添加订单
     $("#add").click(function () {
-        layer.open({
+        var addOpen = layer.open({
             type: 1
             , title: '添加订单信息！'
             , content: $('#div_form_add')
@@ -138,10 +153,25 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'POST',
                         data: JSON.stringify(formData),
                         success: function (data) {
-                            ajaxSuccess(data, table);
+                            layer.open({
+                                content: '是否继续管理合约号？',
+                                fixd: true,
+                                closeBtn:0,
+                                resize: false,
+                                anim: 1 ,//从上掉落
+                                btn: ['是', '否'],
+                                btn2: function() {
+                                    ajaxSuccess(data, table);
+                                    layer.close(addOpen);
+                                },
+                                btn1: function() {
+                                    $(location).attr('href', '/dingdanguanli/heyuehaoguanli/heyuehao?id='+data.data.id);
+                                    ajaxSuccess(data, table);
+                                    layer.close(addOpen);
+                                }
+                            });
                         }
                     });
-                    layer.close(index);
                 });
                 $("#form_add_submit").trigger('click');
                 //
@@ -180,6 +210,15 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         });
     }
 
+    //监听搜索
+    form.on('submit(form_search)', function(data){
+        var field = getParams('form');
+        table.reload('table', {
+            where: field
+        });
+        return false;
+    });
+
 
     /**
      * 2019/03/23 bjw
@@ -196,6 +235,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             var currentObj = obj; //当前对象
             for (var i = 0; i < arr.length; i++) {
                 if (i == arr.length - 1) {
+                    val = val == '' ? "''" : val;
                     eval(textObj+"."+arr[i]+"="+val);
                 } else{
                     textObj += '.' + arr[i];

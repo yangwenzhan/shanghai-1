@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.service;
 
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
 import com.tianqiauto.textile.weaving.repository.OrderRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
@@ -9,11 +10,16 @@ import com.tianqiauto.textile.weaving.util.JPASql.DynamicUpdateSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,8 +60,38 @@ public class OrderService {
         return orderRepository.findById(id).get();
     }
 
-    public Page<Order> findAll(Pageable pageable){
-        return orderRepository.findAll(pageable);
+    public Page<Order> findAll(Order order,Pageable pageable){
+
+        Specification<Order> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList();
+            //开始日期和结束日期
+            if(!StringUtils.isEmpty(order.getXiadankaishiriqi()) || !StringUtils.isEmpty(order.getXiadanjieshuriqi())) {
+                predicates.add(criteriaBuilder.between(root.get("xiadanriqi"), order.getXiadankaishiriqi(),order.getXiadanjieshuriqi()));
+            }
+            //订单号
+            if(!StringUtils.isEmpty(order.getDingdanhao())) {
+                predicates.add(criteriaBuilder.like(root.get("dingdanhao"), "%" + order.getDingdanhao() + "%"));
+            }
+            //订单状态
+            if(!StringUtils.isEmpty(order.getStatus())) {
+                predicates.add(criteriaBuilder.equal(root.get("status").get("id"), order.getStatus().getId()));
+            }
+            //客户信息
+            if(!StringUtils.isEmpty(order.getKehuxinxi())) {
+                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+            }
+            //要求交货日期
+            if(!StringUtils.isEmpty(order.getJiaohuoriqi())) {
+                predicates.add(criteriaBuilder.like(root.get("jiaohuoriqi"), "%" + order.getJiaohuoriqi() + "%"));
+            }
+            //客户信息
+            if(!StringUtils.isEmpty(order.getKehuxinxi())) {
+                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+            }
+            criteriaBuilder.desc(root.get("createTime"));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        return orderRepository.findAll(specification,pageable);
     }
 
     public int update(Order order) {

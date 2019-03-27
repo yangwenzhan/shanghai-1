@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -26,7 +27,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_order")
-@EqualsAndHashCode(exclude = {"heyuehaos","yuanliaoleixing","chengpinyongtu","yingxiaoyuan","jingli","kehuxinxi","status"})
+@EqualsAndHashCode(exclude = {"heyuehaos"})
 public class Order {
     /**
      * 新增合约号（新增、换经纱、换纬纱）
@@ -67,6 +68,7 @@ public class Order {
     private Date xiadanriqi; //下单日期
 
 //    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量

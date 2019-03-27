@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,7 +61,6 @@ public class HeYueHaoController {
     @ApiOperation("合约号管理-添加合约号信息")
     @ResponseBody
     public Result addHeyuegao(@RequestBody Heyuehao heyuehao){
-        heyuehao.setCreateTime(new Date());
         heyuehao = heyuehaoService.save(heyuehao);
         return Result.ok("添加成功！",heyuehao);
     }
@@ -87,4 +83,13 @@ public class HeYueHaoController {
         heyuehao = heyuehaoService.findByid(heyuehao.getId());
         return Result.ok("更新成功！",heyuehao);
     }
+
+    @GetMapping("create_heyuehao")
+    @ApiOperation("合约号管理-更新合约号信息")
+    @ResponseBody
+    public Result create_heyuehao(String order_id, String flag){
+        Object ret = heyuehaoService.create_heyuehao(order_id,flag);
+        return Result.ok("更新成功！",ret);
+    }
+
 }
