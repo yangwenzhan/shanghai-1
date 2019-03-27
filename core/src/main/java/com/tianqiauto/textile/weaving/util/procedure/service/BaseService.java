@@ -40,6 +40,7 @@ public class BaseService {
 		final List<ProcedureParam> outParams = new ArrayList();
 		// 将输入in输出out参数分开
 		if (pm.size() > 0) {
+
 			for (ProcedureParam param : pm) {
 				if ("IN".equals(param.getInOut().toUpperCase())) {
 					inParams.add(param);
