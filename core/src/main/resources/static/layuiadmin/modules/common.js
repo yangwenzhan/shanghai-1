@@ -18,19 +18,14 @@ layui.define(function(exports){
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
 
-
-
   getParams = function (formId) {
     var _params = {};
 
-    console.info("aaaa"+$('#' + formId).serializeArray());
-
     $.each($('#' + formId).serializeArray(), function (i, field) {
-      // if (null != field.value && "" != field.value) {
+      if (null != field.value && "" != field.value) {
       _params[field.name] = field.value;
-      // }
+      }
     });
-    console.info(_params);
     return _params;
   };
 

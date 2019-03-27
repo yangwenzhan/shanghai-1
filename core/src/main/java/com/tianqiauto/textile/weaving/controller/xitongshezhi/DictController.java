@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ClassName Dict
@@ -43,6 +44,7 @@ public class DictController {
 
     @GetMapping("query_page")
     public Result query_page(Dict_Type dict_type,Pageable pageable){
+
 
         return Result.ok(dict_typeRepository.findAll(new Specification<Dict_Type>() {
             @Override
