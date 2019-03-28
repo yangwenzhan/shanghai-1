@@ -27,10 +27,6 @@ public class YuanSha_RuKu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
-
-
     @ManyToOne
     @JoinColumn(name = "yuansha_id")
     private YuanSha yuanSha;
