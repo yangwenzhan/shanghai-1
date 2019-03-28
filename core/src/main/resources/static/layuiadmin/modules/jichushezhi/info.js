@@ -24,6 +24,46 @@ layui.define(['form','laydate'], function(exports){
   
   //设置资料
   form.on('submit(setmyinfo)', function(obj){
+
+      if($('#xingming').val()==""){
+          layer.open({
+              title:"消息提醒",
+              content:"姓名不能为空",
+              skin:"layui-layer-molv",
+              offset: 'auto',
+              time:3000,
+              btn:[],
+              shade: 0,
+              anim: -1,
+              icon:5
+          });
+          $('#xingming').focus();
+          return false;
+      }
+      //邮箱格式验证
+      var email = $.trim($('#email').val());
+      var isEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+      if(!(email=="")){
+          if(!(isEmail.test(email))){
+              layer.open({
+                  title:"消息提醒",
+                  content:"邮箱格式不正确",
+                  skin:"layui-layer-molv",
+                  offset: 'auto',
+                  time:3000,
+                  btn:[],
+                  shade: 0,
+                  anim: -1,
+                  icon:5
+              });
+              $('#email').focus();
+              return false;
+          }
+      }
+
+
+
       var param = {
           id:obj.field.id,
           xingming:obj.field.xingming,
