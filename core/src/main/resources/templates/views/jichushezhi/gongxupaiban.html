@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>工序对应排班</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-form"></i>详情</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+	</script>
+	<div style="display: none" id="div_form_edit">
+		<form class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label leftsou">运转方式</label>
+					<div class="layui-input-inline">
+						<select lay-search="" id="edit_yzfs" lay-filter="edit_yzfs">
+
+						</select>
+					</div>
+				</div>
+			</div>
+			<table class="layui-table" lay-filter="edit_table" id="edit_table" ></table>
+		</form>
+	</div>
+
+	<div style="display: none" id="div_form_see">
+		<div class="layui-form" lay-filter="form_see" id="form_see" style="padding: 20px 30px 0 0;">
+			<table class="layui-table" lay-filter="see_table" id="see_table" ></table>
+		</div>
+	</div>
+
+  	<div th:replace="/common/links::js_footer"></div>
+
+	<!--
+	<script type="text/html" id="cur_yzfs_num_upd"> 
+
+        {{# if (d.cur_num == null ) {  }}
+			<input type="checkbox" lay-filter="upd_cur_num" value="{{d.paixuhao}}" />
+         {{#  }  else {   }}
+			<input type="checkbox" lay-filter="upd_cur_num" value="{{d.paixuhao}}" checked="" />
+            {{#     }   }}
+	</script>
+	<script type="text/html" id="cur_yzfs_num_sel"> 
+
+        {{# if (d.cur_num == null ) {  }}
+			<input type="checkbox" disabled="" />
+         {{#  }  else {   }}
+			<input type="checkbox" checked="" disabled="" />
+            {{#     }   }}
+	</script>
+	-->
+
+  <script>
+      layui.config({
+          base:"/layuiadmin/" //静态资源所在路径
+      }).extend({
+          index: 'lib/index' //主入口模块
+          ,gongxupaiban:'jichushezhi/paiban/gongxupaiban'
+      }).use(['index','gongxupaiban'],function () {
+
+      });
+  </script>
+</body>
+
+</html>
