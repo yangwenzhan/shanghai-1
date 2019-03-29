@@ -20,19 +20,19 @@
                             <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                         </a>
                     </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="http://www.layui.com/admin/" target="_blank" title="前台">
-                            <i class="layui-icon layui-icon-website"></i>
-                        </a>
-                    </li>
+                    <!--<li class="layui-nav-item layui-hide-xs" lay-unselect>-->
+                        <!--<a href="http://www.layui.com/admin/" target="_blank" title="前台">-->
+                            <!--<i class="layui-icon layui-icon-website"></i>-->
+                        <!--</a>-->
+                    <!--</li>-->
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;" layadmin-event="refresh" title="刷新">
                             <i class="layui-icon layui-icon-refresh-3"></i>
                         </a>
                     </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
-                    </li>
+                    <!--<li class="layui-nav-item layui-hide-xs" lay-unselect>-->
+                        <!--<input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">-->
+                    <!--</li>-->
                 </ul>
                 <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
 
@@ -59,7 +59,7 @@
                             <i class="layui-icon layui-icon-screen-full"></i>
                         </a>
                     </li>
-                    <li class="layui-nav-item" lay-unselect>
+                    <li class="layui-nav-item" lay-unselect style="margin-right: 20px">
                         <a href="javascript:;">
                             <cite th:text="${#authentication.getPrincipal().getUser().getXingming()}"></cite>
                         </a>
@@ -71,12 +71,12 @@
                         </dl>
                     </li>
 
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                    </li>
-                    <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
-                        <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                    </li>
+                    <!--<li class="layui-nav-item layui-hide-xs" lay-unselect>-->
+                        <!--<a href="javascript:;" layadmin-event=""><i class="layui-icon layui-icon-more-vertical"></i></a>-->
+                    <!--</li>-->
+                    <!--<li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>-->
+                        <!--<a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>-->
+                    <!--</li>-->
                 </ul>
 
             </div>
@@ -88,7 +88,7 @@
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
                     <div class="layui-logo" lay-href="home/console.html">
-                        <span>layuiAdmin</span>
+                        <span>上海纺织</span>
                     </div>
 
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
