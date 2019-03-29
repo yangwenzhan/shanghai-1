@@ -1,20 +1,23 @@
 package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 
+import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
+import com.tianqiauto.textile.weaving.model.sys.Heyuehao_YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.service.HeyuehaoService;
 import com.tianqiauto.textile.weaving.service.OrderService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author bjw
@@ -31,13 +34,18 @@ public class HeYueHaoController {
     private OrderService orderService;
 
     @RequestMapping("/heyuehao")
-    public String loginError(Model model,Long id) {
+    public String heyuehao(Model model,Long id) {
         Order order = new Order();
         if(null != id){
            order = orderService.findByid(id);
         }
         model.addAttribute("order", order);
         return "/views/dingdanguanli/heyuehao";
+    }
+
+    @RequestMapping("/heyuehao_page")
+    public String heyuehao_page() {
+        return "/views/heyuehaoguanli/heyuehaoguanli";
     }
 
     @PostMapping("findByOrderid")
@@ -90,6 +98,28 @@ public class HeYueHaoController {
     public Result create_heyuehao(String order_id, String flag){
         Object ret = heyuehaoService.create_heyuehao(order_id,flag);
         return Result.ok("更新成功！",ret);
+    }
+
+    @GetMapping("findAllPage")
+    @ApiOperation("合约号管理-更新合约号信息")
+    @ResponseBody
+    public Result findAllPage(Heyuehao heyuehao,Pageable pageable){
+        Object ret = heyuehaoService.findAllPage(heyuehao,pageable);
+        return Result.ok("更新成功！",ret);
+    }
+
+    @GetMapping("/getYuanSha")
+    @ApiOperation(value = "根据订单id查询对应的经纬纱信息")
+    @ResponseBody
+    public Result findByName(String type, Long id){
+        Heyuehao heyuehao = heyuehaoService.findByid(id);
+        Set<Heyuehao_YuanSha> set = new HashSet<>();
+        if("jingsha".equals(type)){
+            set = heyuehao.getJingsha();
+        }else if("weisha".equals(type)){
+            set = heyuehao.getWeisha();
+        }
+        return Result.ok(set);
     }
 
 }

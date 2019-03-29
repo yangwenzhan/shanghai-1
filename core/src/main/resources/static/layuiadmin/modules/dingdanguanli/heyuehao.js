@@ -12,7 +12,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {field: 'name', title: '合约号'}
         , {field: 'kehubianhaomiaoshu', title: '客户编号描述'}
         , {field: 'beizhu', title: '备注'}
-        , {type:'radio', fixed: 'right',title: '选择'}
+        , {type: 'radio', fixed: 'right', title: '选择'}
         , {title: '操作', toolbar: '#hyh_caozuo', width: 150, fixed: 'right'}
     ]];
 
@@ -20,7 +20,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     var jws_cols = [[
         {field: 'id', title: 'id', hide: true}
         , {field: 'createTime', title: '创建时间'}
-        , {templet: repNull('yuanSha.id'),hide: true}
+        , {templet: repNull('yuanSha.id'), hide: true}
         , {templet: repNull('yuanSha.pinming'), title: '品名'}
         , {templet: repNull('yuanSha.pihao'), title: '批号'}
         , {templet: repNull('yuanSha.gongyingshang.name'), title: '供应商'}
@@ -34,27 +34,27 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     ]];
 
     //初始化合约号表格
-    initTableTemp('hyh_table',heyuehaos,cols);
+    initTableTemp('hyh_table', heyuehaos, cols);
     //初始化经纱表格
-    initTableTemp('jsxx_table',[],jws_cols);
+    initTableTemp('jsxx_table', [], jws_cols);
     //初始化纬纱表格
-    initTableTemp('wsxx_table',[],jws_cols);
+    initTableTemp('wsxx_table', [], jws_cols);
 
     //监听单选框
-    table.on('radio(hyh_table)', function(obj){
+    table.on('radio(hyh_table)', function (obj) {
         heyuehao_temp = obj.data;
         //重新渲染经纱表格
         var jsData = obj.data.jingsha;
-        initTableTemp('jsxx_table',jsData,jws_cols);
+        initTableTemp('jsxx_table', jsData, jws_cols);
         //重新渲染纬纱表格
         var wsData = obj.data.weisha;
-        initTableTemp('wsxx_table',wsData,jws_cols);
+        initTableTemp('wsxx_table', wsData, jws_cols);
 
         $('#hyhxx_jsxx,#hyhxx_wsxx').html(heyuehao_temp.name);
     });
 
     //合约号删除和修改
-    table.on('tool(hyh_table)', function(obj){
+    table.on('tool(hyh_table)', function (obj) {
         var data = obj.data;
         if (obj.event === 'hyh_dele') {
             layer.confirm(
@@ -65,92 +65,89 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'POST',
                         data: {'id': data.id},
                         success: function (data) {
-                            if(data.code == 0){
-                                heyuehaos.splice(jQuery.inArray(data,heyuehaos),1);
+                            if (data.code == 0) {
+                                heyuehaos.splice(jQuery.inArray(data, heyuehaos), 1);
                                 //初始化合约号表格
-                                initTableTemp('hyh_table',heyuehaos,cols);
+                                initTableTemp('hyh_table', heyuehaos, cols);
                                 //初始化经纱表格
-                                initTableTemp('jsxx_table',[],jws_cols);
+                                initTableTemp('jsxx_table', [], jws_cols);
                                 //初始化纬纱表格
-                                initTableTemp('wsxx_table',[],jws_cols);
+                                initTableTemp('wsxx_table', [], jws_cols);
                             }
-                            ajaxSuccess(data, table,"hyh_table");
+                            ajaxSuccess(data, table, "hyh_table");
                         }
                     });
                 });
-       }
-        else if(obj.event === 'hyh_edit'){
-            layer.open({
+        }
+        else if (obj.event === 'hyh_edit') {
+            editI = layer.open({
                 type: 1
                 , title: '编辑合约号信息！'
                 , content: $('#div_form_edit')
                 , area: ['50%', '40%']
                 , btn: ['修改', '取消']
                 , btn1: function (index, layero) {
-                    layer.confirm('确定要修改合约号信息吗?'
-                        , function (i) {
-                            form.on('submit(form_edit_submit)', function (data) {
-                                var formData = data.field;
-                                encObject(formData);
-                                $.ajax({
-                                    url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/update',
-                                    contentType: "application/json;charset=utf-8",
-                                    type: 'POST',
-                                    data: JSON.stringify(formData),
-                                    success: function (data) {
-
-                                        if(data.code == 0){
-                                            var hyh = data.data;
-                                            for(var i=0; i<heyuehaos.length; i++ ){
-                                                if(hyh.id == heyuehaos[i].id){
-                                                    heyuehaos[i] = hyh;
-                                                }
+                    form.on('submit(form_edit_submit)', function (data) {
+                        layer.confirm('确定要修改合约号信息吗?', function (i) {
+                            var formData = data.field;
+                            encObject(formData);
+                            $.ajax({
+                                url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/update',
+                                contentType: "application/json;charset=utf-8",
+                                type: 'POST',
+                                data: JSON.stringify(formData),
+                                success: function (data) {
+                                    if (data.code == 0) {
+                                        var hyh = data.data;
+                                        for (var i = 0; i < heyuehaos.length; i++) {
+                                            if (hyh.id == heyuehaos[i].id) {
+                                                heyuehaos[i] = hyh;
                                             }
-                                            //初始化合约号表格
-                                            initTableTemp('hyh_table',heyuehaos,cols);
-                                            //初始化经纱表格
-                                            initTableTemp('jsxx_table',[],jws_cols);
-                                            //初始化纬纱表格
-                                            initTableTemp('wsxx_table',[],jws_cols);
                                         }
-                                        ajaxSuccess(data, table,"hyh_table");
+                                        //初始化合约号表格
+                                        initTableTemp('hyh_table', heyuehaos, cols);
+                                        //初始化经纱表格
+                                        initTableTemp('jsxx_table', [], jws_cols);
+                                        //初始化纬纱表格
+                                        initTableTemp('wsxx_table', [], jws_cols);
+                                        layer.close(i);
+                                        layer.close(editI);
                                     }
-                                });
-                                layer.close(index);
+                                    ajaxSuccess(data, table, "hyh_table");
+                                }
                             });
-
-                            $("#form_edit_submit").trigger('click');
-                            layer.close(i);
-                        })
+                        });
+                    });
+                    $("#form_edit_submit").trigger('click');
                 }
                 , success: function () {
                     $('#dingdanhao_edit').val(order.dingdanhao);
-                    data.order = {'id':order.id};
-                    fromSetVel(form,'form_edit', data);
+                    data.order = {'id': order.id};
+                    fromSetVel(form, 'form_edit', data);
                 }
             })
-       }
+        }
     });
 
     //添加合约号
     $("#wsxz,#jsxz").click(function () {
         var thisId = $(this).attr('id');
         var flag = null;
-        if(thisId == 'wsxz'){
+        if (thisId == 'wsxz') {
             flag = 'huanwei';
-        }else if(thisId == 'jsxz'){
+        } else if (thisId == 'jsxz') {
             flag = 'huanjing';
         }
         $.ajax({
             url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/create_heyuehao',
             type: 'get',
-            data: {'order_id': order.id,'flag':flag},
+            data: {'order_id': order.id, 'flag': flag},
             success: function (data) {
-                if(data.code == 0){
+                if (data.code == 0) {
                     $('#name_add').val(data.data[0].heyuehao);
                     $('#kehubianhaomiaoshu_add').val(data.data[0].heyuehao);
-                }else{
-                    ajaxSuccess(data,table,tableId)
+                } else {
+                    ajaxSuccess(data, table, tableId)
                 }
             }
         });
@@ -170,17 +167,17 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'POST',
                         data: JSON.stringify(formData),
                         success: function (data) {
-                            if(data.code == 0){
+                            if (data.code == 0) {
                                 var hyh = data.data;
                                 heyuehaos.push(hyh);
                                 //初始化合约号表格
-                                initTableTemp('hyh_table',heyuehaos,cols);
+                                initTableTemp('hyh_table', heyuehaos, cols);
                                 //初始化经纱表格
-                                initTableTemp('jsxx_table',[],jws_cols);
+                                initTableTemp('jsxx_table', [], jws_cols);
                                 //初始化纬纱表格
-                                initTableTemp('wsxx_table',[],jws_cols);
+                                initTableTemp('wsxx_table', [], jws_cols);
                             }
-                            ajaxSuccess(data, table,"hyh_table");
+                            ajaxSuccess(data, table, "hyh_table");
                         }
                     });
                     layer.close(index);
@@ -195,14 +192,15 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     });
 
 
-    table.on('tool(wsxx_table)', function(obj){
-        jwstableOnClick(obj,"wsxx_table");
+    table.on('tool(wsxx_table)', function (obj) {
+        jwstableOnClick(obj, "wsxx_table");
     });
-    table.on('tool(jsxx_table)', function(obj){
-        jwstableOnClick(obj,'jsxx_table');
+    table.on('tool(jsxx_table)', function (obj) {
+        jwstableOnClick(obj, 'jsxx_table');
     });
+
     //经纬纱表格的监听事件
-    function jwstableOnClick(obj,tableId){
+    function jwstableOnClick(obj, tableId) {
         var data = obj.data;
         if (obj.event === 'jws_dele') {
             layer.confirm(
@@ -213,37 +211,37 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'get',
                         data: {'id': data.id},
                         success: function (data) {
-                            if(data.code == 0){
-                                if(tableId == 'wsxx_table'){
-                                    heyuehao_temp.weisha.splice(jQuery.inArray(data,heyuehao_temp.weisha),1);
-                                    initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
-                                }else if(tableId == 'jsxx_table'){
-                                    heyuehao_temp.jingsha.splice(jQuery.inArray(data,heyuehao_temp.jingsha),1);
-                                    initTableTemp('jsxx_table',heyuehao_temp.jingsha,jws_cols);
+                            if (data.code == 0) {
+                                if (tableId == 'wsxx_table') {
+                                    heyuehao_temp.weisha.splice(jQuery.inArray(data, heyuehao_temp.weisha), 1);
+                                    initTableTemp('wsxx_table', heyuehao_temp.weisha, jws_cols);
+                                } else if (tableId == 'jsxx_table') {
+                                    heyuehao_temp.jingsha.splice(jQuery.inArray(data, heyuehao_temp.jingsha), 1);
+                                    initTableTemp('jsxx_table', heyuehao_temp.jingsha, jws_cols);
                                 }
                             }
-                            if(tableId == 'wsxx_table'){
-                                ajaxSuccess(data, table,"jsxx_table");
-                            }else if(tableId == 'jsxx_table'){
-                                ajaxSuccess(data, table,"wsxx_table");
+                            if (tableId == 'wsxx_table') {
+                                ajaxSuccess(data, table, "wsxx_table");
+                            } else if (tableId == 'jsxx_table') {
+                                ajaxSuccess(data, table, "jsxx_table");
                             }
                         }
                     });
                 });
         } else if (obj.event === 'jws_edit') {
             yuansha_temp_edit = data.yuanSha;
-            fromSetVel(form,'form_jws_edit',data);
+            fromSetVel(form, 'form_jws_edit', data);
             $("#heyuehao_ys_edit").val(heyuehao_temp.name);
-            layer.open({
+            var jwsxxxgIndex = layer.open({
                 type: 1
                 , title: '编辑经纬纱信息！'
                 , content: $('#div_form_jws_edit')
                 , area: ['50%', '50%']
                 , btn: ['修改', '取消']
                 , btn1: function (index, layero) {
-                    layer.confirm('确定要修改经纬纱信息么?'
-                        , function (i) {
-                            form.on('submit(form_jws_submit_edit)', function (data) {
+                    form.on('submit(form_jws_submit_edit)', function (data) {
+                        layer.confirm('确定要修改经纬纱信息么?'
+                            , function (i) {
                                 var formData = data.field;
                                 formData.yuanSha = yuansha_temp_edit;
                                 $.ajax({
@@ -252,47 +250,47 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                     type: 'POST',
                                     data: JSON.stringify(formData),
                                     success: function (data) {
-                                        if(data.code == 0){
-                                            if(tableId == 'jsxx_table'){//渲染经纱
+                                        if (data.code == 0) {
+                                            if (tableId == 'jsxx_table') {//渲染经纱
                                                 var jingsha = data.data;
-                                                for(var i=0; i<heyuehao_temp.jingsha.length; i++ ){
-                                                    if(jingsha.id == heyuehao_temp.jingsha[i].id){
+                                                for (var i = 0; i < heyuehao_temp.jingsha.length; i++) {
+                                                    if (jingsha.id == heyuehao_temp.jingsha[i].id) {
                                                         heyuehao_temp.jingsha[i] = jingsha;
                                                     }
                                                 }
-                                                initTableTemp('jsxx_table',heyuehao_temp.jingsha,jws_cols);
-                                            }else if(tableId == 'wsxx_table'){//渲染纬纱
+                                                initTableTemp('jsxx_table', heyuehao_temp.jingsha, jws_cols);
+                                            } else if (tableId == 'wsxx_table') {//渲染纬纱
                                                 var weisha = data.data;
-                                                for(var i=0; i<heyuehao_temp.weisha.length; i++ ){
-                                                    if(weisha.id == heyuehao_temp.weisha[i].id){
+                                                for (var i = 0; i < heyuehao_temp.weisha.length; i++) {
+                                                    if (weisha.id == heyuehao_temp.weisha[i].id) {
                                                         heyuehao_temp.weisha[i] = weisha;
                                                     }
                                                 }
-                                                initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
+                                                initTableTemp('wsxx_table', heyuehao_temp.weisha, jws_cols);
                                             }
                                         }
-                                        if(tableId == 'jsxx_table'){//渲染经纱
-                                            ajaxSuccess(data, table,"jsxx_table");
-                                        }else if(tableId == 'wsxx_table'){//渲染纬纱
-                                            ajaxSuccess(data, table,"wsxx_table");
+                                        if (tableId == 'jsxx_table') {//渲染经纱
+                                            ajaxSuccess(data, table, "jsxx_table");
+                                        } else if (tableId == 'wsxx_table') {//渲染纬纱
+                                            ajaxSuccess(data, table, "wsxx_table");
                                         }
                                     }
                                 });
-                                layer.close(index);
+                                layer.close(i);
+                                layer.close(jwsxxxgIndex);
                             });
-                            $("#form_jws_submit_edit").trigger('click');
-                            layer.close(i);
-                        })
+                    });
+                    $("#form_jws_submit_edit").trigger('click');
                 }
                 , success: function () {
-                    fromSetVel(form,'form_edit', data);
+                    fromSetVel(form, 'form_edit', data);
                     laydate.render({
                         elem: '#xiadanriqi_edit',
-                        min:0
+                        min: 0
                     });
                     laydate.render({
                         elem: '#jiaohuoriqi_edit',
-                        min:0
+                        min: 0
                     });
                 }
             })
@@ -300,12 +298,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     }
 
     //初始化表格默认部分页，data渲染
-    function initTableTemp(tableId,data,cols){
+    function initTableTemp(tableId, data, cols) {
         table.render({
-            elem: "#"+tableId
-            ,id: tableId
+            elem: "#" + tableId
+            , id: tableId
             , cellMinWidth: 80
-            , data:data
+            , data: data
             , cols: cols
             , done: function (res) {
                 if (typeof(doneCallBack) === "function") {
@@ -317,23 +315,25 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     setPPGG('_add');
     setPPGG('_edit');
-    function setPPGG(Suffix){
-        $('#name'+Suffix).blur(function () {
-            var name =  $('#name'+Suffix).val();
-            $("#kehubianhaomiaoshu"+Suffix).val(name);
+
+    function setPPGG(Suffix) {
+        $('#name' + Suffix).blur(function () {
+            var name = $('#name' + Suffix).val();
+            $("#kehubianhaomiaoshu" + Suffix).val(name);
         });
     }
+
 //-----------------------------------------------------------------------------------------------------------添加选择原纱信息（以下）
     //添加经纬纱
     $("#jsxx_add,#wsxx_add").click(function () {
-        var onClickId=$(this).attr("id");
-        if(null == heyuehao_temp){
+        var onClickId = $(this).attr("id");
+        if (null == heyuehao_temp) {
             layer.msg('您还没有选择对应的合约号！<br>请选择对应的合约号才能添加原纱信息！', {
                 time: 20000, //20s后自动关闭
                 btnAlign: 'c',
                 btn: ['知道了']
             });
-        }else{
+        } else {
             layer.open({
                 type: 1
                 , title: '添加合约号对应原纱信息！'
@@ -344,10 +344,10 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                     form.on('submit(form_jws_submit)', function (data) {
                         var formData = data.field;
                         formData.yuanSha = yuansha_temp;
-                        if(onClickId == 'jsxx_add'){//纬纱添加
-                            formData.jingsha = [{id:heyuehao_temp.id}];
-                        }else if(onClickId == 'wsxx_add'){//经纱添加
-                            formData.weisha = [{id:heyuehao_temp.id}];
+                        if (onClickId == 'jsxx_add') {//纬纱添加
+                            formData.jingsha = [{id: heyuehao_temp.id}];
+                        } else if (onClickId == 'wsxx_add') {//经纱添加
+                            formData.weisha = [{id: heyuehao_temp.id}];
                         }
                         $.ajax({
                             url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/add',
@@ -355,19 +355,19 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                             type: 'POST',
                             data: JSON.stringify(formData),
                             success: function (data) {
-                                if(data.code == 0){
-                                    if(onClickId == 'jsxx_add'){//渲染经纱
+                                if (data.code == 0) {
+                                    if (onClickId == 'jsxx_add') {//渲染经纱
                                         heyuehao_temp.jingsha.push(data.data);
-                                        initTableTemp('jsxx_table',heyuehao_temp.jingsha,jws_cols);
-                                    }else if(onClickId == 'wsxx_add'){//渲染纬纱
+                                        initTableTemp('jsxx_table', heyuehao_temp.jingsha, jws_cols);
+                                    } else if (onClickId == 'wsxx_add') {//渲染纬纱
                                         heyuehao_temp.weisha.push(data.data);
-                                        initTableTemp('wsxx_table',heyuehao_temp.weisha,jws_cols);
+                                        initTableTemp('wsxx_table', heyuehao_temp.weisha, jws_cols);
                                     }
                                 }
-                                if(onClickId == 'jsxx_add'){//渲染经纱
-                                    ajaxSuccess(data, table,"jsxx_table");
-                                }else if(onClickId == 'wsxx_add'){//渲染纬纱
-                                    ajaxSuccess(data, table,"wsxx_table");
+                                if (onClickId == 'jsxx_add') {//渲染经纱
+                                    ajaxSuccess(data, table, "jsxx_table");
+                                } else if (onClickId == 'wsxx_add') {//渲染纬纱
+                                    ajaxSuccess(data, table, "wsxx_table");
                                 }
                                 layer.close(index);
                             }
@@ -397,7 +397,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     ]];
     var layerOpenYuansha;
     var xzysId;
-    $('#xzys,#xzys_edit').click(function(){
+    $('#xzys,#xzys_edit').click(function () {
         xzysId = $(this).attr('id');
         layerOpenYuansha = layer.open({
             type: 1
@@ -410,20 +410,21 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             }
         })
     });
-    table.on('tool(yuansha_table)', function(obj) {
+    table.on('tool(yuansha_table)', function (obj) {
         var data = obj.data;
         if (obj.event === 'xuanzeYS') {
-           if(xzysId == 'xzys'){
-               yuansha_temp = data;
-               fromSetVel(form,'form_ysxx',yuansha_temp);
-           }
-           if(xzysId == 'xzys_edit'){
-               yuansha_temp_edit = data;
-               fromSetVel(form,'form_ysxx_edit',yuansha_temp);
-           }
-           layer.close(layerOpenYuansha);
+            if (xzysId == 'xzys') {
+                yuansha_temp = data;
+                fromSetVel(form, 'form_ysxx', yuansha_temp);
+            }
+            if (xzysId == 'xzys_edit') {
+                yuansha_temp_edit = data;
+                fromSetVel(form, 'form_ysxx_edit', yuansha_temp_edit);
+            }
+            layer.close(layerOpenYuansha);
         }
     });
+
 //-----------------------------------------------------------------------------------------------------------添加选择原纱信息（以上）
     /**
      * 2019/03/23 bjw
@@ -431,7 +432,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
      * @param obj
      */
     function encObject(obj) {
-        $.each(obj, function(key, val) {
+        $.each(obj, function (key, val) {
+            val = !val ? "''" : "'" + val + "'";
             var arr = key.split('.');
             if (arr.length <= 1) {
                 return true;
@@ -440,11 +442,10 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             var currentObj = obj; //当前对象
             for (var i = 0; i < arr.length; i++) {
                 if (i == arr.length - 1) {
-                    val = val == '' ? "''" : val;
-                    eval(textObj+"."+arr[i]+"="+val);
-                } else{
+                    eval(textObj + "." + arr[i] + "=" + val);
+                } else {
                     textObj += '.' + arr[i];
-                    if (currentObj[arr[i]] == undefined || null == currentObj[arr[i]]){
+                    if (currentObj[arr[i]] == undefined || null == currentObj[arr[i]]) {
                         eval(textObj + '= {}');
                     }
                 }
@@ -482,7 +483,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
      * @param formId  表单div的id
      * @param ObjVal  值对象
      */
-    function fromSetVel(from,formId, data) {
+    function fromSetVel(from, formId, data) {
         var arrObj = $('#' + formId).find(":input[name *= '.']");
         for (var i = 0; i < arrObj.length; i++) {
             var name = arrObj[i].name;
@@ -501,51 +502,95 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
 
     //ajax请求成功处理函数
-    function ajaxSuccess(data,table,tableId){
+    function ajaxSuccess(data, table, tableId) {
         table.reload(tableId);
-        if(data.code == 0){
+        if (data.code == 0) {
             layer.open({
-                title:"消息提醒",
-                content:data.message,
-                skin:"layui-layer-molv",
+                title: "消息提醒",
+                content: data.message,
+                skin: "layui-layer-molv",
                 offset: 'rb',
-                time:3000,
-                btn:[],
+                time: 3000,
+                btn: [],
                 shade: 0,
                 anim: -1,
-                icon:6
+                icon: 6
             });
-        }else {
+        } else {
             layer.open({
-                title:"消息提醒",
-                content:data.message,
-                skin:"layui-layer-molv",
-                btn:["查看错误信息"],
+                title: "消息提醒",
+                content: data.message,
+                skin: "layui-layer-molv",
+                btn: ["查看错误信息"],
                 anim: -1,
-                icon:5,
-                btn1:function(index){
-                    layer.open({content:data.data})
+                icon: 5,
+                btn1: function (index) {
+                    layer.open({content: data.data})
                     layer.close(index);
                 }
             });
         }
     }
 
-    //自定义验证规则
-    form.verify({
-        heyuehao:[
-            /^([0-9]{5})([A-Z]{1})([0-9]{1})$/,
-            '合约号格式不正确！'
-        ]
-    });
-
     //监听搜索
-    form.on('submit(form_search)', function(data){
+    form.on('submit(form_search)', function (data) {
         var field = data.field;
         table.reload('yuansha_table', {
             where: field
         });
         return false;
+    });
+
+    /**
+     * 校验
+     */
+    form.verify({
+        heyuehao: [
+            /^([0-9]{5})([A-Z]{1})([0-9]{1})$/,
+            '合约号格式不正确！'
+        ],
+        zmAndSz: [
+            /^[A-Za-z0-9]+$/
+            , '只能是数字和字母组成！'
+        ],
+        zm: [
+            /^[A-Za-z]+$/
+            , '只能是字母组成！'
+        ],
+        sz: [
+            /^[0-9]+$/
+            , '只能是数字组成！'
+        ],
+        int: [
+            /^-?[1-9]+[0-9]*$/
+            , '只能是整数类型！'
+        ],
+        num: function (value, item) {
+            if (isNaN(value)) {
+                return "只能输入数字类型！";
+            }
+        },
+        length: function (value, item) { //value：表单的值、item：表单的DOM对象
+            var valueSize = value ? value.length : 0;
+            var maxNumber = $(item).attr('tq_length');
+            if (maxNumber) {
+                var arr = maxNumber.split('^');
+                if (arr[0] != '' && arr[1] != '') {
+                    if (valueSize < arr[0] || valueSize > arr[1]) return '不能少于' + arr[0] + '个字符和不能大于' + arr[1] + '个字符！';
+                }
+                if (arr.length == 1) {
+                    if (valueSize != arr[0]) return '输入长度只能是' + arr[0] + '个字符！';
+                }
+                if (arr[0] == '' && arr[1] != '') {
+                    if (valueSize > arr[1]) return "不能超过" + arr[1] + "个字符！";
+                }
+                if (arr[0] != '' && arr[1] == '') {
+                    if (valueSize < arr[0]) return "不能少于" + arr[0] + "个字符！";
+                }
+
+
+            }
+        }
     });
 
     exports('heyuehao', {})

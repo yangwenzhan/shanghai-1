@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 
+import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Order;
 import com.tianqiauto.textile.weaving.service.OrderService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
 import com.tianqiauto.textile.weaving.util.poi.ImportUtil;
 import com.tianqiauto.textile.weaving.util.poi.downloadUtils;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author bjw
@@ -29,6 +32,9 @@ public class DingdanguanliController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "upload")
     @Logger(msg = "导入订单信息")
@@ -88,5 +94,10 @@ public class DingdanguanliController {
         return Result.ok("查询成功！", order);
     }
 
-
+    @GetMapping("getUser")
+    @ApiOperation("获取在职人员")
+    public Result getUser() {
+        List<User> users =  userService.getByZaizhi(1);//查出所有的在职人员 //fixme 注意还有经理和营销员的区分
+        return Result.ok("查询成功！", users);
+    }
 }

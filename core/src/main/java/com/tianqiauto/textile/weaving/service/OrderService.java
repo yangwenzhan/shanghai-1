@@ -74,11 +74,7 @@ public class OrderService {
             }
             //订单状态
             if(!StringUtils.isEmpty(order.getStatus())) {
-                predicates.add(criteriaBuilder.equal(root.get("status").get("id"), order.getStatus().getId()));
-            }
-            //客户信息
-            if(!StringUtils.isEmpty(order.getKehuxinxi())) {
-                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+                predicates.add(criteriaBuilder.equal(root.get("status").get("value"), order.getStatus().getValue()));
             }
             //要求交货日期
             if(!StringUtils.isEmpty(order.getJiaohuoriqi())) {
@@ -86,7 +82,7 @@ public class OrderService {
             }
             //客户信息
             if(!StringUtils.isEmpty(order.getKehuxinxi())) {
-                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("value"),order.getKehuxinxi().getId()));
             }
             criteriaBuilder.desc(root.get("createTime"));
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

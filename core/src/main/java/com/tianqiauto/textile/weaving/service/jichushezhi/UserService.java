@@ -213,5 +213,7 @@ public class UserService {
     }
 
 
-
+    public List<User> getByZaizhi(Integer sfzz) {
+        return userRepository.findByShifouzaizhi(sfzz);
+    }
 }

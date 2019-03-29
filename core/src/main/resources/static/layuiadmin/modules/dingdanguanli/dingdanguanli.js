@@ -5,20 +5,19 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , upload = layui.upload
         , laydate = layui.laydate;
 
-    $(function(){
-        laydate.render({
-            elem: '#xiadankaishiriqi',
-            min:0
-        });
-        laydate.render({
-            elem: '#xiadanjieshuriqi',
-            min:0
-        });
-        laydate.render({
-            elem: '#jiaohuoriqi',
-            min:0
-        });
+    //打开页面初始化查询框
+    dictInitSelect('status', null, 'dingdanzhuangtai', 'name', 'value');
+    dictInitSelect('kehuxinxi', null, 'kehuxinxi', 'name', 'value');
+    laydate.render({
+        elem: '#xiadankaishiriqi',
     });
+    laydate.render({
+        elem: '#xiadanjieshuriqi',
+    });
+    laydate.render({
+        elem: '#jiaohuoriqi',
+    });
+
 
     //设置表格头
     var cols = [[
@@ -92,16 +91,21 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                     });
                 });
         } else if (obj.event === 'edit') {
-            layer.open({
+            dictInitSelect('yuanliaoleixing_id_edit', null, 'yuanliaoleixing', 'name', 'id');//原料类型
+            dictInitSelect('kehuxinxi_id_edit', null, 'kehuxinxi', 'name', 'id');//客户信息
+            dictInitSelect('chengpinyongtu_id_edit', '15', 'dd_chengpinyongtu', 'name', 'id');//成品用图
+            InitSelect('jingli_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+            InitSelect('yingxiaoyuan_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+            editI = layer.open({
                 type: 1
                 , title: '编辑数据订单信息！'
                 , content: $('#div_form_edit')
                 , area: ['80%', '80%']
                 , btn: ['修改', '取消']
-                , btn1: function (index, layero) {
-                    layer.confirm('确定要修改订单信息么?'
-                        , function (i) {
-                            form.on('submit(form_edit_submit)', function (data) {
+                , btn1: function (editIndex, layero) {
+                    form.on('submit(form_edit_submit)', function (data) {
+                        layer.confirm('确定要修改订单信息么?'
+                            , function (i) {
                                 var formData = data.field;
                                 encObject(formData);
                                 $.ajax({
@@ -113,22 +117,21 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                         ajaxSuccess(data, table);
                                     }
                                 });
-                                layer.close(index);
+                                layer.close(i);
+                                layer.close(editI);
                             });
-
-                            $("#form_edit_submit").trigger('click');
-                            layer.close(i);
-                        })
+                    });
+                    $("#form_edit_submit").trigger('click');
                 }
                 , success: function () {
-                    fromSetVel(form,'form_edit', data);
+                    fromSetVel(form, 'form_edit', data);
                     laydate.render({
                         elem: '#xiadanriqi_edit',
-                        min:0
+                        min: 0
                     });
                     laydate.render({
                         elem: '#jiaohuoriqi_edit',
-                        min:0
+                        min: 0
                     });
                 }
             })
@@ -137,6 +140,11 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //添加订单
     $("#add").click(function () {
+        dictInitSelect('yuanliaoleixing_id_add', null, 'yuanliaoleixing', 'name', 'id');//原料类型
+        dictInitSelect('kehuxinxi_id_add', null, 'kehuxinxi', 'name', 'id');//客户信息
+        dictInitSelect('chengpinyongtu_id_add', '15', 'dd_chengpinyongtu', 'name', 'id');//成品用图
+        InitSelect('jingli_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+        InitSelect('yingxiaoyuan_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
         var addOpen = layer.open({
             type: 1
             , title: '添加订单信息！'
@@ -156,16 +164,16 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                             layer.open({
                                 content: '是否继续管理合约号？',
                                 fixd: true,
-                                closeBtn:0,
+                                closeBtn: 0,
                                 resize: false,
-                                anim: 1 ,//从上掉落
+                                anim: 1,//从上掉落
                                 btn: ['是', '否'],
-                                btn2: function() {
+                                btn2: function () {
                                     ajaxSuccess(data, table);
                                     layer.close(addOpen);
                                 },
-                                btn1: function() {
-                                    $(location).attr('href', '/dingdanguanli/heyuehaoguanli/heyuehao?id='+data.data.id);
+                                btn1: function () {
+                                    $(location).attr('href', '/dingdanguanli/heyuehaoguanli/heyuehao?id=' + data.data.id);
                                     ajaxSuccess(data, table);
                                     layer.close(addOpen);
                                 }
@@ -179,39 +187,40 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             , success: function () { //弹出层打开成功时的回调。
                 laydate.render({
                     elem: '#xiadanriqi_add',
-                    value:new Date(),
-                    min:0
+                    value: new Date(),
+                    min: 0
                 });
                 laydate.render({
                     elem: '#jiaohuoriqi_add',
-                    min:0
+                    min: 0
                 });
             }
-        })
+        });
     });
 
     //动态拼接坯布规格等数据
-    $(function(){
+    $(function () {
         setPPGG('_add');
         setPPGG('_edit');
     });
-    function setPPGG(Suffix){
-        $('#fukuan'+Suffix+',#jingmi'+Suffix+',#weimi'+Suffix+',#jingshachengfen'+Suffix+',#jingshazhishu'+Suffix+',#weishachengfen'+Suffix+',#weishazhishu'+Suffix+',#teshuyaoqiu'+Suffix).blur(function () {
-            var fukuan = $('#fukuan'+Suffix).val();
-            var jingmi = $('#jingmi'+Suffix).val();
-            var weimi = $('#weimi'+Suffix).val();
-            var jingshachengfen = $('#jingshachengfen'+Suffix).val();
-            var jingshazhishu = $('#jingshazhishu'+Suffix).val();
-            var weishachengfen = $('#weishachengfen'+Suffix).val();
-            var weishazhishu = $('#weishazhishu'+Suffix).val();
-            var teshuyaoqiu = $('#teshuyaoqiu'+Suffix).val();
+
+    function setPPGG(Suffix) {
+        $('#fukuan' + Suffix + ',#jingmi' + Suffix + ',#weimi' + Suffix + ',#jingshachengfen' + Suffix + ',#jingshazhishu' + Suffix + ',#weishachengfen' + Suffix + ',#weishazhishu' + Suffix + ',#teshuyaoqiu' + Suffix).blur(function () {
+            var fukuan = $('#fukuan' + Suffix).val();
+            var jingmi = $('#jingmi' + Suffix).val();
+            var weimi = $('#weimi' + Suffix).val();
+            var jingshachengfen = $('#jingshachengfen' + Suffix).val();
+            var jingshazhishu = $('#jingshazhishu' + Suffix).val();
+            var weishachengfen = $('#weishachengfen' + Suffix).val();
+            var weishazhishu = $('#weishazhishu' + Suffix).val();
+            var teshuyaoqiu = $('#teshuyaoqiu' + Suffix).val();
             var pibuguige = fukuan + "\" " + jingshachengfen + jingshazhishu + "*" + weishachengfen + weishazhishu + " " + jingmi + "*" + weimi + " " + teshuyaoqiu;
-            $('#pibuguige'+Suffix).val(pibuguige);
+            $('#pibuguige' + Suffix).val(pibuguige);
         });
     }
 
     //监听搜索
-    form.on('submit(form_search)', function(data){
+    form.on('submit(form_search)', function (data) {
         var field = getParams('form');
         table.reload('table', {
             where: field
@@ -226,7 +235,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
      * @param obj
      */
     function encObject(obj) {
-        $.each(obj, function(key, val) {
+        $.each(obj, function (key, val) {
+            val = !val ? "''" : "'"+val+"'";
             var arr = key.split('.');
             if (arr.length <= 1) {
                 return true;
@@ -235,11 +245,10 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             var currentObj = obj; //当前对象
             for (var i = 0; i < arr.length; i++) {
                 if (i == arr.length - 1) {
-                    val = val == '' ? "''" : val;
-                    eval(textObj+"."+arr[i]+"="+val);
-                } else{
+                    eval(textObj + "." + arr[i] + "=" + val);
+                } else {
                     textObj += '.' + arr[i];
-                    if (currentObj[arr[i]] == undefined || null == currentObj[arr[i]]){
+                    if (currentObj[arr[i]] == undefined || null == currentObj[arr[i]]) {
                         eval(textObj + '= {}');
                     }
                 }
@@ -277,7 +286,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
      * @param formId  表单div的id
      * @param ObjVal  值对象
      */
-    function fromSetVel(from,formId, data) {
+    function fromSetVel(from, formId, data) {
         var arrObj = $('#' + formId).find(":input[name *= '.']");
         for (var i = 0; i < arrObj.length; i++) {
             var name = arrObj[i].name;
@@ -293,6 +302,103 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         }
         form.val(formId, data);
     }
+
+    /**
+     * 请求数据字典初始化select选项框
+     * @param eleId
+     * @param selectedId
+     */
+    function dictInitSelect(eleId, selectedId, dictCode, key, val) {
+        $.ajax({
+            url: layui.setter.host + 'common/findAllDictVal',
+            async: false,
+            data: {
+                code: dictCode
+            },
+            type: 'get',
+            success: function (data) {
+                var dict_data = {
+                    code: 0,
+                    data: data.data.dicts,
+                    message: "查询成功"
+                };
+                initDownList(dict_data, eleId, selectedId, key, val, true);
+                form.render();
+            }
+        });
+    }
+
+    /**
+     * 渲染select
+     * @param eleId select原素id
+     * @param selectedId 默认选中值 value
+     * @param url 查询值的路径
+     * @param type 类型
+     * @param data 查询的参数
+     * @param key   取值的key-name
+     * @param val   取值的val-name
+     * @constructor
+     */
+    function InitSelect(eleId, selectedId, url, type, data, key, val) {
+        $.ajax({
+            url: layui.setter.host + url,
+            async: false,
+            data: data,
+            type: type,
+            success: function (data) {
+                initDownList(data, eleId, selectedId, key, val, true);
+                form.render();
+            }
+        });
+    }
+
+    /**
+     * 校验
+     */
+    form.verify({
+        zmAndSz: [
+            /^[A-Za-z0-9]+$/
+            , '只能是数字和字母组成！'
+        ],
+        zm: [
+            /^[A-Za-z]+$/
+            , '只能是字母组成！'
+        ],
+        sz: [
+            /^[0-9]+$/
+            , '只能是数字组成！'
+        ],
+        int: [
+            /^-?[1-9]+[0-9]*$/
+            , '只能是整数类型！'
+        ],
+        num: function (value, item) {
+            if (isNaN(value)) {
+                return "只能输入数字类型！";
+            }
+        },
+        length: function (value, item) { //value：表单的值、item：表单的DOM对象
+            var valueSize = value ? value.length : 0;
+            var maxNumber = $(item).attr('tq_length');
+            if (maxNumber) {
+                var arr = maxNumber.split('^');
+                if (arr[0] != '' && arr[1] != '') {
+                    if (valueSize < arr[0] || valueSize > arr[1]) return '不能少于' + arr[0] + '个字符和不能大于' + arr[1] + '个字符！';
+                }
+                if (arr.length == 1) {
+                    if (valueSize != arr[0]) return '输入长度只能是' + arr[0] + '个字符！';
+                }
+                if (arr[0] == '' && arr[1] != '') {
+                    if (valueSize > arr[1]) return "不能超过" + arr[1] + "个字符！";
+                }
+                if (arr[0] != '' && arr[1] == '') {
+                    if (valueSize < arr[0]) return "不能少于" + arr[0] + "个字符！";
+                }
+
+
+            }
+        }
+    });
 
     exports('dingdanguanli', {})
 });
