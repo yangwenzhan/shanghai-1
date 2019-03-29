@@ -45,7 +45,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                     data: data.data.dicts,
                     message: "查询成功"
                 };
-                initDownList(dict_data, eleId, selectedId, 'name', 'value', true);
+                initDownList(dict_data, eleId, selectedId, 'name', 'id', true);
                 form.render();
             }
         });
@@ -129,6 +129,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
     function initTable(){
         table.render({
             elem: '#table'
+            ,limit:100000
             ,method:'GET'
             ,url: layui.setter.host + 'jichushezhi/user/findAllUser'
             ,where:getPageParams()

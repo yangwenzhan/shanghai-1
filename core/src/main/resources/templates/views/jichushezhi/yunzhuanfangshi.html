@@ -11,7 +11,7 @@
 		<div class="layui-card">
 			<div class="layui-card-body">
 				<div style="padding-bottom: 10px;">
-					<button class="layui-btn layuiadmin-btn-admin" id="add_yzfs_btn"><i class="layui-icon layui-icon-add-circle">新增运转方式</i></button>
+					<button class="layui-btn layuiadmin-btn-admin" id="ttadd"><i class="layui-icon layui-icon-add-circle">新增运转方式</i></button>
 				</div>
 				<table id="table" lay-filter="table"></table>
 			</div>
@@ -30,32 +30,33 @@
 			<div class="layui-form" id="yi">
 				<div class="layui-form-item">
 					<div class="layui-inline">
-						<label class="layui-form-label leftsou">名称</label>
+						<label class="layui-form-label" style="width: 100px">名称</label>
 						<div class="layui-input-inline">
 							<input type="text" id="lbmc" autocomplete="off" class="layui-input" placeholder="名称" />
 						</div>
-
 					</div>
+				</div>
+				<div class="layui-form-item">
 
 					<div class="layui-inline">
-						<label class="layui-form-label leftsou" style="width: 135px;">每天运转班个数</label>
+						<label class="layui-form-label" style="width: 100px">每天运转班个数</label>
 						<div class="layui-input-inline">
 							<input type="number" id="yzbgs" autocomplete="off" class="layui-input" placeholder="每天运转班个数" />
 						</div>
-
 					</div>
+				</div>
+				<div class="layui-form-item">
 
 					<div class="layui-inline">
-						<label class="layui-form-label leftsou">轮班个数</label>
+						<label class="layui-form-label" style="width: 100px">轮班个数</label>
 						<div class="layui-input-inline">
 							<input type="number" id="lbgs" autocomplete="off" class="layui-input" placeholder="轮班个数" />
 						</div>
-
 					</div>
 
 				</div>
 				<div class="layui-inline" style="margin-left: 50%; margin-top: 60px;">
-					<button class="layui-btn" onclick="next1()">下一步</button>
+					<button class="layui-btn" id="next1">下一步</button>
 					<button class="layui-btn layui-btn-warm cancel">取 消</button>
 				</div>
 			</div>
@@ -68,7 +69,7 @@
 					<div class="layui-form-item">
 						<h1 style="margin-left: 65px;font-size: 20px;font-weight: 600;   display:inline-block;">运转详情</h1>
 						<div class="layui-inline" style="margin-left: 65px;">
-							<button class="layui-btn" onclick="addtr()">新&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增</button>
+							<button class="layui-btn" id="addtr">新&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增</button>
 						</div>
 					</div>
 				</div>
@@ -86,8 +87,8 @@
 
 				<div class="layui-form" style="padding-bottom: 30px;">
 					<div class="layui-inline" style="margin-left:45%;">
-						<button class="layui-btn" onclick="next2()">下一步</button>
-						<button class="layui-btn layui-btn-warm" onclick="back1()">上一步</button>
+						<button class="layui-btn" id="next2">下一步</button>
+						<button class="layui-btn layui-btn-warm" id="back1">上一步</button>
 						<button class="layui-btn layui-btn-warm cancel">取 消</button>
 					</div>
 				</div>
@@ -104,7 +105,7 @@
 
 
 				<div class="layui-inline" style="margin-left: 45%; margin-top: 30px;">					
-					<button class="layui-btn layui-btn-warm" onclick="back2()">上一步</button>
+					<button class="layui-btn layui-btn-warm" id="back2">上一步</button>
 					<button class="layui-btn" id="qd_btn">确定</button>
 					<button class="layui-btn layui-btn-warm cancel">取 消</button>
 				</div>

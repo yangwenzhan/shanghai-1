@@ -10,6 +10,7 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
     function queryPermissionByPId(node_id){
         table.render({
             elem: '#table'
+            ,limit:100000
             ,method:'GET'
             ,url: layui.setter.host + 'jichushezhi/juesequanxian/permission/findAllByParent_id'
             ,where:{id:node_id}

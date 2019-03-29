@@ -204,11 +204,29 @@ layui.define(function(exports){
           }
 
           var str = "";
+
           if(!isall) {
               for(var i = 0; i < data.data.length; i++) {
-                  str += "<option value='" + data.data[i][valueID] + "'>"
-                      + data.data[i].valueName
-                      + "</option>";
+                  if(selectedArr==null){
+                      str += "<option value='" + data.data[i][valueID] + "'>"
+                          + data.data[i][valueName]
+                          + "</option>";
+                  }else{
+                      for(var j=0;j< selectedArr.length;j++){
+                          if(data.data[i][valueID]==selectedArr[j]){
+                              str += "<option value='" + data.data[i][valueID] + "' selected='selected'>"
+                                  + data.data[i][valueName]
+                                  + "</option>";
+                              break;
+                          }
+                          if(j==selectedArr.length-1 && data.data[i][valueID]!=selectedArr[j]){
+                              str += "<option value='" + data.data[i][valueID] + "'>"
+                                  + data.data[i][valueName]
+                                  + "</option>";
+                              break;
+                          }
+                      }
+                  }
               }
               $('#' + downID).html(str);
           } else {
