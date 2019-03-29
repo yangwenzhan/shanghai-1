@@ -1,7 +1,8 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.dingdanguanli;
 
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
 import com.tianqiauto.textile.weaving.util.JPASql.DynamicUpdateSQL;
@@ -29,6 +30,10 @@ import java.util.List;
 public class HeyuehaoService {
     @Autowired
     private HeYueHaoRepository heYueHaoRepository;
+
+
+    @Autowired
+    private Dict_TypeRepository dict_typeRepository;
 
     public List<Heyuehao> findByOrderid(Order order) {
         return heYueHaoRepository.findByOrder(order);
@@ -70,6 +75,10 @@ public class HeyuehaoService {
     }
 
     public Object findAllPage(Heyuehao heyuehao, Pageable pageable) {
+
+
+
+
         Specification<Heyuehao> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList();
             //合约号
@@ -84,5 +93,9 @@ public class HeyuehaoService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return heYueHaoRepository.findAll(specification,pageable);
+    }
+
+    public List<Heyuehao> findByName(String name) {
+        return heYueHaoRepository.findAllByName(name);
     }
 }

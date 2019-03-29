@@ -1,16 +1,13 @@
 package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 
-import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao_YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.Order;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha;
-import com.tianqiauto.textile.weaving.service.HeyuehaoService;
-import com.tianqiauto.textile.weaving.service.OrderService;
+import com.tianqiauto.textile.weaving.service.dingdanguanli.HeyuehaoService;
+import com.tianqiauto.textile.weaving.service.dingdanguanli.OrderService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -69,6 +66,12 @@ public class HeYueHaoController {
     @ApiOperation("合约号管理-添加合约号信息")
     @ResponseBody
     public Result addHeyuegao(@RequestBody Heyuehao heyuehao){
+
+        List<Heyuehao> list = heyuehaoService.findByName(heyuehao.getName());
+        if(null != list || !list.isEmpty()){
+            return Result.result(666,"合约号"+heyuehao.getName()+"已存在不能重复添加！",heyuehao);
+        }
+
         heyuehao = heyuehaoService.save(heyuehao);
         return Result.ok("添加成功！",heyuehao);
     }
@@ -87,13 +90,17 @@ public class HeYueHaoController {
     @ApiOperation("合约号管理-更新合约号信息")
     @ResponseBody
     public Result update(@RequestBody Heyuehao heyuehao){
+        List<Heyuehao> list = heyuehaoService.findByName(heyuehao.getName());
+        if(null != list || !list.isEmpty()){
+            return Result.result(666,"合约号"+heyuehao.getName()+"已存在不能修改！",heyuehao);
+        }
         int ret = heyuehaoService.update(heyuehao);
         heyuehao = heyuehaoService.findByid(heyuehao.getId());
         return Result.ok("更新成功！",heyuehao);
     }
 
     @GetMapping("create_heyuehao")
-    @ApiOperation("合约号管理-更新合约号信息")
+    @ApiOperation("合约号管理-生成新的合约号")
     @ResponseBody
     public Result create_heyuehao(String order_id, String flag){
         Object ret = heyuehaoService.create_heyuehao(order_id,flag);
@@ -101,7 +108,7 @@ public class HeYueHaoController {
     }
 
     @GetMapping("findAllPage")
-    @ApiOperation("合约号管理-更新合约号信息")
+    @ApiOperation("合约号管理-查询所有的合约号")
     @ResponseBody
     public Result findAllPage(Heyuehao heyuehao,Pageable pageable){
         Object ret = heyuehaoService.findAllPage(heyuehao,pageable);

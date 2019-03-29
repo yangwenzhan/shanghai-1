@@ -12,4 +12,6 @@ public interface HeYueHaoRepository extends JpaRepository<Heyuehao,Long>, JpaSpe
 
     List<Heyuehao> findByOrder(Order order);
 
+    List<Heyuehao> findAllByName(String name);
+
 }

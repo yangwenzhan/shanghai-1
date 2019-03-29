@@ -2,11 +2,14 @@ package com.tianqiauto.textile.weaving.repository;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface DictRepository extends JpaRepository<Dict,Long> {
+import java.util.List;
+
+public interface DictRepository extends JpaRepository<Dict,Long>, JpaSpecificationExecutor<Dict> {
 
     @Modifying
     @Transactional

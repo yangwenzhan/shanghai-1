@@ -5,6 +5,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , upload = layui.upload
         , laydate = layui.laydate;
 
+    tq_verify(form);
+
     //打开页面初始化查询框
     dictInitSelect('status', null, 'dingdanzhuangtai', 'name', 'value');
     dictInitSelect('kehuxinxi', null, 'kehuxinxi', 'name', 'value');
@@ -257,30 +259,6 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     }
 
     /**
-     * 2019/03/22 bjw
-     * 通过三目运算符处理NULL异常
-     * @param name 数据取值参数
-     * @returns {string} 取值内容
-     */
-    function repNull(name) {
-        var arr = name.split('.');
-        var tem = "<div>{{ ";
-        var currentObj = 'd';
-        var smbds = '(';
-        for (var i = 0; i < arr.length; i++) {
-            currentObj += '.' + arr[i];
-            if (i == (arr.length - 1)) {
-                smbds += currentObj + "== null) ? '' : " + currentObj;
-            } else {
-                smbds += currentObj + "== null || ";
-            }
-        }
-        tem += smbds;
-        tem += ' }}</div>';
-        return tem;
-    }
-
-    /**
      * 2019/03/24 bjw
      * 处理根据对象默认select选择列表。
      * @param formId  表单div的id
@@ -351,54 +329,6 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             }
         });
     }
-
-    /**
-     * 校验
-     */
-    form.verify({
-        zmAndSz: [
-            /^[A-Za-z0-9]+$/
-            , '只能是数字和字母组成！'
-        ],
-        zm: [
-            /^[A-Za-z]+$/
-            , '只能是字母组成！'
-        ],
-        sz: [
-            /^[0-9]+$/
-            , '只能是数字组成！'
-        ],
-        int: [
-            /^-?[1-9]+[0-9]*$/
-            , '只能是整数类型！'
-        ],
-        num: function (value, item) {
-            if (isNaN(value)) {
-                return "只能输入数字类型！";
-            }
-        },
-        length: function (value, item) { //value：表单的值、item：表单的DOM对象
-            var valueSize = value ? value.length : 0;
-            var maxNumber = $(item).attr('tq_length');
-            if (maxNumber) {
-                var arr = maxNumber.split('^');
-                if (arr[0] != '' && arr[1] != '') {
-                    if (valueSize < arr[0] || valueSize > arr[1]) return '不能少于' + arr[0] + '个字符和不能大于' + arr[1] + '个字符！';
-                }
-                if (arr.length == 1) {
-                    if (valueSize != arr[0]) return '输入长度只能是' + arr[0] + '个字符！';
-                }
-                if (arr[0] == '' && arr[1] != '') {
-                    if (valueSize > arr[1]) return "不能超过" + arr[1] + "个字符！";
-                }
-                if (arr[0] != '' && arr[1] == '') {
-                    if (valueSize < arr[0]) return "不能少于" + arr[0] + "个字符！";
-                }
-
-
-            }
-        }
-    });
 
     exports('dingdanguanli', {})
 });
