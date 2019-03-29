@@ -149,6 +149,27 @@ layui.define(function(exports){
 
 
 
+  //form查询表单收缩
+    formBack = function(){
+    var shou_suo = false; //未收缩
+    $('#shou_suo_cxtj').click(function() {
+        if (shou_suo) {
+            $('.layui-card-header').slideDown(500, function () {
+                $('#shou_suo_cxtj').html('<img class="layui-nav-img" style="margin-right:0" src="/images/up.png"/>');
+                shou_suo = false;
+            });
+        } else {
+            $('.layui-card-header').slideUp(500, function () {
+                $('#shou_suo_cxtj').html('<img class="layui-nav-img" style="margin-right:0" src="/images/down.png"/>');
+                shou_suo = true;
+            });
+        }
+    })}
+
+
+
+
+
 
 
 

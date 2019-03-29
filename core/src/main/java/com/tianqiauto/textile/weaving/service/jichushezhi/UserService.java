@@ -73,6 +73,8 @@ public class UserService {
     public void updateUserInfo(String xm,String birth,String sex,String email,String phone,
                                Long id,String zu,
                                String gx_id,String lb_id,Set<Role> roles,boolean flag){
+
+
         String sql1 = "update base_user set xingming=?,birthday=?,user_yuangong_id=?,sex=?,mobile=?,email=? where id=?";
         String sql2 = "update base_user_yuangong set zu=?,gongxu_id=?,lunban_id=? where user_id=?";
         String sql3 = "delete from base_user_yuangong where user_id=?";
@@ -210,6 +212,16 @@ public class UserService {
             list.add(arr);
         }
         jdbcTemplate.batchUpdate(sql,list);
+    }
+
+
+    @Transactional
+    public User saveUser(User user){
+
+
+       return userRepository.save(user);
+
+
     }
 
 

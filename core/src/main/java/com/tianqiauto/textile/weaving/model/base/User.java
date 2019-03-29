@@ -99,6 +99,6 @@ public class User {
     private String modifiedBy;
     @Column
     @Version
-    private long version;
+    private Long version;
 
 }

@@ -4,6 +4,7 @@ import com.tianqiauto.textile.weaving.model.base.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
@@ -23,7 +24,8 @@ public class UserAuditorAware implements AuditorAware<String> {
             return null;
         }
 
-        return Optional.of(((User) authentication.getPrincipal()).getUsername());
+        UserDetails userDetails =  (UserDetails)authentication.getPrincipal();
+        return Optional.of(userDetails.getUsername());
 
     }
 }
