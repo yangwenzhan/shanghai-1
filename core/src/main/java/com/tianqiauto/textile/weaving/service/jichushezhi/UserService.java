@@ -3,11 +3,14 @@ package com.tianqiauto.textile.weaving.service.jichushezhi;
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
+import com.tianqiauto.textile.weaving.model.base.User_YuanGong;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
+import com.tianqiauto.textile.weaving.repository.UserYuanGongRepository;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import com.tianqiauto.textile.weaving.util.result.Result;
+import com.tianqiauto.textile.weaving.util.update.UpdateCopyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserYuanGongRepository userYuanGongRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -235,11 +241,29 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user){
-
-
        return userRepository.save(user);
+    }
 
+    @Transactional
+    public void updateUserInfo(User user){
 
+        System.out.println("request user:"+user);
+
+        User_YuanGong user_yuanGong = null;
+        user.getUser_yuanGong().setLunban(null);
+
+        if(user.getUser_yuanGong()!=null){
+
+            user_yuanGong = userYuanGongRepository.saveAndFlush(user.getUser_yuanGong());
+        }
+
+        User userInDB = userRepository.getOne(user.getId());
+        UpdateCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","mobile","roles","sex","xingming"));
+
+        user.setUser_yuanGong(user_yuanGong);
+
+        System.out.println("userInDB:"+userInDB);
+        userRepository.save(userInDB);
     }
 
 

@@ -40,9 +40,11 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
             },
             type: 'get',
             success: function (data) {
+                var lb_data = data.data.dicts;
+                lb_data = lb_data.sort(sortPXH);
                 var dict_data = {
                     code: 0,
-                    data: data.data.dicts,
+                    data: lb_data,
                     message: "查询成功"
                 };
                 initDownList(dict_data, eleId, selectedId, 'name', 'id', true);
@@ -393,6 +395,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 ,offset:'auto'
                 ,area: ['90%', '90%']
                 ,btn: ['修改', '取消']
+                ,btnAlign: 'c'
                 ,btn1: function(index, layero){
                     if($('#edit_xingming').val()==""){
                         layer.open({
@@ -431,7 +434,6 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                             return false;
                         }
                     }
-
 
                     layer.confirm('确定要修改员工信息么?'
                         ,function(i){
@@ -527,6 +529,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         }
     });
 
+    //根据sort排序
+    function sortPXH(a,b){
+        return a.sort-b.sort;
+    }
 
 
     exports('user', {})

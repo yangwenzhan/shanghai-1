@@ -12,10 +12,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  **/
 public interface Dict_TypeRepository extends JpaRepository<Dict_Type,Long>, JpaSpecificationExecutor<Dict_Type> {
 
-
      Dict_Type findByCode(String code);
-
-     List<Dict_Type> findAllByCode(String code);
-
 
 }

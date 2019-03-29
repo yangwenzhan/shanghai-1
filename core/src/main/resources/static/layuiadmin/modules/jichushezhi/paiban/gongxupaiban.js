@@ -135,7 +135,7 @@ layui.define(['table', 'form'], function(exports){
             ,cols: [cols]
         });
         $('.cur_yzfs_num_upd').each(function (i) {
-            if($(this).val()==data.pb_yunZhuanFangShi_xiangqing.id){
+            if($(this).val()==data.sort){
                 $(this).prop("checked",true);
             }
         });
@@ -167,7 +167,9 @@ layui.define(['table', 'form'], function(exports){
         });
 
         $('.cur_yzfs_num_sel').each(function (i) {
-           if($(this).val()==data.pb_yunZhuanFangShi_xiangqing.id){
+            console.log($(this).val())
+            console.log()
+           if($(this).val()==data.pb_yunZhuanFangShi_xiangqing.sort){
                 $(this).prop("checked",true);
            }
         });
