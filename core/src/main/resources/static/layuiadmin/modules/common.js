@@ -18,19 +18,14 @@ layui.define(function(exports){
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
 
-
-
   getParams = function (formId) {
     var _params = {};
-
-    console.info("aaaa"+$('#' + formId).serializeArray());
 
     $.each($('#' + formId).serializeArray(), function (i, field) {
       if (null != field.value && "" != field.value) {
       _params[field.name] = field.value;
       }
     });
-    console.info(_params);
     return _params;
   };
 
@@ -149,6 +144,27 @@ layui.define(function(exports){
     console.info(html);
     $("#"+code).append(html);
   }
+
+
+
+
+  //form查询表单收缩
+    formBack = function(){
+    var shou_suo = false; //未收缩
+    $('#shou_suo_cxtj').click(function() {
+        if (shou_suo) {
+            $('.layui-card-header').slideDown(500, function () {
+                $('#shou_suo_cxtj').html('<img class="layui-nav-img" style="margin-right:0" src="/images/up.png"/>');
+                shou_suo = false;
+            });
+        } else {
+            $('.layui-card-header').slideUp(500, function () {
+                $('#shou_suo_cxtj').html('<img class="layui-nav-img" style="margin-right:0" src="/images/down.png"/>');
+                shou_suo = true;
+            });
+        }
+    })}
+
 
 
 

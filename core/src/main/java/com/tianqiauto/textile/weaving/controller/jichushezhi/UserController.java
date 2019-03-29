@@ -7,13 +7,16 @@ import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.UserYuanGongRepository;
 import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.result.Result;
+import com.tianqiauto.textile.weaving.util.update.UpdateCopyProperties;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -66,7 +69,11 @@ public class UserController {
         String encryptPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptPwd);
         user.setUser_yuanGong(null);
-        User newUser = userJpaRepository.save(user);
+
+
+        User newUser = userService.saveUser(user);
+
+
 
         //判断user_yuangong是否为空，若是空，不进行操作
         Boolean flag = (StringUtils.isEmpty(user_yuanGong.getZu())
@@ -84,12 +91,26 @@ public class UserController {
             userService.addUser_setRole(newUser.getId().toString(),roles);
         }
 
+
+
         return Result.ok("新增成功!",newUser);
     }
 
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息",notes = "工号不可修改,姓名不能为空")
     public Result updateUserInfo(@RequestBody User user){
+
+
+        User userInDB = userJpaRepository.getOne(user.getId());
+        UpdateCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","user_yuanGong","mobile","roles","sex","xingming"));
+
+
+        System.out.println("userInDB:"+userInDB);
+//        userJpaRepository.save(userInDB);
+
+
+
+
 
         User_YuanGong user_yuanGong= user.getUser_yuanGong();
         Set<Role> roles = user.getRoles();

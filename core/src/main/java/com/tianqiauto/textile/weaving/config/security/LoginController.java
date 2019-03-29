@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName LoginController
@@ -50,6 +52,7 @@ public class LoginController {
     @GetMapping("logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
