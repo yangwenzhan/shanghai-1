@@ -251,5 +251,5 @@ layui.define(['table', 'form'], function(exports){
         return cols;
     }
 
-    exports('pancunyue', {})
+    exports('gongxupaiban', {})
 });
