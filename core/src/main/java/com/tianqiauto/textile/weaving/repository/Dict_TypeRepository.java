@@ -17,5 +17,7 @@ public interface Dict_TypeRepository extends JpaRepository<Dict_Type,Long>, JpaS
 
      Dict_Type findByCode(String code);
 
+     List<Dict_Type> findAllByCode(String code);
+
 
 }
