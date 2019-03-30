@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>工序对应排班</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-form"></i>详情</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+	</script>
+
+	<div id="div_form_edit" style="display: none;" >
+		<!--表格 -->
+		<div class="layui-form">
+			<div class="layui-inline">
+				<label class="layui-form-label leftsou1">运转方式</label>
+				<div class="layui-input-inline">
+					<select name="modules" lay-verify="required" lay-search="" id="edit_yzfs" lay-filter="edit_yzfs">
+
+					</select>
+				</div>
+			</div>
+			<table class="layui-table" id="edit_table" ></table>
+		</div>
+
+	</div>
+
+	<div style="display: none" id="div_form_see">
+		<div class="layui-form" lay-filter="form_see" id="form_see" style="padding: 20px 30px 0 0;">
+			<table class="layui-table" lay-filter="see_table" id="see_table" ></table>
+		</div>
+	</div>
+
+  	<div th:replace="/common/links::js_footer"></div>
+
+	<script type="text/html" id="cur_yzfs_num_upd">
+		<input type="radio" class="cur_yzfs_num_upd" lay-filter="radioInput" lay name="radio_upd" value="{{d.sort}}" />
+	</script>
+	<script type="text/html" id="cur_yzfs_num_sel">
+		<input type="radio" class="cur_yzfs_num_sel" name="radio_sel" value="{{d.sort}}" disabled=""/>
+	</script>
+
+  <script>
+      layui.config({
+          base:"/layuiadmin/" //静态资源所在路径
+      }).extend({
+          index: 'lib/index' //主入口模块
+          ,gongxupaiban:'jichushezhi/paiban/gongxupaiban'
+      }).use(['index','gongxupaiban'],function () {
+
+      });
+  </script>
+</body>
+
+</html>

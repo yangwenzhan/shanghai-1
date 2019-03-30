@@ -38,13 +38,11 @@ public class GongXuPaiBanController {
         return Result.ok("查询成功!",list);
     }
 
-    @PostMapping("updateGongXuYZFS")
+    @GetMapping("updateGongXuYZFS")
     @ApiOperation(value = "修改工序运转方式")
-    public Result updateGongXuYZFS(@RequestBody PB_YunZhuanFangShi_Xiangqing_Gongxu gxyz){
-        yunZhuanFangShi_gongXu_repository.updateGongXuYZFS(gxyz.getPb_yunZhuanFangShi_xiangqing().getId(),
-                gxyz.getSort(),
-                gxyz.getGongxu().getId());
-        return Result.ok("修改成功!",gxyz);
+    public Result updateGongXuYZFS(String xq_id,String gxid){
+        yunZhuanFangShi_gongXu_repository.updateGongXuYZFS(xq_id,gxid);
+        return Result.ok("修改成功!",gxid);
     }
 
 

@@ -64,8 +64,8 @@
                             <cite th:text="${#authentication.getPrincipal().getUser().getXingming()}"></cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd><a lay-href="/forward/jichushezhi/info">基本资料</a></dd>
+                            <dd><a lay-href="/forward/jichushezhi/password">修改密码</a></dd>
                             <hr>
                             <dd style="text-align: center;"><a th:href="@{/logout}">退出</a></dd>
                         </dl>
@@ -126,6 +126,13 @@
                                         <dd><a lay-href="/forward/jichushezhi/role">角色管理</a></dd>
                                     </dl>
                                 </dd>
+                                <dd class="layui-nav-itemed">
+                                    <a href="javascript:;">排班管理</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a lay-href="/forward/jichushezhi/gongxupaiban">工序对应排班</a></dd>
+                                        <dd><a lay-href="/forward/jichushezhi/yunzhuanfangshi">运转方式管理</a></dd>
+                                    </dl>
+                                </dd>
                             </dl>
                         </li>
                         <li data-name="xitongshezhi" class="layui-nav-item">
@@ -165,8 +172,8 @@
                                 <dd class="layui-nav-itemed">
                                     <a href="javascript:;">我的设置</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                                        <dd><a lay-href="/forward/jichushezhi/info">基本资料</a></dd>
+                                        <dd><a lay-href="/forward/jichushezhi/password">修改密码</a></dd>
                                     </dl>
                                 </dd>
                             </dl>
