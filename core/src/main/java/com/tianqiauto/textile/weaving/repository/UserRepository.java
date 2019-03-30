@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByUsername(String username);
@@ -24,6 +26,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     boolean existsByUsername(String username);
 
+    List<User> findByShifouzaizhi(Integer sfzz);
     User findAllById(Long id);
+
 
 }

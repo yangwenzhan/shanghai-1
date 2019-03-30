@@ -31,6 +31,8 @@ public class GlobalExceptionHandler {
             msg = "没有权限访问此页面，请联系管理员";
         }
 
+        e.printStackTrace();
+
         return Result.error(msg,e.getMessage());
     }
 
