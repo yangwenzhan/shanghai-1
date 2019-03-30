@@ -220,6 +220,7 @@ public class UserService {
         jdbcTemplate.batchUpdate(sql,list);
     }
 
+
     //修改员工基本信息
     public void setUserInfo(String id,String xingming,String sex,String birthday,String mobile,String email){
         String sql = "update base_user set xingming=?,sex=?,mobile=?,email=?,birthday=? where id=?";
@@ -237,7 +238,6 @@ public class UserService {
         String sql = "update base_user set password=? where id=?";
         return jdbcTemplate.update(sql,newpwd,sql);
     }
-
 
     @Transactional
     public User saveUser(User user){
@@ -266,6 +266,7 @@ public class UserService {
         userRepository.save(userInDB);
     }
 
-
-
+    public List<User> getByZaizhi(Integer sfzz) {
+        return userRepository.findByShifouzaizhi(sfzz);
+    }
 }

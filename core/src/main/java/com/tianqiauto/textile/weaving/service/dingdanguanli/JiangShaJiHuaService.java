@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.dingdanguanli;
 
 import com.tianqiauto.textile.weaving.model.sys.JiHua_JiangSha;
 import com.tianqiauto.textile.weaving.model.sys.JiHua_JiangSha_Main;

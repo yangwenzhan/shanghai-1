@@ -1,5 +1,8 @@
 package com.tianqiauto.textile.weaving.util.JPASql;
 
+import com.tianqiauto.textile.weaving.model.base.User;
+import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
+import com.tianqiauto.textile.weaving.model.sys.Order;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -177,6 +180,24 @@ public class DynamicUpdateSQL<T> {
     public class Param {
         private String name;
         private Object value;
+    }
+
+    public static void main(String[] args) {
+        Order order = new Order();
+        order.setId(132L);
+
+        order.setBeizhu(null);
+
+        User user = new User();
+        user.setId(123L);
+        order.setJingli(user);
+
+
+        Container RUSql2 = new DynamicUpdateSQL<>(order).getUpdateSql();
+//        return jdbcTemplate.update(RUSql2.getSql(),RUSql2.getParam());
+        System.out.println(RUSql2.getSql());
+        System.out.println(RUSql2.getParam());
+
     }
 
 }
