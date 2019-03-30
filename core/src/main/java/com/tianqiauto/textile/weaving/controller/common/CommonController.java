@@ -65,7 +65,7 @@ public class CommonController {
     @GetMapping("findAllDictVal")
     @ApiOperation(value = "根据数据字典类别查询数据字典值",notes = "比如：传入轮班的code，查出来所有轮班值")
     public Result findAllDictVal(String code){
-        List<Dict_Type> list = dict_typeRepository.findAllByCode(code);
+        Dict_Type list = dict_typeRepository.findByCode(code);
         return Result.ok("查询成功!",list);
     }
 
