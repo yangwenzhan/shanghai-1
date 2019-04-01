@@ -3,8 +3,10 @@ package com.tianqiauto.textile.weaving.repository;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName Dict_TypeRepository
@@ -18,6 +20,5 @@ public interface Dict_TypeRepository extends JpaRepository<Dict_Type,Long>, JpaS
      Dict_Type findByCode(String code);
 
      List<Dict_Type> findAllByCode(String code);
-
 
 }

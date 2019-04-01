@@ -1,21 +1,16 @@
-package com.tianqiauto.textile.weaving.util.update;
+package com.tianqiauto.textile.weaving.util.copy;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.PropertyAccessorFactory;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * @ClassName UpdateCopyProperties
+ * @ClassName MyCopyProperties
  * @Description TODO
  * @Author xingxiaoshuai
  * @Date 2019-03-28 17:07
  * @Version 1.0
  **/
-public class UpdateCopyProperties {
+public class MyCopyProperties {
 
 
     public static void copyProperties(Object src, Object trg, Iterable<String> props) {

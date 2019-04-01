@@ -1,7 +1,6 @@
 layui.define(['table', 'form'], function(exports){
         var table = layui.table
             ,form = layui.form;
-    searchForm("lunban","gongxu");
 
     var cols =  [[
         {field: 'id', title: 'id',hide:true}

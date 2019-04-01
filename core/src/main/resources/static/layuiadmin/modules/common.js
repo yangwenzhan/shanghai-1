@@ -1,9 +1,5 @@
 /**
  @Name：layuiAdmin 公共业务
- @Author：贤心
- @Site：http://www.layui.com/admin/
- @License：LPPL
-    
  */
  
 layui.define(function(exports){
@@ -65,9 +61,10 @@ layui.define(function(exports){
 
   //初始化table
    initTable = function (ele, url, method,cols, table,formId, doneCallBack) {
-    return table.render({
+     table.render({
       elem: "#"+ele
       ,id: ele
+      ,autoSort: false  //后端排序
       , url: layui.setter.host+url
       , method: method
       , cellMinWidth: 80
@@ -75,7 +72,7 @@ layui.define(function(exports){
       ,where:getParams(formId)
       ,page:{
         limits:[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90]
-        ,limit:20
+        ,limit:10
       }
       , done: function (res) {
         if (typeof(doneCallBack) === "function") {
@@ -83,13 +80,24 @@ layui.define(function(exports){
         }
       }
     });
+
+
+   table.on('sort('+ele+')', function(obj){
+       var paramObject = getParams(formId);
+       paramObject.sort = obj.field+','+obj.type;
+       table.reload(ele, { //testTable是表格容器id
+           where: paramObject
+       });
+   });
+
   };
 
   //初始化table(不带分页)
   initTable_all = function (ele, url, method,cols, table,formId, doneCallBack) {
-    return table.render({
+    table.render({
       elem: "#"+ele
       ,id: ele
+      ,autoSort: false  //后端排序
       , url: layui.setter.host+url
       , method: method
       , cellMinWidth: 80
@@ -101,6 +109,16 @@ layui.define(function(exports){
         }
       }
     });
+
+  table.on('sort('+ele+')', function(obj){
+      var paramObject = getParams(formId);
+      paramObject.sort = obj.field+','+obj.type;
+      console.info(paramObject)
+      table.reload(ele, { //testTable是表格容器id
+          where: paramObject
+      });
+  });
+
   };
 
 
@@ -114,36 +132,7 @@ layui.define(function(exports){
 
 
 
-  //动态参数
-  searchForm = function(){
-    var args = Array.from(arguments);   //arguments不是Array类型，此方法是将arguments转换为Array。
-    searchForm_dict(args,"lunban");
-  }
 
-
-
-  searchForm_dict = function(params,code){
-      if(params.indexOf(code) != -1){
-         $.ajax({
-          type:'get',
-          async:false,
-          url:layui.setter.host+'xitongshezhi/shujuzidian/formSelect?code='+code,
-          success:function(data){
-            createOption_dict(data,code);
-          }
-        });
-    }
-  }
-  //动态创建option dict
-  createOption_dict = function(data,code){
-    var html = '';
-    var dicts = data.data.dicts;
-    for(var i = 0;i<dicts.length;i++){
-      html+='<option value= "'+dicts[i].value+'" >'+dicts[i].name+'</option>';
-    }
-    console.info(html);
-    $("#"+code).append(html);
-  }
 
 
 
@@ -172,105 +161,209 @@ layui.define(function(exports){
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //动态参数
+    dynamicForm = function(){
+        // {code:"lunban",hasNull:true,defaultValue:""};   //defaultValue：数据字典传value；工序传工序名称
 
 
+        var args = Array.from(arguments);   //arguments不是Array类型，此方法是将arguments转换为Array。
 
-
-
-
-
-
-
-
-  
-  
-  //退出
-  admin.events.logout = function(){
-    //执行退出接口
-    admin.req({
-      url: layui.setter.base + 'json/user/logout.js'
-      ,type: 'get'
-      ,data: {}
-      ,done: function(res){ //这里要说明一下：done 是只有 response 的 code 正常才会执行。而 succese 则是只要 http 为 200 就会执行
-        
-        //清空本地记录的 token，并跳转到登入页
-        admin.exit(function(){
-          location.href = 'user/login.html';
+        //数据字典
+        $.ajax({
+            type:"get",
+            url:layui.setter.host+"xitongshezhi/shujuzidian/getcodes",
+            async:false,
+            success:function (data) {
+                var datas = data.data;
+                for (var i = 0; i < datas.length; i++) {
+                    searchForm_dict(args,datas[i].code);
+                }
+            }
         });
-      }
-    });
-  };
+
+        //工序
+        var gongxu= args.filter(function(item){return item.code == "gongxu";});
+        if(gongxu.length>0){
+            $.ajax({
+                url: layui.setter.host + 'common/findAllGX',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(gongxu[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(gongxu[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+gongxu[0].code+"']").append(html);
+                }
+            });
+        }
 
 
-  //ajax请求成功处理下拉框函数
-  initDownList = function(data,downID,selectedId,valueName,valueID,isall){
-      $('#' + downID).html("");
-      if(data.code == 0) {
-          if(data.data.length == 0) {
-              return false;
-          }
-          var reg = RegExp(/,/);
-          var selectedArr=[];
-          if(selectedId==null){
-              selectedArr=null;
-          }else if(reg.test(selectedId)){
-              selectedArr = selectedId.split(',');
-          }else{
-              selectedArr.push(selectedId);
-          }
+        //组
+        var zu= args.filter(function(item){return item.code == "zu";});
+        if(zu.length>0){
+            var data = [{zu:1},{zu:2},{zu:3},{zu:4},{zu:5},{zu:6},{zu:7},{zu:8},{zu:9},{zu:10}];
+            var html = '';
+            if(zu[0].hasNull){
+                html+='<option value= "" >全部</option>';
+            }
+            for(var i = 0;i<data.length;i++){
+                if(zu[0].defaultValue == data[i].zu){
+                    html+='<option selected value= "'+data[i].zu+'" >'+data[i].zu+'</option>';
+                }else {
+                    html+='<option  value= "'+data[i].zu+'" >'+data[i].zu+'</option>';
+                }
+            }
+            $("select[name='"+zu[0].code+"']").append(html);
+        }
 
-          var str = "";
-          if(!isall) {
-              for(var i = 0; i < data.data.length; i++) {
-                  str += "<option value='" + data.data[i][valueName] + "'>"
-                      + data.data[i].valueName
-                      + "</option>";
-              }
-              $('#' + downID).html(str);
-          } else {
-              str += "<option value=''>全部</option>";
-              for(var i = 0; i < data.data.length; i++) {
+        //角色
+        var roles= args.filter(function(item){return item.code == "role";});
+        if(roles.length>0){
+            $.ajax({
+                url:layui.setter.host+'jichushezhi/juesequanxian/role/findAll',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(roles[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(roles[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+roles[0].code+"']").append(html);
+                }
+            });
+        }
 
-                  if(selectedArr==null){
-                      str += "<option value='" + data.data[i][valueID] + "'>"
-                          + data.data[i][valueName]
-                          + "</option>";
-                  }else{
-                      for(var j=0;j< selectedArr.length;j++){
-                          if(data.data[i][valueID]==selectedArr[j]){
-                              str += "<option value='" + data.data[i][valueID] + "' selected='selected'>"
-                                  + data.data[i][valueName]
-                                  + "</option>";
-                              break;
-                          }
-                          if(j==selectedArr.length-1 && data.data[i][valueID]!=selectedArr[j]){
-                              str += "<option value='" + data.data[i][valueID] + "'>"
-                                  + data.data[i][valueName]
-                                  + "</option>";
-                              break;
-                          }
-                      }
-                  }
-              }
-              $('#' + downID).html(str);
-          }
 
-      } else {
-          layer.open({
-              title:"消息提醒",
-              content:data.message,
-              skin:"layui-layer-molv",
-              btn:["查看错误信息"],
-              anim: -1,
-              icon:5,
-              btn1:function(index){
-                  layer.open({content:data.data})
-                  layer.close(index);
-              }
-          });
-      }
-  }
-  
-  //对外暴露的接口
+
+
+
+
+    }
+
+    searchForm_dict = function(params,code){
+        var param= params.filter(function(item){
+            return item.code == code;
+        })
+        if(param.length>0){
+            $.ajax({
+                type:'get',
+                async:false,
+                url:layui.setter.host+'xitongshezhi/shujuzidian/formSelect?code='+code,
+                success:function(data){
+                    createOption_dict(data,param[0]);
+                }
+            });
+        }
+    }
+    //动态创建option dict
+    createOption_dict = function(data,param){
+        var html = '';
+        if(param.hasNull){
+            html+='<option value= "" >全部</option>';
+        }
+        var dicts = data.data.dicts;
+        for(var i = 0;i<dicts.length;i++){
+            if(param.defaultValue == dicts[i].value){
+                html+='<option selected value= "'+dicts[i].id+'" >'+dicts[i].name+'</option>';
+            }else {
+                html+='<option value= "'+dicts[i].id+'" >'+dicts[i].name+'</option>';
+            }
+        }
+        $("select[name='"+param.code+"']").append(html);
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //ajax请求成功处理下拉框函数
+    initDownList = function(data,downID,selectedId,valueName,valueID,isall){
+        $('#' + downID).html("");
+        if(data.code == 0) {
+            if(data.data.length == 0) {
+                return false;
+            }
+            var reg = RegExp(/,/);
+            var selectedArr=[];
+            if(selectedId==null){
+                selectedArr=null;
+            }else if(reg.test(selectedId)){
+                selectedArr = selectedId.split(',');
+            }else{
+                selectedArr.push(selectedId);
+            }
+
+            var str = "";
+            if(!isall) {
+                for(var i = 0; i < data.data.length; i++) {
+                    str += "<option value='" + data.data[i][valueName] + "'>"
+                        + data.data[i].valueName
+                        + "</option>";
+                }
+                $('#' + downID).html(str);
+            } else {
+                str += "<option value=''>全部</option>";
+                for(var i = 0; i < data.data.length; i++) {
+
+                    if(selectedArr==null){
+                        str += "<option value='" + data.data[i][valueID] + "'>"
+                            + data.data[i][valueName]
+                            + "</option>";
+                    }else{
+                        for(var j=0;j< selectedArr.length;j++){
+                            if(data.data[i][valueID]==selectedArr[j]){
+                                str += "<option value='" + data.data[i][valueID] + "' selected='selected'>"
+                                    + data.data[i][valueName]
+                                    + "</option>";
+                                break;
+                            }
+                            if(j==selectedArr.length-1 && data.data[i][valueID]!=selectedArr[j]){
+                                str += "<option value='" + data.data[i][valueID] + "'>"
+                                    + data.data[i][valueName]
+                                    + "</option>";
+                                break;
+                            }
+                        }
+                    }
+                }
+                $('#' + downID).html(str);
+            }
+
+        } else {
+            layer.open({
+                title:"消息提醒",
+                content:data.message,
+                skin:"layui-layer-molv",
+                btn:["查看错误信息"],
+                anim: -1,
+                icon:5,
+                btn1:function(index){
+                    layer.open({content:data.data})
+                    layer.close(index);
+                }
+            });
+        }
+    }
+
+
+
+
+
+    //对外暴露的接口
   exports('common', {});
 });

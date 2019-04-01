@@ -93,7 +93,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 var formData = data.field;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/update',
+                                    url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/copy',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
@@ -247,7 +247,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 var formData = data.field;
                                 formData.yuanSha = yuansha_temp_edit;
                                 $.ajax({
-                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/update',
+                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/copy',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),

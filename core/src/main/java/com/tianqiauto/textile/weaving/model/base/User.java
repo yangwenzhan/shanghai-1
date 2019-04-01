@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"roles","user_yuanGong"})
+@EqualsAndHashCode(exclude = {"roles","gongxu","lunban"})
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
@@ -52,17 +52,30 @@ public class User {
     //是否在职
     private Integer shifouzaizhi;
 
-    //一对一关系
-    @JsonIgnoreProperties("user")
-    @OneToOne
-    @JoinColumn(name = "user_yuangong_id")
-    private User_YuanGong user_yuanGong;
-
     @JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "base_user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+
+
+
+
+    //关联工序表 可为空
+    @ManyToOne
+    @JoinColumn(name = "gongxu_id")
+    private Gongxu gongxu;
+
+    //若工序为空，则组必为空，新增时不需展示组
+    private Integer zu;
+
+    //所属轮班
+    @ManyToOne
+    @JoinColumn(name = "lunban_id")
+    private Dict lunban;
+
+
 
 
     @Transient
