@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>设备参数管理</title>
+</head>
+
+<body>
+
+  <div class="layui-fluid">
+	  <div class="layui-card">
+		  <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" lay-verify="required" lay-search="" id="gongxu" lay-filter="gongxu">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机型</label>
+					<div class="layui-input-inline">
+						<select name="jixing" lay-verify="required" lay-search="" id="jixing" lay-filter="jixing">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">参数类别</label>
+					<div class="layui-input-inline">
+						<select name="leiBie" lay-verify="required" lay-search="" id="leiBie" lay-filter="leiBie">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<button class="layui-btn" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+						<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+					</button>
+				</div>
+
+			</div>
+		</div>
+	  </div>
+
+	  <div class="layui-card-body">
+		  <div style="padding-bottom: 10px;">
+			  <button class="layui-btn" id="batch_edit_btn"><i class="layui-icon layui-icon-edit"></i>批量修改</button>
+		  </div>
+		  <table class="layui-table" lay-filter="table" id="table"></table>
+	  </div>
+  </div>
+
+  <script type="text/html" id="barDemo">
+	  <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+  </script>
+
+	<!--批量修改弹出框-->
+	<div style="display: none;" id="batch_edit_form_div">
+		<form class="layui-form" lay-filter="form_batch_edit" id="form_batch_edit">
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改参数类别" id="xgplnr_cslb" lay-filter='xgplnr_cslb'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">参数类别</label>
+					<div class="layui-input-inline">
+						<select name="name" lay-verify="required" lay-search="" id="pl_xgcslb">
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改单位" id="xgplnr_dw" lay-filter='xgplnr_dw'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">单位</label>
+					<div class="layui-input-block">
+						<input type="text" name="danwei" style="display: inline-block;" lay-verify="title" autocomplete="off" placeholder="请输入单位" class="layui-input" id="pl_xgdw"/>
+					</div>
+				</div>
+			</div>
+
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改存储时长" id="xgplnr_ccsc" lay-filter='xgplnr_ccsc'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">存储时长(小时)</label>
+					<div class="layui-input-block">
+						<input type="number" name="cunchushichang" style="display: inline-block;" lay-verify="title" autocomplete="off" placeholder="请输入存储时长" class="layui-input" id="pl_xgsc"/>
+					</div>
+				</div>
+			</div>
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改存储周期" id="xgplnr_cczq" lay-filter='xgplnr_cczq'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">存储周期(秒)</label>
+					<div class="layui-input-block">
+						<input type="number" name="cunchuzhouqi" style="display: inline-block;" lay-verify="title" autocomplete="off" placeholder="请输入存储周期" class="layui-input" id="pl_xgzq"/>
+					</div>
+				</div>
+			</div>
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改是否报警" id="xgplnr_sfbj" lay-filter='xgplnr_sfbj'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">是否报警</label>
+					<div class="layui-input-inline">
+						<select name="baojing_flag" lay-verify="required" lay-search="" id="pl_xgsfbj">
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改是否显示" id="xgplnr_sfxs" lay-filter='xgplnr_sfxs'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">是否显示</label>
+					 <div class="layui-input-inline">
+						<select name="zhanshi_flag" lay-verify="required" lay-search="" id="pl_xgsfxs">
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					 </div>
+				</div>
+			</div>
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>
+					<input type="checkbox" name="" title="修改是否记录历史曲线" id="xgplnr_sfjlls" lay-filter='xgplnr_sfjlls'/>
+				</legend>
+			</fieldset>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">是否记录历史曲线</label>
+					<div class="layui-input-inline">
+						<select name="cunchu_flag" lay-verify="required" lay-search="" id="pl_xgsfjlls">
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item layui-hide">
+				<input type="button" lay-submit lay-filter="form_batch_edit_submit" id="form_batch_edit_submit" value="确认">
+			</div>
+
+		</form>
+	</div>
+
+	<!--逐条修改弹出框-->
+	<div style="display: none;" id="edit_form_div">
+		<form class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">参数名</label>
+					<div class="layui-input-block">
+						<input type="text" name="csm" lay-verify="title" autocomplete="off" placeholder="请输入参数名" class="layui-input" id="dh_xgcsm" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">参数单位</label>
+					<div class="layui-input-block">
+						<input type="text" name="danwei" lay-verify="title" autocomplete="off" placeholder="请输入参数单位" class="layui-input" id="dh_xgcsdw" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">参数类别</label>
+					<div class="layui-input-inline">
+						<select name="leiBie" lay-verify="required" lay-search="" id="dh_xgcslb">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">存储时长(小时)</label>
+					<div class="layui-input-block">
+						<input type="number" name="cunchushichang" style="display: inline-block;" lay-verify="title" autocomplete="off" placeholder="请输入存储时长" class="layui-input" id="dh_xgsc" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">存储周期(秒)</label>
+					<div class="layui-input-block">
+						<input type="number" name="cunchuzhouqi" style="display: inline-block;" lay-verify="title" autocomplete="off" placeholder="请输入存储周期" class="layui-input" id="dh_xgzq" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">展示顺序</label>
+					<div class="layui-input-block">
+						<input name="xuhao" onkeyup="this.value=this.value.replace(/\D/g,'')" onblur="this.value=this.value.replace(/\D/g,'')" type="text" id="xg_px" placeholder="请输入展示顺序" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+			</div>
+		</form>
+	</div>
+
+  	<div th:replace="/common/links::js_footer"></div>
+
+  		<!--0 false 1 true-->
+		<script type="text/html" id="mysfxx">
+			{{# if (d.zhanshi_flag == 0 || d.zhanshi_flag == null ) { }}
+			<input id='{{d.id}}' name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfxx" value="0" type="checkbox" />
+			{{# } else { }}
+			<input id='{{d.id}}' name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfxx" value="1" checked type="checkbox" />
+			{{# } }}
+		</script>
+
+  		<!--是否能报警字段 sfnbj-->
+		<script type="text/html" id="mysfbj">
+			{{# if (d.sfnbj == 0) { }}
+			<input id='{{d.id}}' name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfbj" value="0" type="checkbox" disabled/>
+			{{# } else { }}
+				{{# if (d.baojing_flag == 0 || d.baojing_flag == null ) { }}
+				<input id='{{d.id}}' name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfbj" value="0" type="checkbox" />
+				{{# } else { }}
+				<input id='{{d.id}}' name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfbj" value="1" checked type="checkbox" />
+				{{# } }}
+			{{# } }}
+		</script>
+		<script type="text/html" id="mysfjllsqx">
+			{{# if (d.cunchu_flag == 0 || d.cunchu_flag == null ) { }}
+			<input id="{{d.id}}" name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfjllsqx" value="0" type="checkbox" />
+			{{# } else { }}
+			<input id="{{d.id}}" name="switch" lay-skin="switch" lay-text="是|否" lay-filter="switchSfjllsqx" value="1" checked type="checkbox" />
+			{{# } }}
+		</script>
+
+	<script>
+	  layui.config({
+		  base:"/layuiadmin/" //静态资源所在路径
+	  }).extend({
+		  index: 'lib/index' //主入口模块
+		  ,shebeiparam:'jichushezhi/shebei/shebeiparam'
+	  }).use(['index','shebeiparam'],function () {
+
+	  });
+	</script>
+
+</body>
+</html>
