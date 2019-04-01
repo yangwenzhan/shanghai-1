@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>运转方式管理</title>
+</head>
+
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<button class="layui-btn layuiadmin-btn-admin" id="ttadd"><i class="layui-icon layui-icon-add-circle">新增运转方式</i></button>
+				</div>
+				<table id="table" lay-filter="table"></table>
+			</div>
+
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail"><i class="layui-icon layui-icon-form"></i>详情</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+	</script>
+
+		<!--增加 弹窗  div-->
+		<div id="s_ttadd" style="display: none;">
+			<!--第一步  -->
+			<div class="layui-form" id="yi">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: 100px">名称</label>
+						<div class="layui-input-inline">
+							<input type="text" id="lbmc" autocomplete="off" class="layui-input" placeholder="名称" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: 100px">每天运转班个数</label>
+						<div class="layui-input-inline">
+							<input type="number" id="yzbgs" autocomplete="off" class="layui-input" placeholder="每天运转班个数" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: 100px">轮班个数</label>
+						<div class="layui-input-inline">
+							<input type="number" id="lbgs" autocomplete="off" class="layui-input" placeholder="轮班个数" />
+						</div>
+					</div>
+
+				</div>
+				<div class="layui-inline" style="margin-left: 50%; margin-top: 60px;">
+					<button class="layui-btn" id="next1">下一步</button>
+					<button class="layui-btn layui-btn-warm cancel">取 消</button>
+				</div>
+			</div>
+			<!--第一步  end-->
+
+			<!--第二 步  -->
+			<div id="er" style="display: none; height: 400px;overflow-y: scroll;">
+
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<h1 style="margin-left: 65px;font-size: 20px;font-weight: 600;   display:inline-block;">运转详情</h1>
+						<div class="layui-inline" style="margin-left: 65px;">
+							<button class="layui-btn" id="addtr">新&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增</button>
+						</div>
+					</div>
+				</div>
+
+				<!--表格 -->
+				<div class="layui-form">
+					<table class="layui-table" style="width: 60%; margin-left: 65px;">
+						<tbody id="pai_table">
+							<tr id="pai_tr">
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="layui-form" style="padding-bottom: 30px;">
+					<div class="layui-inline" style="margin-left:45%;">
+						<button class="layui-btn" id="next2">下一步</button>
+						<button class="layui-btn layui-btn-warm" id="back1">上一步</button>
+						<button class="layui-btn layui-btn-warm cancel">取 消</button>
+					</div>
+				</div>
+			</div>
+			<!--第二 步  end-->
+
+			<!--第三 步 -->
+			<div class="layui-form" style="display: none;" id="san">
+				<h1 style="margin-left: 20px;font-size: 20px;font-weight: 600; margin-bottom: 30px;  ">班次起始时间</h1>
+			   <div id="bcqz_sj">	
+			   	<!--班次起止时间content-->
+	
+			   </div>
+
+
+				<div class="layui-inline" style="margin-left: 45%; margin-top: 30px;">					
+					<button class="layui-btn layui-btn-warm" id="back2">上一步</button>
+					<button class="layui-btn" id="qd_btn">确定</button>
+					<button class="layui-btn layui-btn-warm cancel">取 消</button>
+				</div>
+			</div>
+			<!--第三 步  end-->
+		</div>
+
+		<!--修改  弹窗  div-->
+		<div id="s_ttxiugai" style="display: none;">
+			<!--表格 -->
+			<div class="layui-form" id="upd_div">
+				<table class="layui-table" id="upd_table"></table>
+			</div>
+
+		</div>
+
+		<!--查看  弹窗  div-->
+		<div id="s_chakan" style="display: none;">
+			<!--表格 -->
+			<div class="layui-form">
+				<table class="layui-table" id="xq_table"></table>
+			</div>
+		</div>
+
+	<div th:replace="/common/links::js_footer"></div>
+
+	<script>
+        layui.config({
+            base:"/layuiadmin/" //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+            ,yunzhuanfangshi:'jichushezhi/paiban/yunzhuanfangshi'
+        }).use(['index','yunzhuanfangshi'],function () {
+
+        });
+	</script>
+
+</body>
+
+</html>

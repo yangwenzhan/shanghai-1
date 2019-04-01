@@ -1,7 +1,10 @@
 package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 
+import com.tianqiauto.textile.weaving.model.base.Dict;
+import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Order;
-import com.tianqiauto.textile.weaving.service.OrderService;
+import com.tianqiauto.textile.weaving.service.dingdanguanli.OrderService;
+import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
 import com.tianqiauto.textile.weaving.util.poi.ImportUtil;
 import com.tianqiauto.textile.weaving.util.poi.downloadUtils;
@@ -17,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @Author bjw
@@ -29,6 +32,9 @@ public class DingdanguanliController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "upload")
     @Logger(msg = "导入订单信息")
@@ -54,7 +60,12 @@ public class DingdanguanliController {
     @Logger(msg = "添加订单信息")
     @ApiOperation("订单管理-添加订单")
     public Result addOrder(@Valid @RequestBody Order order) {
-        //order.setStatus(); fixme 添加默认（已创建）先查詢出默认状态然后set进去
+        List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
+        if(null != list || !list.isEmpty()){
+            return Result.result(666,"订单号已存在不能重复添加！",order);
+        }
+        Dict status = orderService.findByTypenameAndValue("dingdanzhuangtai","10");
+        order.setStatus(status);
         order.setRukuguige(order.getPibuguige());
         order = orderService.save(order);
         return Result.ok("新增订单成功！", order);
@@ -77,6 +88,10 @@ public class DingdanguanliController {
     @Logger(msg = "修改订单信息")
     @ApiOperation("订单管理-修改订单")
     public Result updateOrder(@RequestBody Order order) {
+        List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
+        if(null != list || !list.isEmpty()){
+            return Result.result(666,"订单号已存在不能修改！",order);
+        }
         orderService.update(order);
         return Result.ok("查询成功！", order);
     }
@@ -88,5 +103,10 @@ public class DingdanguanliController {
         return Result.ok("查询成功！", order);
     }
 
-
+    @GetMapping("getUser")
+    @ApiOperation("获取在职人员")
+    public Result getUser() {
+        List<User> users =  userService.getByZaizhi(1);//查出所有的在职人员 //fixme 注意还有经理和营销员的区分
+        return Result.ok("查询成功！", users);
+    }
 }

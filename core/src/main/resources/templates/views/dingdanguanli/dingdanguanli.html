@@ -32,7 +32,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label leftsou">订单状态</label>
                     <div class="layui-input-inline">
-                        <select name="status.id" id="status" lay-verify="required" lay-search="">
+                        <select name="status.value" id="status"  lay-search="">
 
                         </select>
                     </div>
@@ -55,7 +55,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">客户信息</label>
                     <div class="layui-input-inline">
-                        <select name="kehuxinxi.id" lay-verify="required" lay-search="" id="kehuxinxi" >
+                        <select name="kehuxinxi.value"  lay-search="" id="kehuxinxi" >
                         </select>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
                         class="layui-icon layui-icon-delete"></i>删除</a>
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="heyuehao" href="javascript:;" lay-href="/dingdanguanli/heyuehaoguanli/heyuehao?id={{= d.id }}"><i
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="heyuehao" href="javascript:" lay-href="/dingdanguanli/heyuehaoguanli/heyuehao?id={{= d.id }}"><i
                         class="layui-icon layui-icon-note"></i>合约号</a>
             </script>
         </div>

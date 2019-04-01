@@ -1,8 +1,10 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.dingdanguanli;
 
+import com.tianqiauto.textile.weaving.model.base.Dict;
+import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Order;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha;
+import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
 import com.tianqiauto.textile.weaving.repository.OrderRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
@@ -35,6 +37,9 @@ public class OrderService {
 
     @Autowired
     private HeYueHaoRepository heYueHaoRepository;
+
+    @Autowired
+    private Dict_TypeRepository dict_typeRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -74,11 +79,7 @@ public class OrderService {
             }
             //订单状态
             if(!StringUtils.isEmpty(order.getStatus())) {
-                predicates.add(criteriaBuilder.equal(root.get("status").get("id"), order.getStatus().getId()));
-            }
-            //客户信息
-            if(!StringUtils.isEmpty(order.getKehuxinxi())) {
-                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+                predicates.add(criteriaBuilder.equal(root.get("status").get("value"), order.getStatus().getValue()));
             }
             //要求交货日期
             if(!StringUtils.isEmpty(order.getJiaohuoriqi())) {
@@ -86,7 +87,7 @@ public class OrderService {
             }
             //客户信息
             if(!StringUtils.isEmpty(order.getKehuxinxi())) {
-                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("id"),order.getKehuxinxi().getId()));
+                predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("value"),order.getKehuxinxi().getId()));
             }
             criteriaBuilder.desc(root.get("createTime"));
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -97,5 +98,21 @@ public class OrderService {
     public int update(Order order) {
         Container RUSql = new DynamicUpdateSQL<>(order).getUpdateSql();
         return jdbcTemplate.update(RUSql.getSql(),RUSql.getParam());
+    }
+
+    public Dict findByTypenameAndValue(String codeType,String value){
+        Dict dictR = new Dict();
+        Dict_Type dict_types = dict_typeRepository.findByCode(codeType);
+        for(Dict dict:dict_types.getDicts()){
+            if(value.equals(dict.getValue())){
+                dictR.setId(dict.getId());
+                return dictR;
+            }
+        }
+        return dictR;
+    }
+
+    public List<Order> findByDingdanhao(String dingdanhao) {
+        return orderRepository.findAllByDingdanhao(dingdanhao);
     }
 }

@@ -9,6 +9,7 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
     function initTable(){
         table.render({
             elem: '#table'
+            ,limit:100000
             ,method:'GET'
             ,url: layui.setter.host + 'jichushezhi/juesequanxian/role/findAll'
             ,cols: [[

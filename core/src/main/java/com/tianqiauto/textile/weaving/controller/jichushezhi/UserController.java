@@ -24,6 +24,8 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * @ClassName UserController
@@ -100,52 +102,18 @@ public class UserController {
         user.setPassword(passwordEncoder.encode("123456")); //初始密码为123456
 
         User newUser = userService.saveUser(user);
-
-
-
-
-
         return Result.ok("新增成功!",newUser);
     }
 
     @PostMapping("updateUserInfo")
-    @ApiOperation(value = "修改用户信息",notes = "工号不可修改,姓名不能为空")
+    @ApiOperation(value = "修改用户信息-jpa语句修改",notes = "工号不可修改,姓名不能为空")
     public Result updateUserInfo(@RequestBody User user){
-
         User userInDB = userJpaRepository.getOne(user.getId());
         MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","user_yuanGong","mobile","roles","sex","xingming"));
-        userJpaRepository.save(userInDB);
 
-
-//        User_YuanGong user_yuanGong= user.getUser_yuanGong();
-//        Set<Role> roles = user.getRoles();
-//
-//        //判断user_yuangong是否为空 true 空
-//        boolean flag = (StringUtils.isEmpty(user_yuanGong.getZu())
-//                && StringUtils.isEmpty(user_yuanGong.getGongxu().getId())
-//                && StringUtils.isEmpty(user_yuanGong.getLunban().getId()));
-//
-//        String xm = user.getXingming();
-//
-//        //判断生日是否为空
-//        String birthday = null;
-//        if(!StringUtils.isEmpty(user.getBirthday())){
-//            Date birth = user.getBirthday();
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//            birthday = sdf.format(birth);
-//        }
-//
-//        String sex = StringUtils.isEmpty(user.getSex())?null:user.getSex().toString();
-//        String email = StringUtils.isEmpty(user.getEmail())?null:user.getEmail();
-//        String phone = StringUtils.isEmpty(user.getMobile())?null:user.getMobile();
-//        String zu = StringUtils.isEmpty(user_yuanGong.getZu())?null:user_yuanGong.getZu().toString();
-//        String gx_id = StringUtils.isEmpty(user_yuanGong.getGongxu().getId())?null:user_yuanGong.getGongxu().getId().toString();
-//        String lb_id = StringUtils.isEmpty(user_yuanGong.getLunban().getId())?null:user_yuanGong.getLunban().getId().toString();
-//
-//        userService.updateUserInfo(xm,birthday,sex,email,phone,user.getId(),zu,gx_id,lb_id,roles,flag);
-
-        return Result.ok("修改成功!",user);
+        return Result.ok("修改成功!",userJpaRepository.save(userInDB));
     }
+
 
     @GetMapping("updateUserZaiZhi")
     @ApiOperation(value = "修改员工在职离职")
@@ -178,6 +146,41 @@ public class UserController {
         return Result.ok("设置角色成功!",true);
     }
 
+    @GetMapping("findByUserId")
+    @ApiOperation(value = "根据用户id查询信息")
+    public Result findByUserId(Long id){
+        User user = userJpaRepository.findAllById(id);
+        return Result.ok("查询成功!",user);
+    }
+
+    @GetMapping("setUserInfo")
+    @ApiOperation(value = "修改当前登录用户基本资料")
+    public Result setUserInfo(String id,String xingming,String sex,String birthday,String mobile,String email){
+        birthday = StringUtils.isEmpty(birthday)?null:birthday;
+        mobile = StringUtils.isEmpty(mobile)?null:mobile;
+        email = StringUtils.isEmpty(email)?null:email;
+        userService.setUserInfo(id, xingming, sex, birthday, mobile, email);
+        return Result.ok("修改成功!",id);
+    }
+
+    @GetMapping("resetPwd")
+    @ApiOperation(value = "重置密码")
+    public Result resetPwd(String id,String oldpwd,String newpwd){
+
+        //新密码加密
+        String encryptPwd = passwordEncoder.encode(newpwd);
+        Map<String,Object> map = userService.getPwd(id);
+        //旧密码加密
+        String sql_oldpwd = passwordEncoder.encode(map.get("password").toString());
+        //新旧密码对比
+        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        if(flag){
+            userService.updateUserPwd(id,encryptPwd);
+            return Result.ok("密码修改成功!",id);
+        }else{
+            return Result.error("原始密码输入错误!",id);
+        }
+    }
 
 
 }

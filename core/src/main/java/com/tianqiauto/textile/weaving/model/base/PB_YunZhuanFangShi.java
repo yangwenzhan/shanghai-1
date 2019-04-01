@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "base_pb_yunzhuanfangshi")
+@EqualsAndHashCode(exclude = {"yunZhuanFangShi_xiangqingSet"})
 public class PB_YunZhuanFangShi {
 
 
@@ -32,6 +35,7 @@ public class PB_YunZhuanFangShi {
 
     private Integer lunbanshu; //轮班数
 
+    @JsonIgnoreProperties("yunZhuanFangShi")
     @OneToMany
     @JoinColumn(name="yunzhuanfangshi_id")
     private Set<PB_YunZhuanFangShi_Xiangqing> yunZhuanFangShi_xiangqingSet;

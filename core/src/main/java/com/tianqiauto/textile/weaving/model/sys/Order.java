@@ -136,8 +136,11 @@ public class Order {
 
     //查询使用条件
     @Transient
-    private String xiadankaishiriqi;//下单开始日期
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date xiadankaishiriqi;//下单开始日期
+
     @Transient
-    private String xiadanjieshuriqi;//下单结束日期
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date xiadanjieshuriqi;//下单结束日期
 
 }

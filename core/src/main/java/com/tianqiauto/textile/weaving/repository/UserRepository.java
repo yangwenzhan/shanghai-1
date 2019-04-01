@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificationExecutor<User> {
-
     User findByUsername(String username);
 
     //修改是否在职字段
@@ -24,5 +23,9 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
     void updateUserPwd(String pwd,Long id);
 
     boolean existsByUsername(String username);
+
+    List<User> findByShifouzaizhi(Integer sfzz);
+    User findAllById(Long id);
+
 
 }

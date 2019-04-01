@@ -1,5 +1,7 @@
 package com.tianqiauto.textile.weaving.service.jichushezhi;
 
+import com.tianqiauto.textile.weaving.model.base.PB_YunZhuanFangShi;
+import com.tianqiauto.textile.weaving.model.base.PB_YunZhuanFangShi_Xiangqing;
 import com.tianqiauto.textile.weaving.repository.YunZhuanFangShi_GongXu_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class PaiBanService {
@@ -22,59 +25,64 @@ public class PaiBanService {
 
     //修改运转方式详情
     @Transactional
-    public void upd_yzfs_Info(List<Object[]> list){
+    public void upd_yzfs_Info(PB_YunZhuanFangShi paibanRole){
+
+        List<Object[]> list = new ArrayList<>();
+        String yzfs_id = paibanRole.getId().toString();
+        Set<PB_YunZhuanFangShi_Xiangqing> xqSet = paibanRole.getYunZhuanFangShi_xiangqingSet();
+
+        for(PB_YunZhuanFangShi_Xiangqing xq:xqSet){
+            String lb_id = xq.getLunban().getId().toString();
+            String pxh = xq.getSort().toString();
+
+            String[] arr = new String[3];
+            arr[0] = lb_id;
+            arr[1] = yzfs_id;
+            arr[2] = pxh;
+            list.add(arr);
+        }
+
         String sql = "update base_pb_yunzhuanfangshi_xiangqing set lunban_id=? where yunzhuanfangshi_id=? and sort=?";
         jdbcTemplate.batchUpdate(sql,list);
     }
 
     /**
      * 新增运转方式详情
+     * 班次起始时间暂时没写，因数据库表中没有，字段不完整
      * @return
      */
     @Transactional
-    public void add_new_yzfs(Map<String,Object> paibanName,List<Map<String,Object>> banciTime,List<Map<String,Object>> paibanRole){
+    public void add_new_yzfs(PB_YunZhuanFangShi paibanRole){
 
-        String yzfsName = paibanName.get("yzfs_name").toString();
-        String yzfsLb = paibanName.get("yzfs_lb").toString();
-        String yzfsBc = paibanName.get("yzfs_bc").toString();
-        String addYzfs_sql = "insert into base_pb_yunzhuanfangshi(name,lunbanshu,paibanshu) values(?,?,?)";
-        int result = jdbcTemplate.update(addYzfs_sql, yzfsName, yzfsLb, yzfsBc);
+        String sql1 = "insert into base_pb_yunzhuanfangshi(lunbanshu,name,paibanshu) values(?,?,?)";
+        String sql2 = "insert into base_pb_yunzhuanfangshi_xiangqing(sort,banci_id,lunban_id,yunzhuanfangshi_id) values(?,?,?,?)";
+        String sql3 = "select id from base_pb_yunzhuanfangshi where name=?";
 
-        if (result >= 1) {
-            String sel_sql = "select id from base_pb_yunzhuanfangshi where name=?";
-            Map<String, Object> map = jdbcTemplate.queryForMap(sel_sql, yzfsName);
+        List<Object[]> list = new ArrayList<>();
+        String name = paibanRole.getName();
+        String lunbanshu = paibanRole.getLunbanshu().toString();
+        String paibanshu = paibanRole.getPaibanshu().toString();
+
+        int result = jdbcTemplate.update(sql1,lunbanshu,name,paibanshu);
+        if(result>0){
+            Map<String,Object> map = jdbcTemplate.queryForMap(sql3,name);
             String yzfs_id = map.get("id").toString();
 
-            //插入新的运转详情
-            List<Object[]> lb_list = new ArrayList<>();
-            for (int i = 0; i < banciTime.size(); i++) {
-                Map<String,Object> pbRoleMap = banciTime.get(i);
+            Set<PB_YunZhuanFangShi_Xiangqing> xqSet = paibanRole.getYunZhuanFangShi_xiangqingSet();
+            for(PB_YunZhuanFangShi_Xiangqing xq:xqSet){
+                String bc_id = xq.getBanci().getId().toString();
+                String lb_id = xq.getLunban().getId().toString();
+                String pxh = xq.getSort().toString();
+
                 String[] arr = new String[4];
-                arr[0] = yzfs_id;
-                arr[1] = pbRoleMap.get("pxh").toString();
-                arr[2] = pbRoleMap.get("lb_id").toString();
-                arr[3] = pbRoleMap.get("bc_id").toString();
-                lb_list.add(arr);
+                arr[0] = pxh;
+                arr[1] = bc_id;
+                arr[2] = lb_id;
+                arr[3] = yzfs_id;
+                list.add(arr);
             }
-            String add_yzfsInfo_sql = "insert into base_pb_yunzhuanfangshi_xiangqing(yunzhuanfangshi_id,sort,lunban_id,banci_id) values(?,?,?,?)";
-            jdbcTemplate.batchUpdate(add_yzfsInfo_sql, lb_list);
+            jdbcTemplate.batchUpdate(sql2,list);
         }
-
-        //更改班次开始结束时间
-        List<Object[]> bc_list = new ArrayList<>();
-
-        for (int i = 0; i < banciTime.size(); i++) {
-            Map<String,Object> bcMap = banciTime.get(i);
-            String[] arr = new String[3];
-            arr[0] = bcMap.get("kssj").toString();
-            arr[1] = bcMap.get("jssj").toString();
-            arr[2] = bcMap.get("bcid").toString();
-            bc_list.add(arr);
-        }
-
-        String updBcTime_sql = "update sys_banci set Start_time=?,End_time=? where id=?";
-
-        jdbcTemplate.batchUpdate(updBcTime_sql, bc_list);
 
     }
 
