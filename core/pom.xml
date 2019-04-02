@@ -97,6 +97,13 @@
 
 
 
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>excel-plus</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+
         <!-- 引用poi的jar包 -->
         <dependency>
             <groupId>org.apache.poi</groupId>

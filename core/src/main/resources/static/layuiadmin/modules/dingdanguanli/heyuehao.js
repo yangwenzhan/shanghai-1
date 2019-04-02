@@ -247,7 +247,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 var formData = data.field;
                                 formData.yuanSha = yuansha_temp_edit;
                                 $.ajax({
-                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/update',
+                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/copy',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
@@ -313,8 +313,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 }
             }
         });
-    };
-
+    }
     setPPGG('_add');
     setPPGG('_edit');
 
@@ -503,7 +502,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 anim: -1,
                 icon: 5,
                 btn1: function (index) {
-                    layer.open({content: data.data})
+                    layer.open({content: data.data});
                     layer.close(index);
                 }
             });

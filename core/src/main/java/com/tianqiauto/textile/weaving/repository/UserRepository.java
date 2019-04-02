@@ -2,14 +2,12 @@ package com.tianqiauto.textile.weaving.repository;
 
 import com.tianqiauto.textile.weaving.model.base.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
-public interface UserRepository extends JpaRepository<User,Long> {
-
+public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificationExecutor<User> {
     User findByUsername(String username);
 
     //修改是否在职字段
@@ -27,5 +25,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByUsername(String username);
 
     List<User> findByShifouzaizhi(Integer sfzz);
+    User findAllById(Long id);
+
 
 }

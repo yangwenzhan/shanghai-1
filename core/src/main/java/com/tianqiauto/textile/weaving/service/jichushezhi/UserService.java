@@ -113,7 +113,7 @@ public class UserService {
             jdbcTemplate.update(sql4,id);
             List<Object[]> list = new ArrayList<>();
             for(Role role:roles){
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = Long.toString(id);
                 arr[1] = role.getId().toString();
                 list.add(arr);
@@ -145,7 +145,7 @@ public class UserService {
         if(inst_ids.size()>0){
             List<Object[]> inst_list = new ArrayList<>();
             for (Map<String, Object> map : inst_ids) {
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = zu;
                 arr[1] = map.get("id").toString();
                 inst_list.add(arr);
@@ -160,7 +160,7 @@ public class UserService {
         if(upd_ids.size()>0){
             List<Object[]> upd_list = new ArrayList<>();
             for (Map<String, Object> map : upd_ids) {
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = zu;
                 arr[1] = map.get("id").toString();
                 upd_list.add(arr);
@@ -190,7 +190,7 @@ public class UserService {
 
                 List<Object[]> list = new ArrayList<>();
                 for (int j = 0; j < role_ids.length; j++) {
-                    String arr[] = new String[2];
+                    String[] arr = new String[2];
                     arr[0] = user_ids[i];
                     arr[1] = role_ids[j];
                     list.add(arr);
@@ -206,7 +206,7 @@ public class UserService {
         String sql = "insert into base_user_role(user_id,role_id) values(?,?)";
         List<Object[]> list = new ArrayList<>();
         for(Role role:roles){
-            String arr[] = new String[2];
+            String[] arr = new String[2];
             arr[0] = id;
             arr[1] = role.getId().toString();
             list.add(arr);
@@ -214,14 +214,30 @@ public class UserService {
         jdbcTemplate.batchUpdate(sql,list);
     }
 
+
+    //修改员工基本信息
+    public void setUserInfo(String id,String xingming,String sex,String birthday,String mobile,String email){
+        String sql = "update base_user set xingming=?,sex=?,mobile=?,email=?,birthday=? where id=?";
+        jdbcTemplate.update(sql,xingming,sex,mobile,email,birthday,id);
+    }
+
+    //查询旧密码
+    public Map<String,Object> getPwd(String id){
+        String sql = "select password from base_user where id=?";
+        return jdbcTemplate.queryForMap(sql,id);
+    }
+
+    //修改密码
+    public int updateUserPwd(String id,String newpwd){
+        String sql = "update base_user set password=? where id=?";
+        return jdbcTemplate.update(sql,newpwd,sql);
+    }
+
     @Transactional
     public User saveUser(User user){
-
-
        return userRepository.save(user);
-
-
     }
+
 
     public List<User> getByZaizhi(Integer sfzz) {
         return userRepository.findByShifouzaizhi(sfzz);
