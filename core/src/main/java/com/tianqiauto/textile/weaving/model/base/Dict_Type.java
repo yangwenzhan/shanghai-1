@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.model.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
+import io.github.biezhi.excel.plus.annotation.ExcelColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ public class Dict_Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     private String name;
 

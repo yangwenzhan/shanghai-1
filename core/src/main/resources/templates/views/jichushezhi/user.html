@@ -9,12 +9,12 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">工序</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="gx" lay-filter="gx">
+                        <select lay-search="" id="gx" lay-filter="gx" name="gongxu">
 
                         </select>
                     </div>
@@ -23,7 +23,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="role" lay-filter="role">
+                        <select lay-search="" id="role" lay-filter="role" name="role">
 
                         </select>
                     </div>
@@ -32,7 +32,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">轮班</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="lb" lay-filter="lb">
+                        <select lay-search="" id="lb" lay-filter="lb" name="lunban">
 
                         </select>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">组</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="zu" lay-filter="zu">
+                        <select lay-search="" id="zu" lay-filter="zu" name="zu">
 
                         </select>
                     </div>
@@ -48,7 +48,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">是否在职</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="sfzz" lay-filter="sfzz">
+                        <select lay-search="" id="sfzz" lay-filter="shifouzaizhi" name="shifouzaizhi">
+                            <option value="">全部</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
@@ -57,14 +58,12 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">工号姓名</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="yg" lay-filter="yg">
-
-                        </select>
+                        <select lay-search="" id="yg" lay-filter="yg" name="username"></select>
                     </div>
                 </div>
 
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
                     </button>
 
@@ -75,7 +74,7 @@
                 </div>
 
             </div>
-        </div>
+        </form>
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
@@ -135,7 +134,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">角色</label>
                 <div class="layui-input-inline">
-                    <select xm-select="add_select_role" lay-search="" name="roles" id="add_role">
+                    <select xm-select="add_select_role" lay-search="" name="role2" id="add_role">
 
                     </select>
                 </div>
@@ -214,35 +213,27 @@
             <div class="layui-inline">
                 <label class="layui-form-label">工序</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="gongxu" id="edit_gongxu">
-
-                    </select>
+                    <select lay-search="" name="gongxu" id="edit_gongxu"></select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">轮班</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="lunban" id="edit_lunban">
-
-                    </select>
+                    <select lay-search="" name="lunban" id="edit_lunban"></select>
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">组</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="zu" id="edit_zu" lay-filter="zu">
-
-                    </select>
+                    <select lay-search="" name="zu" id="edit_zu" lay-filter="zu"></select>
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">角色</label>
                 <div class="layui-input-inline">
-                    <select xm-select="edit_select_role" lay-search="" name="rolename" id="edit_role">
-
-                    </select>
+                    <select xm-select="edit_select_role" lay-search="" name="role2" id="edit_role"></select>
                 </div>
             </div>
 
@@ -337,7 +328,6 @@
         index: 'lib/index' //主入口模块
         ,user:'jichushezhi/user'
     }).use(['index','user','formSelects'],function () {
-
     });
 </script>
 </body>

@@ -35,7 +35,7 @@ public class PaiBanService {
             String lb_id = xq.getLunban().getId().toString();
             String pxh = xq.getSort().toString();
 
-            String arr[] = new String[3];
+            String[] arr = new String[3];
             arr[0] = lb_id;
             arr[1] = yzfs_id;
             arr[2] = pxh;
@@ -74,7 +74,7 @@ public class PaiBanService {
                 String lb_id = xq.getLunban().getId().toString();
                 String pxh = xq.getSort().toString();
 
-                String arr[] = new String[4];
+                String[] arr = new String[4];
                 arr[0] = pxh;
                 arr[1] = bc_id;
                 arr[2] = lb_id;

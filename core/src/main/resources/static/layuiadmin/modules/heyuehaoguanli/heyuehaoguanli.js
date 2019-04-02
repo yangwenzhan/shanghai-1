@@ -138,8 +138,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 }
             }
         });
-    };
-
+    }
     //初始化表格默认部分页，data渲染
     function initTableTemp(tableId, data, cols) {
         table.render({
@@ -154,8 +153,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 }
             }
         });
-    };
-
+    }
     //-----------------------------------------------------------------------------------------------------------添加选择原纱信息（以下）
     //监听搜索
     form.on('submit(ys_form_search)', function (data) {
@@ -361,12 +359,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 anim: -1,
                 icon:5,
                 btn1:function(index){
-                    layer.open({content:data.data})
+                    layer.open({content:data.data});
                     layer.close(index);
                 }
             });
         }
-    }
+    };
 
     /**
      * 2019/03/24 bjw
