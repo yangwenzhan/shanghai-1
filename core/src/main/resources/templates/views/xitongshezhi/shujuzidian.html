@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="/common/links::header"></div>
+        <title>数据字典</title>
+    </head>
+
+	<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类别名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类别编码</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="code" placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="layui-card-body">
+                <div style="padding-bottom: 10px;">
+                    <div class="layui-btn-group">
+                        <button class="layui-btn"><i class="layui-icon">&#xe608;</i> 添加</button>
+                        <button class="layui-btn"><i class="layui-icon">&#xe601;</i> 导出</button>
+                        <!--<button class="layui-btn"><i class="layui-icon">&#xe642;</i> 修改</button>-->
+                        <!--<button class="layui-btn"><i class="layui-icon">&#xe640;</i> 删除</button>-->
+                    </div>
+
+                    <button class="layui-btn layuiadmin-btn-list" id="shou_suo_cxtj" style="position: absolute;right: 2%;"><img style="margin-right:0" class="layui-nav-img" src="/images/up.png"></button>
+                </div>
+                <table id="table" lay-filter="table"></table>
+
+                <script type="text/html" id="tpl_edit">
+                    {{#  if(d.fixed == 1){ }}
+                    <input  name="fixed" type="checkbox" id="{{d.id}}" lay-filter="form_fixed" lay-skin="switch" lay-text="是|否"  value="1" checked />
+                    {{#  } else { }}
+                    <input  name="fixed" type="checkbox" id="{{d.id}} " lay-filter="form_fixed" lay-skin="switch" lay-text="是|否"  value="0"  />
+                    {{#  } }}
+                </script>
+
+                <script type="text/html" id="caozuo">
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div  style="display: none" id="div_form_edit">
+        <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">类别名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="required" placeholder="类别名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">类别编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" lay-verify="required" placeholder="类别编码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否可编辑</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" lay-filter="form_edit_switch" id="form_edit_switch" name="fixed" lay-skin="switch" lay-text="是|否">
+                </div>
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="text" name="id">
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div th:replace="/common/links::js_footer"></div>
+    <script>
+        layui.config({
+            base:"/layuiadmin/" //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+            ,shujuzidian:'xitongshezhi/shujuzidian'
+        }).use(['index','shujuzidian'],function () {
+            formBack();
+        });
+    </script>
+
+
+	</body>
+
+</html>

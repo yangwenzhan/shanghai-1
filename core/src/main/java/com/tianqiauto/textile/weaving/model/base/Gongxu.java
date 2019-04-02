@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * @ClassName SheBei
@@ -32,7 +31,7 @@ public class Gongxu {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    private Gongxu parent_gongxu; //父工序
+    private Gongxu parentGongxu; //父工序
 
 
 

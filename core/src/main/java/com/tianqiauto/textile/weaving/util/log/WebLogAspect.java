@@ -61,7 +61,7 @@ public class WebLogAspect {
 
         Sys_Log  sys_log = new Sys_Log();
         sys_log.setUserInfo(userInfo);
-        sys_log.setException(ex.toString());
+        sys_log.setException(ex.getMessage());
         sys_log.setUrl(URL);
         sys_log.setHttp_method(HTTP_METHOD);
         sys_log.setIp(IP);
@@ -103,7 +103,7 @@ public class WebLogAspect {
         sys_log.setArgs(Arrays.toString(joinPoint.getArgs()));
         sys_log.setType("normal");
         sys_log.setExecuteTime(System.currentTimeMillis() - startTime.get());
-        sys_log.setResponse(ret.toString());
+//        sys_log.setResponse(ret.toString());
         sys_log.setMsg(logger.msg());
         logJpaRepository.save(sys_log);
     }

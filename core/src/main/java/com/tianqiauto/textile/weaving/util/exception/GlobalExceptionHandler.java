@@ -25,11 +25,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e){
 
-        String msg = "服务器异常，请联系管理员";
+        String msg = "服务器异常，请重试或联系管理员";
 
         if("Access is denied".equals(e.getMessage())){
             msg = "没有权限访问此页面，请联系管理员";
         }
+        e.printStackTrace();
+
+        e.printStackTrace();
 
         return Result.error(msg,e.getMessage());
     }

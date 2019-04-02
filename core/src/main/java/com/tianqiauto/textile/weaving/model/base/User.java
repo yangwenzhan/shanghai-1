@@ -1,12 +1,19 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,6 +21,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"roles","gongxu","lunban"})
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -21,15 +30,29 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    @ApiModelProperty(value = "用户姓名")
+    @ApiModelProperty(value = "用户名")
     private String username;
 
     @Column(nullable = false)
-    @NotBlank(message = "密码不能为空")
     private String password;
+
+    @Column(nullable = false)
+    private  String xingming;
 
     private Date birthday;
 
+    @Email(message = "不是有效的邮箱地址")
+    private String email;
+
+    private String mobile;
+
+    //性别
+    private Integer sex;
+
+    //是否在职
+    private Integer shifouzaizhi;
+
+    @JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "base_user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -39,9 +62,24 @@ public class User {
 
 
 
+    //关联工序表 可为空
+    @ManyToOne
+    @JoinColumn(name = "gongxu_id")
+    private Gongxu gongxu;
+
+    //若工序为空，则组必为空，新增时不需展示组
+    private Integer zu;
+
+    //所属轮班
+    @ManyToOne
+    @JoinColumn(name = "lunban_id")
+    private Dict lunban;
 
 
 
+
+    @Transient
+    private String ghxm;
 
 
 //        @Transient          //不映射生成数据库对应字段
@@ -51,9 +89,29 @@ public class User {
 
 
 
+    public void setGhxm(String ghxm){
+        this.ghxm=username+" "+xingming;
+    }
 
 
 
 
+
+
+    @Column
+    @CreatedDate
+    private Date createDate;
+    @Column
+    @LastModifiedDate
+    private Date lastModifiedDate;
+    @Column
+    @CreatedBy
+    private String createdBy;
+    @Column
+    @LastModifiedBy
+    private String modifiedBy;
+    @Column
+    @Version
+    private Long version;
 
 }

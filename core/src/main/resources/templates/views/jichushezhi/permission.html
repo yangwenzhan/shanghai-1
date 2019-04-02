@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/demo.css}" media="all">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/metroStyle.css}" media="all">
+	<div th:replace="/common/links::header"></div>
+	<title>权限管理</title>
+</head>
+
+	<body>
+
+		<div class="content_wrap">
+			<div class="zTreeDemoBackground2 left">
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+
+			<div class="inforight">
+				<fieldset class="layui-elem-field layui-field-title">
+					<legend> <button class="layui-btn" id="add_role_btn"><i class="layui-icon">&#xe608;</i> 添加权限</button></legend>
+				</fieldset>
+
+				<table class="layui-table" id="table" lay-filter="table">
+				</table>
+
+			</div>
+		</div>
+
+
+		<!--增加   div-->
+		<div id="div_form_add" style="display: none">
+			<div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">权限编码</label>
+						<div class="layui-input-inline">
+							<input type="text" name="permissionCode" autocomplete="off" lay-verify="required" placeholder="权限编码" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限名称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="permissionName" autocomplete="off" lay-verify="required" placeholder="权限名称" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限父节点</label>
+						<div class="layui-input-inline">
+							<input type="text" id="parentId_add_name" autocomplete="off" placeholder="权限父节点" class="layui-input" disabled/>
+						</div>
+					</div>
+					<div class="layui-inline layui-hide">
+						<div class="layui-input-inline">
+							<input type="text" name="parentId" id="parentId_add_id" autocomplete="off" placeholder="权限父节点" class="layui-input"/>
+						</div>
+					</div>
+
+				</div>
+
+				<!--<div class="layui-form-item">
+					<label class="layui-form-label">权限父节点</label>
+					<div class="layui-input-block">
+						<input type="text" id="tree_add" lay-filter="tree_add" class="layui-input" autocomplete="off" lay-verify="required">
+					</div>
+				</div>-->
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+
+
+		<!--修改 弹窗  div-->
+		<div id="div_form_edit" style="display: none;">
+			<div class="layui-form" lay-filter="form_edit" id="form_edit">
+				<div class="layui-form-item">
+
+					<div class="layui-inline layui-hide">
+						<div class="layui-input-inline">
+							<input type="text" name="id" autocomplete="off" placeholder="权限父节点" class="layui-input"/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限编码</label>
+						<div class="layui-input-inline">
+							<input type="text" name="permissionCode" autocomplete="off" lay-verify="required" placeholder="权限编码" class="layui-input" disabled/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限名称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="permissionName" autocomplete="off" lay-verify="required" placeholder="权限名称" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">权限父节点</label>
+						<div class="layui-input-inline">
+							<input type="text" name="parentId" autocomplete="off" placeholder="权限父节点" class="layui-input" disabled/>
+						</div>
+					</div>
+
+					<!--<div class="layui-form-item">
+						<label class="layui-form-label">权限父节点</label>
+						<div class="layui-input-block">
+							<input type="text" id="tree_edit" lay-filter="tree_add" class="layui-input" autocomplete="off" lay-verify="required">
+						</div>
+					</div>-->
+
+					<div class="layui-form-item layui-hide">
+						<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--//查看角色-->
+		<div style="display: none" id="role_list_window">
+			<form class="layui-form">
+				<div class="layui-form-item layui-inline" id="role_list_container" style="padding: 0 10px">
+				</div>
+			</form>
+		</div>
+
+		<script type="text/html" id="role_list_tpl">
+			{{# layui.each(d, function(idx, it){ }}
+			<div class="layui-input-inline">
+				<input type="checkbox" title="{{it.name}}" checked value="{{it.id}}" lay-filter="delete_role_from_permission"/>
+			</div>
+			{{# }); }}
+		</script>
+
+		<!--操作按钮-->
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="role"><i class="layui-icon layui-icon-group"></i>角色</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+		</script>
+
+		<div th:replace="/common/links::js_footer"></div>
+		<script th:src="@{/js/ztree/jquery.ztree.core.js}"></script>
+		<script th:src="@{/js/ztree/jquery.ztree.excheck.js}"></script>
+		<script th:src="@{/js/ztree/jquery.ztree.exedit.js}"></script>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+                ,permission: 'jichushezhi/juesequanxian/permission'
+            }).use(['index','permission'],function () {
+
+            });
+
+		</script>
+
+
+
+	</body>
+
+</html>

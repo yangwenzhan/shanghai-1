@@ -1,12 +1,15 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,6 +27,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_order")
+@EqualsAndHashCode(exclude = {"heyuehaos"})
 public class Order {
     /**
      * 新增合约号（新增、换经纱、换纬纱）
@@ -34,11 +38,10 @@ public class Order {
      *
      * 查询订单（订单进度）
      *
-     *
      * 合约号查询
      *
+     * 坯布规格=入库规格=【幅宽/经密/纬密/经纱成分/经纱支数/纬纱支数/纬纱支数/特殊要求】拼接而成
      */
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +50,7 @@ public class Order {
 
     private String dingdanhao; //订单号
 
+    @JsonIgnoreProperties("order")
     @OneToMany
     @JoinColumn(name = "order_id")
     private Set<Heyuehao> heyuehaos; //合约号
@@ -63,6 +67,8 @@ public class Order {
 
     private Date xiadanriqi; //下单日期
 
+//    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量
@@ -78,15 +84,6 @@ public class Order {
     private Double weibaimiyongsha; //纬百米用纱量
 
     private Integer pingfangkezhong; //平方克重
-
-    @Column(precision = 12,scale = 2)
-    private Double jingxiangjindu; //经向紧度
-
-    @Column(precision = 12,scale = 2)
-    private Double weixiangjindu; //纬向紧度
-
-    @Column(precision = 12,scale = 2)
-    private Double zongjindu;  //总紧度
 
     @ManyToOne
     @JoinColumn(name = "yuanliaoleixing_id")
@@ -114,23 +111,19 @@ public class Order {
     @JoinColumn(name = "kehuxinxi_id")
     private Dict kehuxinxi; //客户信息
 
-
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Dict status; //订单状态 10 15 20 30 40   已下单/生产中/已完成
 
-
     //这5个字段根据坯布规格拆分出来
-    private Double fukuan;  //幅宽
-    private String jingshapinzhong; //经纱品种
-    private String weishapinzhong; //纬纱品种
-    private Double jingmi; //经密
-    private Double weimi; //纬密
-
-
-
-
-
+    private Double fukuan;            //幅宽
+    private Double jingmi;            //经密
+    private Double weimi;             //纬密
+    private String jingshachengfen; //经纱成分
+    private String jingshazhishu;   //经纱支数
+    private String weishachengfen;  //经纱成分
+    private String weishazhishu;    //纬纱支数
+    private String teshuyaoqiu;     //特殊要求
 
     @CreatedDate
     private Date createTime;
@@ -139,11 +132,15 @@ public class Order {
     private Date lastModifyTime;
     private String lastModifyRen;
 
-
-
     private String beizhu;   //备注
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date xiadankaishiriqi;//下单开始日期
 
-
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date xiadanjieshuriqi;//下单结束日期
 
 }

@@ -1,8 +1,10 @@
 package com.tianqiauto.textile.weaving.model.base;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,7 +16,23 @@ import javax.persistence.*;
 /**
  *  数据字典表
  */
+@EqualsAndHashCode(exclude = {"dict_type"})
 public class Dict {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String value;
+    private Integer sort;  //排序号
+
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    @JsonIgnoreProperties("dicts")
+    private Dict_Type dict_type;
+
 
     /**
      * 订单原料类型（原纱表来源字段同样使用）
@@ -42,23 +60,6 @@ public class Dict {
      * 成品入/出库类型
      *
      */
-
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String value;
-    private Integer sort;  //排序号
-
-
-
-
-
-//    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-//    @JoinColumn(name = "type_id")
-//    private Dict_Type type;
 
 
 
