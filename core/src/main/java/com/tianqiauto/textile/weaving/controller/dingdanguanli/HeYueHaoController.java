@@ -68,7 +68,7 @@ public class HeYueHaoController {
     public Result addHeyuegao(@RequestBody Heyuehao heyuehao){
 
         List<Heyuehao> list = heyuehaoService.findByName(heyuehao.getName());
-        if(null != list || !list.isEmpty()){
+        if(list.size()>0){
             return Result.result(666,"合约号"+heyuehao.getName()+"已存在不能重复添加！",heyuehao);
         }
 
@@ -104,7 +104,7 @@ public class HeYueHaoController {
     @ResponseBody
     public Result create_heyuehao(String order_id, String flag){
         Object ret = heyuehaoService.create_heyuehao(order_id,flag);
-        return Result.ok("更新成功！",ret);
+        return Result.ok("成功！",ret);
     }
 
     @GetMapping("findAllPage")
@@ -112,7 +112,7 @@ public class HeYueHaoController {
     @ResponseBody
     public Result findAllPage(Heyuehao heyuehao,Pageable pageable){
         Object ret = heyuehaoService.findAllPage(heyuehao,pageable);
-        return Result.ok("更新成功！",ret);
+        return Result.ok("成功！",ret);
     }
 
     @GetMapping("/getYuanSha")
