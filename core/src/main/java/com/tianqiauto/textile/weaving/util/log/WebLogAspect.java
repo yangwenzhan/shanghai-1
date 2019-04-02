@@ -61,7 +61,7 @@ public class WebLogAspect {
 
         Sys_Log  sys_log = new Sys_Log();
         sys_log.setUserInfo(userInfo);
-        sys_log.setException(ex.getMessage().toString());
+        sys_log.setException(ex.getMessage());
         sys_log.setUrl(URL);
         sys_log.setHttp_method(HTTP_METHOD);
         sys_log.setIp(IP);

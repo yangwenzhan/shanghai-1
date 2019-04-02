@@ -1,5 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.common;
 
+import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
 import com.tianqiauto.textile.weaving.model.sys.Param_LeiBie;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName CommonController
@@ -74,6 +74,14 @@ public class CommonController {
     public Result findUserZu(){
         List<Map<String,Object>> list = commonService.findUserZu();
         return Result.ok(list);
+    }
+
+    @GetMapping("DictFindAllByCodes")
+    @ApiOperation(value = "根据数据字典类型的code查询出dict数据并封装成map类型返回，key=code，val=Set<dict> ",notes = "传入查询需要的多个code，codes是数组对象")
+    public Result DictFindAllByCodes(String[] codes){
+        Set<String> set = new HashSet<>(Arrays.asList(codes));
+        Map<String,Set<Dict>> map = commonService.DictFindAllByCodes(set);
+        return Result.ok("查询成功!",map);
     }
 
 }
