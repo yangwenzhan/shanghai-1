@@ -1,9 +1,7 @@
 package com.tianqiauto.textile.weaving.model.base;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -49,7 +47,13 @@ public class PanCunYue {
     private String jieshu; //结束时间+班次
 
 
+    public void setKaishi(String kaishi){
+        this.kaishi = kaishiriqi.replaceAll("-","")+kaishibanci.getValue();
+    }
 
+    public void setJieshu(String jieshu){
+        this.jieshu = jieshuriqi.replaceAll("-","")+jieshubanci.getValue();
+    }
 
 
 

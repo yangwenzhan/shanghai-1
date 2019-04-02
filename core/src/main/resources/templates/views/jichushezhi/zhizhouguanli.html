@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>织轴管理</title>
+</head>
+
+	<body>
+
+		<div class="layui-fluid">
+			<table class="layui-table" lay-filter="table" id="table"></table>
+		</div>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+		</script>
+
+		<!--修改弹窗  div-->
+		<div id="edit_form_div" style="display: none;">
+			<div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">织轴号</label>
+						<div class="layui-input-block">
+							<input type="text" name="zhouhao" id="zhouhao" placeholder="请输入轴宽" class="layui-input" autocomplete="off" disabled/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">织机机型</label>
+						<div class="layui-input-block">
+							<select name="jixing" lay-verify="required" lay-search="" id="jixing" lay-filter="jixing">
+
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">轴宽</label>
+						<div class="layui-input-block">
+							<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="text" name="zhoukuan" id="zhoukuan" placeholder="请输入轴宽" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-block">
+							<textarea type="text" name="beizhu" id="beizhu" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+						</div>
+					</div>
+
+					<div class="layui-hide">
+						<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div th:replace="/common/links::js_footer"></div>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+                ,zhizhouguanli:'jichushezhi/zhouguanli/zhizhouguanli'
+            }).use(['index','zhizhouguanli'],function () {
+
+            });
+		</script>
+
+	</body>
+
+</html>

@@ -226,30 +226,6 @@ layui.define(['table', 'form'], function(exports){
 
     });
 
-    /**
-     * 2019/03/22 bjw
-     * 通过三目运算符处理NULL异常
-     * @param name 数据取值参数
-     * @returns {string} 取值内容
-     */
-    function repNull(name) {
-        var arr = name.split('.');
-        var tem = "<div>{{ ";
-        var currentObj = 'd';
-        var smbds = '(';
-        for (var i = 0; i < arr.length; i++) {
-            currentObj += '.' + arr[i];
-            if (i == (arr.length - 1)) {
-                smbds += currentObj + "== null) ? '' : " + currentObj;
-            } else {
-                smbds += currentObj + "== null || ";
-            }
-        }
-        tem += smbds;
-        tem += ' }}</div>';
-        return tem;
-    }
-
     //丰富列配置功能
     function fixedColumn(cols) {
         for(var i = 0; i < cols.length; i++) {

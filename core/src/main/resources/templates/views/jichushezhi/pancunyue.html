@@ -8,24 +8,38 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
             <div class="layui-form-item">
 
                 <div class="layui-inline">
                     <label class="layui-form-label">年份</label>
                     <div class="layui-input-block">
-                        <input type="text" name="nian" placeholder="年份" autocomplete="off" class="layui-input">
+                        <input type="text" id="nian" name="nian" placeholder="年份" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">月份</label>
                     <div class="layui-input-block">
-                        <input type="text" name="yue" placeholder="月份" autocomplete="off" class="layui-input">
+                        <select name="yue" lay-verify="required" lay-search="" id="yue">
+                            <option value="">全部</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
                     </button>
                 </div>
 
@@ -34,11 +48,19 @@
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
-                <button class="layui-btn layuiadmin-btn-admin">删除</button>
-                <button class="layui-btn layuiadmin-btn-admin">添加</button>
+                <button class="layui-btn"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                <button class="layui-btn"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
             </div>
             <table id="table" lay-filter="table"></table>
         </div>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+        </script>
+
+
+
+
     </div>
 </div>
 
