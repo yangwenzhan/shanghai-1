@@ -50,8 +50,8 @@ public class CommonController {
 
     @GetMapping("findAllJX")
     @ApiOperation(value = "查询工序下机型")
-    public Result findAllJX(Gongxu parent_gongxu){
-        List<Gongxu> list = gongXuRepository.findAllByParentGongxu(parent_gongxu);
+    public Result findAllJX(Long gongxu){
+        List<Gongxu> list = gongXuRepository.findAllByParentGongxu(gongxu);
         return Result.ok("查询成功!",list);
     }
 
