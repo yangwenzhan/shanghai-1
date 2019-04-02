@@ -135,7 +135,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             var lbid = tdArr.eq(3).find('div').find('select').val();
 
             //将要修改的字段  yzfs_id,pxh,lbid 封装到对象中，并把对象放入arry数组
-            var obj = new Object();
+            var obj = {};
             /*运转详情对象*/
             obj.lunban_id = lbid;
             obj.yzfs_id = id;
@@ -144,10 +144,10 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             arry.push(obj);
         }
 
-        var YunZhuanXiangQing = [],YunZhuanFangShi=new Object();
+        var YunZhuanXiangQing = [],YunZhuanFangShi={};
         for(var i=0;i<arry.length;i++){
             var lunban = {id:arry[i].lunban_id};
-            var yunZhuanFangShi_xiangqingSet = {sort:arry[i].sort,lunban:lunban}
+            var yunZhuanFangShi_xiangqingSet = {sort:arry[i].sort,lunban:lunban};
             YunZhuanXiangQing.push(yunZhuanFangShi_xiangqingSet);
         }
         YunZhuanFangShi = {id:id,yunZhuanFangShi_xiangqingSet:YunZhuanXiangQing};
@@ -193,7 +193,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                         function(index) {
 
                         });
-                })
+                });
                 $('.cancel').click(function() {
                     layer.close(index_one);
                 })
@@ -210,7 +210,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         });
 
         var arry = [];
-        var obj = new Object();//运转方式对象
+        var obj = {};//运转方式对象
 
         //存储新增的运转方式
         var yzfs_name = $('#lbmc').val();
@@ -227,7 +227,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         var yzbc_num = $('#bcqz_sj').children().length;
         var bc_arr = [];
         for(var i = 1; i <= yzbc_num; i++) {
-            var bc_obj = new Object();
+            var bc_obj = {};
             bc_obj.bcid = $('#bc' + i).val();
             bc_obj.kssj = $('#kssj' + i).val();
             bc_obj.jssj = $('#jssj' + i).val();
@@ -240,7 +240,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         //放第二步的详细排班信息     pai_table获取该table下td的轮班信息
         var lb_arr = [];
         $('#pai_table tr').children('td').find('select').each(function(i) { // 遍历 tr 的各个 td
-            var lb_obj = new Object();
+            var lb_obj = {};
             lb_obj.pxh = i + 1;
             lb_obj.lb_id = $(this).val();
             if(i < yzbc_num) {

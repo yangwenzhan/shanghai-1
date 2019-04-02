@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
         if("Access is denied".equals(e.getMessage())){
             msg = "没有权限访问此页面，请联系管理员";
         }
+        e.printStackTrace();
 
         e.printStackTrace();
 

@@ -29,7 +29,7 @@ layui.define(['form'], function(exports){
           id:obj.field.id,
           oldpwd:obj.field.oldPassword,
           newpwd:obj.field.password
-      }
+      };
       layer.confirm(
           '确定修改信息?',
           {title:'提示'},function (i){
@@ -59,7 +59,7 @@ layui.define(['form'], function(exports){
                               anim: -1,
                               icon:5,
                               btn1:function(index){
-                                  layer.open({content:data.data})
+                                  layer.open({content:data.data});
                                   layer.close(index);
                               }
                           });

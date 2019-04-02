@@ -174,7 +174,7 @@
 		n.isHover = false;
 		n.editNameFlag = false;
 	},
-	//update zTreeObj, add method of edit
+	//copy zTreeObj, add method of edit
 	_zTreeTools = function(setting, zTreeTools) {
 		zTreeTools.cancelEditName = function(newName) {
 			var root = data.getRoot(this.setting);

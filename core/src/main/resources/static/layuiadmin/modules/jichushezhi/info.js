@@ -71,7 +71,7 @@ layui.define(['form','laydate'], function(exports){
           birthday:obj.field.birthday,
           mobile:obj.field.mobile,
           email:obj.field.email
-      }
+      };
       layer.confirm(
           '确定修改信息?',
           {title:'提示'},function (i){
@@ -101,7 +101,7 @@ layui.define(['form','laydate'], function(exports){
                               anim: -1,
                               icon:5,
                               btn1:function(index){
-                                  layer.open({content:data.data})
+                                  layer.open({content:data.data});
                                   layer.close(index);
                               }
                           });

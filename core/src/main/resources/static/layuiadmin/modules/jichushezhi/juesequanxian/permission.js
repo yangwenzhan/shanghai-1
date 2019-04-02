@@ -59,7 +59,7 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
                                     parentNodeName=parentNode.name;
                                 }
                                 node_id = node.id;
-                                node_name = nodes[0].name
+                                node_name = nodes[0].name;
                                 queryPermissionByPId(node_id);
                             }
                         }

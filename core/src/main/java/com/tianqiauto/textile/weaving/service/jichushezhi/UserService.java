@@ -3,14 +3,11 @@ package com.tianqiauto.textile.weaving.service.jichushezhi;
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
-import com.tianqiauto.textile.weaving.model.base.User_YuanGong;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
-import com.tianqiauto.textile.weaving.repository.UserYuanGongRepository;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import com.tianqiauto.textile.weaving.util.result.Result;
-import com.tianqiauto.textile.weaving.util.update.UpdateCopyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -34,9 +31,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private UserYuanGongRepository userYuanGongRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -119,7 +113,7 @@ public class UserService {
             jdbcTemplate.update(sql4,id);
             List<Object[]> list = new ArrayList<>();
             for(Role role:roles){
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = Long.toString(id);
                 arr[1] = role.getId().toString();
                 list.add(arr);
@@ -151,7 +145,7 @@ public class UserService {
         if(inst_ids.size()>0){
             List<Object[]> inst_list = new ArrayList<>();
             for (Map<String, Object> map : inst_ids) {
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = zu;
                 arr[1] = map.get("id").toString();
                 inst_list.add(arr);
@@ -166,7 +160,7 @@ public class UserService {
         if(upd_ids.size()>0){
             List<Object[]> upd_list = new ArrayList<>();
             for (Map<String, Object> map : upd_ids) {
-                String arr[] = new String[2];
+                String[] arr = new String[2];
                 arr[0] = zu;
                 arr[1] = map.get("id").toString();
                 upd_list.add(arr);
@@ -196,7 +190,7 @@ public class UserService {
 
                 List<Object[]> list = new ArrayList<>();
                 for (int j = 0; j < role_ids.length; j++) {
-                    String arr[] = new String[2];
+                    String[] arr = new String[2];
                     arr[0] = user_ids[i];
                     arr[1] = role_ids[j];
                     list.add(arr);
@@ -212,7 +206,7 @@ public class UserService {
         String sql = "insert into base_user_role(user_id,role_id) values(?,?)";
         List<Object[]> list = new ArrayList<>();
         for(Role role:roles){
-            String arr[] = new String[2];
+            String[] arr = new String[2];
             arr[0] = id;
             arr[1] = role.getId().toString();
             list.add(arr);
@@ -244,27 +238,6 @@ public class UserService {
        return userRepository.save(user);
     }
 
-    @Transactional
-    public void updateUserInfo(User user){
-
-        System.out.println("request user:"+user);
-
-        User_YuanGong user_yuanGong = null;
-        user.getUser_yuanGong().setLunban(null);
-
-        if(user.getUser_yuanGong()!=null){
-
-            user_yuanGong = userYuanGongRepository.saveAndFlush(user.getUser_yuanGong());
-        }
-
-        User userInDB = userRepository.getOne(user.getId());
-        UpdateCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","mobile","roles","sex","xingming"));
-
-        user.setUser_yuanGong(user_yuanGong);
-
-        System.out.println("userInDB:"+userInDB);
-        userRepository.save(userInDB);
-    }
 
     public List<User> getByZaizhi(Integer sfzz) {
         return userRepository.findByShifouzaizhi(sfzz);
