@@ -9,8 +9,7 @@ layui.define(['table', 'form'], function(exports){
             url: layui.setter.host + 'common/findAllGX',
             type: 'get',
             success: function (data) {
-                console.log(data)
-                initDownList(data, 'gongxu', null, 'name', 'id', true);
+                initDownList(data, "gongxu", null, 'name', 'id', true);
                 form.render();
             }
         });
@@ -23,7 +22,7 @@ layui.define(['table', 'form'], function(exports){
                 gongxu:$('#gongxu').val()
             },
             success: function (data) {
-                initDownList(data, 'gongxu', null, 'name', 'id', false);
+                initDownList(data, 'jixing', null, 'name', 'id', true);
                 form.render();
             }
         });
@@ -42,12 +41,12 @@ layui.define(['table', 'form'], function(exports){
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
     ];
     cols = fixedColumn(cols);
+
     initTable_all("table", 'jichushuju/shebei/shebei/findAllSheBei', 'get',[cols], table,"form");
 
     form.on('select(gongxu)', function(data) {
         initJX();
     });
-
 
     table.on('tool(table)',function(obj){
         var data = obj.data;
@@ -89,6 +88,17 @@ layui.define(['table', 'form'], function(exports){
                 },
             });
         }
+    });
+
+    form.on('submit(form_search)',function(data){
+        var field = getParams("form");
+        table.reload('table',{where:field});
+        return false;
+    });
+
+
+    $('#searchBtn').on("click",function(){
+        table.reload("table");
     });
 
     //监听是否报警

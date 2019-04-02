@@ -2,10 +2,8 @@ package com.tianqiauto.textile.weaving.controller.common;
 
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
-import com.tianqiauto.textile.weaving.model.sys.Param_LeiBie;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.GongXuRepository;
-import com.tianqiauto.textile.weaving.repository.SheBeiParamLeiBieRepository;
 import com.tianqiauto.textile.weaving.service.common.CommonService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
@@ -32,9 +30,6 @@ public class CommonController {
     private GongXuRepository gongXuRepository;
 
     @Autowired
-    private SheBeiParamLeiBieRepository sheBeiParamLeiBieRepository;
-
-    @Autowired
     private Dict_TypeRepository dict_typeRepository;
 
     @Autowired
@@ -57,8 +52,8 @@ public class CommonController {
 
     @GetMapping("findAllCSLB")
     @ApiOperation(value = "根据工序机型查询参数类别")
-    public Result findAllCSLB(Gongxu gongxu, Gongxu jixing){
-        List<Param_LeiBie> list = sheBeiParamLeiBieRepository.findAllByGongxuAndJixing(gongxu, jixing);
+    public Result findAllCSLB(String gongxu, String jixing){
+        List list = commonService.findCSLB(gongxu, jixing);
         return Result.ok("查询成功!",list);
     }
 
@@ -75,6 +70,13 @@ public class CommonController {
     public Result findUserZu(){
         List<Map<String,Object>> list = commonService.findUserZu();
         return Result.ok(list);
+    }
+
+    @GetMapping("findZhiJiJiXing")
+    @ApiOperation(value = "查询织机机型")
+    public Result findZhiJiJiXing(){
+        List list = commonService.findZhiJiJiXing();
+        return Result.ok("查询成功",list);
     }
 
 }

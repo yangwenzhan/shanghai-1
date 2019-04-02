@@ -13,4 +13,6 @@ public interface JingZhouRepository extends JpaRepository<Beam_JingZhou,Long> {
     @Query(value = "update sys_beam_jingzhou set zhoukuan=?1,beizhu=?2 where id=?3",nativeQuery = true)
     void updateJingZhou(Double zhoukuan, String beizhu, Long id);
 
+    boolean existsByZhouhao(String zhouhao);
+
 }

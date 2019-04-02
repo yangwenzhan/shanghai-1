@@ -7,11 +7,13 @@ import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName PancunyueController
@@ -31,20 +33,48 @@ public class PancunyueController {
     @Autowired
     private PanCunYueRepository panCunYueRepository;
 
-    @PostMapping("findAll")
+    @GetMapping("findAll")
     @ApiOperation(value = "查询所有")
-    public Result query_page(@RequestBody PanCunYue panCunYue, Pageable pageable){
-        System.out.println(pageable.getSort());
-        Page<PanCunYue> panCunYues = panCunYueService.findAll(panCunYue,pageable);
+    public Result query_page(PanCunYue panCunYue, Pageable pageable){
+
+        List<Sort.Order> orders=new ArrayList<Sort.Order>();
+        orders.add( new Sort.Order(Sort.Direction.ASC, "nian"));
+        orders.add( new Sort.Order(Sort.Direction.ASC, "yue"));
+
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),
+                new Sort(orders));
+        System.out.println(pageRequest.getSort());
+        Page<PanCunYue> panCunYues = panCunYueService.findAll(panCunYue,pageRequest);
         return Result.ok("查询成功",panCunYues);
     }
 
     @PostMapping("addPanCunYue")
     @ApiOperation(value = "新增盘存月")
     public Result addPanCunYue(@RequestBody PanCunYue panCunYue){
-        panCunYueRepository.save(panCunYue);
-        return Result.ok("新增成功",panCunYue);
+        boolean flag = panCunYueRepository.existsByNianAndYue(panCunYue.getNian(),panCunYue.getYue());
+        if(!flag){
+            panCunYueService.addPanCunYue(panCunYue);
+            return Result.ok("新增成功",panCunYue);
+        }else{
+            return Result.result(666,"该月盘存已存在",panCunYue);
+        }
     }
+
+    @PostMapping("deletePanCunYue")
+    @ApiOperation(value = "删除盘存月")
+    public Result deletePanCunYue(@RequestBody PanCunYue panCunYue){
+        panCunYueRepository.delete(panCunYue);
+        return Result.ok("删除成功",panCunYue);
+    }
+
+    @PostMapping("updatePanCunYue")
+    @ApiOperation(value = "修改盘存月")
+    public Result updatePanCunYue(@RequestBody PanCunYue panCunYue){
+        panCunYueService.updatePanCunYue(panCunYue);
+        return Result.ok("修改成功",panCunYue);
+    }
+
+
 
 
 

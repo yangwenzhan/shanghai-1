@@ -51,7 +51,9 @@ layui.define(['table', 'form'], function(exports){
                                 success:function(data){
                                     ajaxSuccess(data,table);
                                     if(data.code==666){
-                                        layer.close(i);
+                                        layer.open({
+                                            title:"消息提醒",content:data.message,skin:"layui-layer-molv",offset: 'auto',time:3000,btn:[],shade: 0,anim: -1,icon:5
+                                        });
                                     }else{
                                         layer.close(i);layer.close(index);
                                     }

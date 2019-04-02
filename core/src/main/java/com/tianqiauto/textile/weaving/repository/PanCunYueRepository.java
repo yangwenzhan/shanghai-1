@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface PanCunYueRepository extends JpaRepository<PanCunYue,Long> ,JpaSpecificationExecutor<PanCunYue> {
 
-
+    boolean existsByNianAndYue(String nian,String yue);
 }

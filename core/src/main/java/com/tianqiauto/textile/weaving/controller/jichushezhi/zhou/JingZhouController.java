@@ -46,4 +46,24 @@ public class JingZhouController {
         return Result.ok("修改成功",jingZhou);
     }
 
+    @PostMapping("addJingZhou")
+    @ApiOperation(value = "新增经轴")
+    public Result addJingZhou(@RequestBody Beam_JingZhou jingZhou){
+        boolean flag = jingZhouRepository.existsByZhouhao(jingZhou.getZhouhao());
+        if(!flag){
+            jingZhouRepository.save(jingZhou);
+            return Result.ok("新增成功",jingZhou);
+        }else{
+            return Result.result(666,"经轴号已存在",jingZhou);
+        }
+    }
+
+    @PostMapping("deleteJingZhou")
+    @ApiOperation(value = "删除经轴")
+    public Result deleteJingZhou(@RequestBody Beam_JingZhou jingZhou){
+        jingZhouRepository.delete(jingZhou);
+        return Result.ok("删除成功",jingZhou);
+    }
+
+
 }

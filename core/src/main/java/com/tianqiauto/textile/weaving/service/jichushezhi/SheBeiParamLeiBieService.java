@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -26,6 +27,9 @@ public class SheBeiParamLeiBieService {
     @Autowired
     private SheBeiParamLeiBieRepository sheBeiParamLeiBieRepository;
 
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     public Page<Param_LeiBie> findAll(String gxid,String jxid,Pageable pageable){
         Specification<Param_LeiBie> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList();
@@ -39,6 +43,15 @@ public class SheBeiParamLeiBieService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return sheBeiParamLeiBieRepository.findAll(specification,pageable);
+    }
+
+    //判断类别是否存在
+    public boolean existsByGongxuAndJixingAndName(Long gxid,Long jxid,String name,Long id){
+        String sql = "select count(*) from sys_param_leibie where gongxu_id=? and jixing_id=? and name=? and id != ?";
+        int num = jdbcTemplate.queryForObject(sql,Integer.class,gxid,jxid,name,id);
+        if(num>0)
+            return false;
+        return true;
     }
 
 

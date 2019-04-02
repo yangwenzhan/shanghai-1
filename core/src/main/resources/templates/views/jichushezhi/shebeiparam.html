@@ -9,7 +9,7 @@
 
   <div class="layui-fluid">
 	  <div class="layui-card">
-		  <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+		  <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
 			<div class="layui-form-item">
 
 				<div class="layui-inline">
@@ -31,19 +31,19 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">参数类别</label>
 					<div class="layui-input-inline">
-						<select name="leiBie" lay-verify="required" lay-search="" id="leiBie" lay-filter="leiBie">
+						<select name="leiBie" lay-search="" id="leiBie" lay-filter="leiBie">
 						</select>
 					</div>
 				</div>
 
 				<div class="layui-inline">
-					<button class="layui-btn" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+					<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
 						<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
 					</button>
 				</div>
 
 			</div>
-		</div>
+		  </form>
 	  </div>
 
 	  <div class="layui-card-body">
@@ -179,7 +179,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">参数名</label>
 					<div class="layui-input-block">
-						<input type="text" name="csm" lay-verify="title" autocomplete="off" placeholder="请输入参数名" class="layui-input" id="dh_xgcsm" />
+						<input type="text" name="csm" lay-verify="required" autocomplete="off" placeholder="请输入参数名" class="layui-input" id="dh_xgcsm" />
 					</div>
 				</div>
 				<div class="layui-inline">

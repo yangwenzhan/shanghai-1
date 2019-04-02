@@ -8,12 +8,12 @@
 <body>
   <div class="layui-fluid">
 	  <div class="layui-card">
-		  <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+		  <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
 			<div class="layui-form-item">
 				<div class="layui-inline">
 					<label class="layui-form-label">工序</label>
 					<div class="layui-input-inline">
-						<select name="gongxu" lay-verify="required" lay-search="" id="gongxu" lay-filter="gongxu">
+						<select name="gongxu" lay-search="" id="gongxu" lay-filter="gongxu">
 						</select>
 					</div>
 				</div>
@@ -21,18 +21,18 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">机型</label>
 					<div class="layui-input-inline">
-						<select name="jixing" lay-verify="required" lay-search="" id="jixing" lay-filter="jixing">
+						<select name="jixing" lay-search="" id="jixing" lay-filter="jixing">
 						</select>
 					</div>
 				</div>
 
 				<div class="layui-inline">
-					<button class="layui-btn" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
+					<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
 						<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
 					</button>
 				</div>
 			</div>
-		  </div>
+		  </form>
 
 		  <div class="layui-card-body">
 			  <table class="layui-table" lay-filter="table" id="table"></table>

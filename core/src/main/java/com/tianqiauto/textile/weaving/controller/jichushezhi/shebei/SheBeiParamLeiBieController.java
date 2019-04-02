@@ -38,8 +38,8 @@ public class SheBeiParamLeiBieController {
     @PostMapping("updParamLeiBie")
     @ApiOperation(value = "修改设备数据类别")
     public Result updParamLeiBie(@RequestBody Param_LeiBie param_leiBie){
-        boolean flag = sheBeiParamLeiBieRepository.existsByGongxuAndJixingAndName(param_leiBie.getGongxu(),param_leiBie.getJixing(),param_leiBie.getName());
-        if(!flag){
+        boolean flag = sheBeiParamLeiBieService.existsByGongxuAndJixingAndName(param_leiBie.getGongxu().getId(),param_leiBie.getJixing().getId(),param_leiBie.getName(),param_leiBie.getId());
+        if(flag){
             sheBeiParamLeiBieRepository.updParamLeiBie(param_leiBie.getGongxu().getId(),param_leiBie.getJixing().getId(),param_leiBie.getName(),param_leiBie.getXuhao(),param_leiBie.getId());
             return Result.ok("修改设备数据类别成功！",param_leiBie);
         }else{

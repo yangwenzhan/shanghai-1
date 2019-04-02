@@ -47,14 +47,13 @@ public class PanCunYue {
     private String jieshu; //结束时间+班次
 
 
-    public void setKaishi(String kaishi){
-        this.kaishi = kaishiriqi.replaceAll("-","")+kaishibanci.getValue();
+    public void setKaishi(String kaishiriqi,Dict kaishibanci){
+        this.kaishi = kaishiriqi.replaceAll("-","")+kaishibanci.getId();
     }
 
-    public void setJieshu(String jieshu){
-        this.jieshu = jieshuriqi.replaceAll("-","")+jieshubanci.getValue();
+    public void setJieshu(String jieshuriqi,Dict jieshubanci){
+        this.jieshu = jieshuriqi.replaceAll("-","")+jieshubanci.getId();
     }
-
 
 
 }
