@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * @ClassName Order
- * @Description 整经计划单
+ * @Description 整经计划单（主表对应多个计划）
  * @Author xingxiaoshuai
  * @Date 2019-02-14 09:21
  * @Version 1.0

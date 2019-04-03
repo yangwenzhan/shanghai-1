@@ -1,5 +1,6 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,10 +25,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_yuansha_ruku_shenqing")
+@EqualsAndHashCode(exclude = {"yuanShaRuKu","yuanSha","laiyuan","status","cangkuquerenren","heyuehao"})
 public class YuanSha_RuKu_Shenqing {
 
 
-
+    @OneToOne(mappedBy="yuanSha_ruKu_shenqing")
+    @JsonIgnoreProperties("yuanSha_ruKu_shenqing")
+    private YuanSha_RuKu yuanShaRuKu;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,6 +86,15 @@ public class YuanSha_RuKu_Shenqing {
     @LastModifiedDate
     private Date lastModifyTime;
     private String lastModifyRen;
+
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 
 
 }

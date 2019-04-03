@@ -89,7 +89,7 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-修改订单")
     public Result updateOrder(@RequestBody Order order) {
         List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
-        if(null != list || !list.isEmpty()){
+        if(list.size()>0){
             return Result.result(666,"订单号已存在不能重复添加！",order);
         }
         orderService.update(order);
