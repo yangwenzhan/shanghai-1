@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>织布车位管理</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">员工工序</label>
+						<div class="layui-input-inline">
+							<select name="gongxu" lay-search="" id="ssgx" lay-filter="ssgx">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">员工轮班</label>
+						<div class="layui-input-inline">
+							<select name="lunban" lay-search="" id="sslb" lay-filter="sslb">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">员工工种</label>
+						<div class="layui-input-inline">
+							<select name="role" lay-search="" id="gz" lay-filter="gz">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">工号姓名</label>
+						<div class="layui-input-inline">
+							<select name="ghxm" lay-search="" id="yg" lay-filter="yg">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">机台机型</label>
+						<div class="layui-input-inline">
+							<select name="jixing" lay-search="" id="jx" lay-filter="jx">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">机台轮班</label>
+						<div class="layui-input-inline">
+							<select name="lunban" lay-search="" id="lb" lay-filter="lb">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+						</button>
+					</div>
+
+				</div>
+			</form>
+
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<button class="layui-btn" id="batch_edit_btn"><i class="layui-icon layui-icon-edit">批量修改</i></button>
+					<button class="layui-btn" id="add_chewei_btn"><i class="layui-icon layui-icon-add-circle">添加</i></button>
+				</div>
+				<table id="table" lay-filter="table"></table>
+			</div>
+
+		</div>
+	</div>
+
+	<!--批量修改弹出框-->
+	<div style="display: none" id="div_form_batch_edit">
+		<form class="layui-form" lay-filter="form_batch_edit" id="form_batch_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-block">
+						<label id="plxg_jth"></label>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-search="" id="plxg_lb" lay-filter="plxg_lb">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>员工信息选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" lay-search="" id="plxg_ssgx" lay-filter="plxg_ssgx">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-search="" id="plxg_sslb" lay-filter="plxg_sslb">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工种</label>
+					<div class="layui-input-inline">
+						<select name="role" lay-verify="required" lay-search="" id="plxg_ssgz" lay-filter="plxg_ssgz">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">员工</label>
+					<div class="layui-input-inline">
+						<select name="ghxm" lay-verify="required" lay-search="" id="plxg_yg" lay-filter="plxg_yg">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_batch_edit_submit" id="form_batch_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<!--单条修改-->
+	<div style="display: none" id="div_form_edit">
+		<form class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-block">
+						<input id="up_panle_id" type="text" style="display: none;"/>
+						<label id="panle_up_jth"></label>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-verify="required" lay-search="" id="xg_lb" lay-filter="xg_lb">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>员工信息选择</legend>
+				</fieldset>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" lay-search="" id="xg_ssgx" lay-filter="xg_ssgx">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-search="" id="xg_sslb" lay-filter="xg_sslb">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工种</label>
+					<div class="layui-input-inline">
+						<select name="role" lay-search="" id="xg_ssgz" lay-filter="xg_ssgz">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">员工</label>
+					<div class="layui-input-inline">
+						<select name="ghxm" lay-verify="required" lay-search="" id="xg_yg" lay-filter="xg_yg">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<!--添加弹出框-->
+	<div style="display: none" id="div_form_add">
+		<form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>机台信息选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">机型</label>
+					<div class="layui-input-inline">
+						<select name="jixing" lay-verify="required" lay-search="" id="add_jx" lay-filter="add_jx">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-inline">
+						<select name="jitiahao" lay-verify="required" lay-search="" id="add_jth" lay-filter="add_jth">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-verify="required" lay-search="" id="add_lb" lay-filter="add_lb">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>员工信息选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" lay-search="" id="add_ssgx" lay-filter="add_ssgx">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属轮班</label>
+					<div class="layui-input-inline">
+						<select name="lunban" lay-search="" id="add_sslb" lay-filter="add_sslb">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工种</label>
+					<div class="layui-input-inline">
+						<select name="role" lay-search="" id="add_ssgz" lay-filter="add_ssgz">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">员工</label>
+					<div class="layui-input-inline">
+						<select name="ghxm" lay-verify="required" lay-search="" id="add_yg" lay-filter="add_yg">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="/common/links::js_footer"></div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+	</script>
+
+  <script>
+      layui.config({
+          base:"/layuiadmin/" //静态资源所在路径
+      }).extend({
+          index: 'lib/index' //主入口模块
+          ,zhibuchewei:'jichushezhi/chewei/zhibuchewei'
+      }).use(['index','zhibuchewei'],function () {
+      });
+  </script>
+
+</body>
+</html>
