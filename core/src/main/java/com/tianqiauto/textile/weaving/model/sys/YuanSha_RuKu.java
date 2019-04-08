@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
+import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_yuansha_ruku")
+@EqualsAndHashCode(exclude = {"yuanSha","yuanSha_ruKu_shenqing","lingyongren","laiyuan"})
 public class YuanSha_RuKu {
 
     @Id
@@ -38,6 +40,7 @@ public class YuanSha_RuKu {
 
     @OneToOne
     @JoinColumn(name = "yuansha_ruku_shenqing_id")
+    @JsonIgnoreProperties("yuanShaRuKu")
     private YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing;
 
 
@@ -53,7 +56,9 @@ public class YuanSha_RuKu {
 
     private Double zongzhong; //总重量
 
-
+    @ManyToOne
+    @JoinColumn(name="lingyongren_id")
+    private User lingyongren;//领用人
 
 
 

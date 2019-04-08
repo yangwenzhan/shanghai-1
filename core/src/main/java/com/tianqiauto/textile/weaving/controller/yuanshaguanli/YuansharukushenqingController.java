@@ -15,6 +15,8 @@ import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,7 +31,7 @@ public class YuansharukushenqingController {
     private YuansharukushenqingServer yuansharukushenqingServer;
 
     @GetMapping("query_page")
-    public Result findAll(YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing, Pageable pageable) {
+    public Result findAll(YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing,@PageableDefault( sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
         return Result.ok(yuansharukushenqingServer.findAll(yuanSha_ruKu_shenqing,pageable));
     }
 
