@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ import java.util.List;
  * @Date 2019/4/1 18:10
  */
 @Service
+@Transactional
 public class YuansharukudengjiServer {
 
     @Autowired

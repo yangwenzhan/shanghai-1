@@ -91,7 +91,7 @@ public class HeYueHaoController {
     @ResponseBody
     public Result update(@RequestBody Heyuehao heyuehao){
         List<Heyuehao> list = heyuehaoService.findByName(heyuehao.getName());
-        if(null != list || !list.isEmpty()){
+        if(list.size()>0){
             return Result.result(666,"合约号"+heyuehao.getName()+"已存在不能修改！",heyuehao);
         }
         int ret = heyuehaoService.update(heyuehao);
