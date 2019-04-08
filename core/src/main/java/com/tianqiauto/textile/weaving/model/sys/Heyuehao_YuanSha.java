@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -47,11 +49,17 @@ public class Heyuehao_YuanSha {
     private String beizhu; //备注
 
 
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
     @JsonIgnoreProperties("jingsha")

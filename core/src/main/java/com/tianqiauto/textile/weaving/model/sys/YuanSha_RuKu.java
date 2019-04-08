@@ -1,11 +1,16 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,7 +41,7 @@ public class YuanSha_RuKu {
     private YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing;
 
 
-    private Date goururizhi; //购入日期
+    private Date goururiqi; //购入日期
 
     @ManyToOne
     @JoinColumn(name="laiyuan_id")
@@ -56,12 +61,26 @@ public class YuanSha_RuKu {
 
 
     private String beizhu; //备注
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 
 }

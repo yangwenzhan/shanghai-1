@@ -61,7 +61,7 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-添加订单")
     public Result addOrder(@Valid @RequestBody Order order) {
         List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
-        if(null != list || !list.isEmpty()){
+        if(list.size()>0){
             return Result.result(666,"订单号已存在不能重复添加！",order);
         }
         Dict status = orderService.findByTypenameAndValue("dingdanzhuangtai","10");
@@ -81,7 +81,7 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-撤销订单")
     public Result deleteOrder(Long id) {
         orderService.deleteById(id);
-        return Result.ok("查询成功！", id); //fixme 有可能是假删除
+        return Result.ok("删除成功！", id); //fixme 有可能是假删除
     }
 
     @PostMapping("updateOrder")
@@ -90,10 +90,10 @@ public class DingdanguanliController {
     public Result updateOrder(@RequestBody Order order) {
         List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
         if(null != list || !list.isEmpty()){
-            return Result.result(666,"订单号已存在不能修改！",order);
+            return Result.result(666,"订单号已存在不能重复添加！",order);
         }
         orderService.update(order);
-        return Result.ok("查询成功！", order);
+        return Result.ok("修改成功！", order);
     }
 
     @PostMapping("getOrder")

@@ -1,4 +1,4 @@
-package com.tianqiauto.textile.weaving.service;
+package com.tianqiauto.textile.weaving.service.dingdanguanli;
 
 import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
@@ -55,5 +55,9 @@ public class YuanShaService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return yuanShaRepository.findAll(specification,pageable);
+    }
+
+    public YuanSha findByPihao(String pihao) {
+        return yuanShaRepository.findByPihao(pihao);
     }
 }
