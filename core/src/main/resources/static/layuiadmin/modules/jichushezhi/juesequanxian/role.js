@@ -44,7 +44,11 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
                                 data:JSON.stringify(formData),
                                 success:function(data){
                                     ajaxSuccess(data,table);
-                                    layer.close(i);layer.close(index);
+                                    if(data.code==666){
+                                        layer.close(i);
+                                    }else{
+                                        layer.close(i);layer.close(index);
+                                    }
                                 }
                             });
                         });
@@ -94,7 +98,11 @@ layui.define(['table', 'form', 'laytpl'], function(exports){
                                     data:JSON.stringify(formData),
                                     success:function(data){
                                         ajaxSuccess(data,table);
-                                        layer.close(i);layer.close(index);
+                                        if(data.code==666){
+                                            layer.close(i);
+                                        }else{
+                                            layer.close(i);layer.close(index);
+                                        }
                                     }
                                 });
 

@@ -48,7 +48,7 @@ public class RoleController {
             roleRepository.save(role);
             return Result.ok("新增成功!",role);
         }else{
-            return Result.error("该角色名称已存在！",role);
+            return Result.result(666,"该角色名称已存在",role);
         }
     }
 
@@ -60,7 +60,7 @@ public class RoleController {
             roleRepository.updateRole(role.getName(),role.getBeizhu(),role.getId());
             return Result.ok("修改成功!",role);
         }else{
-            return Result.error("该角色名称已存在！",role);
+            return Result.result(666,"该角色名称已存在",role);
         }
     }
 

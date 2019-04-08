@@ -41,7 +41,20 @@ layui.define(function(exports){
         anim: -1,
         icon:6
       });
-    }else {
+    }else if(data.code == 666){
+        layer.open({
+            title:"错误提示",
+            content:data.message,
+            skin:"layui-layer-molv",
+            btn:["确定"],
+            anim: -1,
+            icon:5,
+            btn1:function(index){
+                layer.close(index);
+            }
+        });
+    }
+    else {
       layer.open({
         title:"消息提醒",
         content:data.message,
