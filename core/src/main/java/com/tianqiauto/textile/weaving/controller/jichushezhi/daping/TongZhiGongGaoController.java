@@ -6,8 +6,7 @@ import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +28,9 @@ public class TongZhiGongGaoController {
 
     @GetMapping("findAll")
     @ApiOperation(value = "查询所有通知公告")
-    public Result findAll(@PageableDefault(size = 20,page = 0,sort = "name,asc") Pageable pageable){
-        List<TV_TongZhiGongGao> list = tongZhiGongGaoRepository.findAll();
+    public Result findAll(){
+        Sort sort = new Sort(Sort.Direction.ASC, "name");
+        List<TV_TongZhiGongGao> list = tongZhiGongGaoRepository.findAll(sort);
         return Result.ok("查询成功",list);
     }
 
@@ -51,6 +51,15 @@ public class TongZhiGongGaoController {
     public Result updTZGG(String neirong,Long id){
         tongZhiGongGaoRepository.updTongZhiGongGao(neirong,id);
         return Result.ok("修改成功!",id);
+    }
+
+    @PostMapping("delTZGG")
+    @ApiOperation(value = "删除通知公告")
+    public Result delTZGG(@RequestBody TV_TongZhiGongGao tongZhiGongGao){
+        tongZhiGongGaoRepository.delete(tongZhiGongGao);
+        //fixme
+        //将电视展示方案中也删掉该页面
+        return Result.ok("删除成功!",tongZhiGongGao);
     }
 
 

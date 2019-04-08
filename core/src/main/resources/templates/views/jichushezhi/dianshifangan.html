@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>电视方案管理</title>
+</head>
+
+	<body>
+
+		<div class="layui-fluid">
+		<div class="layui-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<button class="layui-btn add_fa" id="fa" style="margin-left: 66px;">新增展示方案</button>
+				</div>
+			</div>
+		</div>
+		<table class="layui-table" id="demo" lay-filter="demo"></table>
+		</div>
+		<!--新增弹出框-->
+		<div class="tnone" id="add_fa">
+			<form class="layui-form" action="">
+				<div class="layui-form-item xgsbxx">					
+					<div class="layui-inline">
+						<label class="layui-form-label">名称</label>
+						<div class="layui-input-block">
+							<input type="text"  id="mc" placeholder="请输入名称" class="layui-input" autocomplete="off"/>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">位置</label>
+						<div class="layui-input-block">
+							<input type="text"  id="wz" placeholder="请输入位置" class="layui-input" autocomplete="off"/>
+						</div>
+					</div>
+					
+				</div>
+			</form>
+		</div>
+		<!--设置页面弹出框-->
+		<div class="tnone" id="szym">
+			<form class="layui-form" action="">
+				<div class="layui-form-item szdpym" id="yemian">
+				</div>
+			</form>
+		</div>
+
+		<div th:replace="/common/links::js_footer"></div>
+
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs btn_ty" lay-event="edit">设置页面</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+                ,dianshifangan:'jichushezhi/daping/dianshifangan'
+            }).use(['index','dianshifangan'],function () {
+
+            });
+		</script>
+
+	</body>
+
+</html>

@@ -164,7 +164,7 @@ public class PanCunYueService {
                     nt_bcid = dbin_zb_id;
                     nt_rq = getSpecifiedDayAfter(jsrq);
                 }else{
-                    nt_bcid = dbin_zb_id;
+                    nt_bcid = dbin_yb_id;
                     nt_rq = jsrq;
                 }
             }

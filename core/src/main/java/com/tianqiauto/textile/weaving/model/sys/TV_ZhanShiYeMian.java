@@ -1,15 +1,19 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @ClassName TV_ZhanShiYeMian
@@ -22,6 +26,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_tv_zhanshiyemian")
+@EqualsAndHashCode(exclude = {"fangAns"})
+@EntityListeners(AuditingEntityListener.class)
 public class TV_ZhanShiYeMian {
 
     @Id
@@ -48,8 +54,17 @@ public class TV_ZhanShiYeMian {
     @Column
     @LastModifiedBy
     private String modifiedBy;
-    @Column
-    @Version
-    private Long version;
+//    @Column
+//    @Version
+//    private Long version;
+
+    @JsonIgnoreProperties("zhanShiYeMians")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_tv_ym_plan", joinColumns = @JoinColumn(name = "zhanshiyemian_id"),
+            inverseJoinColumns = @JoinColumn(name = "dianshifangan_id"))
+    private Set<TV_DianShiFangAn> fangAns;
+
+
+
 
 }
