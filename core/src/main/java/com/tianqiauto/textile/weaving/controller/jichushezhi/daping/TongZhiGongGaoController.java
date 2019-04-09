@@ -57,8 +57,6 @@ public class TongZhiGongGaoController {
     @ApiOperation(value = "删除通知公告")
     public Result delTZGG(@RequestBody TV_TongZhiGongGao tongZhiGongGao){
         tongZhiGongGaoRepository.delete(tongZhiGongGao);
-        //fixme
-        //将电视展示方案中也删掉该页面
         return Result.ok("删除成功!",tongZhiGongGao);
     }
 

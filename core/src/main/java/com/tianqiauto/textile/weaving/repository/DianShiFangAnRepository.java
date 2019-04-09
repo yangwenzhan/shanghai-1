@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface DianShiFangAnRepository extends JpaRepository<TV_DianShiFangAn,Long>,JpaSpecificationExecutor<TV_DianShiFangAn> {
+
+    boolean existsByName(String name);
+
 }

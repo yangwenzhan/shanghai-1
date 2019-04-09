@@ -15,4 +15,9 @@ public interface ZhanShiYeMianRepository extends JpaRepository<TV_ZhanShiYeMian,
     @Query(value = "update sys_tv_zhanshiyemian set sort=?1,tingliushichang=?2 where id=?3",nativeQuery = true)
     void updZSYM(Integer sort,Integer tingliushichang,Long id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from sys_tv_ym_plan where zhanshiyemian_id=?1",nativeQuery = true)
+    void delYMFromFA(Long id);
+
 }

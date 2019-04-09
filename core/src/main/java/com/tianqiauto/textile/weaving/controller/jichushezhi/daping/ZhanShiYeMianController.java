@@ -59,6 +59,7 @@ public class ZhanShiYeMianController {
         zhanShiYeMianRepository.delete(zhanShiYeMian);
         //fixme
         //将电视展示方案中也删掉该页面
+        zhanShiYeMianRepository.delYMFromFA(zhanShiYeMian.getId());
         return Result.ok("删除成功!",zhanShiYeMian);
     }
 

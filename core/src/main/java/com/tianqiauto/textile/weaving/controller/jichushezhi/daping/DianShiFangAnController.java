@@ -36,16 +36,30 @@ public class DianShiFangAnController {
     @PostMapping("addDSFA")
     @ApiOperation(value = "添加电视方案")
     public Result addDSFA(@RequestBody TV_DianShiFangAn dianShiFangAn){
-        dianShiFangAnRepository.save(dianShiFangAn);
-        return Result.ok("新增成功",dianShiFangAn);
+        boolean flag = dianShiFangAnRepository.existsByName(dianShiFangAn.getName());
+        if(flag){
+            return Result.result(666,"该方案名称已存在",dianShiFangAn);
+        }else{
+            dianShiFangAnRepository.save(dianShiFangAn);
+            return Result.ok("新增成功",dianShiFangAn);
+        }
     }
 
-    @PostMapping("delDSFA")
-    @ApiOperation(value = "删除电视方案")
-    public Result delDSFA(@RequestBody TV_DianShiFangAn dianShiFangAn){
-        dianShiFangAnRepository.delete(dianShiFangAn);
-        return Result.ok("删除成功",dianShiFangAn);
+    @GetMapping("updDSFA")
+    @ApiOperation(value = "修改电视方案展示页面")
+    public Result updDSFA(String id,String[] ymids){
+       dianShiFangAnService.updDSFA(id, ymids);
+       return Result.ok("修改成功",id);
+
     }
+
+    @GetMapping("delDSFA")
+    @ApiOperation(value = "删除电视方案")
+    public Result delDSFA(String id){
+        dianShiFangAnService.delDSFA(id);
+        return Result.ok("删除成功",id);
+    }
+
 
 
 
