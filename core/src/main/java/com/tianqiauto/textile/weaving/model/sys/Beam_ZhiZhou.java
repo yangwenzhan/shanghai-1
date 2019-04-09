@@ -1,9 +1,10 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -22,9 +23,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_beam_zhizhou")
-@EqualsAndHashCode(exclude = {"jixing"})
-@ToString(exclude = {"jixing"})
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Beam_ZhiZhou {
 
     @Id

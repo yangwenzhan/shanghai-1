@@ -41,7 +41,20 @@ layui.define(function(exports){
         anim: -1,
         icon:6
       });
-    }else {
+    }else if(data.code == 666){
+        layer.open({
+            title:"错误提示",
+            content:data.message,
+            skin:"layui-layer-molv",
+            btn:["确定"],
+            anim: -1,
+            icon:5,
+            btn1:function(index){
+                layer.close(index);
+            }
+        });
+    }
+    else {
       layer.open({
         title:"消息提醒",
         content:data.message,
@@ -307,9 +320,26 @@ layui.define(function(exports){
             var str = "";
             if(!isall) {
                 for(var i = 0; i < data.data.length; i++) {
-                    str += "<option value='" + data.data[i][valueName] + "'>"
-                        + data.data[i].valueName
-                        + "</option>";
+                    if(selectedArr==null){
+                        str += "<option value='" + data.data[i][valueID] + "'>"
+                            + data.data[i][valueName]
+                            + "</option>";
+                    }else{
+                        for(var j=0;j< selectedArr.length;j++){
+                            if(data.data[i][valueID]==selectedArr[j]){
+                                str += "<option value='" + data.data[i][valueID] + "' selected='selected'>"
+                                    + data.data[i][valueName]
+                                    + "</option>";
+                                break;
+                            }
+                            if(j==selectedArr.length-1 && data.data[i][valueID]!=selectedArr[j]){
+                                str += "<option value='" + data.data[i][valueID] + "'>"
+                                    + data.data[i][valueName]
+                                    + "</option>";
+                                break;
+                            }
+                        }
+                    }
                 }
                 $('#' + downID).html(str);
             } else {

@@ -22,15 +22,19 @@ public class SheBeiParamService {
 
     //根据工序机型参数类别查询参数
     public Result findAll(String gx_id, String jx_id, String cslb_id){
-        gx_id = StringUtils.isEmpty(gx_id)?null:gx_id;
-        jx_id = StringUtils.isEmpty(jx_id)?null:jx_id;
-        cslb_id = StringUtils.isEmpty(cslb_id)?null:cslb_id;
-
-
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         ppu.addInVarchar(gx_id).addInVarchar(jx_id).addInVarchar(cslb_id);
         ProcedureContext pro=baseService.callProcedure("pc_base_shebei_param", ppu.getList());
         return Result.ok(pro.getDatas());
+    }
+
+    //设备参数是否已存在
+    public boolean existsByNameAndLeiBie(String name,Long lbid,Long id){
+        String sql = "select count(*) from sys_param where name=? and leibie_id=? and id != ?";
+        int num = jdbcTemplate.queryForObject(sql,Integer.class,name,lbid,id);
+        if(num>0)
+            return false;
+        return true;
     }
 
     //修改设备参数
@@ -39,11 +43,11 @@ public class SheBeiParamService {
 
         String name = StringUtils.isEmpty(param.getName())?null:param.getName();
         String dw = StringUtils.isEmpty(param.getDanwei())?null:param.getDanwei();
-        Integer cczq = param.getCunchu_flag();
+        Integer cczq = param.getCunchuzhouqi();
         Integer ccsc = param.getCunchushichang();
         Integer xh = param.getXuhao();
 
-        int num = jdbcTemplate.update(sql,name,dw,param.getLeiBie(),cczq,ccsc,xh,param.getId());
+        int num = jdbcTemplate.update(sql,name,dw,param.getLeiBie().getId(),cczq,ccsc,xh,param.getId());
         return num;
     }
 
@@ -56,21 +60,12 @@ public class SheBeiParamService {
 
     //批量修改设备参数
 
-    public Result updSheBeiParam_Batch(String idStr, String sfbj, String sfzs, String sfjlqx, String dw,
-                                       String cslb_id, String ccsc, String cczq){
-
-
-        sfbj = StringUtils.isEmpty(sfbj) ? null : sfbj;
-        sfzs = StringUtils.isEmpty(sfzs) ? null : sfzs;
-        sfjlqx = StringUtils.isEmpty(sfjlqx) ? null : sfjlqx;
-        dw = StringUtils.isEmpty(dw) ? null : dw;
-        cslb_id = StringUtils.isEmpty(cslb_id) ? null : cslb_id;
-        ccsc = StringUtils.isEmpty(ccsc) ? null : ccsc;
-        cczq = StringUtils.isEmpty(cczq) ? null : cczq;
-
+    public Result updSheBeiParam_Batch(String idStr,String dw,
+                                       String cslb_id, String ccsc, String cczq,
+                                       String sfbj,String sfzs,String sfjlqx){
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
-        ppu.addInVarchar(idStr).addInVarchar(sfbj).addInVarchar(sfzs).addInVarchar(sfjlqx)
-                .addInVarchar(dw).addInVarchar(cslb_id).addInVarchar(ccsc).addInVarchar(cczq)
+        ppu.addInVarchar(idStr).addInVarchar(dw).addInVarchar(cslb_id).addInVarchar(ccsc).addInVarchar(cczq)
+                .addInVarchar(sfbj).addInVarchar(sfzs).addInVarchar(sfjlqx)
                 .addOut();
         ProcedureContext pro=baseService.callProcedure("pc_upd_shebei_param", ppu.getList());
         return Result.ok(pro.getDatas());

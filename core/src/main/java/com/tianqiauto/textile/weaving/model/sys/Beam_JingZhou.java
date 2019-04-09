@@ -28,7 +28,8 @@ public class Beam_JingZhou {
 
     private String zhouhao; //轴号
 
-    private Integer zhoukuan; //轴宽
+    @Column(scale = 2)
+    private Double zhoukuan; //轴宽
 
     private String beizhu;   //备注
 

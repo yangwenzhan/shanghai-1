@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>通知公告管理</title>
+	<meta charset="utf-8" />
+	<div th:replace="/common/links::header"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/js/kindeditor/themes/default/default.css}" media="all">
+	<link rel="stylesheet" type="text/css" th:href="@{/js/kindeditor/plugins/code/prettify.css}" media="all">
+	<script th:inline="javascript">
+        /*<![CDATA[*/
+        var base = [[${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#httpServletRequest.getServerPort()+#httpServletRequest.getContextPath()+'/' }]];
+        /*]]>*/
+	</script>
+</head>
+
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<div class="layui-btn-group">
+						<button class="layui-btn" id="add_btn"><i class="layui-icon">&#xe608;</i> 新增通知公告</button>
+					</div>
+				</div>
+			</div>
+			<table class="layui-table" lay-filter="table" id="table"></table>
+		</div>
+	</div>
+
+	<!--弹出框-->
+	<!--新增-->
+	<div style="display: none;" id="add_tck">
+		<form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">通知名称</label>
+					<div class="layui-input-block">
+						<input  type="text" id="name" name="name" placeholder="请输入通知名称" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item layui-hide">
+				<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+			</div>
+		</form>
+	</div>
+
+	<div style="display: none;" id="upd_mp">
+		<textarea id="html_content" name="texts" style="width: 99%;height: 450px;"></textarea>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+	</script>
+
+	<div th:replace="/common/links::js_footer"></div>
+	<script th:src="@{/js/kindeditor/kindeditor.js}"></script>
+	<script th:src="@{/js/kindeditor/lang/zh_CN.js}"></script>
+	<script th:src="@{/js/kindeditor/plugins/code/prettify.js}"></script>
+	<script>
+        layui.config({
+            base:"/layuiadmin/" //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+            ,tongzhigonggao:'jichushezhi/daping/tongzhigonggao'
+        }).use(['index','tongzhigonggao'],function () {
+
+        });
+
+
+        KindEditor.ready(function(K) {
+            window.editor = K.create('textarea[name="texts"]', {
+                uploadJson : base+'kindeditor/uploadfile',
+                fileManagerJson : base+'kindeditor/fileManager',
+                allowFileManager : true,
+                fontSizeTable:['12px', '14px', '16px', '18px', '24px', '32px', '48px', '64px']
+            });
+            prettyPrint();
+        });
+	</script>
+</body>
+
+</html>

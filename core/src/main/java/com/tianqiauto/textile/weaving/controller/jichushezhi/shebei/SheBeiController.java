@@ -22,9 +22,9 @@ public class SheBeiController {
     SheBeiService sheBeiService;
 
     @GetMapping("findAllSheBei")
-    @ApiOperation(value = "查询所有设备信息")
-    public Result findAllSheBei(String gx_id, String jx_id){
-        return sheBeiService.findAllSheBei(gx_id, jx_id);
+    @ApiOperation(value = "查询所有设备信息",notes = "工序id，机型id")
+    public Result findAllSheBei(String gongxu, String jixing){
+        return sheBeiService.findAllSheBei(gongxu, jixing);
     }
 
     @GetMapping("updateJHTC")
