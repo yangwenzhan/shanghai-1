@@ -1,8 +1,13 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi;
 
+import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.result.ResultUser;
+import com.tianqiauto.textile.weaving.model.search.AddUser;
 import com.tianqiauto.textile.weaving.model.search.SearchUser;
+import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.repository.OrderRepository;
+import com.tianqiauto.textile.weaving.repository.RoleRepository;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
@@ -15,21 +20,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
  * @ClassName UserController
- * @Description TODO
+ * @Description 用户管理
  * @Author xingxiaoshuai
  * @Date 2019-03-08 22:52
  * @Version 1.0
@@ -54,10 +57,6 @@ public class UserController {
 //        return  userService.findAllUser(gx_id, lb_id, zu, sfzz, js_id, ghxm);
 //
 //    }
-
-
-
-
 
 
     public Specification getSpecification(SearchUser searchUser){
@@ -93,15 +92,14 @@ public class UserController {
     @PostMapping("saveUser")
     @ApiOperation(value = "新增用户")
     public Result saveUser(@RequestBody User user){
-
         //判断工号是否唯一
         boolean exist = userJpaRepository.existsByUsername(user.getUsername());
         if(exist){
-            return Result.error("工号已存在!",user);
+            return Result.result(666,"工号已存在!",null);
         }
         user.setPassword(passwordEncoder.encode("123456")); //初始密码为123456
 
-        User newUser = userService.saveUser(user);
+        User newUser = userJpaRepository.save(user);
         return Result.ok("新增成功!",newUser);
     }
 
@@ -109,8 +107,7 @@ public class UserController {
     @ApiOperation(value = "修改用户信息-jpa语句修改",notes = "工号不可修改,姓名不能为空")
     public Result updateUserInfo(@RequestBody User user){
         User userInDB = userJpaRepository.getOne(user.getId());
-        MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","user_yuanGong","mobile","roles","sex","xingming"));
-
+        MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("username","xingming","gongxu","lunban","zu","roles","birthday","email","mobile","sex"));
         return Result.ok("修改成功!",userJpaRepository.save(userInDB));
     }
 
@@ -130,19 +127,47 @@ public class UserController {
         return Result.ok("重置密码成功!",user_id);
     }
 
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     //设置组
     @PostMapping("updateUserZu")
     @ApiOperation(value = "设置组")
     public Result updateUserZu(String zu,String user_ids){
-        userService.updateUserZu(zu, user_ids);
+        String sql = "update base_user set zu = :zu where id in (:ids)";
+
+        Map paramMap = new HashMap();
+        paramMap.put("ids",Arrays.asList(user_ids.substring(0, user_ids.length() - 1).split(",")));
+        paramMap.put("zu",StringUtils.isEmpty(zu)?null:zu);
+
+        namedParameterJdbcTemplate.update(sql,paramMap);
+
         return Result.ok("设置组成功!",true);
     }
+
+
+
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     //设置角色
     @PostMapping("updateUserRole")
     @ApiOperation(value = "设置角色")
-    public Result updateUserRole(String[] user_ids,String[] role_ids){
-        userService.updateUserRole(user_ids,role_ids);
+    public Result updateUserRole(Long[] user_ids,Long[] role_ids){
+
+        Set<Role> roles = new HashSet<>();
+        for (int i = 0; i < role_ids.length; i++) {
+            roles.add(roleRepository.getOne(role_ids[i]));
+        }
+
+
+        for (int i = 0; i < user_ids.length; i++) {
+            User user = userJpaRepository.getOne(user_ids[i]);
+            user.setRoles(roles);
+            userJpaRepository.save(user);
+        }
         return Result.ok("设置角色成功!",true);
     }
 

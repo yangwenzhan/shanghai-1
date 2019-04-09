@@ -69,8 +69,6 @@ public class Order {
 
     private Date xiadanriqi; //下单日期
 
-//    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量

@@ -41,7 +41,7 @@ public class User {
 
     private Date birthday;
 
-    @Email(message = "不是有效的邮箱地址")
+//    @Email(message = "不是有效的邮箱地址")
     private String email;
 
     private String mobile;
@@ -57,9 +57,6 @@ public class User {
     @JoinTable(name = "base_user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-
-
 
 
     //关联工序表 可为空
@@ -92,10 +89,6 @@ public class User {
     public void setGhxm(String ghxm){
         this.ghxm=username+" "+xingming;
     }
-
-
-
-
 
 
     @Column

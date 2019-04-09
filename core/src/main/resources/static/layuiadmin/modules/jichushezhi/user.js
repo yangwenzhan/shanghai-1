@@ -11,7 +11,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         ,{code:"zu",hasNull:true,defaultValue:""}
         ,{code:"role",hasNull:true,defaultValue:""}
         );
+
     form.render();
+
+
     var cols = [[
         {fixed:'left',checkbox:true}
         ,{field: 'id', title: 'id',hide:true}
@@ -38,6 +41,14 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         return false;
     });
 
+    formSelects.data('setRole', 'server', {
+        url:layui.setter.host+'jichushezhi/juesequanxian/role/findAll'
+    });
+    formSelects.config("setRole",{
+        keyName: 'name',
+        keyVal: 'id'
+    });
+
     //设置组
     $('#set_zu_btn').on("click",function () {
         var user_ids='';
@@ -59,17 +70,16 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
             user_ids+=data[i].id+',';
         }
 
-        initZu('set_zu');
         layer.open({
             type: 1,
             title: ['设置组', 'font-size:12px;'],
             content: $("#set_zu_div"),
-            shadeClose: true, //点击遮罩关闭层
+            shadeClose: true,
             shade: 0.8,
             offset:'auto',
-            area: ['70%', '70%'],
+            area: ['50%', '55%'],
             btn: ['确定', '取消'],
-            btnAlign: 'c',
+            btnAlign: 'r',
             yes: function(index, layero) {
                 layer.confirm(
                     '确定修改组?',
@@ -94,6 +104,9 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
 
     //设置角色
     $('#set_role_btn').on("click",function () {
+
+
+
         var user_ids=[];
         var checkStatus = table.checkStatus('table');
         var data = checkStatus.data;
@@ -113,7 +126,8 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
             user_ids.push(data[i].id);
         }
 
-        // initRole('set_role',null);
+
+
         layer.open({
             type: 1,
             title: ['设置角色', 'font-size:12px;'],
@@ -123,7 +137,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
             offset:'auto',
             area: ['70%', '70%'],
             btn: ['确定', '取消'],
-            btnAlign: 'c',
+            btnAlign: 'r',
             yes: function(index, layero) {
                 layer.confirm(
                     '确定修改角色?',
@@ -132,7 +146,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                             url:layui.setter.host+'jichushezhi/user/updateUserRole',
                             type:'post',
                             data:{
-                                role_ids:formSelects.value('selectRole', 'val'),
+                                role_ids:formSelects.value('setRole', 'val'),
                                 user_ids:user_ids
                             },
                             traditional:true,
@@ -150,58 +164,25 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
     //添加用户
     $("#add_user_btn").on("click", function() {
 
-        //数据清空
-        $('#add_username').val("");
-        $('#add_xingming').val("");
-        $('#add_email').val("");
-        $('#add_mobile').val("");
-
-
-        laydate.render({
-            elem: '#add_birthday',
-            value: new Date(),
-            max: 0
-        });
+        $("#form_add")[0].reset();
+        laydate.render({elem: '#add_birthday',max:0});
 
         layer.open({
             type: 1,
             title: ['添加用户', 'font-size:12px;'],
             content: $("#div_form_add"),
-            shadeClose: true, //点击遮罩关闭层
-            shade: 0.8,
-            offset:'auto',
             area: ['90%', '90%'],
+            shade: [0.8, '#393D49'],
             btn: ['确定', '取消'],
-            btnAlign: 'c',
             yes: function(index, layero) {
                 //必输项检验
                 if($('#add_username').val()==""){
-                    layer.open({
-                        title:"消息提醒",
-                        content:"工号不能为空",
-                        skin:"layui-layer-molv",
-                        offset: 'auto',
-                        time:3000,
-                        btn:[],
-                        shade: 0,
-                        anim: -1,
-                        icon:5
-                    });
+                    verifyWindow("工号不能为空");
                     $('#add_username').focus();
                     return false;
                 }
                 if($('#add_xingming').val()==""){
-                    layer.open({
-                        title:"消息提醒",
-                        content:"姓名不能为空",
-                        skin:"layui-layer-molv",
-                        offset: 'auto',
-                        time:3000,
-                        btn:[],
-                        shade: 0,
-                        anim: -1,
-                        icon:5
-                    });
+                    verifyWindow("姓名不能为空");
                     $('#add_xingming').focus();
                     return false;
                 }
@@ -209,20 +190,9 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 //邮箱格式验证
                 var email = $.trim($('#add_email').val());
                 var isEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-
                 if(!(email=="")){
                     if(!(isEmail.test(email))){
-                        layer.open({
-                            title:"消息提醒",
-                            content:"邮箱格式不正确",
-                            skin:"layui-layer-molv",
-                            offset: 'auto',
-                            time:3000,
-                            btn:[],
-                            shade: 0,
-                            anim: -1,
-                            icon:5
-                        });
+                        verifyWindow("邮箱格式不正确");
                         $('#add_email').focus();
                         return false;
                     }
@@ -235,13 +205,13 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
 
                             var gongxu = {id:$('#add_gongxu').val()};
                             var lunban = {id:$('#add_lunban').val()};
-                            var user_yuanGong={zu:$('#add_zu').val(),gongxu:gongxu,lunban:lunban};
+                            formData.gongxu=gongxu;
+                            formData.lunban=lunban;
 
-                            formData.user_yuanGong=user_yuanGong;
-                            var role_arry = formSelects.value('add_select_role', 'val');
+                            var role_arr = formSelects.value('setRole', 'val');
                             var role_obj = [];
-                            for(var i=0;i<role_arry.length;i++){
-                                var id={id:role_arry[i]};
+                            for(var i=0;i<role_arr.length;i++){
+                                var id={id:role_arr[i]};
                                 role_obj.push(id);
                             }
                             formData.roles=role_obj;
@@ -265,31 +235,32 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
 
     });
 
+    formSelects.data('edit_select_role', 'server', {
+        url:layui.setter.host+'jichushezhi/juesequanxian/role/findAll'
+    });
+    formSelects.config("edit_select_role",{
+        keyName: 'name',
+        keyVal: 'id'
+    });
+
     //监听工具条
     table.on('tool(table)', function(obj){
         var data = obj.data;
         if(obj.event === 'edit'){
             layer.open({
                 type: 1
-                ,title: '编辑用户  '+data.ghxm
+                ,title: '编辑用户  '+data.username
                 ,content: $('#div_form_edit')
-                ,offset:'auto'
                 ,area: ['90%', '90%']
                 ,btn: ['修改', '取消']
-                ,btnAlign: 'c'
                 ,btn1: function(index, layero){
+                    if($('#edit_username').val()==""){
+                        verifyWindow("工号不能为空");
+                        $('#edit_username').focus();
+                        return false;
+                    }
                     if($('#edit_xingming').val()==""){
-                        layer.open({
-                            title:"消息提醒",
-                            content:"姓名不能为空",
-                            skin:"layui-layer-molv",
-                            offset: 'auto',
-                            time:3000,
-                            btn:[],
-                            shade: 0,
-                            anim: -1,
-                            icon:5
-                        });
+                        verifyWindow("姓名不能为空");
                         $('#edit_xingming').focus();
                         return false;
                     }
@@ -297,20 +268,9 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                     //邮箱格式验证
                     var email = $.trim($('#edit_email').val());
                     var isEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-
                     if(!(email=="")){
                         if(!(isEmail.test(email))){
-                            layer.open({
-                                title:"消息提醒",
-                                content:"邮箱格式不正确",
-                                skin:"layui-layer-molv",
-                                offset: 'auto',
-                                time:3000,
-                                btn:[],
-                                shade: 0,
-                                anim: -1,
-                                icon:5
-                            });
+                            verifyWindow("邮箱格式不正确");
                             $('#edit_email').focus();
                             return false;
                         }
@@ -322,14 +282,14 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                                 var formData = data.field;
 
                                 var gongxu = {id:$('#edit_gongxu').val()};
-                                var lunban = {id:4};
-                                var user_yuanGong={zu:$('#edit_zu').val(),gongxu:gongxu,lunban:lunban,id:data.user_yg_id};
+                                var lunban = {id:$('#edit_lunban').val()};
+                                formData.gongxu=gongxu;
+                                formData.lunban=lunban;
 
-                                formData.user_yuanGong=user_yuanGong;
-                                var role_arry = formSelects.value('edit_select_role', 'val');
+                                var role_arr = formSelects.value('edit_select_role', 'val');
                                 var role_obj = [];
-                                for(var i=0;i<role_arry.length;i++){
-                                    var id={id:role_arry[i]};
+                                for(var i=0;i<role_arr.length;i++){
+                                    var id={id:role_arr[i]};
                                     role_obj.push(id);
                                 }
                                 formData.roles=role_obj;
@@ -352,16 +312,31 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 }
                 ,success: function(){
                     //渲染表格数据
-                    laydate.render({
-                        elem: '#edit_birthday',
-                        max: 0
+                    laydate.render({elem: '#edit_birthday',max: 0});
+                    form.val('form_edit',data);
+                    form.val("form_edit",{
+                        "username":data.username.split(" ")[0],
+                        "xingming":data.username.split(" ")[1],
+                        "sex":data.sex_id,
+                        "gongxu":data.gongxu_id,
+                        "lunban":data.lunban_id
                     });
+                    if (!isEmpty(data.roles_id)) {
+                        var roles = data.roles_id.split(",");
+                        var arr = [];
+                        for (var i = 0; i < roles.length; i++) {
+                            arr.push(parseInt(roles[i]));
+                        }
+                        formSelects.value('edit_select_role',arr);
+                    }else {
+                        formSelects.value('edit_select_role',[]);
+                    }
 
                 }
             });
         }else if(obj.event === 'lizhi'){
             layer.confirm(
-                "确定  "+data.ghxm+'  离职?',
+                "确定  "+data.username+'  离职?',
                 {title:'离职提示'},function (index){
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/user/updateUserZaiZhi',
@@ -375,7 +350,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 });
         }else if(obj.event === 'fuzhi') {
             layer.confirm(
-                "确定  "+data.ghxm+'  复职?',
+                "确定  "+data.username+'  复职?',
                 {title:'复职提示'},function (index){
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/user/updateUserZaiZhi',
@@ -389,7 +364,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 });
         }else if(obj.event === 'reset'){
             layer.confirm(
-                "确定将  "+data.ghxm+'  密码重置为 123456 ?',
+                "确定将  "+data.username+'  密码重置为 123456 ?',
                 {title:'重置密码提示'},function (index){
                     $.ajax({
                         url:layui.setter.host+'jichushezhi/user/updateUserPwd',
@@ -403,11 +378,6 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 });
         }
     });
-
-    //根据sort排序
-    function sortPXH(a,b){
-        return a.sort-b.sort;
-    }
 
 
     exports('user', {})

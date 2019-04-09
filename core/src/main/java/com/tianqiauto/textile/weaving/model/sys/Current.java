@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName Param_LeiBie
@@ -21,6 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity(name = "sys_current")
 public class Current {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
