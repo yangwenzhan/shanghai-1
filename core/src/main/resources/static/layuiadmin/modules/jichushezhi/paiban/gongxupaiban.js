@@ -44,18 +44,6 @@ layui.define(['table', 'form'], function(exports){
                 }
             }
         });
-
-
-        //控制复选框变为单选框
-        $('#see_table .layui-form-checkbox').click(function() {
-
-            alert('aaaaa');
-
-            $('#div_form_edit .layui-form-checkbox').removeClass('layui-form-checked');
-            $(this).addClass('layui-form-checked');
-        });
-
-
     });
 
     table.on('tool(table)', function(obj){
@@ -251,5 +239,5 @@ layui.define(['table', 'form'], function(exports){
         return cols;
     }
 
-    exports('pancunyue', {})
+    exports('gongxupaiban', {})
 });

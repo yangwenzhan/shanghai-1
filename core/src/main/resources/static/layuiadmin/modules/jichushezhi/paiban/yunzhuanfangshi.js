@@ -545,5 +545,5 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         return tem;
     }
 
-    exports('pancunyue', {})
+    exports('yunzhuanfangshi', {})
 });

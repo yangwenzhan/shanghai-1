@@ -160,5 +160,5 @@ layui.define(['form','laydate'], function(exports){
 
   
   //对外暴露的接口
-  exports('set', {});
+  exports('info', {});
 });

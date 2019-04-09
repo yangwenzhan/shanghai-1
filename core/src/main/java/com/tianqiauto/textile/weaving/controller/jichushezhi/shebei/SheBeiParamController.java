@@ -17,16 +17,21 @@ public class SheBeiParamController {
     private SheBeiParamService sheBeiParamService;
 
     @GetMapping("findAll")
-    @ApiOperation(value = "查询设备数据参数")
-    public Result findAll(String gx_id, String jx_id, String cslb_id){
-        return sheBeiParamService.findAll(gx_id, jx_id, cslb_id);
+    @ApiOperation(value = "查询设备数据参数",notes = "工序id，机型id，参数类别id")
+    public Result findAll(String gongxu, String jixing, String leiBie){
+        return sheBeiParamService.findAll(gongxu, jixing, leiBie);
     }
 
-    @GetMapping("updSheBeiParam")
+    @PostMapping("updSheBeiParam")
     @ApiOperation(value = "修改设备参数")
     public Result updSheBeiParam(@RequestBody Param param){
-        int num = sheBeiParamService.updSheBeiParam(param);
-        return Result.ok("修改设备参数成功!",num);
+        boolean flag = sheBeiParamService.existsByNameAndLeiBie(param.getName(),param.getLeiBie().getId(),param.getId());
+        if(flag){
+            sheBeiParamService.updSheBeiParam(param);
+            return Result.ok("修改设备参数成功!",param);
+        }else{
+            return Result.result(666,"该参数名称已存在！",param);
+        }
     }
 
     @GetMapping("updSheBeiParam_flag")
@@ -38,11 +43,12 @@ public class SheBeiParamController {
 
     @PostMapping("updSheBeiParam_Batch")
     @ApiOperation(value = "批量修改设备参数",notes = "输出参数   1表示成功   0 表示失败")
-    public Result updSheBeiParam_Batch (String idStr, String sfbj, String sfzs, String sfjlqx, String dw,
-                                        String cslb_id, String ccsc, String cczq){
-        return sheBeiParamService.updSheBeiParam_Batch(idStr, sfbj, sfzs, sfjlqx, dw, cslb_id, ccsc, cczq);
+    public Result updSheBeiParam_Batch (String idStr, String dw,
+                                        String cslb_id, String ccsc, String cczq, String sfbj,String sfzs,String sfjlqx){
+
         //fixme
         //调用存储过程批量修改，返回0失败，1成功
+        return sheBeiParamService.updSheBeiParam_Batch(idStr, dw, cslb_id, ccsc, cczq, sfbj, sfzs, sfjlqx);
 
     }
 

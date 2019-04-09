@@ -1,15 +1,11 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
-import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @ClassName Order
@@ -37,7 +33,8 @@ public class Beam_ZhiZhou {
     private Gongxu jixing; //机型
 
 
-    private Integer zhoukuan; //轴宽
+    @Column(scale = 2)
+    private Double zhoukuan; //轴宽
 
 
 
