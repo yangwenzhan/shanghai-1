@@ -3,10 +3,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +22,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_yuansha_ruku_shenqing")
-@EqualsAndHashCode(exclude = {"yuanShaRuKu","yuanSha","laiyuan","status","cangkuquerenren","heyuehao"})
+@EqualsAndHashCode(exclude = {"yuanShaRuKu","yuanSha","laiyuan","status","heyuehao"})
+@ToString(exclude = {"yuanShaRuKu","yuanSha","laiyuan","status","heyuehao"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class YuanSha_RuKu_Shenqing {
 
 
@@ -59,20 +58,9 @@ public class YuanSha_RuKu_Shenqing {
     @JoinColumn(name = "status_id")
     private Dict status; // 入库申请状态
 
-
-    @ManyToOne
-    @JoinColumn(name = "cangkuquerenren_id")
-    private User cangkuquerenren;  //仓库确认人
-    private Date cangkuquerenshijian; //仓库确认时间
-
-
-
     @ManyToOne
     @JoinColumn(name = "heyuehao_id")
     private Heyuehao heyuehao;  //哪个合约号上退的
-
-
-
 
 
 

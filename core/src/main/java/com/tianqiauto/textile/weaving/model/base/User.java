@@ -2,10 +2,7 @@ package com.tianqiauto.textile.weaving.model.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -23,6 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"roles","gongxu","lunban"})
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@ToString(exclude = {"roles","gongxu","lunban"})
 public class User {
 
     @Id
@@ -106,5 +105,6 @@ public class User {
     @Column
     @Version
     private Long version;
+
 
 }

@@ -19,6 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"users","permissions"})
+@ToString(exclude = {"users","permissions"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role {
 
 

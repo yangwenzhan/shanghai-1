@@ -1,9 +1,8 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -20,6 +19,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"yuanSha_chuKu_shenqing","yuanSha","chukuleixing"})
+@ToString(exclude = {"yuanSha_chuKu_shenqing","yuanSha","chukuleixing"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "sys_yuansha_chuku")
 
 //之所以这个表有冗余字段，是为了保证既可以走申请流程，也可以直接进行出库

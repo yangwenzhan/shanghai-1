@@ -59,8 +59,8 @@ public class OrderService {
             }
         }
         order.setHeyuehaos(temp);
-        User jingli = userRepository.findById(order.getJingli().getId()).get();
-        User yingxiaoyuan = userRepository.findById(order.getYingxiaoyuan().getId()).get();
+        User jingli = userRepository.getOne(order.getJingli().getId());
+        User yingxiaoyuan = userRepository.getOne(order.getYingxiaoyuan().getId());
         order.setJingli(jingli);
         order.setYingxiaoyuan(yingxiaoyuan);
         return orderRepository.save(order);
@@ -98,7 +98,6 @@ public class OrderService {
             if(!StringUtils.isEmpty(order.getKehuxinxi())) {
                 predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("value"),order.getKehuxinxi().getId()));
             }
-            criteriaBuilder.desc(root.get("createTime"));
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return orderRepository.findAll(specification,pageable);
