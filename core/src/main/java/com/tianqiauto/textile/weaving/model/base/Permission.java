@@ -1,10 +1,7 @@
 package com.tianqiauto.textile.weaving.model.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -21,6 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"roles"})
+@ToString(exclude = {"roles"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Permission {
 
     @Id
