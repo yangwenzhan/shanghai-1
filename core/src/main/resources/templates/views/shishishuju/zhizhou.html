@@ -67,6 +67,13 @@
 		</div>
 	</div>
 
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
 
 	<!--按合约号汇总弹出框  div-->
 	<div id="hyh_hz_tck" style="display: none">
@@ -87,7 +94,7 @@
 		{{# }else if(d.zt == '机下满未穿综' || d.zt == '机下剪轴未穿综'){ }}
 		<div><div style="color: yellow">{{d.zt}}</div></div>
 		{{# }else{ }}
-		<div><div style="color: green">{{d.zt}}</div></div>
+		<div><div style="color: green">{{d.zt==null?'':d.zt}}</div></div>
 		{{# } }}
 	</script>
 

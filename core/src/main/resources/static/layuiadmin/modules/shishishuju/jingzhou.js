@@ -159,11 +159,53 @@ layui.define(['table', 'form'], function(exports){
 
     //合约号详情
     form.on('submit(heyuehao_filter)',function(data){
-        //获取合约号id
-        console.log($(this).context.id);
-
+        //经纬纱信息表头
+        var jws_cols = [[
+            {field: 'id', title: 'id', hide: true}
+            , {field: 'createTime', title: '创建时间'}
+            , {templet: repNull('yuanSha.id'), hide: true}
+            , {templet: repNull('yuanSha.pinming'), title: '品名'}
+            , {templet: repNull('yuanSha.pihao'), title: '批号'}
+            , {templet: repNull('yuanSha.gongyingshang.name'), title: '供应商'}
+            , {templet: repNull('yuanSha.zhishu'), title: '支数'}
+            , {templet: repNull('yuanSha.sehao'), title: '色号'}
+            , {templet: repNull('yuanSha.sebie'), title: '色别'}
+            , {field: 'genshu', title: '根数'}
+            , {field: 'beizhu', title: '备注'}
+        ]];
+        //渲染经纱table
+        initTable_jws('hyh_js_table', 'dingdanguanli/heyuehaoguanli/getYuanSha', 'get',jws_cols, table,{type:'jingsha',id:$(this).context.id});
+        // 渲染纬纱table
+        initTable_jws('hyh_ws_table', 'dingdanguanli/heyuehaoguanli/getYuanSha', 'get',jws_cols, table,{type:'weisha',id:$(this).context.id});
+        layer.open({
+            type: 1,
+            title: ['合约号 '+$(this).context.innerHTML+' 原纱信息'],
+            content: $("#hyh_ys_tck"),
+            shade: 0.8,
+            area: ['90%', '90%'],
+            offset: "10px"
+        });
         return false;
     });
+
+
+    //初始化table(不带分页)
+    function initTable_jws(ele, url, method,cols, table,data,doneCallBack) {
+        return table.render({
+            elem: "#" + ele
+            , id: ele
+            , url: layui.setter.host + url
+            , method: method
+            , cellMinWidth: 80
+            , cols: cols
+            , where: data
+            , done: function (res) {
+                if (typeof(doneCallBack) === "function") {
+                    doneCallBack(res);
+                }
+            }
+        });
+    }
 
 
 
