@@ -37,6 +37,9 @@ public class YuansharukushenqingServer {
     @Autowired
     private YuanShaRepository yuanShaRepository;
 
+    @Autowired
+    private YuanShaRuKuRepository yuanShaRuKuRepository;
+
     public Object findAll(YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing, Pageable pageable) {
         ModelUtil mu = new ModelUtil(yuanSha_ruKu_shenqing);
         Specification<YuanSha_RuKu_Shenqing> specification = (root, criteriaQuery, criteriaBuilder) -> {
@@ -69,6 +72,10 @@ public class YuansharukushenqingServer {
             if(!mu.paramIsEmpty("laiyuan.id")) {
                 andPredicates.add(criteriaBuilder.equal(root.get("laiyuan").get("id"),yuanSha_ruKu_shenqing.getLaiyuan().getId()));
             }
+            //状态
+            if(!mu.paramIsEmpty("status.id")) {
+                andPredicates.add(criteriaBuilder.equal(root.get("status").get("id"),yuanSha_ruKu_shenqing.getStatus().getId()));
+            }
             Predicate[] array = new Predicate[andPredicates.size()];
             Predicate preAnd = criteriaBuilder.and(andPredicates.toArray(array));
             return criteriaQuery.where(preAnd).getRestriction();
@@ -96,6 +103,13 @@ public class YuansharukushenqingServer {
             yuanSha_ruKu_shenqing.setYuanSha(yuanSha);
             yuanSha_ruKu_shenqing = yuanShaRuKuShenQingRepository.save(yuanSha_ruKu_shenqing);
         }
+        YuanSha_RuKu yuanShaRuKu = new YuanSha_RuKu();
+        yuanShaRuKu.setLaiyuan(yuanSha_ruKu_shenqing.getLaiyuan());
+        yuanShaRuKu.setYuanSha_ruKu_shenqing(yuanSha_ruKu_shenqing);
+        YuanSha ys = new YuanSha();
+        ys.setId(yuanSha.getId());
+        yuanShaRuKu.setYuanSha(ys);
+        yuanShaRuKuRepository.save(yuanShaRuKu);
         return yuanSha_ruKu_shenqing;
     }
 

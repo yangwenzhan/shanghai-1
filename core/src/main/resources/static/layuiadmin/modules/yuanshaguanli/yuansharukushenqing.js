@@ -32,7 +32,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     //设置表格头
     var cols = [[
         {field: 'id', title: 'id', hide: true}
-        , {field: 'createTime', title: '购入日期'}
+        , {field: 'createTime', title: '申请日期'}
         , {title: '品名',templet: repNull('yuanSha.pinming')}
         , {title: '批号',templet: repNull('yuanSha.pihao')}
         , {title: '支数',templet: repNull('yuanSha.zhishu')}
@@ -46,10 +46,11 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '申请包数',field: 'baoshu'}
         , {title: '申请总重',field: 'zongzhong'}
         , {title: '申请备注',field: 'beizhu'}
-        , {title: '登记包重',templet: repNull('yuanShaRuKu.baozhong')}
-        , {title: '登记包数',templet: repNull('yuanShaRuKu.baoshu')}
-        , {title: '登记总重',templet: repNull('yuanShaRuKu.zongzhong')}
+        , {title: '实际包重',templet: repNull('yuanShaRuKu.baozhong')}
+        , {title: '实际包数',templet: repNull('yuanShaRuKu.baoshu')}
+        , {title: '实际总重',templet: repNull('yuanShaRuKu.zongzhong')}
         , {title: '登记备注',templet: repNull('yuanShaRuKu.beizhu')}
+        , {title: '领用人',templet: repNull('yuanShaRuKu.lingyongren.xingming')}
         , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:180}
     ]];
 
@@ -241,5 +242,5 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     tq_verify(form);//给form添加自定义校验
 
-    exports('yuansharukudengji', {})
+    exports('yuansharukushenqing', {})
 });
