@@ -1,9 +1,7 @@
 package com.tianqiauto.textile.weaving.model.base;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,7 +16,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "base_pb_yunzhuanfangshi_xiangqing")
-@EqualsAndHashCode(exclude = {"yunZhuanFangShi"})
+@EqualsAndHashCode(exclude = {"yunZhuanFangShi","banci","lunban"})
+@ToString(exclude = {"yunZhuanFangShi","banci","lunban"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PB_YunZhuanFangShi_Xiangqing {
 
 

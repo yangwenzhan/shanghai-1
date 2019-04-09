@@ -3,10 +3,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -28,6 +25,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity(name = "sys_yuansha_ruku")
 @EqualsAndHashCode(exclude = {"yuanSha","yuanSha_ruKu_shenqing","lingyongren","laiyuan"})
+@ToString(exclude = {"yuanSha","yuanSha_ruKu_shenqing","lingyongren","laiyuan"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class YuanSha_RuKu {
 
     @Id
@@ -81,11 +80,9 @@ public class YuanSha_RuKu {
 
     //查询使用条件
     @Transient
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date kaishiriqi;//开始日期
 
     @Transient
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jieshuriqi;//结束日期
 
 }

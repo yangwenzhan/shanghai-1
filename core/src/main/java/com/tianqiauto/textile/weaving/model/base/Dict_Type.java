@@ -3,10 +3,7 @@ package com.tianqiauto.textile.weaving.model.base;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import io.github.biezhi.excel.plus.annotation.ExcelColumn;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,6 +13,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "base_dict_type")
 @EqualsAndHashCode(exclude = {"dicts"})
+@ToString(exclude = {"dicts"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 /**
  * 数据字典类型表
  */

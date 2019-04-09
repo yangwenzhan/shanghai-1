@@ -1,7 +1,9 @@
 package com.tianqiauto.textile.weaving.model.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -54,6 +56,7 @@ public class PanCunYue {
     public void setJieshu(String jieshuriqi,Dict jieshubanci){
         this.jieshu = jieshuriqi.replaceAll("-","")+jieshubanci.getId();
     }
+
 
 
 }

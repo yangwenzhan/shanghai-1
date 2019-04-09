@@ -1,11 +1,6 @@
 package com.tianqiauto.textile.weaving.model.search;
 
-import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.Gongxu;
-import com.tianqiauto.textile.weaving.model.base.Role;
 import lombok.Data;
-
-import java.util.Set;
 
 /**
  * @ClassName SearchUser
