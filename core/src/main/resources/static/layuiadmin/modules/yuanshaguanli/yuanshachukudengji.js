@@ -32,9 +32,9 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     var cols = [[
         {field: 'id', title: 'id', hide: true}
         , {field: 'createTime', title: '日期', sort: true}
-        , {title: '品名',templet: repNull('yuanSha.pinming'), sort: true}
-        , {title: '批号',templet: repNull('yuanSha.pihao'), sort: true}
-        , {title: '支数',templet: repNull('yuanSha.zhishu'), sort: true}
+        , {title: '品名',templet: repNull('yuanSha.pinming'),field: 'yuanSha.pinming', sort: true}
+        , {title: '批号',templet: repNull('yuanSha.pihao'), field: 'yuanSha.pihao',sort: true}
+        , {title: '支数',templet: repNull('yuanSha.zhishu'),field: 'yuanSha.zhishu', sort: true}
         , {title: '色别',templet: repNull('yuanSha.sebie')}
         , {title: '色号',templet: repNull('yuanSha.sehao')}
         , {title: '供应商',templet: repNull('yuanSha.gongyingshang.name')}
