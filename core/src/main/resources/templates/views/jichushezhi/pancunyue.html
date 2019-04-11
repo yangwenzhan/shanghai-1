@@ -8,37 +8,191 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
             <div class="layui-form-item">
 
                 <div class="layui-inline">
                     <label class="layui-form-label">年份</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="nian" placeholder="年份" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline">
+                        <input type="text" name="nian" id="cx_nian" placeholder="全部" class="layui-input" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">月份</label>
                     <div class="layui-input-block">
-                        <input type="text" name="yue" placeholder="月份" autocomplete="off" class="layui-input">
+                        <select name="yue" lay-search="" id="yue">
+                            <option value="">全部</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="searchBtn">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
                     </button>
                 </div>
 
             </div>
-        </div>
+        </form>
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
-                <button class="layui-btn layuiadmin-btn-admin">删除</button>
-                <button class="layui-btn layuiadmin-btn-admin">添加</button>
+                <button class="layui-btn" id="add_btn"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
             </div>
             <table id="table" lay-filter="table"></table>
         </div>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
+
+        <!--新增弹框-->
+        <div style="display: none" id="add_form_div">
+            <div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">年份</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="nian" id="add_nian" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">月份</label>
+                        <div class="layui-input-block">
+                            <select name="yue" lay-verify="required" lay-search="" id="add_yue">
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="kaishiriqi" id="add_kaishiriqi" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始班次</label>
+                        <div class="layui-input-inline">
+                            <select name="banci" lay-verify="required" lay-search="" id="add_kaishibanci" lay-filter="add_kaishibanci">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="jieshuriqi" id="add_jieshuriqi" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束班次</label>
+                        <div class="layui-input-inline">
+                            <select name="banci" lay-verify="required" lay-search="" id="add_jieshubanci" lay-filter="add_jieshubanci">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--修改弹框-->
+        <div style="display: none" id="edit_form_div">
+            <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item">
+
+                    <div class="layui-inline" style="display: none;">
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="id" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">年份</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="nian" id="edit_nian" class="layui-input" autocomplete="off" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">月份</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="yue" id="edit_yue" class="layui-input" autocomplete="off" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="kaishiriqi" id="edit_kaishiriqi" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始班次</label>
+                        <div class="layui-input-inline">
+                            <select name="banci" lay-verify="required" lay-search="" id="edit_kaishibanci" lay-filter="add_kaishibanci">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" name="jieshuriqi" id="edit_jieshuriqi" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束班次</label>
+                        <div class="layui-input-inline">
+                            <select name="banci" lay-verify="required" lay-search="" id="edit_jieshubanci" lay-filter="add_jieshubanci">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 

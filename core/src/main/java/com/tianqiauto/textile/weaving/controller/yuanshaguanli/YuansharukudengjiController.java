@@ -1,8 +1,6 @@
 package com.tianqiauto.textile.weaving.controller.yuanshaguanli;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.sys.Order;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu_Shenqing;
 import com.tianqiauto.textile.weaving.service.yuanshaguanli.YuansharukudengjiServer;
@@ -12,8 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @Author bjw

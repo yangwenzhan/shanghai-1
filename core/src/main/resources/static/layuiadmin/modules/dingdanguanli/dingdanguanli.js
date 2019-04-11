@@ -96,8 +96,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             dictInitSelect('yuanliaoleixing_id_edit', null, 'yuanliaoleixing', 'name', 'id');//原料类型
             dictInitSelect('kehuxinxi_id_edit', null, 'kehuxinxi', 'name', 'id');//客户信息
             dictInitSelect('chengpinyongtu_id_edit', '15', 'dd_chengpinyongtu', 'name', 'id');//成品用图
-            InitSelect('jingli_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
-            InitSelect('yingxiaoyuan_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+            InitSelect('jingli_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
+            InitSelect('yingxiaoyuan_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             editI = layer.open({
                 type: 1
                 , title: '编辑数据订单信息！'
@@ -151,11 +151,11 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     $("#add").click(function () {
         dictInitSele(seleInit,false);
         form.render();
-        InitSelect('jingli_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'xingming', 'id');
-        InitSelect('yingxiaoyuan_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'xingming', 'id');
+        InitSelect('jingli_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
+        InitSelect('yingxiaoyuan_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
         var addOpen = layer.open({
             type: 1
-            , title: '添加订单信息！'
+            , title: '添加订单信息'
             , content: $('#div_form_add')
             , area: ['80%', '80%']
             , btn: ['添加', '取消']
@@ -169,6 +169,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'POST',
                         data: JSON.stringify(formData),
                         success: function (data) {
+                            fromClear("div_form_add");
                             layer.open({
                                 content: '是否继续管理合约号？',
                                 fixd: true,
@@ -229,7 +230,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //监听搜索
     form.on('submit(form_search)', function (data) {
-        var field = data.field;;
+        var field = data.field;
         table.reload('table', {
             where: field
         });
@@ -333,6 +334,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 form.render();
             }
         });
+    }
+
+
+    function fromClear(formId) {
+        var arrObj = $('#' + formId).find(":input");
+        for (var i = 0; i < arrObj.length; i++) {
+            $(arrObj[i]).val("");
+        }
     }
 
     exports('dingdanguanli', {})

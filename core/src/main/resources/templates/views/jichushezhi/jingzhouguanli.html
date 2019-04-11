@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>经轴管理</title>
+</head>
+
+	<body>
+
+		<div class="layui-fluid">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div style="padding-bottom: 10px;">
+						<div class="layui-btn-group">
+							<button class="layui-btn" id="add_btn"><i class="layui-icon">&#xe608;</i> 添加经轴</button>
+						</div>
+					</div>
+				</div>
+				<table class="layui-table" id="table" lay-filter="table"></table>
+			</div>
+		</div>
+
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+		</script>
+
+		<!--新增弹窗  div-->
+		<div id="add_form_div" style="display: none;">
+			<div class="layui-form" lay-filter="form_edit" id="form_add" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">经轴号</label>
+						<div class="layui-input-block">
+							<input type="text" name="zhouhao" id="add_zhouhao" placeholder="请输入经轴号" class="layui-input" autocomplete="off"/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">轴宽</label>
+						<div class="layui-input-block">
+							<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="text" name="zhoukuan" id="add_zhoukuan" placeholder="请输入轴宽" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-block">
+							<textarea type="text" name="beizhu" lay-verify="beizhu" id="add_beizhu" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+						</div>
+					</div>
+
+					<div class="layui-hide">
+						<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--修改弹窗  div-->
+		<div id="edit_form_div" style="display: none;">
+			<div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">经轴号</label>
+						<div class="layui-input-block">
+							<input type="text" name="zhouhao" id="zhouhao" placeholder="请输入轴宽" class="layui-input" autocomplete="off" disabled/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">轴宽</label>
+						<div class="layui-input-block">
+							<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="text" name="zhoukuan" id="zhoukuan" placeholder="请输入轴宽" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-block">
+							<textarea type="text" name="beizhu" lay-verify="beizhu" id="beizhu" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+						</div>
+					</div>
+
+					<div class="layui-hide">
+						<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div th:replace="/common/links::js_footer"></div>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+                ,jingzhouguanli:'jichushezhi/zhouguanli/jingzhouguanli'
+            }).use(['index','jingzhouguanli'],function () {
+
+            });
+		</script>
+
+	</body>
+
+</html>

@@ -6,6 +6,7 @@ import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
@@ -33,14 +34,13 @@ public class CommonService {
         String sql = "select distinct zu from base_user_yuangong";
         return jdbcTemplate.queryForList(sql);
     }
+    public List<Map<String,Object>> findCSLB(String gongxu,String jixing){
+        String sql = "select * from sys_param_leibie where gongxu_id=isnull(?,gongxu_id) and jixing_id=isnull(?,jixing_id)";
+        return jdbcTemplate.queryForList(sql, StringUtils.isEmpty(gongxu)?null:gongxu,StringUtils.isEmpty(jixing)?null:jixing);
+    }
 
-    @Transactional
-    public Map<String,Set<Dict>> DictFindAllByCodes(Set<String> codes) {
-        Map<String,Set<Dict>> map = new HashMap<>();
-        for (String code:codes){
-            Dict_Type dist_type = dict_typeRepository.findByCode(code);
-            map.put(code,dist_type.getDicts());
-        }
-        return map;
+    public List<Map<String,Object>> findZhiJiJiXing(){
+        String sql = "select * from base_gongxu where parent_id=(select id from base_gongxu where name='织布')";
+        return jdbcTemplate.queryForList(sql);
     }
 }
