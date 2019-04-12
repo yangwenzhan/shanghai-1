@@ -3,27 +3,29 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
+import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
- * @ClassName Shift_Zhengjing
+ * @ClassName CheWei_History
  * @Description TODO
  * @Author xingxiaoshuai
- * @Date 2019-02-28 14:57
+ * @Date 2019-04-12 17:59
  * @Version 1.0
  **/
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_shift_jiangsha")
-@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao"})
-@ToString(exclude = {"banci","jitaihao","heyuehao"})
+@Entity(name = "sys_chewei")
+@EqualsAndHashCode(exclude = {"users","jitaihao","lunban","banci"})
+@ToString(exclude = {"users","jitaihao","lunban","banci"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Shift_JiangSha {
+public class CheWei_History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,20 +37,17 @@ public class Shift_JiangSha {
     private Dict banci;
 
     @ManyToOne
-    @JoinColumn(name = "shebei_id")
+    @JoinColumn(name = "jitai_id")
     private SheBei jitaihao; //机台号
 
     @ManyToOne
-    @JoinColumn(name = "heyuehao_id")
-    private Heyuehao heyuehao;
+    @JoinColumn(name = "lunban_id")
+    private Dict lunban;  //轮班
 
-
-
-
-    private Double changdu; //长度
-
-    private Integer shifouwancheng;  //是否完成：为1时完成 为0时未完成
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_chewei_yuangong", joinColumns = @JoinColumn(name = "chewei_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users;
 
 
 

@@ -12,7 +12,42 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         ,{code:"role",hasNull:true,defaultValue:""}
         );
 
-    form.render();
+    //工号姓名 username
+    function getUsername(){
+        $("select[name='search_yuangong']").empty();
+        $.ajax({
+            async:false,
+            url:layui.setter.host+'jichushezhi/user/getGonghaoAndXingming',
+            type: 'get',
+            data:{
+                "gongxu":$("#search_gongxu").val(),
+                "lunban":$("#search_lunban").val(),
+                "zaizhiflag":$("#search_shifouzaizhi").val(),
+                "zu":$("#search_zu").val(),
+                "role":$("#search_role").val()
+            },
+            success: function (data) {
+                var html = '';
+                html+='<option value= "" >全部</option>';
+                for(var i = 0;i<data.data.length;i++){
+                    html+='<option value= "'+data.data[i].gonghao+'" >'+data.data[i].xingming+'</option>';
+                }
+                $("select[name='search_yuangong']").append(html);
+            }
+        });
+        form.render();
+    }
+
+    getUsername();
+
+
+
+
+    form.on('select(search_gongxu)', function(){getUsername();});
+    form.on('select(search_lunban)', function(){getUsername();});
+    form.on('select(search_shifouzaizhi)', function(){getUsername();});
+    form.on('select(search_zu)', function(){getUsername();});
+    form.on('select(search_role)', function(){getUsername();});
 
 
     var cols = [[
@@ -281,10 +316,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                             form.on('submit(form_edit_submit)', function (data) {
                                 var formData = data.field;
 
+
+
                                 var gongxu = {id:$('#edit_gongxu').val()};
                                 var lunban = {id:$('#edit_lunban').val()};
-                                formData.gongxu=gongxu;
-                                formData.lunban=lunban;
 
                                 var role_arr = formSelects.value('edit_select_role', 'val');
                                 var role_obj = [];
@@ -292,7 +327,11 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                                     var id={id:role_arr[i]};
                                     role_obj.push(id);
                                 }
-                                formData.roles=role_obj;
+
+                                //关联对象出现空的时候向后传会导致无法保存；处理：空的时候直接不传相应字段；不为空时按照json对应格式向后传
+                                if(isEmpty($('#edit_gongxu').val())){delete formData["gongxu"];}else{formData.gongxu=gongxu;}
+                                if(isEmpty($('#edit_lunban').val())){delete formData["lunban"];}else{formData.lunban=lunban;}
+                                if(role_obj.length<=0){delete formData["roles"]; }else {formData.roles=role_obj;}
 
                                 $.ajax({
                                     url:layui.setter.host+'jichushezhi/user/updateUserInfo',
@@ -301,7 +340,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                                     data:JSON.stringify(formData),
                                     success:function(data){
                                         ajaxSuccess(data,table);
-                                        layer.close(i);layer.close(index);
+                                        layer.close(i);
+                                        if(data.code == 0){
+                                            layer.close(index);
+                                        }
                                     }
                                 });
 

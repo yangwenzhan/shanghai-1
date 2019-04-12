@@ -36,7 +36,11 @@ public class Shift_ChuanZong {
 
     @ManyToOne
     @JoinColumn(name = "shebei_id")
-    private SheBei jitaihao; //机台号
+    private SheBei jitaihao; //机台号  为空代表为手工穿综
+
+    @ManyToOne
+    @JoinColumn(name = "zhiZhou_id")
+    private Beam_ZhiZhou zhiZhou; //轴号
 
     @ManyToOne
     @JoinColumn(name = "heyuehao_id")
@@ -44,6 +48,9 @@ public class Shift_ChuanZong {
 
 
     private Integer genshu; //根数
+
+    private Integer shifouwancheng;  //是否完成：为1时完成 为0时未完成
+
 
 
 

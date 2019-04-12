@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -84,7 +86,6 @@ public class UserController {
     @GetMapping("findAllUser")
     @ApiOperation(value = "查询所有用户信息")
     public Result findAllUser(SearchUser searchUser,@PageableDefault( sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable){
-        System.out.println("排序："+pageable.getSort());
         Page<User> userPage = userJpaRepository.findAll(getSpecification(searchUser), pageable);
         return Result.ok(ResultUser.convert(userPage));
     }
@@ -103,10 +104,24 @@ public class UserController {
         return Result.ok("新增成功!",newUser);
     }
 
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息-jpa语句修改",notes = "工号不可修改,姓名不能为空")
     public Result updateUserInfo(@RequestBody User user){
         User userInDB = userJpaRepository.getOne(user.getId());
+
+        if(!userInDB.getUsername().equals(user.getUsername())){
+            String getUsernameCount = "select count(*) from base_user where username = ?";
+            Integer count = jdbcTemplate.queryForObject(getUsernameCount,Integer.class,user.getUsername());
+            if(count>0){
+                return Result.result(666,"工号已经存在",null);
+            }
+
+        }
+
         MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("username","xingming","gongxu","lunban","zu","roles","birthday","email","mobile","sex"));
         return Result.ok("修改成功!",userJpaRepository.save(userInDB));
     }
@@ -190,21 +205,52 @@ public class UserController {
 
     @GetMapping("resetPwd")
     @ApiOperation(value = "重置密码")
-    public Result resetPwd(String id,String oldpwd,String newpwd){
+    public Result resetPwd(Long id,String oldpwd,String newpwd){
 
         //新密码加密
         String encryptPwd = passwordEncoder.encode(newpwd);
         Map<String,Object> map = userService.getPwd(id);
-        //旧密码加密
-        String sql_oldpwd = passwordEncoder.encode(map.get("password").toString());
-        //新旧密码对比
-        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        String sql_oldpwd = map.get("password").toString();
+//        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        boolean flag = passwordEncoder.matches(oldpwd,sql_oldpwd);
         if(flag){
-            userService.updateUserPwd(id,encryptPwd);
+            userJpaRepository.updateUserPwd(encryptPwd,id);
             return Result.ok("密码修改成功!",id);
         }else{
-            return Result.error("原始密码输入错误!",id);
+            return Result.result(666,"原始密码输入错误",null);
         }
+    }
+
+
+    @ApiOperation(value = "获取工号姓名")
+    @GetMapping("getGonghaoAndXingming")
+    public Result getGonghaoAndXingming(String gongxu,String lunban,String zaizhiflag,String zu,String role,@PageableDefault(size = 100000,sort = { "xingming" }, direction = Sort.Direction.ASC) Pageable pageable){
+       Specification specification =  (Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList();
+            if(!StringUtils.isEmpty(gongxu)) {
+                predicates.add(criteriaBuilder.equal(root.join("gongxu",JoinType.LEFT).get("id"), gongxu));
+            }if(!StringUtils.isEmpty(lunban)) {
+                predicates.add(criteriaBuilder.equal(root.join("lunban",JoinType.LEFT).get("id").as(Long.class), lunban));
+            }if(!StringUtils.isEmpty(zaizhiflag)) {
+                predicates.add(criteriaBuilder.equal(root.get("shifouzaizhi"),zaizhiflag));
+            }if(!StringUtils.isEmpty(zu)) {
+                predicates.add(criteriaBuilder.equal(root.get("zu"),zaizhiflag));
+            }if(!StringUtils.isEmpty(role)) {
+               predicates.add(criteriaBuilder.equal(root.join("roles",JoinType.LEFT).get("id").as(Long.class),role));
+           }
+            predicates.add(criteriaBuilder.notEqual(root.get("username"),"admin"));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        Page<User> list = userJpaRepository.findAll(specification,pageable);
+        List<Map<String,Object>> returnList =
+        list.stream().map(user -> {
+            Map<String,Object> map = new HashMap<>();
+            map.put("gonghao",user.getUsername());
+            map.put("xingming",user.getXingming() + "   " +  user.getUsername());
+            return map;
+        }).collect(Collectors.toList());
+        return Result.ok(returnList);
     }
 
 

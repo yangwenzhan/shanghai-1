@@ -145,15 +145,9 @@ public class UserService {
     }
 
     //查询旧密码
-    public Map<String,Object> getPwd(String id){
+    public Map<String,Object> getPwd(Long id){
         String sql = "select password from base_user where id=?";
         return jdbcTemplate.queryForMap(sql,id);
-    }
-
-    //修改密码
-    public int updateUserPwd(String id,String newpwd){
-        String sql = "update base_user set password=? where id=?";
-        return jdbcTemplate.update(sql,newpwd,sql);
     }
 
     @Transactional
