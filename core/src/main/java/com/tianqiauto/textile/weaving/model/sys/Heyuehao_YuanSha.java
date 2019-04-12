@@ -1,11 +1,10 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -22,9 +21,11 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"weisha","jingsha"})
+@EqualsAndHashCode(exclude = {"weisha","jingsha","yuanSha"})
 @Entity(name = "sys_heyuehao_yuansha")
 //合约号可以直接关联原纱表，但是考虑到合约号关联原纱还有根数等其他信息，中间又多了这个表
+@ToString(exclude = {"weisha","jingsha","yuanSha"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Heyuehao_YuanSha {
 
 
@@ -47,11 +48,17 @@ public class Heyuehao_YuanSha {
     private String beizhu; //备注
 
 
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
     @JsonIgnoreProperties("jingsha")

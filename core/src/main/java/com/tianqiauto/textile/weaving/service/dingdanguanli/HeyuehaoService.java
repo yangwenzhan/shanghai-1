@@ -76,9 +76,6 @@ public class HeyuehaoService {
 
     public Object findAllPage(Heyuehao heyuehao, Pageable pageable) {
 
-
-
-
         Specification<Heyuehao> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList();
             //合约号

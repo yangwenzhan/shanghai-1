@@ -1,10 +1,9 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +20,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_zhixing_chuanzong")
+@EqualsAndHashCode(exclude = {"jiHua_chuanZong","zhizhou","banci","chuanzonggong"})
+@ToString(exclude = {"jiHua_chuanZong","zhizhou","banci","chuanzonggong"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ZhiXing_ChuanZong {
 
     @Id

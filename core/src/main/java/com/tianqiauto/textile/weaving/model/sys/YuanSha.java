@@ -1,10 +1,11 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -21,6 +22,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_yuansha")
+@EqualsAndHashCode(exclude = {"yuanSha_zhiLiang","gongyingshang","baozhuangxingshi"})
+@ToString(exclude = {"yuanSha_zhiLiang","gongyingshang","baozhuangxingshi"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class YuanSha {
 
     @Id
@@ -35,6 +39,8 @@ public class YuanSha {
      *
      *
      * 修改原纱入库信息时，总重量必须大于等于相同批次的出库总重量
+     *
+     * 批号生成规则：201903301  yyyymmdd+自增数字
      */
 
 
@@ -64,17 +70,24 @@ public class YuanSha {
 
     @OneToOne
     @JoinColumn(name = "yuansha_zhiliang_id")
+    @JsonIgnoreProperties("yuansha")
     private YuanSha_ZhiLiang yuanSha_zhiLiang;
 
 
     private String beizhu; //备注
 
 
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
 

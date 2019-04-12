@@ -3,11 +3,10 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,7 +26,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_order")
-@EqualsAndHashCode(exclude = {"heyuehaos"})
+@EqualsAndHashCode(exclude = {"heyuehaos","yingxiaoyuan","jingli","yuanliaoleixing","chengpinyongtu","kehuxinxi"})
+@ToString(exclude = {"heyuehaos","yingxiaoyuan","jingli","yuanliaoleixing","chengpinyongtu","kehuxinxi"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
     /**
      * 新增合约号（新增、换经纱、换纬纱）
@@ -67,8 +68,6 @@ public class Order {
 
     private Date xiadanriqi; //下单日期
 
-//    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量
@@ -125,22 +124,26 @@ public class Order {
     private String weishazhishu;    //纬纱支数
     private String teshuyaoqiu;     //特殊要求
 
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
     private String beizhu;   //备注
 
     //查询使用条件
     @Transient
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadankaishiriqi;//下单开始日期
 
     @Transient
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadanjieshuriqi;//下单结束日期
 
 }

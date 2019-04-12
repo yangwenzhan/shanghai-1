@@ -41,8 +41,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '成品用途', width: 100, templet: repNull('chengpinyongtu.name')}
         , {field: 'teshuyueding', title: '特殊约定', width: 100}
         , {field: 'erpshangpindaima', title: 'erp商品代码', width: 100}
-        , {title: '营销员', width: 100, templet: repNull('yingxiaoyuan.username')}
-        , {title: '经理', width: 100, templet: repNull('jingli.username')}
+        , {title: '营销员', width: 100, templet: repNull('yingxiaoyuan.xingming')}
+        , {title: '经理', width: 100, templet: repNull('jingli.xingming')}
         , {title: '客户信息', width: 100, templet: repNull('kehuxinxi.name')}
         , {title: '订单状态', width: 100, templet: repNull('status.name')}
         , {field: 'beizhu', title: '备注', width: 100}
@@ -50,7 +50,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     ]];
 
     //初始化表格
-    initTable("table", 'dingdanguanli/dingdanguanli/query_page', 'get', cols, table);
+    initTable("table", 'dingdanguanli/dingdanguanli/query_page', 'get', cols, table,"form");
 
     //下载
     $('#download').click(function () {
@@ -96,8 +96,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             dictInitSelect('yuanliaoleixing_id_edit', null, 'yuanliaoleixing', 'name', 'id');//原料类型
             dictInitSelect('kehuxinxi_id_edit', null, 'kehuxinxi', 'name', 'id');//客户信息
             dictInitSelect('chengpinyongtu_id_edit', '15', 'dd_chengpinyongtu', 'name', 'id');//成品用图
-            InitSelect('jingli_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
-            InitSelect('yingxiaoyuan_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+            InitSelect('jingli_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
+            InitSelect('yingxiaoyuan_id_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             editI = layer.open({
                 type: 1
                 , title: '编辑数据订单信息！'
@@ -140,16 +140,22 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         }
     });
 
+
+    //字典选择框下拉选项初始化
+    var seleInit = [
+        {eleId:'yuanliaoleixing_id_add',dictCode:'yuanliaoleixing',val:'id'},
+        {eleId:'kehuxinxi_id_add',dictCode:'kehuxinxi',val:'id'},
+        {eleId:'chengpinyongtu_id_add',dictCode:'dd_chengpinyongtu',val:'id',CheckVal:'15'}
+        ];
     //添加订单
     $("#add").click(function () {
-        dictInitSelect('yuanliaoleixing_id_add', null, 'yuanliaoleixing', 'name', 'id');//原料类型
-        dictInitSelect('kehuxinxi_id_add', null, 'kehuxinxi', 'name', 'id');//客户信息
-        dictInitSelect('chengpinyongtu_id_add', '15', 'dd_chengpinyongtu', 'name', 'id');//成品用图
-        InitSelect('jingli_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
-        InitSelect('yingxiaoyuan_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+        dictInitSele(seleInit,false);
+        form.render();
+        InitSelect('jingli_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
+        InitSelect('yingxiaoyuan_id_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
         var addOpen = layer.open({
             type: 1
-            , title: '添加订单信息！'
+            , title: '添加订单信息'
             , content: $('#div_form_add')
             , area: ['80%', '80%']
             , btn: ['添加', '取消']
@@ -163,6 +169,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         type: 'POST',
                         data: JSON.stringify(formData),
                         success: function (data) {
+                            fromClear("div_form_add");
                             layer.open({
                                 content: '是否继续管理合约号？',
                                 fixd: true,
@@ -223,13 +230,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //监听搜索
     form.on('submit(form_search)', function (data) {
-        var field = getParams('form');
+        var field = data.field;
         table.reload('table', {
             where: field
         });
         return false;
     });
-
 
     /**
      * 2019/03/23 bjw
@@ -328,6 +334,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 form.render();
             }
         });
+    }
+
+
+    function fromClear(formId) {
+        var arrObj = $('#' + formId).find(":input");
+        for (var i = 0; i < arrObj.length; i++) {
+            $(arrObj[i]).val("");
+        }
     }
 
     exports('dingdanguanli', {})
