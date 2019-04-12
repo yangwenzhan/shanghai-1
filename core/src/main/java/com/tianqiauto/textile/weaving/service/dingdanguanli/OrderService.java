@@ -2,11 +2,13 @@ package com.tianqiauto.textile.weaving.service.dingdanguanli;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
+import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
 import com.tianqiauto.textile.weaving.model.sys.Order;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
 import com.tianqiauto.textile.weaving.repository.OrderRepository;
+import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
 import com.tianqiauto.textile.weaving.util.JPASql.DynamicUpdateSQL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ public class OrderService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public Order save(Order order) {
         //坯布规格=入库规格=【幅宽/经密/纬密/经纱成分/经纱支数/纬纱支数/纬纱支数/特殊要求】拼接而成
         Set<Heyuehao> temp = new HashSet<>();
@@ -54,6 +59,10 @@ public class OrderService {
             }
         }
         order.setHeyuehaos(temp);
+        User jingli = userRepository.getOne(order.getJingli().getId());
+        User yingxiaoyuan = userRepository.getOne(order.getYingxiaoyuan().getId());
+        order.setJingli(jingli);
+        order.setYingxiaoyuan(yingxiaoyuan);
         return orderRepository.save(order);
     }
 
@@ -89,7 +98,6 @@ public class OrderService {
             if(!StringUtils.isEmpty(order.getKehuxinxi())) {
                 predicates.add(criteriaBuilder.equal(root.get("kehuxinxi").get("value"),order.getKehuxinxi().getId()));
             }
-            criteriaBuilder.desc(root.get("createTime"));
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
         };
         return orderRepository.findAll(specification,pageable);

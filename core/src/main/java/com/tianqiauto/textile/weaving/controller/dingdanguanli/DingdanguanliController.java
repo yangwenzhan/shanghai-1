@@ -3,6 +3,8 @@ package com.tianqiauto.textile.weaving.controller.dingdanguanli;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.repository.OrderRepository;
+import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.service.dingdanguanli.OrderService;
 import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.log.Logger;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,7 +65,7 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-添加订单")
     public Result addOrder(@Valid @RequestBody Order order) {
         List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
-        if(null != list || !list.isEmpty()){
+        if(list.size()>0){
             return Result.result(666,"订单号已存在不能重复添加！",order);
         }
         Dict status = orderService.findByTypenameAndValue("dingdanzhuangtai","10");
@@ -72,7 +76,7 @@ public class DingdanguanliController {
     }
 
     @GetMapping("query_page")
-    public Result findAll(Order order,Pageable pageable) {
+    public Result findAll(Order order,@PageableDefault( sort = { "createTime"}, direction = Sort.Direction.DESC)Pageable pageable) {
         return Result.ok(orderService.findAll(order,pageable));
     }
 
@@ -81,7 +85,7 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-撤销订单")
     public Result deleteOrder(Long id) {
         orderService.deleteById(id);
-        return Result.ok("查询成功！", id); //fixme 有可能是假删除
+        return Result.ok("删除成功！", id); //fixme 有可能是假删除
     }
 
     @PostMapping("updateOrder")
@@ -89,11 +93,11 @@ public class DingdanguanliController {
     @ApiOperation("订单管理-修改订单")
     public Result updateOrder(@RequestBody Order order) {
         List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
-        if(null != list || !list.isEmpty()){
-            return Result.result(666,"订单号已存在不能修改！",order);
+        if(list.size()>0){
+            return Result.result(666,"订单号已存在不能重复添加！",order);
         }
         orderService.update(order);
-        return Result.ok("查询成功！", order);
+        return Result.ok("修改成功！", order);
     }
 
     @PostMapping("getOrder")
@@ -107,6 +111,10 @@ public class DingdanguanliController {
     @ApiOperation("获取在职人员")
     public Result getUser() {
         List<User> users =  userService.getByZaizhi(1);//查出所有的在职人员 //fixme 注意还有经理和营销员的区分
+        for (User user:users){
+            user.setGhxm(user.getUsername()+user.getXingming());
+        }
         return Result.ok("查询成功！", users);
     }
+
 }

@@ -1,11 +1,14 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.tianqiauto.textile.weaving.model.base.User;
+import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +24,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_yuansha_ruku")
+@EqualsAndHashCode(exclude = {"yuanSha","yuanSha_ruKu_shenqing","lingyongren","laiyuan"})
+@ToString(exclude = {"yuanSha","yuanSha_ruKu_shenqing","lingyongren","laiyuan"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class YuanSha_RuKu {
 
     @Id
@@ -33,10 +39,11 @@ public class YuanSha_RuKu {
 
     @OneToOne
     @JoinColumn(name = "yuansha_ruku_shenqing_id")
+    @JsonIgnoreProperties("yuanShaRuKu")
     private YuanSha_RuKu_Shenqing yuanSha_ruKu_shenqing;
 
 
-    private Date goururizhi; //购入日期
+    private Date goururiqi; //购入日期
 
     @ManyToOne
     @JoinColumn(name="laiyuan_id")
@@ -48,7 +55,9 @@ public class YuanSha_RuKu {
 
     private Double zongzhong; //总重量
 
-
+    @ManyToOne
+    @JoinColumn(name="lingyongren_id")
+    private User lingyongren;//领用人
 
 
 
@@ -56,12 +65,24 @@ public class YuanSha_RuKu {
 
 
     private String beizhu; //备注
+    @Column
     @CreatedDate
     private Date createTime;
+    @Column
+    @CreatedBy
     private String  luruRen;
+    @Column
     @LastModifiedDate
     private Date lastModifyTime;
+    @Column
+    @LastModifiedBy
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    private Date jieshuriqi;//结束日期
 
 }

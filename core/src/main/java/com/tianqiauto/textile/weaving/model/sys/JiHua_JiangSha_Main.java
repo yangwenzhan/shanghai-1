@@ -1,9 +1,8 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 
 /**
  * @ClassName Order
- * @Description 整经计划单
+ * @Description 整经计划单（主表对应多个计划）
  * @Author xingxiaoshuai
  * @Date 2019-02-14 09:21
  * @Version 1.0
@@ -23,6 +22,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_jihua_jiangsha_main")
+@EqualsAndHashCode(exclude = {"banci","heyuehao","status"})
+@ToString(exclude = {"banci","heyuehao","status"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class JiHua_JiangSha_Main {
 
 

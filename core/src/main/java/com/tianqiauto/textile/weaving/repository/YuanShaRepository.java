@@ -21,4 +21,6 @@ public interface YuanShaRepository extends JpaRepository<YuanSha,Long> ,JpaSpeci
     @Modifying
     void updPinZhong(Integer zhishu, Long gongyishang_id, String sebie, String sehao, Long baozhuangxingshi_id, String beizhu, Long id);
 
+
+    YuanSha findByPihao(String pihao);
 }

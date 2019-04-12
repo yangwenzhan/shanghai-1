@@ -458,30 +458,36 @@ layui.define(function(exports){
     };
 
     /**
-     * 校验
+     * 校验 bjw 2019/03/30
+     * 常用的校验，屏蔽layui自带校验不能为空
      */
     tq_verify = function(form){
         form.verify({
-            heyuehao: [
-                /^([0-9]{5})([A-Z]{1})([0-9]{1})$/,
-                '合约号格式不正确！'
-            ],
-            zmAndSz: [
-                /^[A-Za-z0-9]+$/
-                , '只能是数字和字母组成！'
-            ],
-            zm: [
-                /^[A-Za-z]+$/
-                , '只能是字母组成！'
-            ],
-            sz: [
-                /^[0-9]+$/
-                , '只能是数字组成！'
-            ],
-            int: [
-                /^-?[1-9]+[0-9]*$/
-                , '只能是整数类型！'
-            ],
+            heyuehao: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!/^([0-9]{5})([A-Z]{1})([0-9]{1})$/.test(value)){
+                    return '合约号格式不正确！';
+                }
+            },
+            zmAndSz: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!/^[A-Za-z0-9]+$/.test(value)){
+                    return '只能是数字和字母组成！';
+                }
+            },
+            zm: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!/^[A-Za-z]+$/.test(value)){
+                    return '只能是字母组成！';
+                }
+            },
+            sz: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!/^[0-9]+$/.test(value)){
+                    return '只能是数字组成！';
+                }
+            },
+            int: function(value, item){ //value：表单的值、item：表单的DOM对象
+                if(!/^-?[1-9]+[0-9]*$/.test(value)){
+                    return '只能是整数类型！';
+                }
+            },
             num: function (value, item) {
                 if (isNaN(value)) {
                     return "只能输入数字类型！";
@@ -504,10 +510,60 @@ layui.define(function(exports){
                     if (arr[0] != '' && arr[1] == '') {
                         if (valueSize < arr[0]) return "不能少于" + arr[0] + "个字符！";
                     }
+                }else if(valueSize == 0){
+                    return "不能为空！";
                 }
             }
         });
     };
+  
+    /**
+     *  bjw 2019.03.30
+     * 请求数据字典初始化select选项框,
+     * 优化：
+     *  1.如果多个sele选框调用了同一个相同的字典类型，后台只查询一次。
+     *  2.一次AJAX请求后台同时加载多个select选项框。
+     *
+     * @param seleArr 这是一个数组对象，数组中的对象包含以下属性
+     *   |----------------------------------------------------------------------|
+     *   |eleId 	Select的id				必填属性							|
+     * 	 |dictCode	查询的Code				必填属性							|
+     * 	 |key		select需要显示的key  	非必填,默认是name					|
+     * 	 |val		Select隐式的value		非必填,默认是value					|
+     * 	 |CheckVal 	设置默认选中的val		非必填,可以不写,默认为null			|
+     * 	 |isAll		Select是否需要选择全部 	非必填,true是, false否 默认选中		|
+     *   |----------------------------------------------------------------------|
+     *
+     *
+     * @param async 调用获取数据字典参数的异步请求是否需要同步，【true：异步/false:同步】 默认是true异步
+     */
+    dictInitSele = function(seleArr,async) {
+        var async = async == undefined ? true : async;
+        var codes = "?"//参数拼接
+        for(var i in seleArr){
+            codes += "codes="+seleArr[i].dictCode+"&";
+        }
+        $.ajax({
+            url: layui.setter.host + 'common/DictFindAllByCodes'+codes+"ran="+Math.random(),
+            async: async,//是否需要异步
+            type: 'GET',
+            success: function (data) {
+                var dictMap = data.data;
+                for(var i in seleArr){
+                    var eleId = seleArr[i].eleId;
+                    var CheckVal = !(seleArr[i].CheckVal) ? null : seleArr[i].CheckVal;
+                    var dictCode = seleArr[i].dictCode;
+                    var key = !(seleArr[i].key) ? 'name' : seleArr[i].key;
+                    var val = !(seleArr[i].val) ? 'value' : seleArr[i].val;
+                    var isAll = seleArr[i].isAll==undefined ? true : seleArr[i].isAll;
+                    var dict_data = {code: 0, data: dictMap[dictCode]};
+                    initDownList(dict_data, eleId, CheckVal, key, val, isAll);
+                }
+            }
+        });
+    }
 
+
+    //对外暴露的接口
   exports('common', {});
 });
