@@ -1,8 +1,13 @@
 package com.tianqiauto.textile.weaving.controller.jichushezhi;
 
+import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.result.ResultUser;
+import com.tianqiauto.textile.weaving.model.search.AddUser;
 import com.tianqiauto.textile.weaving.model.search.SearchUser;
+import com.tianqiauto.textile.weaving.model.sys.Order;
+import com.tianqiauto.textile.weaving.repository.OrderRepository;
+import com.tianqiauto.textile.weaving.repository.RoleRepository;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.service.jichushezhi.UserService;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
@@ -15,21 +20,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
  * @ClassName UserController
- * @Description TODO
+ * @Description 用户管理
  * @Author xingxiaoshuai
  * @Date 2019-03-08 22:52
  * @Version 1.0
@@ -54,10 +59,6 @@ public class UserController {
 //        return  userService.findAllUser(gx_id, lb_id, zu, sfzz, js_id, ghxm);
 //
 //    }
-
-
-
-
 
 
     public Specification getSpecification(SearchUser searchUser){
@@ -85,7 +86,6 @@ public class UserController {
     @GetMapping("findAllUser")
     @ApiOperation(value = "查询所有用户信息")
     public Result findAllUser(SearchUser searchUser,@PageableDefault( sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable){
-        System.out.println("排序："+pageable.getSort());
         Page<User> userPage = userJpaRepository.findAll(getSpecification(searchUser), pageable);
         return Result.ok(ResultUser.convert(userPage));
     }
@@ -93,24 +93,36 @@ public class UserController {
     @PostMapping("saveUser")
     @ApiOperation(value = "新增用户")
     public Result saveUser(@RequestBody User user){
-
         //判断工号是否唯一
         boolean exist = userJpaRepository.existsByUsername(user.getUsername());
         if(exist){
-            return Result.error("工号已存在!",user);
+            return Result.result(666,"工号已存在!",null);
         }
         user.setPassword(passwordEncoder.encode("123456")); //初始密码为123456
 
-        User newUser = userService.saveUser(user);
+        User newUser = userJpaRepository.save(user);
         return Result.ok("新增成功!",newUser);
     }
+
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息-jpa语句修改",notes = "工号不可修改,姓名不能为空")
     public Result updateUserInfo(@RequestBody User user){
         User userInDB = userJpaRepository.getOne(user.getId());
-        MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("birthday","email","user_yuanGong","mobile","roles","sex","xingming"));
 
+        if(!userInDB.getUsername().equals(user.getUsername())){
+            String getUsernameCount = "select count(*) from base_user where username = ?";
+            Integer count = jdbcTemplate.queryForObject(getUsernameCount,Integer.class,user.getUsername());
+            if(count>0){
+                return Result.result(666,"工号已经存在",null);
+            }
+
+        }
+
+        MyCopyProperties.copyProperties(user,userInDB, Arrays.asList("username","xingming","gongxu","lunban","zu","roles","birthday","email","mobile","sex"));
         return Result.ok("修改成功!",userJpaRepository.save(userInDB));
     }
 
@@ -130,19 +142,47 @@ public class UserController {
         return Result.ok("重置密码成功!",user_id);
     }
 
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     //设置组
     @PostMapping("updateUserZu")
     @ApiOperation(value = "设置组")
     public Result updateUserZu(String zu,String user_ids){
-        userService.updateUserZu(zu, user_ids);
+        String sql = "update base_user set zu = :zu where id in (:ids)";
+
+        Map paramMap = new HashMap();
+        paramMap.put("ids",Arrays.asList(user_ids.substring(0, user_ids.length() - 1).split(",")));
+        paramMap.put("zu",StringUtils.isEmpty(zu)?null:zu);
+
+        namedParameterJdbcTemplate.update(sql,paramMap);
+
         return Result.ok("设置组成功!",true);
     }
+
+
+
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     //设置角色
     @PostMapping("updateUserRole")
     @ApiOperation(value = "设置角色")
-    public Result updateUserRole(String[] user_ids,String[] role_ids){
-        userService.updateUserRole(user_ids,role_ids);
+    public Result updateUserRole(Long[] user_ids,Long[] role_ids){
+
+        Set<Role> roles = new HashSet<>();
+        for (int i = 0; i < role_ids.length; i++) {
+            roles.add(roleRepository.getOne(role_ids[i]));
+        }
+
+
+        for (int i = 0; i < user_ids.length; i++) {
+            User user = userJpaRepository.getOne(user_ids[i]);
+            user.setRoles(roles);
+            userJpaRepository.save(user);
+        }
         return Result.ok("设置角色成功!",true);
     }
 
@@ -165,21 +205,52 @@ public class UserController {
 
     @GetMapping("resetPwd")
     @ApiOperation(value = "重置密码")
-    public Result resetPwd(String id,String oldpwd,String newpwd){
+    public Result resetPwd(Long id,String oldpwd,String newpwd){
 
         //新密码加密
         String encryptPwd = passwordEncoder.encode(newpwd);
         Map<String,Object> map = userService.getPwd(id);
-        //旧密码加密
-        String sql_oldpwd = passwordEncoder.encode(map.get("password").toString());
-        //新旧密码对比
-        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        String sql_oldpwd = map.get("password").toString();
+//        boolean flag = passwordEncoder.matches(sql_oldpwd,encryptPwd);
+        boolean flag = passwordEncoder.matches(oldpwd,sql_oldpwd);
         if(flag){
-            userService.updateUserPwd(id,encryptPwd);
+            userJpaRepository.updateUserPwd(encryptPwd,id);
             return Result.ok("密码修改成功!",id);
         }else{
-            return Result.error("原始密码输入错误!",id);
+            return Result.result(666,"原始密码输入错误",null);
         }
+    }
+
+
+    @ApiOperation(value = "获取工号姓名")
+    @GetMapping("getGonghaoAndXingming")
+    public Result getGonghaoAndXingming(String gongxu,String lunban,String zaizhiflag,String zu,String role,@PageableDefault(size = 100000,sort = { "xingming" }, direction = Sort.Direction.ASC) Pageable pageable){
+       Specification specification =  (Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList();
+            if(!StringUtils.isEmpty(gongxu)) {
+                predicates.add(criteriaBuilder.equal(root.join("gongxu",JoinType.LEFT).get("id"), gongxu));
+            }if(!StringUtils.isEmpty(lunban)) {
+                predicates.add(criteriaBuilder.equal(root.join("lunban",JoinType.LEFT).get("id").as(Long.class), lunban));
+            }if(!StringUtils.isEmpty(zaizhiflag)) {
+                predicates.add(criteriaBuilder.equal(root.get("shifouzaizhi"),zaizhiflag));
+            }if(!StringUtils.isEmpty(zu)) {
+                predicates.add(criteriaBuilder.equal(root.get("zu"),zaizhiflag));
+            }if(!StringUtils.isEmpty(role)) {
+               predicates.add(criteriaBuilder.equal(root.join("roles",JoinType.LEFT).get("id").as(Long.class),role));
+           }
+            predicates.add(criteriaBuilder.notEqual(root.get("username"),"admin"));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+        };
+        Page<User> list = userJpaRepository.findAll(specification,pageable);
+        List<Map<String,Object>> returnList =
+        list.stream().map(user -> {
+            Map<String,Object> map = new HashMap<>();
+            map.put("gonghao",user.getUsername());
+            map.put("xingming",user.getXingming() + "   " +  user.getUsername());
+            return map;
+        }).collect(Collectors.toList());
+        return Result.ok(returnList);
     }
 
 

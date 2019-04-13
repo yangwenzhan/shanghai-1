@@ -139,7 +139,7 @@ layui.define(['form','laydate'], function(exports){
                   $('#email').val(data.data.email);
                   $('#xingming').val(data.data.xingming);
 
-                  if(data.data.sex==0){
+                  if(data.data.sex==1){
                       $('#sex_boy').attr("checked","checked");
                   }else{
                       $('#sex_girl').attr("checked","checked");
