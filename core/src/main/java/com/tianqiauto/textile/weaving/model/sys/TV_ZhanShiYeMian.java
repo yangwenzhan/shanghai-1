@@ -23,6 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "sys_tv_zhanshiyemian")
 @EqualsAndHashCode(exclude = {"fangAns"})
+@ToString(exclude = {"fangAns"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TV_ZhanShiYeMian {
 
     @Id
