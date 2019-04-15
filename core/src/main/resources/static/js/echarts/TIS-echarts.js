@@ -63,7 +63,7 @@ $.extend(TIS, {
 		chart.setOption(option);
 		$(window).resize(function() {
 			chart.resize()
-		})
+		});
 		setTimeout(function() {
 			chart.resize();
 		}, 200);
@@ -82,7 +82,7 @@ $.extend(TIS, {
 			seriesData = [];
 		var seriesName = config.labels[1];
 		for(var i = 0; i < config.datas.length; i++) {
-			var it = config.datas[i]
+			var it = config.datas[i];
 			if(!(legendData.indexOf(it[config.columns[0]]) > 0)) {
 				legendData.push(it[config.columns[0]]);
 				seriesData.push({
@@ -119,7 +119,7 @@ $.extend(TIS, {
 					}
 				}
 			}]
-		}
+		};
 		if(!(config.toolbox == false)) {
 			option.toolbox = {
 				feature: {
@@ -143,7 +143,7 @@ $.extend(TIS, {
 		}
 
 		for(var i = 0; i < config.datas.length; i++) {
-			var it = config.datas[i]
+			var it = config.datas[i];
 			if(!(xAxisdata.indexOf(it[config.columns[0]]) > 0)) {
 				xAxisdata.push(it[config.columns[0]]);
 			}
@@ -155,7 +155,7 @@ $.extend(TIS, {
 
 		for(var j = 0; j < config.datas.length; j++) {
 			for(var i = 1; i < config.columns.length; i++) {
-				var column = config.columns[i]
+				var column = config.columns[i];
 				allDatas[column].push(config.datas[j][column])
 			}
 		}
@@ -214,8 +214,8 @@ $.extend(TIS, {
 				});
 			}
 
-		};
-		option = {
+}
+        option = {
 			tooltip: {
 				trigger: 'axis',
 			},
@@ -285,4 +285,4 @@ $.extend(TIS, {
 		}
 		return option;
 	}
-})
+});

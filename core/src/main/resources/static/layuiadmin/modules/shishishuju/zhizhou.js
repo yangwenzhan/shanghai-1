@@ -108,7 +108,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     layer.open({
                         title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
                         btn1:function(index){
-                            layer.open({content:data.data})
+                            layer.open({content:data.data});
                             layer.close(index);
                         }
                     });
@@ -153,7 +153,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     layer.open({
                         title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
                         btn1:function(index){
-                            layer.open({content:data.data})
+                            layer.open({content:data.data});
                             layer.close(index);
                         }
                     });

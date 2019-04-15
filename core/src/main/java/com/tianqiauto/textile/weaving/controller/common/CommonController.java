@@ -79,4 +79,12 @@ public class CommonController {
         return Result.ok("查询成功",list);
     }
 
+    @GetMapping("DictFindAllByCodes")
+    @ApiOperation(value = "根据数据字典类型的code查询出dict数据并封装成map类型返回，key=code，val=Set<dict> ",notes = "传入查询需要的多个code，codes是数组对象")
+    public Result DictFindAllByCodes(String[] codes){
+        Set<String> set = new HashSet<>(Arrays.asList(codes));
+        Map<String,Set<Dict>> map = commonService.DictFindAllByCodes(set);
+        return Result.ok("查询成功!",map);
+    }
+
 }

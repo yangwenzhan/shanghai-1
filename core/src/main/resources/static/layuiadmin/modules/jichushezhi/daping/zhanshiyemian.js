@@ -9,7 +9,7 @@ layui.define(['table', 'form'], function(exports){
         ,{field: 'tingliushichang', title: '停留时长(秒)',width:200}
         ,{field: 'sort', title: '排序',width:200}
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
-    ]]
+    ]];
 
     initTable_all ("table", 'jichushezhi/daping/zhanshiyemian/findAll', 'get',cols, table);
 

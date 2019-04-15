@@ -7,7 +7,7 @@ layui.define(['table', 'form'], function(exports){
         ,{field: 'name', title: '名称'}
         ,{field:'neirong', title: '内容'}
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
-    ]]
+    ]];
 
     initTable_all ("table", 'jichushezhi/daping/tongzhigonggao/findAll', 'get',cols, table);
 
@@ -67,7 +67,7 @@ layui.define(['table', 'form'], function(exports){
                     setTimeout(function(){
                         var text=data.neirong;
                         window.editor.html(text);
-                    }, 200)
+                    }, 200);
                     setTimeout(function(){
                         window.editor.fullscreen(false);
                     }, 100)
