@@ -96,11 +96,6 @@ layui.define(['table', 'form'], function(exports){
         return false;
     });
 
-
-    $('#searchBtn').on("click",function(){
-        table.reload("table");
-    });
-
     //监听是否报警
     form.on('switch(switchjhtc)', function(data) {
         var id = (data.elem).id;

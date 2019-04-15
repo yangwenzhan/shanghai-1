@@ -262,6 +262,51 @@ layui.define(function(exports){
             });
         }
 
+        var jingzhoubianhao=args.filter(function (item){return item.code == "jingzhoubianhao"});
+        if(jingzhoubianhao.length>0){
+            $.ajax({
+                url:layui.setter.host+'jichushuju/zhou/jingzhou/findAllJZBH',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(jingzhoubianhao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(jingzhoubianhao[0].defaultValue == data.data[i].zhouhao){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }
+                    }
+                    $("select[name='"+jingzhoubianhao[0].code+"']").append(html);
+                }
+            });
+        }
+
+        var zhizhoubianhao=args.filter(function(item){return item.code == "zhizhoubianhao"});
+        if(zhizhoubianhao.length>0){
+            $.ajax({
+                url:layui.setter.host+'jichushuju/zhou/zhizhou/findAllZZBH',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(zhizhoubianhao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(zhizhoubianhao[0].defaultValue == data.data[i].zhouhao){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }
+                    }
+                    $("select[name='"+zhizhoubianhao[0].code+"']").append(html);
+                }
+            });
+        }
 
 
 

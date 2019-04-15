@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @ClassName JingZhouController
  * @Description TODO
@@ -34,6 +36,13 @@ public class JingZhouController {
     public Result findAllJingZhou(Pageable pageable){
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.ASC, "zhouhao");
         Page<Beam_JingZhou> list = jingZhouRepository.findAll(pageRequest);
+        return Result.ok("查询成功!",list);
+    }
+
+    @GetMapping("findAllJZBH")
+    @ApiOperation(value = "查询经轴编号")
+    public Result findAllJZBH(){
+        List<Beam_JingZhou> list = jingZhouRepository.findAll();
         return Result.ok("查询成功!",list);
     }
 

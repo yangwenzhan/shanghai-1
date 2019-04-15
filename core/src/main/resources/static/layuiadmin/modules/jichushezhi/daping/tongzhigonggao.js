@@ -11,13 +11,6 @@ layui.define(['table', 'form'], function(exports){
 
     initTable_all ("table", 'jichushezhi/daping/tongzhigonggao/findAll', 'get',cols, table);
 
-    table.on('tool(table)',function(obj){
-        var data = obj.data;
-        if(obj.event === 'edit'){
-
-        }
-    });
-
     $('#add_btn').on('click',function(){
         $('#name').val("");
         layer.open({
@@ -101,7 +94,9 @@ layui.define(['table', 'form'], function(exports){
                                 success:function(data){
                                     ajaxSuccess(data,table);
                                     if(data.code==666){
-                                        layer.close(i);
+                                        layer.open({
+                                            title:"消息提醒",content:data.message,skin:"layui-layer-molv",offset: 'auto',time:3000,btn:[],shade: 0,anim: -1,icon:5
+                                        });
                                     }else{
                                         layer.close(i);layer.close(index);
                                     }
@@ -113,6 +108,21 @@ layui.define(['table', 'form'], function(exports){
 
                 }
             });
+        }else{
+            var tzgg={id:data.id};
+            layer.confirm('确定要删除'+data.name+'?'
+                ,function(i){
+                    $.ajax({
+                        url:layui.setter.host+'jichushezhi/daping/tongzhigonggao/delTZGG',
+                        type:'post',
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(tzgg),
+                        success:function(data){
+                            ajaxSuccess(data,table);
+                            layer.close(i);
+                        }
+                    });
+                });
         }
     });
 
