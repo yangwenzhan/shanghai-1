@@ -21,14 +21,14 @@ layui.define(['table', 'form'], function(exports){
         ,cols: [cols]
     });
 
-    var id = null;
+    var obj_data = null;
     table.on('tool(table)',function (obj) {
         var data = obj.data,layEvent = obj.event;
-        id = data.id;
+        obj_data = data;
         if(layEvent == "detail"){
 
             //温湿度历史曲线
-            showLSQX(id,'温度');
+            showLSQX(obj_data,'温度');
 
             //设置每次弹框默认为温度
             $('#cjzl_tab li').each(function() {
@@ -40,7 +40,7 @@ layui.define(['table', 'form'], function(exports){
 
             layer.open({
                 type: 1,
-                title: ['详情 ', 'font-size:12px;'],
+                title: [data.name+' 详情', 'font-size:12px;'],
                 content: $("#s_tubiao"),
                 shadeClose: false, // 点击遮罩关闭层
                 shade: 0.8,
@@ -51,109 +51,45 @@ layui.define(['table', 'form'], function(exports){
         }
     });
 
-    function showLSQX(id,type){
-
-        var myChart = echarts.init(document.getElementById('lsqx'));
+    function showLSQX(data,type){
 
         //假数据
         var base = +new Date(1968, 9, 3);
         var oneDay = 24 * 3600 * 1000;
-        var date = [];
-
-        var data = [Math.random() * 300];
-
-        for (var i = 1; i < 20000; i++) {
+        var datas=[];
+        for (var i = 1; i < 2000; i++) {
             var now = new Date(base += oneDay);
-            date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-            data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+            var obj = {date:[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                data:Math.round((Math.random() - 0.5) * 20 + Math.random() * 300)};
+            datas.push(obj);
         }
 
-        option = {
-            /*legent:{
-                width:'auto'
-            },*/
-            tooltip: {
-                trigger: 'axis',
-                position: function (pt) {
-                    return [pt[0], '10%'];
-                }
-            },
-            title: {
-                left: 'center',
-                text: '大数据量面积图',
-            },
-            toolbox: {
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: date
-            },
-            yAxis: {
-                type: 'value',
-                boundaryGap: [0, '100%']
-            },
-            dataZoom: [{
-                type: 'inside',
-                start: 0,
-                end: 10
-            }, {
-                start: 0,
-                end: 10,
-                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-                handleSize: '80%',
-                handleStyle: {
-                    color: '#fff',
-                    shadowBlur: 3,
-                    shadowColor: 'rgba(0, 0, 0, 0.6)',
-                    shadowOffsetX: 2,
-                    shadowOffsetY: 2
-                }
-            }],
-            series: [
-                {
-                    name:'模拟数据',
-                    type:'line',
-                    smooth:true,
-                    symbol: 'none',
-                    sampling: 'average',
-                    itemStyle: {
-                        color: 'rgb(255, 70, 131)'
-                    },
-                    areaStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'rgb(255, 158, 68)'
-                        }, {
-                            offset: 1,
-                            color: 'rgb(255, 70, 131)'
-                        }])
-                    },
-                    data: data
-                }
-            ]
-        };
+        var config = {
+            id : 'lsqx',	//渲染目标
+            title : '',	//图表标题,不传不显示
+            type : 'area',			//图表类型, 可以传递一个数组，例如 type: ['line','bar','scatter'],   可选 line , bar , pie, area , scatter
+            toolbox : false,		//不传默认为true
+            smooth: true,			//不传递默认为false
+            showDataZoom : true ,	//不传递默认为false,是否显示区域缩放的工具条,大多用于渲染历史数据,配合 area 图使用
+            labels : ['日期',type],		//中文名
+            columns : ['date','data'],		//字段名
+            yAxisNames:['%'],
+            yAxisIndexs: [0,1],
+            datas : datas,	//数据
+            onClick : function(params){
+                console.log(params)
+            }
+        }
 
-        myChart.clear();
-        setTimeout(function(){
-            myChart.resize();
-        },500)
-        myChart.setOption(option);
+        TIS.renderEcharts(config);
 
     }
 
     $('#wendu_btn').on("click",function () {
-        showLSQX(id,'温度');
+        showLSQX(obj_data,'温度');
     });
     $('#shidu_btn').on("click",function () {
-        showLSQX(id,'湿度');
+        showLSQX(obj_data,'湿度');
     });
 
 
