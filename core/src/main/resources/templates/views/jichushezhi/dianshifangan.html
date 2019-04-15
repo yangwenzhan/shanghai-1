@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="/common/links::header"></div>
+	<title>电视方案管理</title>
+</head>
+
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<div class="layui-btn-group">
+						<button class="layui-btn" id="add_dsfa_btn"><i class="layui-icon">&#xe608;</i>新增展示方案</button>
+					</div>
+				</div>
+				<table class="layui-table" id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<!--新增弹框-->
+	<div style="display: none" id="div_form_add">
+		<form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">名称</label>
+					<div class="layui-input-block">
+						<input type="text" name="name" id="name" placeholder="请输入名称" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">位置</label>
+					<div class="layui-input-block">
+						<input type="text" name="weizhi" id="weizhi" placeholder="请输入位置" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+			</div>
+			<div class="layui-form-item layui-hide">
+				<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+			</div>
+		</form>
+	</div>
+
+		<!--设置页面弹出框-->
+		<div style="display: none;" id="szym">
+			<form class="layui-form">
+				<div class="layui-form-item" style="margin: 30px">
+					<div class="layui-form-item szdpym" id="yemian">
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div th:replace="/common/links::js_footer"></div>
+
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">设置页面</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+
+		<script>
+            layui.config({
+                base:"/layuiadmin/" //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+                ,dianshifangan:'jichushezhi/daping/dianshifangan'
+            }).use(['index','dianshifangan'],function () {
+
+            });
+		</script>
+
+	</body>
+
+</html>

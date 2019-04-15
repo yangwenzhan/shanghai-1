@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/common/links::header"></div>
+    <title>原纱出库登记</title>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <!--批号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">批号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="pihao" placeholder="原纱批号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--品名-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">品名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="pinming" placeholder="原纱品名" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--支数-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">支数</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="zhishu" placeholder="支数" lay-verify="num" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--色别-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">色别</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sebie" placeholder="色别" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--供应商-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">供应商</label>
+                    <div class="layui-input-inline">
+                        <select name="gongyingshang.id"  lay-search="" id="gongyingsha_sele" >
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="excelBtn">
+                        <i class="layui-icon layui-icon-download-circle layuiadmin-button-btn">导出</i>
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+        <!-- 查询表格-->
+        <div class="layui-card-body">
+            <table id="table" lay-filter="table"></table>
+            <script type="text/html" id="caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div th:replace="/common/links::js_footer"></div>
+<script>
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , yuanshakucunchakan: 'yuanshaguanli/yuanshakucunchakan'
+    }).use(['index', 'yuanshakucunchakan','yuansha'], function () {
+
+    });
+</script>
+</body>
+</html>

@@ -22,8 +22,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_heyuehao")
-@EqualsAndHashCode(exclude = {"order","jingsha","weisha"})
-@ToString(exclude = {"order","jingsha","weisha"})
+@EqualsAndHashCode(exclude = {"order","jingsha","weisha","gongYi"})
+@ToString(exclude = {"order","jingsha","weisha","gongYi"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Heyuehao {
     /**
@@ -61,6 +61,13 @@ public class Heyuehao {
     private Set<Heyuehao_YuanSha> weisha; //纬纱
 
     private String beizhu; //备注
+
+
+    @JsonIgnoreProperties("heyuehao")
+    @OneToOne
+    @JoinColumn(name = "gongyi_id")
+    private GongYi gongYi;
+
 
     @Column
     @CreatedDate

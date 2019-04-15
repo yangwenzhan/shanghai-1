@@ -5,6 +5,7 @@ import com.tianqiauto.textile.weaving.model.base.Dict;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -77,5 +78,12 @@ public class YuanSha_ChuKu {
     private Date lastModifyTime;
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
 
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 }
