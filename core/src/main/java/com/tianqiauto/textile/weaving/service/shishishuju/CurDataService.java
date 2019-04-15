@@ -10,6 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class CurDataService {
 
@@ -64,6 +67,12 @@ public class CurDataService {
         return Result.ok(pro.getDatas());
     }
 
+    //经轴实时数据--查询经轴实时数据对应的合约号
+    public Result cur_jingzhou_hyh(){
+        String sql = "select distinct a.id,a.name from sys_heyuehao a join sys_beam_jingzhou_current b on a.id=b.heyuehao_id";
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql);
+        return Result.ok("查询成功!",list);
+    }
 
     //织轴实时数据
     public Result cur_zhizhou(String zt_id,String heyuehao,String zhouhao,String weizhi){
@@ -91,6 +100,12 @@ public class CurDataService {
         return Result.ok(pro.getDatas());
     }
 
+    //织轴实时数据--查询织轴实时数据对应的合约号
+    public Result cur_zhizhou_hyh(){
+        String sql = "select distinct a.id,a.name from sys_heyuehao a join sys_beam_zhizhou_current b on a.id=b.heyuehao_id";
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql);
+        return Result.ok("查询成功!",list);
+    }
 
 
 

@@ -43,4 +43,14 @@ public class CommonService {
         String sql = "select * from base_gongxu where parent_id=(select id from base_gongxu where name='织布')";
         return jdbcTemplate.queryForList(sql);
     }
+
+    @Transactional
+    public Map<String,Set<Dict>> DictFindAllByCodes(Set<String> codes) {
+        Map<String,Set<Dict>> map = new HashMap<>();
+        for (String code:codes){
+            Dict_Type dist_type = dict_typeRepository.findByCode(code);
+            map.put(code,dist_type.getDicts());
+        }
+        return map;
+    }
 }

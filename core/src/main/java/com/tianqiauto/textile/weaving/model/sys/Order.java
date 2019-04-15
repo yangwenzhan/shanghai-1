@@ -141,9 +141,11 @@ public class Order {
 
     //查询使用条件
     @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadankaishiriqi;//下单开始日期
 
     @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadanjieshuriqi;//下单结束日期
 
 }

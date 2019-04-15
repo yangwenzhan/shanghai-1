@@ -46,8 +46,8 @@ public class TV_TongZhiGongGao {
     @Column
     @LastModifiedBy
     private String modifiedBy;
-    @Column
-    @Version
-    private Long version;
+//    @Column
+//    @Version
+//    private Long version;
 
 }
