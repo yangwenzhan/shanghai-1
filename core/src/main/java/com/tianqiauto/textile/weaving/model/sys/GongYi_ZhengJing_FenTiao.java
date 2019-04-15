@@ -7,8 +7,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * @ClassName GongYi_Zhengjing_FenTiao
- * @Description TODO
  * @Author xingxiaoshuai
  * @Date 2019-04-13 09:59
  * @Version 1.0
@@ -17,17 +15,17 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_gongyi_zhizao")
-@EqualsAndHashCode(exclude = {"gongYi","gongYi_paramValues"})
-@ToString(exclude = {"gongYi","gongYi_paramValues"})
+@Entity(name = "sys_gongyi_zhengjing_fentiao")
+@EqualsAndHashCode(exclude = {"gongYi","gongYi_paramValues","gongYi_zhengJing_fenTiao_paiBanSet"})
+@ToString(exclude = {"gongYi","gongYi_paramValues","gongYi_zhengJing_fenTiao_paiBanSet"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class GongYi_ZhiZao {
+public class GongYi_ZhengJing_FenTiao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnoreProperties("gongYi_zhiZaoSet")
+    @JsonIgnoreProperties("gongYi_zhengJing_fenTiaoSet")
     @ManyToOne
     @JoinColumn(name = "gongyi_id")
     private GongYi gongYi;
@@ -38,16 +36,10 @@ public class GongYi_ZhiZao {
 
 
 
-    private String jishangweimi;  //机上纬密
+    @OneToMany
+    @JoinColumn(name = "gongyi_id")
+    private Set<GongYi_ZhengJing_FenTiao_PaiBan> gongYi_zhengJing_fenTiao_paiBanSet; //分条排版  可能为空
 
-    private Double luobuchangdu;  //落布长度
-
-
-
-    //这三个从订单表同步过来，可以让用户进行修改
-    private String pibuyaoqiu; //坯布要求
-    private String chengbaoyaoqiu;  //成包要求
-    private String baozhuangmaitou; //包装唛头
 
 
     @OneToMany
