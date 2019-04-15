@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @ClassName GongYi_Param
@@ -31,6 +28,8 @@ public class GongYi_Param {
     private Long id;
 
 
+    @ManyToOne
+    @JoinColumn(name = "leibie_id")
     private Dict leibie;  //参数类别（分条、分批、浆纱、穿综、织造）
 
     private String name; //参数名称

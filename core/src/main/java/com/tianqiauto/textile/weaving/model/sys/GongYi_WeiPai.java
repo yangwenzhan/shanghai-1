@@ -1,14 +1,9 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @ClassName GongYi_JingPai
@@ -23,6 +18,8 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_gongyi_weipai")
+@EqualsAndHashCode(exclude = {"yuanSha"})
+@ToString(exclude = {"yuanSha"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GongYi_WeiPai {
 
@@ -31,7 +28,8 @@ public class GongYi_WeiPai {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @ManyToOne
+    @JoinColumn(name = "yuansha_id")
     private YuanSha yuanSha;  //原纱
 
     private Integer baoshu;  //包数
