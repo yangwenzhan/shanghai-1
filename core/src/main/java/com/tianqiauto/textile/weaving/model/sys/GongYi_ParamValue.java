@@ -27,6 +27,8 @@ public class GongYi_ParamValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "param_id")
     private GongYi_Param param; //工艺参数
 
     private  String value; //工艺参数值
