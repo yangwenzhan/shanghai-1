@@ -46,6 +46,18 @@ public class UserController2Test {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void testJpaPersist(){
+
+
+
+    }
+
+
     @Test
     public void findAllTest() throws Exception {
 
@@ -78,8 +90,6 @@ public class UserController2Test {
 
 
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;

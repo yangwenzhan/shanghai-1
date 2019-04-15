@@ -45,6 +45,8 @@ public class Shift_Zhengjing {
 
     private Double changdu; //长度
 
+    private Integer shifouwancheng;  //是否完成：为1时完成 为0时未完成
+
 
 
 

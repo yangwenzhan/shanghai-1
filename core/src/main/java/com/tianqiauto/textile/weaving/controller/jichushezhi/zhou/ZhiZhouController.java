@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName ZhiZhouController
@@ -36,6 +37,13 @@ public class ZhiZhouController {
     public Result findAllZhiZhou(Pageable pageable){
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(), Sort.Direction.ASC, "zhouhao");
         Page<Beam_ZhiZhou> list = zhiZhouRepository.findAll(pageRequest);
+        return Result.ok("查询成功!",list);
+    }
+
+    @GetMapping(value = "findAllZZBH")
+    @ApiOperation(value = "查询织轴编号")
+    public Result findAllZZBH(){
+        List<Beam_ZhiZhou> list = zhiZhouRepository.findAll();
         return Result.ok("查询成功!",list);
     }
 
