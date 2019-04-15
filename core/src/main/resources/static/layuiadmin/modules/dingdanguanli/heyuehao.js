@@ -143,6 +143,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         $.ajax({
             url: layui.setter.host + 'dingdanguanli/heyuehaoguanli/create_heyuehao',
             type: 'get',
+            async:false,
             data: {'order_id': order.id, 'flag': flag},
             success: function (data) {
                 if (data.code == 0) {
@@ -245,9 +246,10 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         layer.confirm('确定要修改经纬纱信息么?'
                             , function (i) {
                                 var formData = data.field;
-                                formData.yuanSha = yuansha_temp_edit;
+                                formData.yuanSha = {};
+                                formData.yuanSha.id = yuansha_temp_edit.id;
                                 $.ajax({
-                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/copy',
+                                    url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
@@ -344,7 +346,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 , btn1: function (index, layero) {
                     form.on('submit(form_jws_submit)', function (data) {
                         var formData = data.field;
-                        formData.yuanSha = yuansha_temp;
+                        formData.yuanSha = {};
+                        formData.yuanSha.id = yuansha_temp.id;
                         if (onClickId == 'jsxx_add') {//纬纱添加
                             formData.jingsha = [{id: heyuehao_temp.id}];
                         } else if (onClickId == 'wsxx_add') {//经纱添加
