@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
 
 import javax.persistence.*;

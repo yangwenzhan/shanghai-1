@@ -52,36 +52,47 @@ layui.define(['table', 'form'], function(exports){
     });
 
     function showLSQX(data,type){
-
-        //假数据
-        var base = +new Date(1968, 9, 3);
-        var oneDay = 24 * 3600 * 1000;
-        var datas=[];
-        for (var i = 1; i < 2000; i++) {
-            var now = new Date(base += oneDay);
-            var obj = {date:[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                data:Math.round((Math.random() - 0.5) * 20 + Math.random() * 300)};
-            datas.push(obj);
+        var column=[];
+        if(type=="温度"){
+            column=["shijian","wendu"];
+        }else{
+            column=["shijian","shidu"];
         }
 
-        var config = {
-            id : 'lsqx',	//渲染目标
-            title : '',	//图表标题,不传不显示
-            type : 'area',			//图表类型, 可以传递一个数组，例如 type: ['line','bar','scatter'],   可选 line , bar , pie, area , scatter
-            toolbox : false,		//不传默认为true
-            smooth: true,			//不传递默认为false
-            showDataZoom : true ,	//不传递默认为false,是否显示区域缩放的工具条,大多用于渲染历史数据,配合 area 图使用
-            labels : ['日期',type],		//中文名
-            columns : ['date','data'],		//字段名
-            yAxisNames:['%'],
-            yAxisIndexs: [0,1],
-            datas : datas,	//数据
-            onClick : function(params){
-                console.log(params)
+        $.ajax({
+            url: layui.setter.host+'shishishuju/cur_wenshidu/findHistory',
+            type: "get",
+            data:{id:data.id},
+            success:function(data){
+                if(data.code==0){
+                    var config = {
+                        id : 'lsqx',	//渲染目标
+                        title : '',	//图表标题,不传不显示
+                        type : 'area',			//图表类型, 可以传递一个数组，例如 type: ['line','bar','scatter'],   可选 line , bar , pie, area , scatter
+                        toolbox : false,		//不传默认为true
+                        smooth: true,			//不传递默认为false
+                        showDataZoom : true ,	//不传递默认为false,是否显示区域缩放的工具条,大多用于渲染历史数据,配合 area 图使用
+                        labels : ['时间',type],		//中文名
+                        columns : column,		//字段名
+                        yAxisNames:['°C'],
+                        yAxisIndexs: [0,1],
+                        datas : data.data,	//数据
+                        onClick : function(params){
+
+                        }
+                    }
+                    TIS.renderEcharts(config);
+                }else{
+                    layer.open({
+                        title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
+                        btn1:function(index){
+                            layer.open({content:data.data});
+                            layer.close(index);
+                        }
+                    });
+                }
             }
-        }
-
-        TIS.renderEcharts(config);
+        });
 
     }
 
