@@ -12,11 +12,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     ];
     dictInitSele(initSele,false);
     form.render();
+    var date = new Date();
     laydate.render({
-        elem: '#kaishiriqi_sele'
+        elem: '#kaishiriqi_sele',
+        value: date
     });
     laydate.render({
-        elem: '#jieshuriqi_sele'
+        elem: '#jieshuriqi_sele',
+        value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
     });
 
     //监听搜索
@@ -86,7 +89,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
                 form.on('submit(form_add_submit)', function (data) {
                     var formData = data.field;
-                    formData.yuanSha = yuansha_add;
+                    formData.yuanSha = {};
+                    formData.yuanSha.id = yuansha_add.id;
                     encObject(formData);
                     $.ajax({
                         url: layui.setter.host + 'yuanshaguanli/yuanshachukudengji/add',

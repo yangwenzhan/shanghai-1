@@ -60,7 +60,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     table.on('tool(table)', function (obj) {
         var data = obj.data;
         if (obj.event === 'edit') {   //点击确认
-            InitSelect('lingyongren_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'username', 'id');
+            InitSelect('lingyongren_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             form.render();
             editI = layer.open({
                 type: 1

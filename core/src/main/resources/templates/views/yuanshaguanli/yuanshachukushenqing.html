@@ -11,20 +11,20 @@
         <!-- 查询条件 -->
         <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
             <div class="layui-form-item">
-                <!--开始日期-->
+             <!--   &lt;!&ndash;开始日期&ndash;&gt;
                 <div class="layui-inline">
                     <label class="layui-form-label">开始日期</label>
                     <div class="layui-input-inline">
                         <input type="text" id="kaishiriqi_sele" name="kaishiriqi" placeholder="开始日期" class="layui-input" autocomplete="off"/>
                     </div>
                 </div>
-                <!--结束日期-->
+                &lt;!&ndash;结束日期&ndash;&gt;
                 <div class="layui-inline">
                     <label class="layui-form-label">结束日期</label>
                     <div class="layui-input-inline">
                         <input type="text" id="jieshuriqi_sele" name="jieshuriqi" placeholder="结束日期" class="layui-input" autocomplete="off"/>
                     </div>
-                </div>
+                </div>-->
                 <!--批号-->
                 <div class="layui-inline">
                     <label class="layui-form-label">批号</label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search_cksq">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
                     </button>
                 </div>
@@ -187,7 +187,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                                 <div class="layui-input-inline">
-                                    <select name="heyuehao.id"  id="heyuehao_add" lay-verify="required" >
+                                    <select name="yuanShaChuKu.heyuehao.id"  id="heyuehao_add" lay-verify="required" >
                                     </select>
                                 </div>
                             </div>
@@ -245,111 +245,141 @@
 
 
         <!-- 修改信息 -->
-       <!-- <div style="display: none" id="div_form_edit" >
+        <div style="display: none" id="div_form_edit" >
             <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
                 <div class="layui-form-item">
 
-                    &lt;!&ndash; 批号 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">批号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="yuanSha.pihao" lay-verify="sz|length" tq_length="^10" placeholder="批号" class="layui-input" autocomplete="off" disabled/>
-                        </div>
-                    </div>
+                    <fieldset class="layui-elem-field">
+                        <legend>原纱信息</legend>
+                        <div class="layui-field-box layui-form" lay-filter="form_ysxx_add" id="form_ysxx_edit">
+                            <!-- 批号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">批号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="pihao" class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 品名 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">品名<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="yuanSha.pinming" lay-verify="length" tq_length="1^20" placeholder="品名" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
+                            <!-- 品名 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">品名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="pinming"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 供应商 === &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">供应商<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="yuanSha.gongyingshang.id"  id="gongyingshang_edit" lay-verify="required" >
-                            </select>
-                        </div>
-                    </div>
+                            <!-- 供应商 === -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="gongyingshang.name"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 支数 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">支数<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="yuanSha.zhishu" lay-verify="int|length" tq_length="1^6" placeholder="支数" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
+                            <!-- 支数 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">支数</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zhishu"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 色号 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">色号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="yuanSha.sehao"  lay-verify="length" tq_length="^20" placeholder="色号" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
+                            <!-- 色号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">色号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="sehao" class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 色别 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">色别</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="yuanSha.sebie" lay-verify="length" tq_length="^20" placeholder="色别" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
+                            <!-- 色别 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">色别</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="sebie"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 包装形式 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">包装形式<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="yuanSha.baozhuangxingshi.id" id="baozhuangxingshi_edit"  lay-verify="required" >
-                            </select>
-                        </div>
-                    </div>
+                            <!-- 包装形式 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">包装形式</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="baozhuangxingshi.name"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
 
-                    &lt;!&ndash; 来源 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">来源<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="laiyuan.id"  id="laiyuan_edit" lay-verify="required" >
-                            </select>
+                            <!-- 库存量 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">库存量</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="kucunliang"  class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn layuiadmin-btn-list" type="button" id="xzys_edit">
+                                    <i class="layui-icon layuiadmin-button-btn" >&#xe608;</i> 选择原纱
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
 
-                    &lt;!&ndash; 申请包数 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">申请包数<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="baoshu_edit" name="baoshu" lay-verify="int|length" tq_length="1^10" placeholder="申请包数" class="layui-input" autocomplete="off"/>
+                    <fieldset class="layui-elem-field">
+                        <legend>出库信息</legend>
+                        <div class="layui-field-box">
+
+                            <!-- 合约号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <select name="yuanShaChuKu.heyuehao.id"  id="heyuehao_edit" lay-verify="required" >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 来源 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出库类型<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <select name="chukuleixing.id"  id="chukuleixing_edit" lay-verify="required" >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 包数 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请包数<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="baoshu_edit" name="baoshu" lay-verify="int|length" tq_length="1^10" placeholder="包数" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+
+                            <!-- 包重 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请包重<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="baozhong_edit" name="baozhong" lay-verify="num|length" tq_length="1^10" placeholder="包重" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+
+                            <!-- 总重量 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请总重量<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="zongzhong_edit" name="zongzhong" lay-verify="num|length" tq_length="1^10" placeholder="总重量" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+
+
+                            <!-- 备注 === 不是必输项-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请备注</label>
+                                <div class="layui-input-inline">
+                                    <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    &lt;!&ndash; 申请包重 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">申请包重<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="baozhong_edit" name="baozhong" lay-verify="num|length" tq_length="1^10" placeholder="申请包重" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
-
-                    &lt;!&ndash; 申请总重量 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">申请总重量<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="zongzhong_edit" name="zongzhong" lay-verify="num|length" tq_length="1^10" placeholder="申请总重量" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
-
-                    &lt;!&ndash; 申请备注 === 不是必输项&ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">申请备注</label>
-                        <div class="layui-input-inline">
-                    <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="申请备注" class="layui-input"
-                              autocomplete="off"></textarea>
-                        </div>
-                    </div>
-
-                    &lt;!&ndash; ID &ndash;&gt;
+                    </fieldset>
+                    <!-- ID -->
                     <div class="layui-form-item layui-hide">
                         <input type="text" name="id">
                         <input type="text" name="yuanSha.id">
@@ -360,7 +390,7 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
 
     </div>
 </div>
