@@ -6,7 +6,7 @@ import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu_Shenqing;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuShenQingRepository;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;

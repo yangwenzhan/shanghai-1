@@ -11,7 +11,7 @@ import com.tianqiauto.textile.weaving.repository.OrderRepository;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.util.JPASql.Container;
 import com.tianqiauto.textile.weaving.util.JPASql.DynamicUpdateSQL;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

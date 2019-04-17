@@ -597,6 +597,17 @@ layui.define(function(exports){
         });
     };
 
+    /**
+     * BJW 2019/04/17
+     * 表单提交后清除提交表单中的数据。
+     * @param formId 表单id
+     */
+    fromClear = function (formId) {
+        var arrObj = $('#' + formId).find(":input");
+        for (var i = 0; i < arrObj.length; i++) {
+            $(arrObj[i]).val("");
+        }
+    }
 
     //对外暴露的接口
   exports('common', {});

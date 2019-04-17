@@ -1,16 +1,11 @@
 package com.tianqiauto.textile.weaving.service.yuanshaguanli;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.Dict_Type;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu_Shenqing;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu_Shenqing;
-import com.tianqiauto.textile.weaving.repository.DictRepository;
-import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuShenQingRepository;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
