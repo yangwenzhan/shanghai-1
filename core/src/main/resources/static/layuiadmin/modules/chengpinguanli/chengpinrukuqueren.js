@@ -46,92 +46,32 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '确认备注',templet: repNull('chengpinruku.beizhu')}
         , {title: '确认时间',templet: repNull('chengpinruku.cangkuquerenshijian')}
         , {title: '仓库确认人',templet: repNull('chengpinruku.cangkuquerenren.xingming')}
-        , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:180}
+        , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:100}
     ]];
 
     //初始化表格
-    initTable("table", 'chengpinguanli/chengpinrukushenqing/query_page', 'get', cols, table,"from");
-
-    //添加
-    $("#add").click(function () {
-        var initsele = [
-            {eleId:'laiyuan_add',dictCode:'cp_rukulaiyuan',val:'id',CheckVal:'50',isAll:false},
-            {eleId:'chengpindengji_add',dictCode:'chengpindengji',val:'id'}
-        ];
-        InitSelect('heyuehao_add', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
-        dictInitSele(initsele,false);
-        form.render();
-        layer.open({
-            type: 1
-            , title: '成品入库申请'
-            , content: $('#div_form_add')
-            , area: ['40%', '40%']
-            , btn: ['添加', '取消']
-            , btn1: function (index, layero) {
-                form.on('submit(form_add_submit)', function (data) {
-                    var formData = data.field;
-                    encObject(formData);
-                    $.ajax({
-                        url: layui.setter.host + 'chengpinguanli/chengpinrukushenqing/add',
-                        contentType: "application/json;charset=utf-8",
-                        type: 'POST',
-                        data: JSON.stringify(formData),
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                            layer.close(index);
-                            fromClear("form_add");
-                        }
-                    });
-                });
-                $("#form_add_submit").trigger('click');
-            }
-            , success: function () { //弹出层打开成功时的回调。
-                // laydate.render({
-                //     elem: '#goururiqi_add',
-                //     value: new Date()
-                // });
-            }
-        });
-    });
+    initTable("table", 'chengpinguanli/chengpinrukuqueren/query_page', 'get', cols, table,"from");
 
     //监听操作列
     table.on('tool(table)', function (obj) {
         var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm(
-                "确定要删除申请信息吗？",
-                {title: '删除提示'}, function (index) {
-                    $.ajax({
-                        url: layui.setter.host + 'chengpinguanli/chengpinrukushenqing/delete',
-                        type: 'get',
-                        data: {'id': data.id},
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                        }
-                    });
-                });
-        } else if (obj.event === 'edit') {
-            var initsele = [
-                {eleId:'laiyuan_edit',dictCode:'cp_rukulaiyuan',val:'id',CheckVal:'50',isAll:false},
-                {eleId:'chengpindengji_edit',dictCode:'chengpindengji',val:'id'}
-            ];
-            InitSelect('heyuehao_edit', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
-            dictInitSele(initsele,false);
+       if (obj.event === 'edit') {
+           InitSelect('cangkuquerenren_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             form.render();
             editI = layer.open({
                 type: 1
-                , title: '成品申请信息编辑'
+                , title: '登记成品入库申请信息'
                 , content: $('#div_form_edit')
-                , area: ['70%', '60%']
-                , btn: ['修改', '取消']
+                , area: ['50%', '50%']
+                , btn: ['确认', '取消']
                 , btn1: function (editIndex, layero) {
                     form.on('submit(form_edit_submit)', function (data) {
-                        layer.confirm('确定要修改申请信息么?'
+                        layer.confirm('确认要登记成品入库信息吗?'
                             , function (i) {
                                 var formData = data.field;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'chengpinguanli/chengpinrukushenqing/update',
+                                    url: layui.setter.host + 'chengpinguanli/chengpinrukuqueren/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
@@ -229,5 +169,5 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     }
 
 
-    exports('chengpinrukushenqing', {})
+    exports('chengpinrukuqueren', {})
 });

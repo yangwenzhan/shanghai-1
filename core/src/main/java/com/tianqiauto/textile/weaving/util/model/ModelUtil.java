@@ -1,11 +1,15 @@
 package com.tianqiauto.textile.weaving.util.model;
 
+import org.assertj.core.util.Lists;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,14 +23,21 @@ public class ModelUtil<T>{
 
     private Root<T> root;
 
-    public ModelUtil(Object obj,Root<T> root){
+    List<Predicate> andPredicates;
+
+    private ModelUtil(){
+        this.andPredicates = Lists.newArrayList();
         this.paramMap = new HashMap<>();
+    }
+
+    public ModelUtil(Object obj,Root<T> root){
+        this();
         this.obj = obj;
         this.root = root;
     }
 
     public ModelUtil(Object obj){
-        this.paramMap = new HashMap<>();
+        this();
         this.obj = obj;
     }
 
@@ -106,6 +117,25 @@ public class ModelUtil<T>{
         return currentObject;
     }
 
+
+    /**
+     * 添加封装Predicate
+     * @Author bjw
+     * @Date 2019/4/17 15:09
+     **/
+    public void addPred(Predicate pred){
+        andPredicates.add(pred);
+    }
+
+    /**
+     * 获取数组
+     * @Author bjw
+     * @Date 2019/4/17 15:13
+     **/
+    public Predicate[] getPred(){
+        Predicate[] array = new Predicate[andPredicates.size()];
+        return andPredicates.toArray(array);
+    }
 
     //-----------------------------------------------第三种封装方式
     private Map<String,Param> paramMap;
