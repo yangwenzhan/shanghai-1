@@ -13,15 +13,15 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     InitSelect('heyuehao_sele', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
     dictInitSele(initSele,false);
     form.render();
-    var date = new Date();
-    laydate.render({
-        elem: '#kaishiriqi_sele',
-        value: date
-    });
-    laydate.render({
-        elem: '#jieshuriqi_sele',
-        value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
-    });
+    // var date = new Date();
+    // laydate.render({
+    //     elem: '#kaishiriqi_sele',
+    //     value: date
+    // });
+    // laydate.render({
+    //     elem: '#jieshuriqi_sele',
+    //     value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
+    // });
 
     //监听搜索
     form.on('submit(form_search)', function (data) {
