@@ -28,27 +28,11 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     });
     form.render();
 
-    var cols =  [
-        {field: 'rownum',width:55,fixed:true}
-        ,{field: 'jitaihao',sort:true, title: '机台号',width:90,fixed:true}
-        ,{field: 'jixing',sort:true, title: '机型',width:120}
-        ,{field: 'heyuehao',sort:true, title: '合约号',width:120}
-        ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
-        ,{field: 'zhou_name',sort:true, title: '经/织轴号',width:120}
-        ,{field: 'jingchang',sort:true, title: '经长',width:80}
-        ,{field: 'yxzt',sort:true, title: '运行状态',width:120}
-        ,{field: 'buchang',sort:true, title: '布长m',width:80}
-        ,{field: 'luobushijian',sort:true, title: '落布预测min',width:120}
-        ,{field: 'liaojishijian',sort:true, title: '了机预测min',width:120}
-        ,{field: 'jingting',sort:true, title: '经停',width:80}
-        ,{field: 'weiting',sort:true, title: '纬停',width:80}
-        ,{field: 'zongting',sort:true, title: '总停',width:80}
-        ,{field: 'chesu',sort:true, title: '车速',width:80}
-        ,{field: 'ygxm',sort:true, title: '员工',width:120}
-        ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
-    ];
-
     initBuJi();
+    setInterval(function(){
+        initBuJi();
+        }, 30000);
+
     function initBuJi(){
         $.ajax({
             url:layui.setter.host+'shishishuju/cur_gongxu/cur_buji',
@@ -60,6 +44,26 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                 yxzt_id:$('#yunxingzhuangtai').val()
             },
             success:function (data) {
+                var cols =  [
+                    {field: 'rownum',width:55,fixed:true}
+                    ,{field: 'jitaihao',sort:true, title: '机台号',width:90,fixed:true}
+                    ,{field: 'jixing',sort:true, title: '机型',width:120}
+                    ,{field: 'heyuehao',sort:true, title: '合约号',width:120}
+                    ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
+                    ,{field: 'zhou_name',sort:true, title: '经/织轴号',width:120}
+                    ,{field: 'jingchang',sort:true, title: '经长',width:80}
+                    ,{field: 'yxzt',sort:true, title: '运行状态',width:120}
+                    ,{field: 'buchang',sort:true, title: '布长m',width:80}
+                    ,{field: 'luobushijian',sort:true, title: '落布预测min',width:120}
+                    ,{field: 'liaojishijian',sort:true, title: '了机预测min',width:120}
+                    ,{field: 'jingting',sort:true, title: '经停',width:80}
+                    ,{field: 'weiting',sort:true, title: '纬停',width:80}
+                    ,{field: 'zongting',sort:true, title: '总停',width:80}
+                    ,{field: 'chesu',sort:true, title: '车速',width:80}
+                    ,{field: 'xiaolv',sort:true, title: '效率',width:80}
+                    ,{field: 'ygxm',sort:true, title: '员工',width:120}
+                    ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
+                ];
                 cols = formatColumns(cols);
                 cols.push({
                     fixed: 'right',
@@ -94,21 +98,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                         limit: 1000000,
                         even: true
                     });
-
-                    table.on('tool(table)', function(obj) {
-                        var data = obj.data;
-
-                        console.log(data)
-
-                        var layEvent = obj.event;
-                        jt_id = data.jitai_id;
-                        jth = data.jitaihao
-                        if(layEvent === 'detail') {
-                            showXxInfo(jt_id,jth);
-                            queryLsqxBtn(jt_id);
-                        }
-                    });
-
                 }else{
                     layer.open({      //系统异常
                         title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
@@ -122,11 +111,21 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         });
     }
 
+    table.on('tool(table)', function(obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        jt_id = data.jitai_id;
+        jth = data.jitaihao
+        if(layEvent === 'detail') {
+            showXxInfo(jt_id,jth);
+            queryLsqxBtn(jt_id);
+        }
+    });
+
     form.on('submit(form_search)',function(data){
         initBuJi();
         return false;
     });
-
 
     //合约号详情
     form.on('submit(heyuehao_filter)',function(data){
@@ -180,11 +179,11 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
     //故障参数
     $('#windowpop_gzcs').on("click",function () {
-        showGzcs(jt_id);
+        showGZBJ(jt_id);
     });
     //历史曲线
     $('#windowpop_lsqx').on("click",function () {
-        showLSQX(jt_id);
+        initChart();
     });
 
     // 丰富列配置功能
@@ -201,5 +200,5 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         return cols;
     }
 
-    exports('buji','windowpop', {})
+    exports('buji', {})
 });

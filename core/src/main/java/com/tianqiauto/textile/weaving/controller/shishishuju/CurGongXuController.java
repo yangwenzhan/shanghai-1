@@ -48,7 +48,11 @@ public class CurGongXuController {
         return curDataService.queryBjcsByJtid(jt_id);
     }
 
-
+    @GetMapping("cur_chejianzonglan")
+    @ApiOperation(value = "查询车间总览数据")
+    public Result cur_chejianzonglan(){
+        return curDataService.cur_chejianzonglan();
+    }
 
 
 

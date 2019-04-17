@@ -3,23 +3,30 @@ layui.define(['table', 'form'], function(exports){
         ,table = layui.table
         ,form = layui.form;
 
-    var cols =  [
-        {field: 'id', title: 'id',hide:true}
-        ,{field: 'name',sort:true, title: '名称'}
-        ,{field: 'weizhi',sort:true, title: '位置'}
-        ,{field: 'wendu',sort:true, title: '温度'}
-        ,{field: 'shidu',sort:true, title: '湿度'}
-        ,{field: 'lastModifiedDate',sort:true, title: '更新时间'}
-        ,{align: 'center',title: '操作',toolbar: '#barDemo'}
-    ];
+    function initWSD(){
+        var cols =  [
+            {field: 'id', title: 'id',hide:true}
+            ,{field: 'name',sort:true, title: '名称'}
+            ,{field: 'weizhi',sort:true, title: '位置'}
+            ,{field: 'wendu',sort:true, title: '温度'}
+            ,{field: 'shidu',sort:true, title: '湿度'}
+            ,{field: 'lastModifiedDate',sort:true, title: '更新时间'}
+            ,{align: 'center',title: '操作',toolbar: '#barDemo'}
+        ];
 
-    table.render({
-        elem: '#table'
-        ,limit:100000
-        ,method:'GET'
-        ,url: layui.setter.host + 'shishishuju/cur_wenshidu/findAll'
-        ,cols: [cols]
-    });
+        table.render({
+            elem: '#table'
+            ,limit:100000
+            ,method:'GET'
+            ,url: layui.setter.host + 'shishishuju/cur_wenshidu/findAll'
+            ,cols: [cols]
+        });
+    }
+
+    initWSD();
+    setInterval(function(){
+        initWSD();
+    }, 30000);
 
     var obj_data = null;
     table.on('tool(table)',function (obj) {
@@ -76,10 +83,7 @@ layui.define(['table', 'form'], function(exports){
                         columns : column,		//字段名
                         yAxisNames:['°C'],
                         yAxisIndexs: [0,1],
-                        datas : data.data,	//数据
-                        onClick : function(params){
-
-                        }
+                        datas : data.data
                     }
                     TIS.renderEcharts(config);
                 }else{

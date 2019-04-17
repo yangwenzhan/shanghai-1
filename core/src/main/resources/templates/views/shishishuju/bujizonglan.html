@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<div th:replace="common/links::header"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/js/font-awesome/css/font-awesome.min.css}" media="all">
 	<title>布机总览</title>
 </head>
 <body>
@@ -71,7 +72,7 @@
 		</ul>
 		<div class="layui-tab-content">
 			<!--详细参数-->
-			<div class="layui-tab-item layui-show">
+			<div class="layui-tab-item layui-show" id="xxcs_div">
 				<div class="show_xxcs" id="show_xxcs"></div>
 			</div>
 			<!--故障参数-->

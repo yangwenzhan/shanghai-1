@@ -76,7 +76,7 @@ public class Current_BuJi {
     private User dangchegong;  //挡车工
 
 
-
+    private Double xiaolv;//效率
 
 
 

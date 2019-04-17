@@ -7,8 +7,8 @@ function darwTable_my(startIndex, data) {
     var table = $("<table/>");
     table.attr("id", "xxcs" + startIndex);
     table.attr("class", "layui-table");
-    if(data.datas.length > 0){
-        table.append("<caption>" + data.datas[startIndex].MingCheng + "</caption>");
+    if(data.data.length > 0){
+        table.append("<caption>" + data.data[startIndex].leibie_name + "</caption>");
     }
     var result = $("<div/>");
     result.append(table);
@@ -20,22 +20,19 @@ function darwTable_my(startIndex, data) {
 function renderTableData(startIndex, endIndex, data) {
     var tbdata = [];
     for (var i = startIndex; i < endIndex; i++) {
-        tbdata.push(data.datas[i]);
+        tbdata.push(data.data[i]);
     }
-
     var t = layui.table;
-
-    // 展示已知数据
     t.render({
         elem: '#show_xxcs' + startIndex,
         height: 'auto',
         data: tbdata,
         cols: [[{
-            field: 'CanShuMing', title: '参数名',width:'30%'
+            field: 'name', title: '参数名',width:'250'
         }, {
-            field: 'CanShuZhi', title: '参数值',width:'30%'
+            field: 'value', title: '参数值',width:'250'
         }, {
-            field: 'DanWei', title: '单位',width:'30%'
+            field: 'danwei', title: '单位',width:'250'
         }]],
         skin: 'row', // 表格风格
         even: true
@@ -43,7 +40,6 @@ function renderTableData(startIndex, endIndex, data) {
         , limit: 10000
     });
 }
-
 
 
 //查询实时数据详细参数
@@ -56,6 +52,9 @@ function showXxInfo(jt_id,jth) {
         $('#cjzl_tab li').removeClass('layui-this');
         $('#cjzl_tab li').eq(0).addClass('layui-this');
     });
+    $('#s_tubiao .layui-tab-content .layui-tab-item').removeClass('layui-show');
+    $('#s_tubiao .layui-tab-content #xxcs_div').addClass('layui-show');
+
     $.ajax({
         url:layui.setter.host+'shishishuju/cur_gongxu/queryXxcsByJtid',
         type:'get',
@@ -64,10 +63,8 @@ function showXxInfo(jt_id,jth) {
         },
         success:function (data) {
             layer.close(loadingIndex);
+            $('#show_xxcs').empty();
             if(data.code==0){
-
-                console.log(data)
-
                 if(data.data.length>0) {
                     //参数类别的index数组
                     var dataNumberArray = new Array();
@@ -75,7 +72,7 @@ function showXxInfo(jt_id,jth) {
                     var newTable = "";
                     //遍历datas获取所有的不重复的参数类别的开始index
                     for (var i = 1; i < data.data.length; i++) {
-                        if (data.data[i].MingCheng != data.data[i - 1].MingCheng) {
+                        if (data.data[i].leibie_name != data.data[i - 1].leibie_name) {
                             dataNumberArray.push(i);
                         }
                     }
@@ -92,6 +89,8 @@ function showXxInfo(jt_id,jth) {
                             renderTableData(dataNumberArray[k], dataNumberArray[k + 1], data);
                         }
                     }
+                }else{
+                    $('#show_xxcs').html("<div'>暂无数据!</div>");
                 }
                 // 查看
                 layer.open({
@@ -100,8 +99,8 @@ function showXxInfo(jt_id,jth) {
                     content: $("#s_tubiao"),
                     shadeClose: false, // 点击遮罩关闭层
                     shade: 0.8,
-                    area: ['1000px', '80%'],
-                    offset: '60px'
+                    area: ['90%', '90%'],
+                    offset: '10px'
                 }); // 弹出 end
 
             }else{
@@ -114,7 +113,6 @@ function showXxInfo(jt_id,jth) {
                 });
             }
         }
-
     });
 }
 
@@ -127,18 +125,16 @@ function showXxInfo(jt_id,jth) {
  */
 //查询历史曲线按钮
 function queryLsqxBtn(jt_id) {
-    var loadingIndex = layer.load(0, {
-        shade: [0.5, '#aaa']
-    });
     $.ajax({
-        url:layui.setter.host+'shishishuju/cur_gongxu/cur_buji',
+        url:layui.setter.host+'shishishuju/cur_gongxu/findHisDataBtn',
         type:'get',
         data:{
             jt_id:jt_id
         },
         success:function (data) {
-            layer.close(loadingIndex);
             if(data.code==0){
+                $("#show_lsqx").empty();
+                $("#show_btn").empty();
                 var qxList = $("#show_lsqx").html();
                 var btnList = $("#show_btn").html();
                 for (var i = 0; i < data.data.length; i++) {
@@ -162,14 +158,16 @@ function queryLsqxBtn(jt_id) {
 
 
 //查询历史曲线
+//fixme 假数据
 function showLsqx(id,csm) {
-    var loadingIndex = layer.load(0, {
-        shade: [0.5, '#aaa']
-    });
+
+    console.log(id)
+    console.log(csm)
+
     $.ajax({
         url: layui.setter.host+'shishishuju/cur_wenshidu/findHistory',
         type: "get",
-        data:{id:data.id},
+        data:{id:1},
         success:function(data){
             if(data.code==0){
                 var config = {
@@ -177,7 +175,7 @@ function showLsqx(id,csm) {
                     type : 'area',			//图表类型, 可以传递一个数组，例如 type: ['line','bar','scatter'],   可选 line , bar , pie, area , scatter
                     smooth: true,			//不传递默认为false
                     showDataZoom : true ,	//不传递默认为false,是否显示区域缩放的工具条,大多用于渲染历史数据,配合 area 图使用
-                    labels : ['时间',type],		//中文名
+                    labels : ['时间','温度'],		//中文名
                     columns : ["shijian","wendu"],		//字段名
                     datas : data.data
                 }
@@ -195,11 +193,15 @@ function showLsqx(id,csm) {
     });
 }
 
+function initChart(){
+    var btns = $("#show_btn button");
+    if(btns.length > 0){
+        btns[0].click();
+    }
+}
+
 /*故障报警*/
-function showGZBJ(jth) {
-    var loadingIndex = layer.load(0, {
-        shade: [0.5, '#aaa']
-    });
+function showGZBJ(jt_id) {
     $.ajax({
         url:layui.setter.host+'shishishuju/cur_gongxu/queryBjcsByJtid',
         type:'get',
@@ -207,18 +209,16 @@ function showGZBJ(jth) {
             jt_id:jt_id
         },
         success:function (data) {
-            layer.close(loadingIndex);
             if(data.code==0){
-
                 var cols =  [
-                    {field: 'rownum',width:55,fixed:true}
-                    ,{field: 'jitaihao',sort:true, title: '机台号',width:90,fixed:true}
+                    {field: 'name', title: '参数名',width:300}
+                    ,{field: 'value', title: '报警状态',width:300}
                 ];
 
                 //自定义化后台返回列配置
                 var cols = fixedColumn(cols);
                 //展示已知数据
-                table.render({
+                layui.table.render({
                     elem: '#show_gzcs'
                     , id: 'show_gzcs'
                     , data: data.data
@@ -253,8 +253,8 @@ function fixedColumn(cols) {
         }
 
         //报警值为1  表明是当前是报警状态。
-        if(col.field == 'cs_value') {
-            col.templet = "<div>{{d.cs_value == 1 ?  '<i class=\"fa fa-warning (alias)\" style=\"color:red\"></i>' : d.cs_value}}</div></div>"
+        if(col.field == 'value') {
+            col.templet = "<div>{{d.value == 1 ?  '<i class=\"fa fa-warning (alias)\" style=\"color:red\"></i>' : d.value}}</div></div>"
         }
 
     }

@@ -124,32 +124,46 @@ public class CurDataService {
 
     //查询机台详细参数
     public Result queryXxcsByJtid(String jt_id){
-        String sql = "select a.*,b.name as leibie_name,b.xuhao as lbxh from sys_param a join sys_param_leibie b on a.leibie_id=b.id " +
-                "where a.leibie_id in ( " +
-                " select id from sys_param_leibie " +
+        String sql = "select a.value,a.jitai_id,a.param_id,b.danwei,b.name,b.xuhao,b.leibie_id,b.leibie_name,b.lbxh from sys_current as a join " +
+                "( " +
+                "select a.*,b.name as leibie_name,b.xuhao as lbxh from sys_param a join sys_param_leibie b on a.leibie_id=b.id  " +
+                "where a.leibie_id in (  " +
+                " select id from sys_param_leibie  " +
                 " where jixing_id = ( " +
                 " select gongxu_id from base_shebei where id=? " +
-                " ) " +
-                ") " +
-                "and zhanshi_flag=1 and baojing_flag=0 " +
-                "order by b.xuhao,a.xuhao";
-        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql,jt_id);
+                " )  " +
+                ")  " +
+                "and zhanshi_flag=1 and baojing_flag=0  " +
+                ") as b on a.param_id=b.id " +
+                "where a.jitai_id=? " +
+                "order by xuhao,lbxh";
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql,jt_id,jt_id);
         return Result.ok("查询成功",list);
     }
 
     //查询报警参数
     public Result queryBjcsByJtid(String jt_id){
-        String sql = "select a.*,b.name as leibie_name,b.xuhao as lbxh from sys_param a join sys_param_leibie b on a.leibie_id=b.id " +
-                "where a.leibie_id in ( " +
-                " select id from sys_param_leibie " +
+        String sql = "select a.value,a.jitai_id,a.param_id,b.danwei,b.name,b.xuhao,b.leibie_id,b.leibie_name,b.lbxh from sys_current as a join " +
+                "( " +
+                "select a.*,b.name as leibie_name,b.xuhao as lbxh from sys_param a join sys_param_leibie b on a.leibie_id=b.id  " +
+                "where a.leibie_id in (  " +
+                " select id from sys_param_leibie  " +
                 " where jixing_id = ( " +
                 " select gongxu_id from base_shebei where id=? " +
-                " ) " +
-                ") " +
-                "and zhanshi_flag=1 and baojing_flag=1 " +
-                "order by b.xuhao,a.xuhao";
-        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql,jt_id);
+                " )  " +
+                ")  " +
+                "and zhanshi_flag=1 and baojing_flag=1  " +
+                ") as b on a.param_id=b.id " +
+                "where a.jitai_id=? " +
+                "order by xuhao,lbxh";
+        List<Map<String,Object>> list = jdbcTemplate.queryForList(sql,jt_id,jt_id);
         return Result.ok("查询成功",list);
+    }
+
+    //车间总览数据
+    public Result cur_chejianzonglan(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_chejianzonglan");
+        return Result.ok("查询成功",proc.getDatas());
     }
 
 
