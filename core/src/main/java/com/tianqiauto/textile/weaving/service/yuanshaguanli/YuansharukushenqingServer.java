@@ -1,16 +1,14 @@
 package com.tianqiauto.textile.weaving.service.yuanshaguanli;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu_Shenqing;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRuKuShenQingRepository;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
-import com.tianqiauto.textile.weaving.util.result.Result;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

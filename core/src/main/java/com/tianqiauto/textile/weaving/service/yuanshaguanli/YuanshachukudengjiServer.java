@@ -2,10 +2,9 @@ package com.tianqiauto.textile.weaving.service.yuanshaguanli;
 
 import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.assertj.core.util.Lists;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
