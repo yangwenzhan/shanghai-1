@@ -18,6 +18,7 @@ spring:
 
   thymeleaf:
     cache: false  # 这个开发配置为false，避免改了模板还要重启服务器
+    mode: LEGACYHTML5
   data:
     web:
       pageable:

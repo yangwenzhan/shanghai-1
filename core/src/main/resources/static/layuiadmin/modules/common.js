@@ -376,6 +376,13 @@ layui.define(function(exports){
             return false;
         }
     };
+    //判断空对象{}
+    isEmptyObject = function (obj) {
+        for (var key in obj){
+            return false;//返回false，不为空对象
+        }
+        return true;//返回true，为空对象
+    };
 
 
 

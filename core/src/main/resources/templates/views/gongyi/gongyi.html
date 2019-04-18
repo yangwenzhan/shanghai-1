@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/links::header"></div>
+    <title>工艺管理</title>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">订单号</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="search_dingdanhao" lay-filter="search_dingdanhao" name="dingdanhao">
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">合约号</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="search_heyuehao" lay-filter="search_heyuehao" name="heyuehao">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">工艺编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="search_gongyibianhao" name="gongyibianhao" placeholder="工艺编号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="search_leixing" lay-filter="search_leixing" name="leixing">
+                            <option value="分批">分批整经</option>
+                            <option value="分条">分条整经</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layui-btn-danger" style="display: none" id="add_gongyi_btn"><i class="layui-icon layui-icon-add-circle"></i></button>
+                <button class="layui-btn layuiadmin-btn-admin" id="set_zu_btn"><i class="layui-icon layui-icon-util">设置组</i></button>
+                <button class="layui-btn layuiadmin-btn-admin" id="set_role_btn"><i class="layui-icon layui-icon-group">设置角色</i></button>
+            </div>
+            <table id="table" lay-filter="table"></table>
+        </div>
+
+    </div>
+</div>
+
+<!--新增工艺（合约号）-->
+<div style="display: none" id="div_form_add">
+    <form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-input-block" id="form_add_heyuehao"></div>
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--新增工艺（工艺总表）-->
+<div style="display: none" id="div_form_add_zongbiao">
+    <form class="layui-form" lay-filter="form_add_zongbiao" id="form_add_zongbiao" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">工艺编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add_gongyibianhao" name="gongyibianhao" placeholder="工艺编号" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">投料长度</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add_touliaochangdu" name="touliaochangdu" placeholder="投料长度" lay-verify="number"  lay-verType="tips" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">地经</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add_dijing" name="dijing" placeholder="地经" lay-verify="required|number"  lay-verType="tips" value="0" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">边经</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add_bianjing" name="bianjing" placeholder="边经" lay-verify="required|number" lay-verType="tips" value="0" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" id="add_zongjing"></label>
+            </div>
+            <div class="layui-form-item layui-hide">
+                <input type="button" lay-submit lay-filter="form_add_zongbiao_submit" id="form_add_zongbiao_submit" value="确认">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+<div th:replace="common/links::js_footer"></div>
+
+
+
+<script>
+    layui.config({
+        base:"/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        ,gongyi:'gongyi/gongyi'
+    }).use(['index','gongyi'],function () {
+
+        $("#add_dijing").on("input",function(e){
+            if(!isNaN(e.delegateTarget.value)){
+                var zongjing = parseInt(e.delegateTarget.value)+parseInt($("#add_bianjing").val())*2;
+                $("#add_zongjing").css("color","green");
+                $("#add_zongjing").html("总经"+zongjing)
+            }else {
+                $("#add_zongjing").css("color","red");
+                $("#add_zongjing").html("地经输入不规范");
+            }
+        });
+        $("#add_bianjing").on("input",function(e){
+            if(!isNaN(e.delegateTarget.value)){
+                var zongjing = parseInt(e.delegateTarget.value)*2+parseInt($("#add_dijing").val());
+                $("#add_zongjing").css("color","green");
+                $("#add_zongjing").html("总经:"+zongjing)
+            }else {
+                $("#add_zongjing").css("color","red");
+                $("#add_zongjing").html("边经输入不规范");
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

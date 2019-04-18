@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="/common/links::header"></div>
+    <div th:replace="common/links::header"></div>
     <title>合约号管理</title>
 </head>
 <body>
@@ -61,12 +61,12 @@
 </div>
 
 <!-- 添加合约号 -->
-<div th:include="/views/dingdanguanli/addHeyuehao::addHYHFragment"></div>
+<div th:include="views/dingdanguanli/addHeyuehao::addHYHFragment"></div>
 
 <!-- 原纱信息选择 -->
-<div th:include="/views/dingdanguanli/yuansha::yuanshaFragment"></div>
+<div th:include="views/dingdanguanli/yuansha::yuanshaFragment"></div>
 
-<div th:replace="/common/links::js_footer"></div>
+<div th:replace="common/links::js_footer"></div>
 <script th:inline="javascript">
     layui.config({
         base: "/layuiadmin/" //静态资源所在路径

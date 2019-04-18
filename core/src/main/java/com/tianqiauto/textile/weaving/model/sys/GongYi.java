@@ -37,6 +37,9 @@ public class GongYi {
     private Integer dijing; //地经
     private Integer bianjing; //边经
 
+    @Column
+    private Integer touliaochangdu; //投料长度
+
 
 
 
