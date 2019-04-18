@@ -37,6 +37,11 @@ public class GongYi {
     private Integer dijing; //地经
     private Integer bianjing; //边经
 
+    @Column
+    private Integer touliaochangdu; //投料长度
+
+
+
 
     private String fentiao_fenpi_flag; //值为分条或分批
 
@@ -57,26 +62,38 @@ public class GongYi {
     private Set<GongYi_Gang> gongYi_gangSet;  //缸   可能为空
 
 
-    @OneToMany
-    @JoinColumn(name = "gongyi_id")
-    private Set<GongYi_ZhengJing_FenTiao_PaiBan> gongYi_zhengJing_fenTiao_paiBanSet; //分条排版  可能为空
 
 
     @JsonIgnoreProperties("gongYi")
     @OneToOne(mappedBy = "gongYi")
     private Heyuehao heyuehao;
+//==========================================================================================================
 
 
     @JsonIgnoreProperties("gongYi")
-    @OneToOne
-    @JoinColumn(name = "zhizao_id")
-    private GongYi_ZhiZao gongYi_zhiZao;
-
-
-
     @OneToMany
-    @JoinColumn(name = "gongyi_id")
-    private Set<GongYi_ParamValue> gongYi_paramValues;
+    @JoinColumn
+    private Set<GongYi_ZhengJing_FenPi> gongYi_zhengJing_fenPiSet;
+
+    @JsonIgnoreProperties("gongYi")
+    @OneToMany(mappedBy = "gongYi")
+    private Set<GongYi_ZhengJing_FenTiao> gongYi_zhengJing_fenTiaoSet;
+
+
+    @JsonIgnoreProperties("gongYi")
+    @OneToMany(mappedBy = "gongYi")
+    private Set<GongYi_JiangSha> gongYi_jiangShaSet;
+
+    @JsonIgnoreProperties("gongYi")
+    @OneToMany(mappedBy = "gongYi")
+    private Set<GongYi_ChuanZong> gongYi_chuanZongSet;
+
+
+
+    @JsonIgnoreProperties("gongYi")
+    @OneToMany(mappedBy = "gongYi")
+    private Set<GongYi_ZhiZao> gongYi_zhiZaoSet;
+
 
 
 

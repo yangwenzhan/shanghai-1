@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<div th:replace="/common/links::header"></div>
+	<div th:replace="common/links::header"></div>
 	<title>工序对应排班</title>
 </head>
 <body>
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 
-  	<div th:replace="/common/links::js_footer"></div>
+  	<div th:replace="common/links::js_footer"></div>
 
 	<script type="text/html" id="cur_yzfs_num_upd">
 		<input type="radio" class="cur_yzfs_num_upd" lay-filter="radioInput" lay name="radio_upd" value="{{d.sort}}" />

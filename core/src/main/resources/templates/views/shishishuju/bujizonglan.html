@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/js/font-awesome/css/font-awesome.min.css}" media="all">
+	<title>布机总览</title>
+</head>
+<body>
+
+
+	<form class="layui-form" style="padding-top: 5px" id="form">
+		<div class="layui-form-item">
+
+			<div class="layui-inline">
+				<label class="layui-form-label" style="width: auto;">合约号</label>
+				<div class="layui-input-inline">
+					<select name="heyuehao" lay-search="" id="hyh" lay-filter="hyh">
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label" style="width: auto;">机型</label>
+				<div class="layui-input-inline">
+					<select name="zhijijixing" lay-search="" id="jixing" lay-filter="jixing">
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label" style="width: auto;">运行状态</label>
+				<div class="layui-input-inline">
+					<select name="yunxingzhuangtai" lay-search="" id="yunxingzhuangtai" lay-filter="yunxingzhuangtai">
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+					<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+				</button>
+			</div>
+
+			<div class="layui-inline" id="total_info_container" style="margin-left: 20px;"></div>
+
+		</div>
+	</form>
+
+	<div style="padding-left: 5px">
+		<table class="layui-table" id="table" lay-filter="table">
+		</table>
+	</div>
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs btn_ty" lay-event="detail">详情</a>
+	</script>
+
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<!--详情弹窗  div-->
+	<div id="s_tubiao" class="layui-tab" style="display: none;">
+		<ul class="layui-tab-title" id="cjzl_tab">
+			<li class="layui-this">实时数据</li>
+			<li id="windowpop_gzcs">故障参数</li>
+			<li id="windowpop_lsqx">历史曲线</li>
+		</ul>
+		<div class="layui-tab-content">
+			<!--详细参数-->
+			<div class="layui-tab-item layui-show" id="xxcs_div">
+				<div class="show_xxcs" id="show_xxcs"></div>
+			</div>
+			<!--故障参数-->
+			<div class="layui-tab-item">
+				<div class="show_gzcs" id="show_gzcs"></div>
+			</div>
+			<!--历史曲线-->
+			<div class="layui-tab-item">
+				<div class="show_btn" id="show_btn"></div>
+				<div class="show_lsqx" id="show_lsqx"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:replace="common/links::js_footer"></div>
+	<script th:src="@{/js/echarts/echarts.min.js}"></script>
+	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+
+	</body>
+
+	<script type="text/html" id="mysfxx">
+		{{#  if(d.yxzt == '运行'){ }}
+		<div><div style="color: green">{{d.yxzt}}</div></div>
+		{{# }else if(d.yxzt == '离线'){ }}
+		<div><div style="color: grey">{{d.yxzt}}</div></div>
+		{{# }else{ }}
+		<div><div style="color: red">{{d.yxzt==null?'':d.yxzt}}</div></div>
+		{{# } }}
+	</script>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,buji:'shishishuju/buji'
+			,windowpop:'shishishuju/windowpop'
+		}).use(['index','buji','windowpop'],function () {
+		});
+	</script>
+
+</html>

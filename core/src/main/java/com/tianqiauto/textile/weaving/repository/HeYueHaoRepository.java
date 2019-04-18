@@ -14,4 +14,9 @@ public interface HeYueHaoRepository extends JpaRepository<Heyuehao,Long>, JpaSpe
 
     List<Heyuehao> findAllByName(String name);
 
+
+
+    List<Heyuehao> findAllByGongYiIsNull();
+
+
 }

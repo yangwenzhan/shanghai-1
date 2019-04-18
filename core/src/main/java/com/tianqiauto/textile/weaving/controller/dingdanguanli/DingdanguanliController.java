@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -77,7 +79,12 @@ public class DingdanguanliController {
 
     @GetMapping("query_page")
     public Result findAll(Order order,@PageableDefault( sort = { "createTime"}, direction = Sort.Direction.DESC)Pageable pageable) {
-        return Result.ok(orderService.findAll(order,pageable));
+        Page<Order> list = orderService.findAll(order, pageable);
+        for (Iterator<Order> it = list.iterator(); it.hasNext(); ) {
+            Order orderE = it.next();
+            orderE.setHeyuehaoStr();
+        }
+        return Result.ok(list);
     }
 
     @GetMapping("deleteOrder")
@@ -92,10 +99,6 @@ public class DingdanguanliController {
     @Logger(msg = "修改订单信息")
     @ApiOperation("订单管理-修改订单")
     public Result updateOrder(@RequestBody Order order) {
-        List<Order> list = orderService.findByDingdanhao(order.getDingdanhao());
-        if(list.size()>0){
-            return Result.result(666,"订单号已存在不能重复添加！",order);
-        }
         orderService.update(order);
         return Result.ok("修改成功！", order);
     }

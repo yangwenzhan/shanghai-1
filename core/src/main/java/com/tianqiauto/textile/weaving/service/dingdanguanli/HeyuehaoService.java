@@ -95,4 +95,8 @@ public class HeyuehaoService {
     public List<Heyuehao> findByName(String name) {
         return heYueHaoRepository.findAllByName(name);
     }
+
+    public List<Heyuehao> findAll(){
+        return heYueHaoRepository.findAll();
+    }
 }
