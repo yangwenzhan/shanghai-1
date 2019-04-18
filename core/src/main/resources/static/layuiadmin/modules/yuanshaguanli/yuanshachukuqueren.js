@@ -60,7 +60,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
             form.render();
             editI = layer.open({
                 type: 1
-                , title: '编辑原纱出库确认！'
+                , title: '原纱出库申请信息确认'
                 , content: $('#div_form_edit')
                 , area: ['80%', '80%']
                 , btn: ['确认', '取消']
