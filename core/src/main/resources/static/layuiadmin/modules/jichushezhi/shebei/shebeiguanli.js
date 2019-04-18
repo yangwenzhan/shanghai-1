@@ -30,7 +30,7 @@ layui.define(['table', 'form'], function(exports){
 
     var cols =  [
         {field: 'id', title: 'id',hide:true}
-        ,{field: 'rownum', title: '',width:50}
+        ,{field: 'rownum', title: '',width:55}
         ,{field: 'gongxu',sort:true, title: '工序'}
         ,{field: 'jixing',sort:true, title: '机型'}
         ,{field: 'jitaihao',sort:true, title: '机台号'}
