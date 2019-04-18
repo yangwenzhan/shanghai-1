@@ -73,6 +73,9 @@ html,body{max-width: 1820px;}
 .green{
 	background-color:#18a67b;
 }
+.grey{
+	background-color: #cecbce;
+}
 /*停车*/
 .stop{
 	background: #787171;

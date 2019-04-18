@@ -6,6 +6,7 @@ import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,26 +22,34 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_chengpin_ruku")
-@EqualsAndHashCode(exclude = {"heyuehao","laiyuan","cangkuquerenren"})
-@ToString(exclude = {"heyuehao","laiyuan","cangkuquerenren"})
+@EqualsAndHashCode(exclude = {"heyuehao","laiyuan","cangkuquerenren","chengpinRuKuShenqing","chengpindengji"})
+@ToString(exclude = {"heyuehao","laiyuan","cangkuquerenren","chengpinRuKuShenqing","chengpindengji"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Chengpin_RuKu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chengpin_ruku_shenqing_id")
+    @JsonIgnoreProperties("chengpinruku")
+    private Chengpin_RuKu_Shenqing chengpinRuKuShenqing;
+
+
     @ManyToOne
     @JoinColumn(name = "heyuehao_id")
     private Heyuehao heyuehao;
-
-
 
     @ManyToOne
     @JoinColumn(name="laiyuan_id")
     private Dict laiyuan; //来源
 
+    @ManyToOne
+    @JoinColumn(name="chengpindengji_id")
+    private Dict chengpindengji;//成品等级
 
     private Double changdu; //长度
+
 
 
 
@@ -62,5 +71,13 @@ public class Chengpin_RuKu {
     private Date lastModifyTime;
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 
 }

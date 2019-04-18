@@ -8,8 +8,7 @@ import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRuKuShenQingRepository;
-import com.tianqiauto.textile.weaving.util.ModelUtil;
-import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
+import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,6 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.List;
 
 /**

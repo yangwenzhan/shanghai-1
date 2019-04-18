@@ -6,6 +6,7 @@ import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -43,7 +44,9 @@ public class YuanSha_ChuKu_Shenqing {
    @JoinColumn(name = "yuansha_id")
    private YuanSha yuanSha; //原纱
 
-
+    @OneToOne(mappedBy="yuanSha_chuKu_shenqing")
+    @JsonIgnoreProperties("yuanSha_chuKu_shenqing")
+    private YuanSha_ChuKu yuanShaChuKu;
 
 
     private Date yaoqiulingyongshijian; //要求领用时间
@@ -60,29 +63,9 @@ public class YuanSha_ChuKu_Shenqing {
     private Double zongzhong; //总重量
 
 
-    private String yongtu;   //用途
-
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Dict status; // 出库申请状态
-
-
-    @ManyToOne
-    @JoinColumn(name = "cangkuquerenren_id")
-    private User cangkuquerenren;  //仓库确认人
-    private Date cangkuquerenshijian; //仓库确认时间
-
-
-
-    @ManyToOne
-    @JoinColumn(name = "heyuehao_id")
-    private Heyuehao heyuehao;  //用作哪个合约号上
-
-
-
-
-
-
 
     private String beizhu; //备注
 
@@ -94,5 +77,13 @@ public class YuanSha_ChuKu_Shenqing {
     private Date lastModifyTime;
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 
 }

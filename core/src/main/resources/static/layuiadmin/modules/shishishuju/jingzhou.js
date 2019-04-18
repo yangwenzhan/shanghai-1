@@ -26,33 +26,40 @@ layui.define(['table', 'form'], function(exports){
     });
     form.render();
 
-    var cols =  [
-        {field: 'id', title: 'id',hide:true}
-        ,{field: 'zhouhao',sort:true, title: '经轴号'}
-        ,{field: 'zhoukuan',sort:true, title: '轴宽'}
-        ,{field: 'jingchang',sort:true, title: '计长'}
-        ,{field: 'zt',sort:true, title: '状态'}
-        ,{field: 'jitaihao',sort:true, title: '机台号'}
-        ,{field: 'name',sort:true, title: '合约号'}
-        ,{field: 'pibuguige',sort:true, title: '坯布规格'}
-        ,{field: 'beizhu',sort:true, title: '备注'}
-        ,{field: 'last_modify_time',sort:true, title: '最后更新时间'}
-        ,{field: 'last_modify_ren',sort:true, title: '最后更新人'}
-    ];
+    function initJingZhou(){
+        var cols =  [
+            {field: 'id', title: 'id',hide:true}
+            ,{field: 'zhouhao',sort:true, title: '经轴号'}
+            ,{field: 'zhoukuan',sort:true, title: '轴宽'}
+            ,{field: 'jingchang',sort:true, title: '计长'}
+            ,{field: 'zt',sort:true, title: '状态'}
+            ,{field: 'jitaihao',sort:true, title: '机台号'}
+            ,{field: 'name',sort:true, title: '合约号'}
+            ,{field: 'pibuguige',sort:true, title: '坯布规格'}
+            ,{field: 'beizhu',sort:true, title: '备注'}
+            ,{field: 'last_modify_time',sort:true, title: '最后更新时间'}
+            ,{field: 'last_modify_ren',sort:true, title: '最后更新人'}
+        ];
 
-    cols = formatColumns(cols);
+        cols = formatColumns(cols);
 
-    table.render({
-        elem: '#table'
-        ,limit:100000
-        ,method:'GET'
-        ,url: layui.setter.host + 'shishishuju/cur_jingzhou/cur_jingzhou'
-        ,where:{zt_id:$('#jz_zt').val(),
+        table.render({
+            elem: '#table'
+            ,limit:100000
+            ,method:'GET'
+            ,url: layui.setter.host + 'shishishuju/cur_jingzhou/cur_jingzhou'
+            ,where:{zt_id:$('#jz_zt').val(),
                 heyuehao:$('#hyh').val(),
                 zhouhao:$('#jz_bh').val()
-        }
-        ,cols: [cols]
-    });
+            }
+            ,cols: [cols]
+        });
+    }
+
+    initJingZhou();
+    setInterval(function(){
+        initJingZhou();
+    }, 30000);
 
 
     form.on('submit(form_search)',function(data){

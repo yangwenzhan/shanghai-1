@@ -10,11 +10,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     //打开页面初始化查询框
     dictInitSelect('status', null, 'dingdanzhuangtai', 'name', 'value');
     dictInitSelect('kehuxinxi', null, 'kehuxinxi', 'name', 'value');
+    var date = new Date();
     laydate.render({
         elem: '#xiadankaishiriqi',
+        value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
     });
     laydate.render({
         elem: '#xiadanjieshuriqi',
+        value: new Date()
     });
     laydate.render({
         elem: '#jiaohuoriqi',
@@ -24,28 +27,29 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     //设置表格头
     var cols = [[
         {field: 'id', title: 'id', hide: true}
-        , {field: 'createTime', title: '创建时间', width: 100}
-        , {field: 'dingdanhao', title: '订单号', width: 100}
-        , {field: 'pibuguige', title: '坯布规格', width: 100}
-        , {field: 'rukuguige', title: '入库规格', width: 100}
-        , {field: 'gongzhiguige', title: '公制规格', width: 100}
-        , {field: 'xiadanriqi', title: '下单日期', width: 100}
-        , {field: 'jiaohuoriqi', title: '交货日期', width: 100}
-        , {field: 'xiadanshuliang', title: '下单数量', width: 100}
-        , {field: 'baozhuangyaoqiu', title: '包装要求', width: 100}
-        , {field: 'baozhuangmaitou', title: '包装唛头', width: 100}
-        , {field: 'jingbaimiyongsha', title: '经百米用纱量', width: 100}
-        , {field: 'weibaimiyongsha', title: '纬百米用纱量', width: 100}
-        , {field: 'pingfangkezhong', title: '平方克重', width: 100}
-        , {title: '原料类型', width: 100, templet: repNull('yuanliaoleixing.name')}
-        , {title: '成品用途', width: 100, templet: repNull('chengpinyongtu.name')}
-        , {field: 'teshuyueding', title: '特殊约定', width: 100}
-        , {field: 'erpshangpindaima', title: 'erp商品代码', width: 100}
-        , {title: '营销员', width: 100, templet: repNull('yingxiaoyuan.xingming')}
-        , {title: '经理', width: 100, templet: repNull('jingli.xingming')}
-        , {title: '客户信息', width: 100, templet: repNull('kehuxinxi.name')}
-        , {title: '订单状态', width: 100, templet: repNull('status.name')}
-        , {field: 'beizhu', title: '备注', width: 100}
+        /*, {field: 'createTime', title: '创建时间', width: 100}*/
+        , {field: 'dingdanhao', title: '订单号', width: 120, sort: true}
+        , {field: 'heyuehaoStr', title: '合约号', width: 120}
+        , {field: 'status.name',title: '订单状态', width: 120, templet: repNull('status.name'), sort: true}
+        , {field: 'pibuguige', title: '坯布规格', width: 120}
+        , {field: 'rukuguige', title: '入库规格', width: 120}
+        , {field: 'gongzhiguige', title: '公制规格', width: 120}
+        , {field: 'xiadanriqi', title: '下单日期', width: 120, sort: true}
+        , {field: 'jiaohuoriqi', title: '交货日期', width: 120, sort: true}
+        , {field: 'xiadanshuliang', title: '下单数量', width: 120, sort: true}
+        , {field: 'baozhuangyaoqiu', title: '包装要求', width: 120}
+        , {field: 'baozhuangmaitou', title: '包装唛头', width: 120}
+        , {field: 'jingbaimiyongsha', title: '经百米用纱量', width: 120}
+        , {field: 'weibaimiyongsha', title: '纬百米用纱量', width: 120}
+        , {field: 'pingfangkezhong', title: '平方克重', width: 120}
+        , {title: '原料类型', width: 120, templet: repNull('yuanliaoleixing.name')}
+        , {title: '成品用途', width: 120, templet: repNull('chengpinyongtu.name')}
+        , {field: 'teshuyueding', title: '特殊约定', width: 120}
+        , {field: 'erpshangpindaima', title: 'erp商品代码', width: 120}
+        , {title: '营销员', width: 120, templet: repNull('yingxiaoyuan.xingming')}
+        , {title: '经理', width: 120, templet: repNull('jingli.xingming')}
+        , {title: '客户信息', width: 120, templet: repNull('kehuxinxi.name')}
+        , {field: 'beizhu', title: '备注', width: 120}
         , {title: '操作', toolbar: '#caozuo', width: 255, fixed: 'right'}
     ]];
 

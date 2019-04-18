@@ -10,4 +10,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> ,JpaSpecifica
 
     List<Order> findAllByDingdanhao(String dingdanhao);
 
+    List<Order> findAllByDingdanhaoAndDeleted(String dingdanhao,Integer deleted);
+
 }
