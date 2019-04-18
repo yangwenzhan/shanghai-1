@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @ClassName GongYi_Zhengjing_FenTiao
@@ -17,8 +18,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_gongyi_zhizao")
-@EqualsAndHashCode(exclude = {"gongYi"})
-@ToString(exclude = {"gongYi"})
+@EqualsAndHashCode(exclude = {"gongYi","gongYi_paramValues"})
+@ToString(exclude = {"gongYi","gongYi_paramValues"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GongYi_ZhiZao {
 
@@ -26,9 +27,14 @@ public class GongYi_ZhiZao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnoreProperties("gongYi_zhiZao")
-    @OneToOne(mappedBy = "gongYi_zhiZao")
+    @JsonIgnoreProperties("gongYi_zhiZaoSet")
+    @ManyToOne
+    @JoinColumn(name = "gongyi_id")
     private GongYi gongYi;
+
+
+
+    private Integer isCurrent;  //当前使用工艺
 
 
 
@@ -42,6 +48,11 @@ public class GongYi_ZhiZao {
     private String pibuyaoqiu; //坯布要求
     private String chengbaoyaoqiu;  //成包要求
     private String baozhuangmaitou; //包装唛头
+
+
+    @OneToMany
+    @JoinColumn(name = "gongyi_id")
+    private Set<GongYi_ParamValue> gongYi_paramValues;
 
 
 

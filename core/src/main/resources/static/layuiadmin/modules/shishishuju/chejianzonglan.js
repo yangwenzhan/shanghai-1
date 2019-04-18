@@ -68,7 +68,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                             var jthDiv = pContainer.parent();
                             //运行状态和效率
                             jthDiv.next().empty();
-                            jthDiv.next().attr("class","")
+                            jthDiv.next().attr("class","");
                             jthDiv.next().html(obj.xiaolv==null?'0%':obj.xiaolv+'%');
                             if("运行"==obj.yxzt){
                                 jthDiv.next().addClass("xl green");
@@ -164,7 +164,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                         yAxisNames:['°C'],
                         yAxisIndexs: [0,1],
                         datas : data.data
-                    }
+                    };
                     TIS.renderEcharts(config);
                 }else{
                     layer.open({

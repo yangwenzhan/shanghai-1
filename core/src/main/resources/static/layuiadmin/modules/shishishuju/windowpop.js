@@ -67,7 +67,7 @@ function showXxInfo(jt_id,jth) {
             if(data.code==0){
                 if(data.data.length>0) {
                     //参数类别的index数组
-                    var dataNumberArray = new Array();
+                    var dataNumberArray = [];
                     dataNumberArray.push(0);
                     var newTable = "";
                     //遍历datas获取所有的不重复的参数类别的开始index
@@ -161,8 +161,8 @@ function queryLsqxBtn(jt_id) {
 //fixme 假数据
 function showLsqx(id,csm) {
 
-    console.log(id)
-    console.log(csm)
+    console.log(id);
+    console.log(csm);
 
     $.ajax({
         url: layui.setter.host+'shishishuju/cur_wenshidu/findHistory',
@@ -178,7 +178,7 @@ function showLsqx(id,csm) {
                     labels : ['时间','温度'],		//中文名
                     columns : ["shijian","wendu"],		//字段名
                     datas : data.data
-                }
+                };
                 TIS.renderEcharts(config);
             }else{
                 layer.open({

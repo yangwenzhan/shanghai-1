@@ -115,7 +115,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         var data = obj.data;
         var layEvent = obj.event;
         jt_id = data.jitai_id;
-        jth = data.jitaihao
+        jth = data.jitaihao;
         if(layEvent === 'detail') {
             showXxInfo(jt_id,jth);
             queryLsqxBtn(jt_id);

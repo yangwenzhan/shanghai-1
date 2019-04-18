@@ -24,7 +24,8 @@ public class HeYueHaoYuanShaService {
     private JdbcTemplate jdbcTemplate;
 
     public Heyuehao_YuanSha save(Heyuehao_YuanSha heyuehaoYuanSha) {
-        return heyuehaoYuanShaRepository.save(heyuehaoYuanSha);
+        heyuehaoYuanShaRepository.save(heyuehaoYuanSha);
+        return heyuehaoYuanShaRepository.findById(heyuehaoYuanSha.getId()).get();
     }
 
     public void deleteById(Long id) {

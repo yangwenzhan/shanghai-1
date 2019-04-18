@@ -85,7 +85,7 @@ layui.define(function(exports){
       ,where:getParams(formId)
       ,page:{
         limits:[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90]
-        ,limit:10
+        ,limit:20
       }
       , done: function (res) {
         if (typeof(doneCallBack) === "function") {
@@ -396,6 +396,13 @@ layui.define(function(exports){
             return false;
         }
     };
+    //判断空对象{}
+    isEmptyObject = function (obj) {
+        for (var key in obj){
+            return false;//返回false，不为空对象
+        }
+        return true;//返回true，为空对象
+    };
 
 
 
@@ -617,6 +624,17 @@ layui.define(function(exports){
         });
     };
 
+    /**
+     * BJW 2019/04/17
+     * 表单提交后清除提交表单中的数据。
+     * @param formId 表单id
+     */
+    fromClear = function (formId) {
+        var arrObj = $('#' + formId).find(":input");
+        for (var i = 0; i < arrObj.length; i++) {
+            $(arrObj[i]).val("");
+        }
+    };
 
     //对外暴露的接口
   exports('common', {});

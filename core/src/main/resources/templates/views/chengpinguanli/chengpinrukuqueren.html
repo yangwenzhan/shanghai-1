@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/links::header"></div>
+    <title>成品入库申请</title>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <!--开始日期-->
+                <!-- <div class="layui-inline">
+                     <label class="layui-form-label">开始日期</label>
+                     <div class="layui-input-inline">
+                         <input type="text" id="kaishiriqi_sele" name="kaishiriqi" placeholder="开始日期" class="layui-input"
+                                autocomplete="off"/>
+                     </div>
+                 </div>
+                 &lt;!&ndash;结束日期&ndash;&gt;
+                 <div class="layui-inline">
+                     <label class="layui-form-label">结束日期</label>
+                     <div class="layui-input-inline">
+                         <input type="text" id="jieshuriqi_sele" name="jieshuriqi" placeholder="结束日期" class="layui-input"
+                                autocomplete="off"/>
+                     </div>
+                 </div>-->
+                <!--成品等级-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">成品等级</label>
+                    <div class="layui-input-inline">
+                        <select name="chengpinruku.chengpindengji.id" id="chengpindengji_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--合约号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">合约号</label>
+                    <div class="layui-input-inline">
+                        <select name="chengpinruku.heyuehao.id" id="heyuehao_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--申请状态-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">申请状态</label>
+                    <div class="layui-input-inline">
+                        <select name="status.id" id="status_sele">
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 查询表格-->
+        <div class="layui-card-body">
+            <table id="table" lay-filter="table"></table>
+            <script type="text/html" id="caozuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit"></i>确认</a>
+            </script>
+        </div>
+
+        <!-- 修改信息 -->
+        <div style="display: none" id="div_form_edit">
+            <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px ">
+                <div class="layui-form-item">
+
+                    <fieldset class="layui-elem-field">
+                        <legend>申请信息</legend>
+                        <div class="layui-field-box">
+                            <!-- 合约号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合约号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="chengpinruku.heyuehao.name" class="layui-input"
+                                           autocomplete="off" disabled/>
+                                </div>
+                            </div>
+                            <!-- 成品等级 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">成品等级</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="chengpinruku.chengpindengji.name" class="layui-input"
+                                           autocomplete="off" disabled/>
+                                </div>
+                            </div>
+                            <!-- 成品来源 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">成品来源</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="chengpinruku.laiyuan.name" class="layui-input"
+                                           autocomplete="off" disabled/>
+                                </div>
+                            </div>
+                            <!-- 申请长度 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请长度</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="changdu" class="layui-input" autocomplete="off" disabled/>
+                                </div>
+                            </div>
+                            <!-- 备注 === 不是必输项-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请备注</label>
+                                <div class="layui-input-inline">
+                                    <textarea type="text" name="beizhu" class="layui-input" autocomplete="off"
+                                              disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field">
+                        <legend>确认信息</legend>
+                        <div class="layui-field-box">
+                            <!-- 仓库确认人 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">仓库确认人<i class="layui-icon layui-icon-snowflake"
+                                                                        style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <select name="chengpinruku.cangkuquerenren.id" id="cangkuquerenren_edit"
+                                            lay-verify="required">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- 申请长度 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">实际长度<i class="layui-icon layui-icon-snowflake"
+                                                                       style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="chengpinruku.changdu" lay-verify="num|length"
+                                           tq_length="1^10"
+                                           placeholder="申请长度" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+
+                            <!-- 备注 === 不是必输项-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">确认备注</label>
+                                <div class="layui-input-inline">
+                            <textarea type="text" name="chengpinruku.beizhu" lay-verify="length" tq_length="^255"
+                                      placeholder="请输入备注"
+                                      class="layui-input" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- ID -->
+                    <div class="layui-form-item layui-hide">
+                        <input type="text" name="id">
+                        <input type="text" name="chengpinruku.id">
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div th:replace="common/links::js_footer"></div>
+<script>
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , chengpinrukuqueren: 'chengpinguanli/chengpinrukuqueren'
+    }).use(['index', 'chengpinrukuqueren'], function () {
+
+    });
+
+</script>
+</body>
+</html>

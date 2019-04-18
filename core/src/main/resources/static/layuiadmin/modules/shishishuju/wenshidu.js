@@ -84,7 +84,7 @@ layui.define(['table', 'form'], function(exports){
                         yAxisNames:['°C'],
                         yAxisIndexs: [0,1],
                         datas : data.data
-                    }
+                    };
                     TIS.renderEcharts(config);
                 }else{
                     layer.open({
