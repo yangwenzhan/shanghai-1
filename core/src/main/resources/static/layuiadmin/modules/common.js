@@ -308,8 +308,28 @@ layui.define(function(exports){
             });
         }
 
-
-
+        var zhijijixing=args.filter(function(item){return item.code == "zhijijixing"});
+        if(zhijijixing.length>0){
+            $.ajax({
+                url:layui.setter.host + 'common/findZhiJiJiXing',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(zhijijixing[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(zhijijixing[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+zhijijixing[0].code+"']").append(html);
+                }
+            });
+        }
 
 
 

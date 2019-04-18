@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
 
@@ -32,7 +31,7 @@ public class Beam_ZhiZhou_Shift {
 
     @ManyToOne
     @JoinColumn(name = "zhizhou_id")
-    private Beam_JingZhou zhizhou; //轴
+    private Beam_ZhiZhou zhizhou; //轴
 
 
     @ManyToOne
