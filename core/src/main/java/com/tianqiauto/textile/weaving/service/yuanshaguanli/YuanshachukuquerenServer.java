@@ -1,13 +1,9 @@
 package com.tianqiauto.textile.weaving.service.yuanshaguanli;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.Dict_Type;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ChuKu_Shenqing;
-import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu_Shenqing;
-import com.tianqiauto.textile.weaving.repository.DictRepository;
-import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
+import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuShenQingRepository;
 import com.tianqiauto.textile.weaving.util.ModelUtil;
@@ -20,11 +16,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +29,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class YuanshachukushenqingServer {
+public class YuanshachukuquerenServer {
 
     @Autowired
     private YuanShaChuKuShenQingRepository yuanShaChuKuShenQingRepository;
@@ -67,45 +63,46 @@ public class YuanshachukushenqingServer {
                 andPredicates.add(criteriaBuilder.equal(root.get("chukuleixing").get("id"), yuanSha_chuKu_shenqing.getChukuleixing().getId()));
             }
             //状态
-            if (!mu.paramIsEmpty("status.id")) {
-                andPredicates.add(criteriaBuilder.equal(root.get("status").get("id"), yuanSha_chuKu_shenqing.getStatus().getId()));
-            }
+            andPredicates.add(criteriaBuilder.equal(root.get("status").get("value"), "10"));
             Predicate[] array = new Predicate[andPredicates.size()];
             Predicate preAnd = criteriaBuilder.and(andPredicates.toArray(array));
             return criteriaQuery.where(preAnd).getRestriction();
         };
         return yuanShaChuKuShenQingRepository.findAll(specification, pageable);
     }
+    @Autowired
+    private YuanShaChuKuRepository yuanShaChuKuRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+    public YuanSha_ChuKu_Shenqing update(YuanSha_ChuKu_Shenqing yuanSha_chuKu_shenqing) {
+        YuanSha_ChuKu_Shenqing yuanShaChuKuShenqingDB = yuanShaChuKuShenQingRepository.findById(yuanSha_chuKu_shenqing.getId()).get();
+        YuanSha_ChuKu yuanSha_chuKuBD = yuanShaChuKuShenqingDB.getYuanShaChuKu();
+        YuanSha_ChuKu yuanSha_chuKu = yuanSha_chuKu_shenqing.getYuanShaChuKu();
+        MyCopyProperties.copyProperties(yuanSha_chuKu,yuanSha_chuKuBD, Arrays.asList("baoshu","baozhong","zongzhong","beizhu"));
+        yuanSha_chuKuBD.setLingyongshijian(new Date());
+        yuanSha_chuKuBD.setLingyongren(userRepository.findById(yuanSha_chuKu.getLingyongren().getId()).get());
+        yuanShaChuKuRepository.save(yuanSha_chuKuBD);
+        yuanShaChuKuShenqingDB.setStatus(findByTypeAndVlaue("ys_chukushenqingzhuangtai","20"));
+        return yuanShaChuKuShenqingDB;
+    }
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-
-    public YuanSha_ChuKu_Shenqing save(YuanSha_ChuKu_Shenqing yuanSha_chuKu_shenqing) {
+    public Dict findByTypeAndVlaue(String typeCode, String value){
         String sql = "SELECT dict.id, dict.name, dict.[value] FROM base_dict dict\n" +
                 "LEFT JOIN base_dict_type type on type.id = dict.type_id \n" +
                 "where type.code = ? AND dict.[value] = ? ";
-        Dict dict = jdbcTemplate.query(sql,new BeanPropertyRowMapper<Dict>(Dict.class),"ys_chukushenqingzhuangtai","10").get(0);
-        yuanSha_chuKu_shenqing.setStatus(dict);
-        return yuanShaChuKuShenQingRepository.save(yuanSha_chuKu_shenqing);
+        List<Dict> dicts = jdbcTemplate.query(sql,new BeanPropertyRowMapper<Dict>(Dict.class),typeCode,value);
+        if (dicts.isEmpty()){
+            return null;
+        }else{
+            return dicts.get(0);
+        }
     }
 
-    public void deleteById(Long id) {
-        YuanSha_ChuKu_Shenqing yuanSha_chuKu_shenqing = yuanShaChuKuShenQingRepository.findById(id).get();
-        yuanShaChuKuRepository.deleteById(yuanSha_chuKu_shenqing.getYuanShaChuKu().getId());
-        yuanShaChuKuShenQingRepository.deleteById(id);
-    }
 
-    @Autowired
-    private YuanShaChuKuRepository yuanShaChuKuRepository;
-    public YuanSha_ChuKu_Shenqing update(YuanSha_ChuKu_Shenqing yuanSha_chuKu_shenqing) {
-        YuanSha_ChuKu_Shenqing yuanshachukushenqingDB = yuanShaChuKuShenQingRepository.findById(yuanSha_chuKu_shenqing.getId()).get();
-        YuanSha_ChuKu yuanSha_chuKuDB = yuanshachukushenqingDB.getYuanShaChuKu();
-        MyCopyProperties.copyProperties(yuanSha_chuKu_shenqing.getYuanShaChuKu(),yuanSha_chuKuDB, Arrays.asList("yuanSha","chukuleixing","heyuehao"));
-        yuanSha_chuKuDB.setChukuleixing(yuanSha_chuKu_shenqing.getChukuleixing());
-        yuanSha_chuKuDB = yuanShaChuKuRepository.save(yuanSha_chuKuDB);
-        yuanshachukushenqingDB.setYuanShaChuKu(yuanSha_chuKuDB);
-        MyCopyProperties.copyProperties(yuanSha_chuKu_shenqing,yuanshachukushenqingDB, Arrays.asList("yuanSha","yaoqiulingyongshijian","chukuleixing","baoshu","baozhong","zongzhong","beizhu"));
-        return yuanShaChuKuShenQingRepository.save(yuanshachukushenqingDB);
+    public YuanSha_ChuKu_Shenqing findById(Long id) {
+        return yuanShaChuKuShenQingRepository.findById(id).get();
     }
 }

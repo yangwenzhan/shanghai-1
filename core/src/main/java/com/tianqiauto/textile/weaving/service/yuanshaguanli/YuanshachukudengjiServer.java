@@ -6,6 +6,7 @@ import com.tianqiauto.textile.weaving.model.sys.YuanSha_RuKu;
 import com.tianqiauto.textile.weaving.repository.YuanShaChuKuRepository;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
 import com.tianqiauto.textile.weaving.util.ModelUtil;
+import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,7 +70,7 @@ public class YuanshachukudengjiServer {
             if(!mu.paramIsEmpty("chukuleixing.id")) {
                 andPredicates.add(criteriaBuilder.equal(root.get("chukuleixing").get("id"),yuanSha_chuKu.getChukuleixing().getId()));
             }
-
+            andPredicates.add(criteriaBuilder.isNull(root.get("yuanSha_chuKu_shenqing")));
             Predicate[] array = new Predicate[andPredicates.size()];
             Predicate preAnd = criteriaBuilder.and(andPredicates.toArray(array));
             return criteriaQuery.where(preAnd).getRestriction();
@@ -103,6 +105,7 @@ public class YuanshachukudengjiServer {
         YuanSha yuanSha = yuanSha_chuKu.getYuanSha();
         yuanSha.setKucunliang(yuanSha.getKucunliang()-yuanSha_chuKu.getZongzhong());
         yuanShaRepository.save(yuanSha);
+        MyCopyProperties.copyProperties(yuanSha_chuKu,yuanSha_chuKuDB, Arrays.asList("yuanSha","chukuleixing","baoshu","baozhong","zongzhong","beizhu","heyuehao"));
         yuanShaChuKuRepository.save(yuanSha_chuKu);
     }
 }

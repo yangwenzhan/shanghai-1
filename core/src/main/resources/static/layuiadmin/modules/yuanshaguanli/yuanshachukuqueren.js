@@ -8,32 +8,14 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     //查询表头部初始化
     var initSele = [
         {eleId:'chukuleixing_sele',dictCode:'ys_chukuleixing',val:'id'},
-        {eleId:'status_sele',dictCode:'ys_chukushenqingzhuangtai',val:'id'},
+        // {eleId:'status_sele',dictCode:'ys_chukushenqingzhuangtai',val:'id'},
         {eleId:'gongyingsha_sele',dictCode:'ys_gongyingshang',val:'id'}
     ];
     dictInitSele(initSele,false);
     form.render();
-    // var date = new Date();
-    // laydate.render({
-    //     elem: '#kaishiriqi_sele',
-    //     value: date
-    // });
-    // laydate.render({
-    //     elem: '#jieshuriqi_sele',
-    //     value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
-    // });
 
     //监听搜索
     form.on('submit(form_search_cksq)', function (data) {
-        var field = data.field;
-        table.reload('table', {
-            where: field
-        });
-        return false;
-    });
-
-    //监听搜索
-    form.on('submit(form_search)', function (data) {
         var field = data.field;
         table.reload('table', {
             where: field
@@ -64,109 +46,26 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '登记备注',templet: repNull('yuanShaChuKu.beizhu'),width:120}
         , {title: '领用人',templet: repNull('yuanShaChuKu.lingyongren.xingming'),width:120}
         , {title: '领用时间',templet: repNull('yuanShaChuKu.lingyongshijian'), sort: true,field:'yuanShaChuKu.lingyongshijian',width:120}
-        , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:180}
+        , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:120}
     ]];
 
     //初始化表格
-    initTable("table", 'yuanshaguanli/yuanshachukushenqing/query_page', 'get', cols, table,"from");
-
-    //添加
-    $("#add").click(function () {
-        var initsele = [
-            {eleId:'chukuleixing_add',dictCode:'ys_chukuleixing',val:'id'}
-        ];
-        InitSelect('heyuehao_add', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
-        dictInitSele(initsele,false);
-        form.render();
-        layer.open({
-            type: 1
-            , title: '原纱出库申请'
-            , content: $('#div_form_add')
-            , area: ['70%', '60%']
-            , btn: ['添加', '取消']
-            , btn1: function (index, layero) {
-                if(null == yuansha_add){
-                    layer.msg('原纱信息不能为空！', {
-                        time: 20000, //20s后自动关闭
-                        btnAlign: 'c',
-                        btn: ['知道了']
-                    });
-                    return false;
-                }
-
-                if(yuansha_add.kucunliang < $('#zongzhong_add').val()){
-                    layer.msg('原纱库存不足！', {
-                        time: 20000, //20s后自动关闭
-                        btnAlign: 'c',
-                        btn: ['知道了']
-                    });
-                    return false;
-                }
-                form.on('submit(form_add_submit)', function (data) {
-                    var formData = data.field;
-                    formData.yuanSha = {};
-                    formData.yuanSha.id = yuansha_add.id;
-                    encObject(formData);
-                    $.ajax({
-                        url: layui.setter.host + 'yuanshaguanli/yuanshachukushenqing/add',
-                        contentType: "application/json;charset=utf-8",
-                        type: 'POST',
-                        data: JSON.stringify(formData),
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                            layer.close(index);
-                            yuansha_add = null;
-                            fromClear("form_add_submit");
-                        }
-                    });
-                });
-                $("#form_add_submit").trigger('click');
-            }
-            , success: function () { //弹出层打开成功时的回调。
-
-            }
-        });
-    });
+    initTable("table", 'yuanshaguanli/yuanshachukuqueren/query_page', 'get', cols, table,"from");
 
     //监听操作列
     table.on('tool(table)', function (obj) {
         var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm(
-                "确定要删除入库申请信息吗？",
-                {title: '删除提示'}, function (index) {
-                    $.ajax({
-                        url: layui.setter.host + 'yuanshaguanli/yuanshachukushenqing/delete',
-                        type: 'get',
-                        data: {'id': data.id},
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                        }
-                    });
-                });
-        } else if (obj.event === 'edit') {
-            var initsele = [
-                {eleId:'chukuleixing_edit',dictCode:'ys_chukuleixing',val:'id'}
-            ];
-            InitSelect('heyuehao_edit', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
-            dictInitSele(initsele,false);
+        if (obj.event === 'edit') {
+            InitSelect('lingyongren_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             form.render();
             editI = layer.open({
                 type: 1
-                , title: '编辑原纱入库登记信息！'
+                , title: '编辑原纱出库确认！'
                 , content: $('#div_form_edit')
-                , area: ['70%', '60%']
-                , btn: ['修改', '取消']
+                , area: ['80%', '80%']
+                , btn: ['确认', '取消']
                 , btn1: function (editIndex, layero) {
-                    if(null == yuansha_edit){
-                        layer.msg('原纱信息不能为空！', {
-                            time: 20000, //20s后自动关闭
-                            btnAlign: 'c',
-                            btn: ['知道了']
-                        });
-                        return false;
-                    }
-                    if(yuansha_edit.kucunliang < $('#zongzhong_edit').val()){
+                    if(Number($('#kucunliang_edit').val()) < Number($('#zongzhong_edit').val())){
                         layer.msg('原纱库存不足！', {
                             time: 20000, //20s后自动关闭
                             btnAlign: 'c',
@@ -175,14 +74,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         return false;
                     }
                     form.on('submit(form_edit_submit)', function (data) {
-                        layer.confirm('确定要修改订单信息么?'
+                        layer.confirm('确认要登记原纱出库信息吗？'
                             , function (i) {
                                 var formData = data.field;
-                                formData.yuanSha = {};
-                                formData.yuanSha.id = yuansha_edit.id;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'yuanshaguanli/yuanshachukushenqing/update',
+                                    url: layui.setter.host + 'yuanshaguanli/yuanshachukuqueren/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
@@ -192,16 +89,11 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 });
                                 layer.close(i);
                                 layer.close(editI);
-                                yuansha_edit=null;
                             });
                     });
                     $("#form_edit_submit").trigger('click');
                 }
                 , success: function () {
-                    yuansha_edit = data.yuanSha;
-                    var zzl = data.zongzhong;
-                    var kcl = yuansha_edit.kucunliang;
-                    //yuansha_edit.kucunliang = kcl+zzl;
                     fromSetVel(form, 'form_edit', data.yuanSha);
                     fromSetVel(form, 'form_edit', data);
                 }
@@ -308,5 +200,5 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     }
 
 
-    exports('yuanshachukushenqing', {})
+    exports('yuanshachukuqueren', {})
 });
