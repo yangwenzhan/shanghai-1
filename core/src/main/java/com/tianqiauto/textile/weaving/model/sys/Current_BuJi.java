@@ -62,7 +62,7 @@ public class Current_BuJi {
     private Integer luobushijian; //预计落布时间
 
 
-    private Integer liaojieshijian;  //预计了机时间
+    private Integer liaojishijian;  //预计了机时间
 
 
 
@@ -76,7 +76,7 @@ public class Current_BuJi {
     private User dangchegong;  //挡车工
 
 
-
+    private Double xiaolv;//效率
 
 
 
