@@ -82,7 +82,11 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                                                 url:layui.setter.host+'gongyi/add_gaikuang',
                                                 data:formData,
                                                 success:function(data){
-                                                    console.info(data)
+                                                    layer.close(index);
+
+
+
+
                                                 }
                                             });
 
