@@ -47,22 +47,24 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                 var cols =  [
                     {field: 'rownum',width:55,fixed:true}
                     ,{field: 'jitaihao',sort:true, title: '机台号',width:90,fixed:true}
-                    ,{field: 'jixing',sort:true, title: '机型',width:120}
-                    ,{field: 'heyuehao',sort:true, title: '合约号',width:120}
+                    ,{field: 'yxzt',sort:true, title: '运行状态',width:100}
+                    ,{field: 'jixing',sort:true, title: '机型',width:100}
+                    ,{field: 'heyuehao',sort:true, title: '合约号',width:100}
                     ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
-                    ,{field: 'zhou_name',sort:true, title: '经/织轴号',width:120}
-                    ,{field: 'jingchang',sort:true, title: '经长',width:80}
-                    ,{field: 'yxzt',sort:true, title: '运行状态',width:120}
-                    ,{field: 'buchang',sort:true, title: '布长m',width:80}
-                    ,{field: 'luobushijian',sort:true, title: '落布预测min',width:120}
-                    ,{field: 'liaojishijian',sort:true, title: '了机预测min',width:120}
+                    ,{field: 'zhou_name',sort:true, title: '织轴号',width:90}
+                    ,{field: 'jingchang',sort:true, title: '当前经长m',width:120}
+                    ,{field: 'zz_zjc',sort:true, title: '总经长m',width:100}
+                    ,{field: 'buchang',sort:true, title: '当前布长m',width:120}
+                    ,{field: 'shedingbuchang',sort:true, title: '设定布长m',width:120}
+                    ,{field: 'luobushijian',sort:true, title: '落布倒计时min',width:150}
+                    ,{field: 'liaojishijian',sort:true, title: '了机倒计时min',width:150}
                     ,{field: 'jingting',sort:true, title: '经停',width:80}
                     ,{field: 'weiting',sort:true, title: '纬停',width:80}
                     ,{field: 'zongting',sort:true, title: '总停',width:80}
                     ,{field: 'chesu',sort:true, title: '车速',width:80}
                     ,{field: 'xiaolv',sort:true, title: '效率',width:80}
                     ,{field: 'ygxm',sort:true, title: '员工',width:120}
-                    ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
+                    ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:220}
                 ];
                 cols = formatColumns(cols);
                 cols.push({
@@ -81,7 +83,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                             $('#total_info_container').empty();
 
                             $('#total_info_container').html(
-                                '<span>总布长m：<b>'+(data.data[i].zongjingchang == null ? "0" : data.data[i].zongjingchang)+'</b></span>， '+
+                                '<span>总布长m：<b>'+(data.data[i].zongbuchang == null ? "0" : data.data[i].zongbuchang)+'</b></span>， '+
                                 '<span>总停次数：<b>' + (data.data[i].zongtingcishu == null ? "0" : data.data[i].zongtingcishu) + '</b></span>， ' +
                                 '<span style="color:green;">开台数：<b>'+(data.data[i].kts == null ? "0" : data.data[i].kts)+'</b></span> '
                             );

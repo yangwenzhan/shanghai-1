@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<title>布机了机预测</title>
+</head>
+<body>
+
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+
+				<div class="layui-inline" style=" margin-left:450px;margin-top: 10px;">
+					<button class="layui-btn" id="tubiao_btn">图表展示</button>
+				</div>
+
+				<div class="layui-inline" style=" margin-left:20px;margin-top: 10px;">
+					<button class="layui-btn layui-btn-primary" id="shuju_btn">数据展示</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!--图表展示-->
+	<div class="layui-form" id="tubiao_div">
+		<div class="show_tubiao" id="show_tubiao" style="width: 100%;margin: auto;height: 5000px;"></div>
+	</div>
+	<!--数据展示-->
+	<div class="layui-form" id="shuju_div" style="display: none;">
+		<div class="layui-table" id="table"></div>
+	</div>
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+
+	<div th:replace="common/links::js_footer"></div>
+	<script th:src="@{/js/echarts/echarts.min.js}"></script>
+	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+
+	<script type="text/html" id="mysfxx">
+		{{#  if(d.yxzt == '运行'){ }}
+		<div><div style="color: green">{{d.yxzt}}</div></div>
+		{{# }else if(d.yxzt == '离线'){ }}
+		<div><div style="color: grey">{{d.yxzt}}</div></div>
+		{{# }else{ }}
+		<div><div style="color: red">{{d.yxzt==null?'':d.yxzt}}</div></div>
+		{{# } }}
+	</script>
+
+	<script>
+        layui.config({
+            base:"/layuiadmin/" //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+            ,liaojiyuce:'shishishuju/liaojiyuce'
+        }).use(['index','liaojiyuce'],function () {
+        });
+	</script>
+
+
+</body>
+</html>
