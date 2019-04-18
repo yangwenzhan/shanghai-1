@@ -14,7 +14,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label">员工工序</label>
 						<div class="layui-input-inline">
-							<select name="gongxu" lay-search="" id="ssgx" lay-filter="ssgx">
+							<select name="gongxu" lay-search="" id="yggx" lay-filter="yggx">
 							</select>
 						</div>
 					</div>
@@ -44,6 +44,14 @@
 					</div>
 
 					<div class="layui-inline">
+						<label class="layui-form-label">机台工序</label>
+						<div class="layui-input-inline">
+							<select name="gongxu" lay-search="" id="jtgx" lay-filter="jtgx">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
 						<label class="layui-form-label">机台机型</label>
 						<div class="layui-input-inline">
 							<select name="jixing" lay-search="" id="jx" lay-filter="jx">
@@ -52,16 +60,11 @@
 					</div>
 
 					<div class="layui-inline">
-						<label class="layui-form-label">机台轮班</label>
-						<div class="layui-input-inline">
-							<select name="lunban" lay-search="" id="lb" lay-filter="lb">
-							</select>
-						</div>
-					</div>
-
-					<div class="layui-inline">
 						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
 							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+						</button>
+						<button class="layui-btn layuiadmin-btn-admin" id="batch_edit_btn">
+							<i class="layui-icon layui-icon-edit layuiadmin-button-btn">修改</i>
 						</button>
 					</div>
 
@@ -69,10 +72,10 @@
 			</form>
 
 			<div class="layui-card-body">
-				<div style="padding-bottom: 10px;">
-					<button class="layui-btn" id="batch_edit_btn"><i class="layui-icon layui-icon-edit">批量修改</i></button>
+				<!--<div style="padding-bottom: 10px;">
+					<button class="layui-btn" id="batch_edit_btn"><i class="layui-icon layui-icon-edit">修改</i></button>
 					<button class="layui-btn" id="add_chewei_btn"><i class="layui-icon layui-icon-add-circle">添加</i></button>
-				</div>
+				</div>-->
 				<table id="table" lay-filter="table"></table>
 			</div>
 
@@ -208,7 +211,7 @@
 	</div>
 
 	<!--添加弹出框-->
-	<div style="display: none" id="div_form_add">
+	<!--<div style="display: none" id="div_form_add">
 		<form class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
 			<div class="layui-form-item">
 
@@ -280,7 +283,7 @@
 
 			</div>
 		</form>
-	</div>
+	</div>-->
 
 	<div th:replace="/common/links::js_footer"></div>
 
