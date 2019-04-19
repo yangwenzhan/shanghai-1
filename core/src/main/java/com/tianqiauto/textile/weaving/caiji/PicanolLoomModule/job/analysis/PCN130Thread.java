@@ -40,15 +40,15 @@ public class PCN130Thread extends AbstractAnalysis {
         byte units = data[3];
         switch (units){
             case 0:
-                ParamVo.addParam(sourceId,"纬密单位","picks/cm"); break;
+                ParamVo.addParam(sourceId,"纬密单位","picks/cm","094"); break;
             case 1:
-                ParamVo.addParam(sourceId,"纬密单位","picks/inch"); break;
+                ParamVo.addParam(sourceId,"纬密单位","picks/inch","094"); break;
             case 2:
-                ParamVo.addParam(sourceId,"纬密单位","picks/mm"); break;
-            default: ParamVo.addParam(sourceId,"纬密单位","");
+                ParamVo.addParam(sourceId,"纬密单位","picks/mm","094"); break;
+            default: ParamVo.addParam(sourceId,"纬密单位","","094");
         }
         byte[]  pickdensity =  Arrays.copyOfRange(data,4,6);//定长
-        ParamVo.addParam(sourceId,"打纬密度",String.valueOf(BytesUtil.bytesToWord(pickdensity)));
-        ParamVo.addParam(sourceId,"纬密-correction",String.valueOf(BytesUtil.bytesToShort(data[7])));
+        ParamVo.addParam(sourceId,"打纬密度",String.valueOf(BytesUtil.bytesToWord(pickdensity)),"095");
+        ParamVo.addParam(sourceId,"纬密-correction",String.valueOf(BytesUtil.bytesToShort(data[7])),"096");
     }
 }

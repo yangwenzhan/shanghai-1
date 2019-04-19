@@ -25,36 +25,36 @@ public class PCN010Controller extends AbstractBispenser {
         byte cnt = body.getCnt();
         //机器运行状态信息
         byte[] bitArray = BytesUtil.toBitArray(body.getData()[0]);
-        ParamVo.addParam(sourceId,"生产状态",String.valueOf(bitArray[7]));
-        ParamVo.addParam(sourceId,"纬纱停车",String.valueOf(bitArray[6]));
-        ParamVo.addParam(sourceId,"经纱停车",String.valueOf(bitArray[5]));
-        ParamVo.addParam(sourceId,"紧急停止",String.valueOf(bitArray[4]));
-        ParamVo.addParam(sourceId,"手动停止",String.valueOf(bitArray[3]));
-        ParamVo.addParam(sourceId,"picks_1000",String.valueOf(bitArray[2]));
+        ParamVo.addParam(sourceId,"生产状态",String.valueOf(bitArray[7]),"001");
+        ParamVo.addParam(sourceId,"纬纱停车",String.valueOf(bitArray[6]),"002");
+        ParamVo.addParam(sourceId,"经纱停车",String.valueOf(bitArray[5]),"003");
+        ParamVo.addParam(sourceId,"紧急停止",String.valueOf(bitArray[4]),"004");
+        ParamVo.addParam(sourceId,"手动停止",String.valueOf(bitArray[3]),"005");
+        ParamVo.addParam(sourceId,"picks_1000",String.valueOf(bitArray[2]),"006");
         if(cnt > 1){//包含其他信息
             if(body.getData()[1] == 30 && body.getData()[2] == 3){//达到预选（布卷长度）时机器发送的消息 落布的消息
                 switch (body.getData()[3]){
                     case 1:
-                        ParamVo.addParam(sourceId,"落布长度单位","picks"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","picks","007"); break;
                     case 2:
-                        ParamVo.addParam(sourceId,"落布长度单位","meters"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","meters","007"); break;
                     case 3:
-                        ParamVo.addParam(sourceId,"落布长度单位","yards"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","yards","007"); break;
                     case 5:
-                        ParamVo.addParam(sourceId,"落布长度单位","cm"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","cm","007"); break;
                     case 6:
-                        ParamVo.addParam(sourceId,"落布长度单位","inch"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","inch","007"); break;
                     case 7:
-                        ParamVo.addParam(sourceId,"落布长度单位","jacquard patterns"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","jacquard patterns","007"); break;
                     case 8:
-                        ParamVo.addParam(sourceId,"落布长度单位","dobby patterns"); break;
+                        ParamVo.addParam(sourceId,"落布长度单位","dobby patterns","007"); break;
                     case 9:
-                        ParamVo.addParam(sourceId,"落布长度单位","jacquard patterns"); break;
-                    default: ParamVo.addParam(sourceId,"落布长度单位","");
+                        ParamVo.addParam(sourceId,"落布长度单位","jacquard patterns","007"); break;
+                    default: ParamVo.addParam(sourceId,"落布长度单位","","007");
                 }
                 byte[] clothLength = Arrays.copyOfRange(body.getData(),4,8);
-                ParamVo.addParam(sourceId,"落布布长", String.valueOf(BytesUtil.bytesToLongWord(clothLength)));
-                ParamVo.addParam(sourceId,"落布时间", StringUtils.NewDateToString("yyyy-MM-dd HH:mm ss"));
+                ParamVo.addParam(sourceId,"落布布长", String.valueOf(BytesUtil.bytesToLongWord(clothLength)),"008");
+                ParamVo.addParam(sourceId,"落布时间", StringUtils.NewDateToString("yyyy-MM-dd HH:mm ss"),"009");
             }
         }
     }

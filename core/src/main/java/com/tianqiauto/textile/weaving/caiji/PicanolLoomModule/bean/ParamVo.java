@@ -12,12 +12,13 @@ public class ParamVo {
 
     private static  Map<String, PicanolParam> map = new HashMap();
 
-    public static void addParam(String machineNumber, String name, String value) {
+    public static void addParam(String machineNumber, String name, String value,String param_number) {
         PicanolParam parm = new PicanolParam();
         parm.setMachineNumber(machineNumber);
         parm.setName(name);
         parm.setValue(value);
-        map.put(machineNumber+name,parm);
+        parm.setParamNumber(param_number);
+        map.put(machineNumber+param_number,parm);
     }
 
     public static Collection<PicanolParam> getCollection() {
