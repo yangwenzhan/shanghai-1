@@ -1125,6 +1125,9 @@
 
 
 		<div th:replace="common/links::js_footer"></div>
+		<script th:src="@{/js/echarts/echarts.min.js}"></script>
+		<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+		<script th:src="@{/layuiadmin/modules/shishishuju/windowpop.js}"></script>
 
 	</body>
 
@@ -1134,8 +1137,7 @@
 		}).extend({
 			index: 'lib/index' //主入口模块
 			,chejianzonglan:'shishishuju/chejianzonglan'
-            ,windowpop:'shishishuju/windowpop'
-		}).use(['index','chejianzonglan','windowpop'],function () {
+		}).use(['index','chejianzonglan'],function () {
 		});
 	</script>
 
