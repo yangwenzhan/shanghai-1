@@ -46,20 +46,21 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         getJiTaiHao("add_jth", null, false, $('#add_gx').val(), $('#add_jx').val());
     });
 
+
     var cols = [
         {fixed:'left',checkbox:true}
         ,{field: 'rownum', width:55}
         ,{field: 'jitai_id', title: 'jitai_id',hide:true}
         ,{field: 'jitaihao', sort:true,title: '机台号',width:120}
-        ,{field: '甲班',sort:true, title: '甲班',width:300}
-        ,{field: '乙班',sort:true, title: '乙班',width:300}
-        ,{field: '丙班',sort:true, title: '丙班',width:300}
+        ,{field: 'ygxm', sort:true,title: '员工',width:300}
+        // ,{field: '甲班',sort:true, title: '甲班'}
+        // ,{field: '乙班',sort:true, title: '乙班'}
+        // ,{field: '丙班',sort:true, title: '丙班'}
     ];
-
-    initTable_all("table", 'jichushezhi/chewei/findCheWei', 'get',[cols], table,"form");
+    initTable_all("table", 'jichushezhi/chewei/findCheWei_Current', 'get',[cols], table,"form");
 
     form.on('submit(form_search)',function(data){
-        initTable_all("table", 'jichushezhi/chewei/findCheWei', 'get',[cols], table,"form");
+        initTable_all("table", 'jichushezhi/chewei/findCheWei_Current', 'get',[cols], table,"form");
         return false;
     });
 
@@ -89,7 +90,6 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         $('#plxg_jth').html(jitai_str);
         getGongXu("plxg_ssgx", null, true);
         getDict("plxg_sslb", null, true, "lunban");
-        getDict("plxg_lb", null, false, "lunban");
         getUsername("plxg_yg", null, true, $('#plxg_ssgx').val(), $('#plxg_sslb').val());
 
         layer.open({
@@ -119,7 +119,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 for(var i=0; i<data.length; i++){
                     var chewei_obj=new Object();
                     chewei_obj.jitaihao = {id:data[i].jitai_id};
-                    chewei_obj.lunban = {id:$('#plxg_lb').val()};
+
+                    //fixme
+                    // chewei_obj.lunban = {id:$('#plxg_lb').val()};
+
                     chewei_obj.users = user_list;
                     chewei_list.push(chewei_obj);
                 }
@@ -127,7 +130,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 layer.confirm('确定修改车位信息? ',
                     {title:'提示'},function(i) {
                         $.ajax({
-                            url:layui.setter.host+'jichushezhi/chewei/updCheWei',
+                            url:layui.setter.host+'jichushezhi/chewei/updCheWei_Current',
                             type:'post',
                             contentType:"application/json;charset=utf-8",
                             data:JSON.stringify(chewei_list),
@@ -147,7 +150,6 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
         getGongXu("add_gx,add_ssgx", null, true);
         getJiXing("add_jx", null, true, $('#add_gx').val());
         getJiTaiHao("add_jth", null, false, $('#add_gx').val(), $('#add_jx').val());
-        getDict("add_lb", null, false, "lunban");
         getDict("add_sslb", null, true, "lunban");
         getUsername("add_yg", null, true, $('#add_ssgx').val(), $('#add_sslb').val());
 
@@ -183,7 +185,10 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 for(var i=0; i<jitai_id_arr.length; i++){
                     var chewei_obj=new Object();
                     chewei_obj.jitaihao = {id:jitai_id_arr[i]};
-                    chewei_obj.lunban = {id:$('#add_lb').val()};
+
+                    //fixme
+                    // chewei_obj.lunban = {id:$('#add_lb').val()};
+
                     chewei_obj.users = user_list;
                     chewei_list.push(chewei_obj);
                 }
@@ -191,7 +196,7 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
                 layer.confirm('确定新增车位信息? ',
                     {title:'提示'},function(i) {
                         $.ajax({
-                            url:layui.setter.host+'jichushezhi/chewei/updCheWei',
+                            url:layui.setter.host+'jichushezhi/chewei/updCheWei_Current',
                             type:'post',
                             contentType:"application/json;charset=utf-8",
                             data:JSON.stringify(chewei_list),
@@ -207,5 +212,5 @@ layui.define(['table', 'form', 'laydate', 'formSelects'], function(exports){
 
 
 
-    exports('zhibuchewei', {})
+    exports('zhibucheweiCurrent', {})
 });

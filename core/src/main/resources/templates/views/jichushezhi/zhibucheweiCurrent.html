@@ -3,7 +3,7 @@
 <head>
 	<div th:replace="common/links::header"></div>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/formSelects.css}" media="all">
-	<title>固定车位管理</title>
+	<title>临时车位管理</title>
 </head>
 <body>
 
@@ -83,16 +83,6 @@
 						<label id="plxg_jth"></label>
 					</div>
 				</div>
-				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-					<legend>调整轮班选择</legend>
-				</fieldset>
-				<div class="layui-inline">
-					<label class="layui-form-label">轮班</label>
-					<div class="layui-input-inline">
-						<select name="lunban" lay-search="" id="plxg_lb" lay-filter="plxg_lb">
-						</select>
-					</div>
-				</div>
 
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
 					<legend>员工信息选择</legend>
@@ -169,17 +159,6 @@
 				</div>
 
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-					<legend>调整轮班选择</legend>
-				</fieldset>
-				<div class="layui-inline">
-					<label class="layui-form-label">轮班</label>
-					<div class="layui-input-inline">
-						<select name="lunban" lay-verify="required" lay-search="" id="add_lb" lay-filter="add_lb">
-						</select>
-					</div>
-				</div>
-
-				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
 					<legend>员工信息选择</legend>
 				</fieldset>
 				<div class="layui-inline">
@@ -222,8 +201,8 @@
           base:"/layuiadmin/" //静态资源所在路径
       }).extend({
           index: 'lib/index' //主入口模块
-          ,zhibuchewei:'jichushezhi/chewei/zhibuchewei'
-      }).use(['index','zhibuchewei','formSelects'],function () {
+          ,zhibucheweiCurrent:'jichushezhi/chewei/zhibucheweiCurrent'
+      }).use(['index','zhibucheweiCurrent','formSelects'],function () {
       });
   </script>
 
