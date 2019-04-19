@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<title>织轴实时查看</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">织轴状态</label>
+						<div class="layui-input-inline">
+							<select name="zhizhouzhuangtai" lay-search="" id="zz_zt" lay-filter="zz_zt">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">合约号</label>
+						<div class="layui-input-inline">
+							<select name="heyuehao" lay-search="" id="hyh" lay-filter="hyh">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">织轴编号</label>
+						<div class="layui-input-inline">
+							<select name="zhizhoubianhao" lay-search="" id="zz_bh" lay-filter="zz_bh">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">位置</label>
+						<div class="layui-input-inline">
+							<select name="weizhi" lay-search="" id="zz_wz" lay-filter="zz_wz">
+								<option value="">全部</option>
+								<option value="机上">机上</option>
+								<option value="仓库">仓库</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+						</button>
+
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="heyuehaohuizong_btn">
+							<i class="layui-icon layuiadmin-button-btn">按合约号汇总</i>
+						</button>
+
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="zhuangtaihuizong_btn">
+							<i class="layui-icon layuiadmin-button-btn">按状态汇总</i>
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<!--按合约号汇总弹出框  div-->
+	<div id="hyh_hz_tck" style="display: none">
+		<table class="layui-table" lay-filter="hyh_dataGrid" id="hyh_dataGrid"></table>
+	</div>
+	<!--按状态汇总弹出框  div-->
+	<div id="zt_hz_tck" style="display: none">
+		<table class="layui-table" lay-filter="zt_dataGrid" id="zt_dataGrid"></table>
+	</div>
+
+	<div th:replace="common/links::js_footer"></div>
+
+	</body>
+
+	<script type="text/html" id="mysfxx">
+        {{#  if(d.zt == '机下空'){ }}
+		<div><div style="color: red">{{d.zt}}</div></div>
+		{{# }else if(d.zt == '机下满未穿综' || d.zt == '机下剪轴未穿综'){ }}
+		<div><div style="color: yellow">{{d.zt}}</div></div>
+		{{# }else{ }}
+		<div><div style="color: green">{{d.zt==null?'':d.zt}}</div></div>
+		{{# } }}
+	</script>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,zhizhou:'shishishuju/zhizhou'
+		}).use(['index','zhizhou',],function () {
+		});
+	</script>
+
+</html>

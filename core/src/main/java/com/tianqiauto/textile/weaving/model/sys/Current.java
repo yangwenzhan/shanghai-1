@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName Param_LeiBie
@@ -23,6 +24,7 @@ import java.util.Date;
 @ToString(exclude = {"param","jitaihao"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Current {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

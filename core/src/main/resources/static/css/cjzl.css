@@ -1,0 +1,378 @@
+@media only screen and (max-width: 1600px) {
+		#wrap{width: 1820px;}
+	}
+@media only screen and (max-width: 1367px) {
+		#wrap{width: 1820px;}
+	}
+@media only screen and (max-width: 1281px) {
+		#wrap{width: 1820px;}
+	}
+ 
+ 
+@media only screen and (min-width: 1601px) {
+	   #wrap{width: 1820px;}
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+html,body{max-width: 1820px;}
+#wrap{
+	padding-bottom: 80px;
+	overflow: auto;
+		font-size: 14px;
+}
+#wrap div{
+	float: left !important;
+}
+/*必佳乐织机*/
+#bjl_zj{
+	width: 500px;	
+	padding-top: 10px;
+}
+.bjl_all{
+	width: 120px;
+}
+.bjl{
+	width: 65%;
+	height: 25px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:25px;
+	margin-left:5px;
+	margin-bottom:5px;
+	position: relative;
+}
+/*展示进度*/
+.bjl span{
+	display: inline-block;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #999999;
+}
+.bjl p{
+	    position: relative;
+    z-index: 9;
+}
+/*展示效率*/
+#bjl_zj .xl{
+	width: 30%;
+	line-height: 25px;
+	text-align: center;
+	height: 25px;
+}
+/*报警*/
+.red{
+	background-color:#ef494a;
+}
+/*运行*/
+.green{
+	background-color:#18a67b;
+}
+.grey{
+	background-color: #cecbce;
+}
+/*停车*/
+.stop{
+	background: #787171;
+}
+/*温湿度采集点*/
+.wsd_cjd .wsd:nth-child(1){
+	margin-left: 100px;
+}
+.wsd_cjd .wsd:nth-child(2){
+	margin-left: 200px;
+}
+.wsd_cjd .wsd{
+	margin-top: 10px;
+	text-align: center;
+	width: 50px;
+	background:#FFB800;
+}
+/*第二列*/
+#two_list{
+	width: 250px;
+		margin-left: 20px;
+}
+/*穿综车间*/
+#czcj{
+	margin-top: 20px;
+	width: 250px;
+	padding-top: 10px;
+	margin-left: 50px;
+}
+.cz_all{
+	width: 30px;
+}
+.cz{
+	width: 30px;
+	height: 100px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:25px;
+	margin-left:5px;
+	position: relative;
+}
+.cz_all:nth-child(1){
+	margin-left: 10px;
+}
+.cz_all:nth-child(2){
+	margin-left: 60px;
+}
+.cz_all p{
+	text-align: center;
+	width: 20px;
+	 margin: 0 auto;
+	 line-height: 20px;
+	 word-wrap: break-word;
+	 padding-top:0.5rem;
+}
+#czcj .xl{
+	width: 30px;
+	margin-left: 5px;
+	box-sizing: border-box;
+}
+/*经轴库*/
+#jzk{
+	margin-top: 70px;
+	width: 250px;
+	padding-top: 10px;
+	margin-left: 50px;
+}
+.jz_all{
+	width: 30px;
+}
+.jz{
+	width: 30px;
+	height: 290px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:25px;
+	margin-left:5px;
+	position: relative;
+}
+.jz_all:nth-child(1){
+	margin-left: 10px;
+}
+.jz_all:nth-child(2){
+	margin-left: 60px;
+}
+.jz_all p{
+	text-align: center;
+	width: 20px;
+	 margin: 0 auto;
+	 line-height: 80px;
+	 word-wrap: break-word;
+	 padding-top:0.5rem;
+}
+#jzk .xl{
+	width: 30px;
+	margin-left: 5px;
+	box-sizing: border-box;
+}
+/*津田驹织机*/
+#jtj_yd_zj{width: 250px;margin-left: 40px;margin-top: 70px;}
+.jtj_yd_all{width: 120px;}
+ .jtj_yd{
+	width: 65%;
+	height: 25px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:25px;
+	margin-left:5px;
+	margin-bottom:5px;
+	position: relative;
+}
+.jtj_yd span{
+	display: inline-block;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #999999;
+}
+.jtj_yd p{
+	    position: relative;
+    z-index: 9;
+}
+/*展示效率*/
+#jtj_yd_zj .xl{
+	width: 30%;
+	line-height: 25px;
+	text-align: center;
+	height: 25px;
+}
+.jtj_yd_1 .jtj_yd_all:nth-child(2){
+	margin-left: 10px;
+}
+/*第三列*/
+#three_list{
+	width: 500px;
+	margin-left: 80px;
+}
+#ftzj_one,#ftzj_two{width: 500px;margin:10px auto;}
+.ftzj_all{width:280px;}
+.ftzj{
+	width: 70%;
+	height: 45px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:45px;
+	margin-left:5px;
+	margin-bottom:5px;
+	position: relative;
+}
+.ftzj span{
+	display: inline-block;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #999999;
+}
+.ftzj p{
+	    position: relative;
+    z-index: 9;
+
+}
+#ftzj_one .xl,#ftzj_two .xl{
+	width: 25%;
+	line-height:45px;
+	text-align: center;
+	height: 45px;
+}
+/*浆纱车间*/
+#jscj{width: 500px;margin-top: 60px;}
+.jsj_all{width:380px;}
+.jsj{
+	width: 70%;
+	height: 45px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:45px;
+	margin-left:5px;
+	margin-bottom:5px;
+	position: relative;
+}
+.jsj span{
+	display: inline-block;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #999999;
+}
+.jsj p{
+	    position: relative;
+    z-index: 9;
+
+}
+#jscj .xl{
+	width: 25%;
+	line-height: 45px;
+	text-align: center;
+	height: 45px;
+}
+/*倒桶机和分批整经*/
+#dtj_fpzj{
+	width: 500px;
+	margin-top: 140px;
+}
+.dtj_all{width:30px;}
+.dtj{
+	width:100%;
+	height: 180px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:45px;
+	margin-left:5px;
+	/*margin-bottom:5px;*/
+	position: relative;
+}
+.dtj span{
+	display: inline-block;
+    height: 100%;
+    width: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #999999;
+}
+.dtj p{
+	 text-align: center;
+	width: 20px;
+	 margin: 0 auto;
+	 line-height: 30px;
+	 word-wrap: break-word;
+	 padding-top:0.5rem;
+}
+.dtj_all .xl{
+	width: 30px;
+	line-height: 45px;
+	text-align: center;
+	height: 45px;
+	margin-left: 5px;
+}
+.dtj_all:nth-child(2){
+	margin-left: 30px;
+}
+.fpzj_all{width:300px;margin-left: 30px;margin-top: 100px;}
+.fpzj{
+width:70%;
+	height: 45px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:45px;
+	margin-left:5px;
+	margin-bottom:5px;
+	position: relative;
+}
+.fpzj_all .xl{
+	width:20%;
+	line-height: 45px;
+	text-align: center;
+	height: 45px;
+}
+/*验布机*/
+#ybjcj{
+	width: 500px;
+	margin-top: 100px;
+}
+.ybj_all{width:30px;margin-left: 20px;}
+.ybj{
+	width:100%;
+	height: 100px;
+	background-color:#cecbce;
+	text-align: center;
+	line-height:45px;
+	margin-left:5px;
+	/*margin-bottom:5px;*/
+	position: relative;
+	
+}
+.ybj p{
+	 text-align: center;
+	width: 20px;
+	 margin: 0 auto;
+	 line-height: 18px;
+	 word-wrap: break-word;
+	 padding-top:0.5rem;
+}
+.ybj_all .xl{
+	width: 30px;
+	line-height: 25px;
+	text-align: center;
+	height: 25px;
+	margin-left: 5px;
+}

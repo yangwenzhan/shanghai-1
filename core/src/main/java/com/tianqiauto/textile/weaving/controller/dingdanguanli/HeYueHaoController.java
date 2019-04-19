@@ -129,4 +129,11 @@ public class HeYueHaoController {
         return Result.ok(set);
     }
 
+    @GetMapping("findAll")
+    @ApiOperation("合约号管理-查询所有的合约号信息")
+    @ResponseBody
+    public Result findAll(){
+        return Result.ok("成功！",heyuehaoService.findAll());
+    }
+
 }

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/cjzl.css}" media="all">
+	<link rel="stylesheet" type="text/css" th:href="@{/js/font-awesome/css/font-awesome.min.css}" media="all">
+	<title>车间总览</title>
+</head>
+<body>
+
+		<div class="layui-fluid">
+			<div class="layui-card" id="wrap">
+				<!--必佳乐织机92台-->
+				<div id="bjl_zj">
+					<!--第一块1-8必佳乐织机-->
+					<div id="bjl_one_1" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机001</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机003</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机005</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机007</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_one_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机002</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机004</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机006</p>
+							</div>
+							<div class='xl grey'>50%</div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机008</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+				     <!--温湿度采集点1,采集点2-->
+					<div class="wsd_cjd bjl_1">
+						<div class="wsd"><p>T1</p></div>
+						<div class="wsd"><p>T2</p></div>
+					</div>
+						<!--第二块9-16必佳乐织机-->
+					<div id="bjl_two_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机009</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机011</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机013</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机015</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_two_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机010</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机012</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机014</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机016</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+						<!--第三块17-24必佳乐织机-->
+					<div id="bjl_three_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机017</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机019</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机021</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机023</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_three_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机018</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机020</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机022</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机024</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					 <!--温湿度采集点3-->
+					<div class="wsd_cjd bjl_1">
+						<div class="wsd"><p>T3</p></div>
+					</div>
+						<!--第四块25-32必佳乐织机-->
+					<div id="bjl_four_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机025</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机027</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机029</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机031</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_four_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机026</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机028</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机030</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机032</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+						<!--第五块33-40必佳乐织机-->
+					<div id="bjl_five_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机033</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机035</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机037</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机039</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_five_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机034</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机036</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机038</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机040</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					 <!--温湿度采集点4-->
+					<div class="wsd_cjd bjl_1">
+						<!--这个采集点不存在T4的样式才加的-->
+						<div class="wsd" style="visibility: hidden;"></div>
+						<div class="wsd"><p>T4</p></div>
+					</div>
+						<!--第六块41-48必佳乐织机-->
+					<div id="bjl_six_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机041</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机043</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机045</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机047</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_six_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机042</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机044</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机046</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机048</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+									<!--第七块49-56必佳乐织机-->
+					<div id="bjl_seven_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机049</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机051</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机053</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机055</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_seven_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机050</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机052</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机054</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机056</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+							 <!--温湿度采集点5-->
+					<div class="wsd_cjd bjl_1">
+						<div class="wsd"><p>T5</p></div>
+					</div>		
+										
+									<!--第八块57-64必佳乐织机-->
+					<div id="bjl_eight_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机057</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机059</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机061</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机063</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_eight_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机058</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机060</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机062</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机064</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+									<!--第九块65-72必佳乐织机-->
+					<div id="bjl_nine_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机065</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机067</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机069</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机071</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_nine_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机066</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机068</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机070</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机072</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+									 <!--温湿度采集点6-->
+					<div class="wsd_cjd bjl_1">
+						<div class="wsd" style="visibility: hidden;">T6</div>
+						<div class="wsd"><p>T6</p></div>
+					</div>
+									<!--第十块73-80必佳乐织机-->
+					<div id="bjl_ten_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机073</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机075</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机077</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机079</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_ten_2" class="bjl_1">	
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机074</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机076</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机078</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机070</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+									<!--第十一块81-88必佳乐织机-->
+					<div id="bjl_eleven_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机081</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机083</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机085</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机087</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+					<div id="bjl_eleven_2" class="bjl_1">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机082</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机084</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机086</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机088</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+									
+									 <!--温湿度采集点7,8-->
+					<div class="wsd_cjd bjl_1">
+						<div class="wsd"><p>T7</p></div>
+						<div class="wsd"><p>T8</p></div>
+					</div>			
+									<!--第十二块89-92必佳乐织机-->
+					<div id="bjl_twelve_1" class="bjl_1" style="margin-top: 15px;">
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机089</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机090</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机091</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="bjl_all">
+							<div class='bjl'>
+								<span></span>
+								<p>布机092</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+					</div>
+				</div>
+			  <!--第二列-->
+			  <div id="two_list">			  
+			  <!--穿综车间-->			  
+			     <div id="czcj">
+			     	<div class="cz_all">
+							<div class='cz'>
+								<!--<span></span>-->
+								<p>穿综001</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+						<div class="cz_all">
+							<div class='cz'>
+								<!--<span></span>-->
+								<p>穿综002</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+			     </div>
+			 <!--经轴库-->
+			     <div id="jzk">
+			     	<div class="jz_all">
+							<div class='jz'>
+								<!--<span></span>-->
+								<p>经轴库</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+						<div class="jz_all">
+							<div class='jz'>
+								<!--<span></span>-->
+								<p>经轴库</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+			     </div>
+			       	<!--津田驹和益达织机-->
+			       	<div id="jtj_yd_zj">
+			       	<!--第一块津田驹织机120-117-->
+			       		<div id="jtj_yd_one_1" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机120</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机119</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>						   
+			       		<div id="jtj_yd_one_2" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机118</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机117</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						 	<!--第二块津田驹织机120-117-->
+			       		<div id="jtj_yd_two_1" class="jtj_yd_1" style="margin-top:25px;">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机116</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机115</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						<!--温湿度采集点9-->
+					<div class="wsd_cjd jtj_yd_1">
+						<div class="wsd" style="font-size: 12px;margin: 0px 0px 3px 150px;"><p>T9</p></div>
+					</div>
+			       		<div id="jtj_yd_two_2" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机114</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机113</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						<!--第三块津田驹织机120-117-->
+			       		<div id="jtj_yd_three_1" class="jtj_yd_1" style="margin-top: 25px;">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机112</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机110</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+			       		<div id="jtj_yd_three_2" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机111</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机109</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						<!--第四块津田驹织机120-117-->
+			       		<div id="jtj_yd_four_1" class="jtj_yd_1" style="margin-top: 25px;">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机108</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机106</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						<!--温湿度采集点9-->
+					<div class="wsd_cjd jtj_yd_1">
+						<div class="wsd" style="font-size: 12px;margin: 0px 0px 3px 40px;"><p>T10</p></div>
+					</div>
+			       		<div id="jtj_yd_four_2" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机107</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机105</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+						<!--第五块津田驹织机120-117-->
+			       		<div id="jtj_yd_five_1" class="jtj_yd_1" style="margin-top: 25px;">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机104</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机102</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+			       		<div id="jtj_yd_five_2" class="jtj_yd_1">
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机103</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						<div class="jtj_yd_all">
+							<div class='jtj_yd'>
+								<span></span>
+								<p>布机101</p>
+							</div>
+							<div class='xl grey'></div>
+						</div>
+						</div>
+			       	</div>
+			    </div>
+			<!--第三列-->
+			<div id="three_list">
+				<!--第一台分条整经机-->
+				 <div id="ftzj_one">
+			     	<div class="ftzj_all">
+							<div class='ftzj'>
+								<!--<span></span>-->
+								<p>分条整经1</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+			     </div>
+			     <!--浆纱机-->
+			      <div id="jscj">
+			     	<div class="jsj_all">
+							<div class='jsj'>
+								<!--<span></span>-->
+								<p>浆纱001</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+			     </div>
+			     <!--分条整经2，3-->
+			      <div id="ftzj_two" style="margin-top: 80px;">
+			     	<div class="ftzj_all">
+							<div class='ftzj'>
+								<!--<span></span>-->
+								<p>分条整经2</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+						<div class="ftzj_all" style="margin-top: 80px;">
+							<div class='ftzj'>
+								<!--<span></span>-->
+								<p>分条整经3</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+			     </div>
+			     <!--倒桶机和分批整经-->
+			      <!--分条整经2，3-->
+				<div id="dtj_fpzj">
+			     		<div class="dtj_all">
+							<div class='dtj'>
+								<!--<span></span>-->
+								<p>倒桶001</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+                         <div class="dtj_all">
+							<div class='dtj'>
+								<!--<span></span>-->
+								<p>倒桶002</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+						<div class="fpzj_all">
+							<div class='fpzj'>
+								<!--<span></span>-->
+								<p>分批整经1</p>
+							</div>
+							<!--<div class='xl red'>50%</div>-->
+						</div>
+				</div>
+			     <!--验布机-->
+			     <div id="ybjcj">
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机1</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机2</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机3</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机4</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机5</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机6</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+					<div class="ybj_all">
+						<div class='ybj'>
+							<!--<span></span>-->
+							<p>验布机7</p>
+						</div>
+						<!--<div class='xl red'>50%</div>-->
+					</div>
+			     </div>
+			</div>
+			</div>
+		</div>
+
+		<!--详情弹窗  div-->
+		<div id="s_tubiao" class="layui-tab" style="display: none;">
+			<ul class="layui-tab-title" id="cjzl_tab">
+				<li class="layui-this">实时数据</li>
+				<li id="windowpop_gzcs">故障参数</li>
+				<li id="windowpop_lsqx">历史曲线</li>
+			</ul>
+			<div class="layui-tab-content">
+				<!--详细参数-->
+				<div class="layui-tab-item layui-show" id="xxcs_div">
+					<div class="show_xxcs" id="show_xxcs"></div>
+				</div>
+				<!--故障参数-->
+				<div class="layui-tab-item">
+					<div class="show_gzcs" id="show_gzcs"></div>
+				</div>
+				<!--历史曲线-->
+				<div class="layui-tab-item">
+					<div class="show_btn" id="show_btn"></div>
+					<div class="show_lsqx" id="show_lsqx"></div>
+				</div>
+			</div>
+		</div>
+
+		<!--温湿度 弹窗  div-->
+		<div id="wsd_tubiao" style="display: none">
+			<div class="layui-tab layui-tab-card">
+				<ul class="layui-tab-title" id="wsd_tab">
+					<li class="layui-this" id="wendu_btn">温度</li>
+					<li id="shidu_btn">湿度</li>
+				</ul>
+				<div class="layui-tab-content" style="margin-left: 0;height: 400px; width: 90%;">
+					<div class="layui-tab-item" id="echarts_div">
+						<div id="lsqx" style="height: 400px; width:100%; margin-bottom: 20px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--其他工序整经浆纱穿综 弹窗 -->
+		<div id="qtgx_tubiao" style="display: none;">
+			<table class="layui-table" lay-filter="qtgx_table" id="qtgx_table"></table>
+		</div>
+
+
+		<div th:replace="common/links::js_footer"></div>
+
+	</body>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,chejianzonglan:'shishishuju/chejianzonglan'
+            ,windowpop:'shishishuju/windowpop'
+		}).use(['index','chejianzonglan','windowpop'],function () {
+		});
+	</script>
+
+</html>

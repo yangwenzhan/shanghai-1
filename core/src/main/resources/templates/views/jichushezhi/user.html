@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="/common/links::header"></div>
+    <div th:replace="common/links::header"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/formSelects.css}" media="all">
     <title>员工管理</title>
 </head>
@@ -14,16 +14,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">工序</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="gx" lay-filter="gx" name="gongxu">
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="layui-inline">
-                    <label class="layui-form-label">角色</label>
-                    <div class="layui-input-inline">
-                        <select lay-search="" id="role" lay-filter="role" name="role">
+                        <select lay-search="" id="search_gongxu" lay-filter="search_gongxu" name="gongxu">
 
                         </select>
                     </div>
@@ -32,15 +23,26 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">轮班</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="lb" lay-filter="lb" name="lunban">
+                        <select lay-search="" id="search_lunban" lay-filter="search_lunban" name="lunban">
 
                         </select>
                     </div>
                 </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" id="search_role" lay-filter="search_role" name="role">
+
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="layui-inline">
                     <label class="layui-form-label">组</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="zu" lay-filter="zu" name="zu">
+                        <select lay-search="" id="search_zu" lay-filter="search_zu" name="zu">
 
                         </select>
                     </div>
@@ -48,7 +50,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">是否在职</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="sfzz" lay-filter="shifouzaizhi" name="shifouzaizhi">
+                        <select lay-search="" id="search_shifouzaizhi" lay-filter="search_shifouzaizhi" name="shifouzaizhi">
                             <option value="">全部</option>
                             <option value="1">是</option>
                             <option value="0">否</option>
@@ -58,7 +60,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">工号姓名</label>
                     <div class="layui-input-inline">
-                        <select lay-search="" id="yg" lay-filter="yg" name="username"></select>
+                        <select lay-search="" id="yg" lay-filter="search_yuangong" name="search_yuangong"></select>
                     </div>
                 </div>
 
@@ -108,35 +110,27 @@
             <div class="layui-inline">
                 <label class="layui-form-label">工序</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="gongxu" id="add_gongxu">
-
-                    </select>
+                    <select lay-search="" name="gongxu" id="add_gongxu"></select>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">轮班</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="lunban" id="add_lunban">
-
-                    </select>
+                    <select lay-search="" name="lunban" id="add_lunban"></select>
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">组</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" name="zu" id="add_zu" lay-filter="zu">
-
-                    </select>
+                    <select lay-search="" name="zu" id="add_zu"></select>
                 </div>
             </div>
 
             <div class="layui-inline">
                 <label class="layui-form-label">角色</label>
                 <div class="layui-input-inline">
-                    <select xm-select="add_select_role" lay-search="" name="role2" id="add_role">
-
-                    </select>
+                    <select xm-select="setRole" name="role" id="add_role"></select>
                 </div>
             </div>
 
@@ -160,8 +154,8 @@
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-inline">
                     <select lay-verify="required" lay-search="" name="sex">
-                        <option value="0">男</option>
-                        <option value="1">女</option>
+                        <option value="1">男</option>
+                        <option value="0">女</option>
                     </select>
                 </div>
             </div>
@@ -200,7 +194,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">工号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="请输入工号" class="layui-input" autocomplete="off" lay-verify="required" disabled/>
+                    <input type="text" id="edit_username" name="username" placeholder="请输入工号" class="layui-input" autocomplete="off" lay-verify="required"/>
                 </div>
             </div>
             <div class="layui-inline">
@@ -233,7 +227,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">角色</label>
                 <div class="layui-input-inline">
-                    <select xm-select="edit_select_role" lay-search="" name="role2" id="edit_role"></select>
+                    <select xm-select="edit_select_role" lay-search="" name="roles" id="edit_role"></select>
                 </div>
             </div>
 
@@ -241,8 +235,8 @@
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-inline">
                     <select lay-verify="required" lay-search="" name="sex">
-                        <option value="0">男</option>
-                        <option value="1">女</option>
+                        <option value="1">男</option>
+                        <option value="0">女</option>
                     </select>
                 </div>
             </div>
@@ -275,32 +269,29 @@
     </form>
 </div>
 
-<!--设置角色弹出框-->
-<div style="display:none;" id="set_role_div">
-    <form class="layui-form">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">角色</label>
-                <div class="layui-input-inline">
-                    <select lay-search="" xm-select="selectRole" id="set_role" lay-filter="set_role">
-
-                    </select>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 
 <!--设置组弹出框-->
 <div style="display: none;" id="set_zu_div">
     <form class="layui-form">
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="padding-top: 50px">
             <div class="layui-inline">
                 <label class="layui-form-label">组</label>
                 <div class="layui-input-inline">
-                    <select lay-search="" id="set_zu" lay-filter="set_zu">
+                    <select lay-search="" id="set_zu" lay-filter="set_zu" name="zu"></select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
-                    </select>
+<!--设置角色弹出框-->
+<div style="display:none;" id="set_role_div">
+    <form class="layui-form">
+        <div class="layui-form-item" style="padding-top: 50px">
+            <div class="layui-inline">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-inline">
+                    <select xm-select="setRole"></select>
                 </div>
             </div>
         </div>
@@ -308,12 +299,14 @@
 </div>
 
 
-<div th:replace="/common/links::js_footer"></div>
+
+
+<div th:replace="common/links::js_footer"></div>
 
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-    {{# if (d.shifouzaizhi=="1") { }}
+    {{# if (d.shifouzaizhi=="在职") { }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="lizhi"><i class="layui-icon layui-icon-delete"></i>离职</a>
     {{# }else{}}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="fuzhi"><i class="layui-icon layui-icon-group"></i>复职</a>

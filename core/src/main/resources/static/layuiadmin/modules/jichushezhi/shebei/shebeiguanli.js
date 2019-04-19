@@ -30,7 +30,7 @@ layui.define(['table', 'form'], function(exports){
 
     var cols =  [
         {field: 'id', title: 'id',hide:true}
-        ,{field: 'rownum', title: '',width:50}
+        ,{field: 'rownum', title: '',width:55}
         ,{field: 'gongxu',sort:true, title: '工序'}
         ,{field: 'jixing',sort:true, title: '机型'}
         ,{field: 'jitaihao',sort:true, title: '机台号'}
@@ -96,11 +96,6 @@ layui.define(['table', 'form'], function(exports){
         return false;
     });
 
-
-    $('#searchBtn').on("click",function(){
-        table.reload("table");
-    });
-
     //监听是否报警
     form.on('switch(switchjhtc)', function(data) {
         var id = (data.elem).id;
@@ -125,7 +120,7 @@ layui.define(['table', 'form'], function(exports){
                     layer.open({
                         title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
                         btn1:function(index){
-                            layer.open({content:data.data})
+                            layer.open({content:data.data});
                             layer.close(index);
                         }
                     });

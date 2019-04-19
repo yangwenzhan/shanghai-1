@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="/common/links::header"></div>
+    <div th:replace="common/links::header"></div>
     <title>订单管理</title>
 </head>
 
@@ -12,13 +12,13 @@
         <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label" style="width: auto;">下单开始日期</label>
+                    <label class="layui-form-label" style="width: auto;">交货开始日期</label>
                     <div class="layui-input-inline">
                         <input type="text" id="xiadankaishiriqi" name="xiadankaishiriqi" placeholder="日期范围" class="layui-input" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label" style="width: auto;">下单结束日期</label>
+                    <label class="layui-form-label" style="width: auto;">交货结束日期</label>
                     <div class="layui-input-inline">
                         <input type="text" id="xiadanjieshuriqi" name="xiadanjieshuriqi" placeholder="日期范围" class="layui-input" autocomplete="off"/>
                     </div>
@@ -38,13 +38,6 @@
                     </div>
                 </div>
 
-                <div class="layui-inline">
-                    <label class="layui-form-label" style="width: auto;">要求交货日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="jiaohuoriqi" name="jiaohuoriqi" placeholder="要求交货日期" class="layui-input"
-                               autocomplete="off"/>
-                    </div>
-                </div>
                 <div class="layui-inline">
                     <label class="layui-form-label leftsou">坯布规格</label>
                     <div class="layui-input-inline">
@@ -77,10 +70,11 @@
             </div>
             <table id="table" lay-filter="table"></table>
             <script type="text/html" id="caozuo">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                        class="layui-icon layui-icon-edit"></i>编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
-                        class="layui-icon layui-icon-delete"></i>删除</a>
+                {{#  if(d.status.value == 10){ }}
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i  class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i  class="layui-icon layui-icon-delete"></i>删除</a>
+                {{#  } }}
+
                 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="heyuehao" href="javascript:" lay-href="/dingdanguanli/heyuehaoguanli/heyuehao?id={{= d.id }}"><i
                         class="layui-icon layui-icon-note"></i>合约号</a>
             </script>
@@ -91,12 +85,12 @@
 </div>
 
 <!-- 添加订单 -->
-<div th:include="/views/dingdanguanli/addOrder::addFragment"></div>
+<div th:include="views/dingdanguanli/addOrder::addFragment"></div>
 
 <!-- 修改订单 -->
-<div th:include="/views/dingdanguanli/editOrder::editFragment"></div>
+<div th:include="views/dingdanguanli/editOrder::editFragment"></div>
 
-<div th:replace="/common/links::js_footer"></div>
+<div th:replace="common/links::js_footer"></div>
 <script>
     layui.config({
         base: "/layuiadmin/" //静态资源所在路径

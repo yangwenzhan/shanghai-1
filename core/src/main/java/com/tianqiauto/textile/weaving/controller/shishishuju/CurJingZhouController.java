@@ -25,7 +25,7 @@ public class CurJingZhouController {
     private CurDataService curDataService;
 
     @GetMapping("cur_jingzhou")
-    @ApiOperation(value = "经轴实时状态查询")
+    @ApiOperation(value = "经轴实时状态查询",notes = "状态id，合约号id，轴号id")
     public Result cur_jingzhou(String zt_id, String heyuehao, String zhouhao){
         return curDataService.cur_jingzhou(zt_id, heyuehao, zhouhao);
     }
@@ -40,6 +40,12 @@ public class CurJingZhouController {
     @ApiOperation(value = "经轴实时状态-按经轴状态汇总")
     public Result cur_jingzhou_zthz(){
         return curDataService.cur_jingzhou_zthz();
+    }
+
+    @GetMapping("cur_jingzhou_hyh")
+    @ApiOperation(value = "经轴实时状态-查询经轴实时数据对应的合约号")
+    public Result cur_jingzhou_hyh(){
+        return curDataService.cur_jingzhou_hyh();
     }
 
 

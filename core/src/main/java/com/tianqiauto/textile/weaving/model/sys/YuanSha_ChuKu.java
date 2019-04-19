@@ -2,9 +2,11 @@ package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
+import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -62,13 +64,7 @@ public class YuanSha_ChuKu {
 
     private String yongtu;   //用途 经纱、纬纱
 
-
-
-
-
-
     private String beizhu; //备注
-
 
     @CreatedDate
     private Date createTime;
@@ -77,5 +73,25 @@ public class YuanSha_ChuKu {
     private Date lastModifyTime;
     private String lastModifyRen;
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
+
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
+
+
+    @ManyToOne
+    @JoinColumn(name = "cangkuquerenren_id")
+    private User lingyongren;  //领用人
+    private Date lingyongshijian; //仓库确认时间
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "heyuehao_id")
+    private Heyuehao heyuehao;  //用作哪个合约号上
 
 }

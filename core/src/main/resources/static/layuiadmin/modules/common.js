@@ -29,7 +29,7 @@ layui.define(function(exports){
   //ajax请求成功处理函数
   ajaxSuccess = function(data,table){
     table.reload('table');
-    if(data.code == 0){
+    if(data.code == 0){  //正确
       layer.open({
         title:"消息提醒",
         content:data.message,
@@ -41,7 +41,7 @@ layui.define(function(exports){
         anim: -1,
         icon:6
       });
-    }else if(data.code == 666){
+    }else if(data.code == 666){  //业务逻辑错误
         layer.open({
             title:"错误提示",
             content:data.message,
@@ -55,7 +55,7 @@ layui.define(function(exports){
         });
     }
     else {
-      layer.open({
+      layer.open({      //系统异常
         title:"消息提醒",
         content:data.message,
         skin:"layui-layer-molv",
@@ -85,7 +85,7 @@ layui.define(function(exports){
       ,where:getParams(formId)
       ,page:{
         limits:[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90]
-        ,limit:10
+        ,limit:20
       }
       , done: function (res) {
         if (typeof(doneCallBack) === "function") {
@@ -262,6 +262,79 @@ layui.define(function(exports){
             });
         }
 
+        var jingzhoubianhao=args.filter(function (item){return item.code == "jingzhoubianhao"});
+        if(jingzhoubianhao.length>0){
+            $.ajax({
+                url:layui.setter.host+'jichushuju/zhou/jingzhou/findAllJZBH',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(jingzhoubianhao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(jingzhoubianhao[0].defaultValue == data.data[i].zhouhao){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }
+                    }
+                    $("select[name='"+jingzhoubianhao[0].code+"']").append(html);
+                }
+            });
+        }
+
+        var zhizhoubianhao=args.filter(function(item){return item.code == "zhizhoubianhao"});
+        if(zhizhoubianhao.length>0){
+            $.ajax({
+                url:layui.setter.host+'jichushuju/zhou/zhizhou/findAllZZBH',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(zhizhoubianhao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(zhizhoubianhao[0].defaultValue == data.data[i].zhouhao){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].zhouhao+'</option>';
+                        }
+                    }
+                    $("select[name='"+zhizhoubianhao[0].code+"']").append(html);
+                }
+            });
+        }
+
+        var zhijijixing=args.filter(function(item){return item.code == "zhijijixing"});
+        if(zhijijixing.length>0){
+            $.ajax({
+                url:layui.setter.host + 'common/findZhiJiJiXing',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(zhijijixing[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(zhijijixing[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+zhijijixing[0].code+"']").append(html);
+                }
+            });
+        }
+
+
+
+
+
 
     };
 
@@ -298,6 +371,39 @@ layui.define(function(exports){
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //验证消息弹窗
+    verifyWindow = function(content){
+        layer.open({
+            title:"消息提醒",
+            content:content,
+            skin:"layui-layer-molv",
+            offset: 'auto',
+            time:5000,
+            shade: 0,
+            anim: -1,
+            icon:5
+        });
+    };
+
+
+    //判断字符是否为空的方法
+    isEmpty = function(obj){
+        if(typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    //判断空对象{}
+    isEmptyObject = function (obj) {
+        for (var key in obj){
+            return false;//返回false，不为空对象
+        }
+        return true;//返回true，为空对象
+    };
+
 
 
     //ajax请求成功处理下拉框函数
@@ -494,7 +600,7 @@ layui.define(function(exports){
      */
     dictInitSele = function(seleArr,async) {
         var async = async == undefined ? true : async;
-        var codes = "?"//参数拼接
+        var codes = "?";//参数拼接
         for(var i in seleArr){
             codes += "codes="+seleArr[i].dictCode+"&";
         }
@@ -516,8 +622,19 @@ layui.define(function(exports){
                 }
             }
         });
-    }
+    };
 
+    /**
+     * BJW 2019/04/17
+     * 表单提交后清除提交表单中的数据。
+     * @param formId 表单id
+     */
+    fromClear = function (formId) {
+        var arrObj = $('#' + formId).find(":input");
+        for (var i = 0; i < arrObj.length; i++) {
+            $(arrObj[i]).val("");
+        }
+    };
 
     //对外暴露的接口
   exports('common', {});

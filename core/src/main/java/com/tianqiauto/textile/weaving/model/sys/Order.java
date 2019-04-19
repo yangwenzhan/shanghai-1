@@ -66,8 +66,10 @@ public class Order {
 
     private String gongzhiguige; //公制规格
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadanriqi; //下单日期
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jiaohuoriqi; //交货日期
 
     private Integer xiadanshuliang; // 下单数量
@@ -124,6 +126,8 @@ public class Order {
     private String weishazhishu;    //纬纱支数
     private String teshuyaoqiu;     //特殊要求
 
+    private Integer deleted;//1是  0否
+
     @Column
     @CreatedDate
     private Date createTime;
@@ -141,9 +145,23 @@ public class Order {
 
     //查询使用条件
     @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadankaishiriqi;//下单开始日期
 
     @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date xiadanjieshuriqi;//下单结束日期
 
+    @Transient
+    private String heyuehaoStr;
+
+    public void setHeyuehaoStr() {
+        this.heyuehaoStr = "";
+        if (!heyuehaos.isEmpty()){
+            for (Heyuehao heyuehao:heyuehaos){
+                heyuehaoStr+=(heyuehao.getName()+",");
+            }
+            heyuehaoStr = heyuehaoStr.substring(0,heyuehaoStr.length()-1);
+        }
+    }
 }

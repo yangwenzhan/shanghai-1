@@ -182,7 +182,9 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 , btn1: function (index, layero) {
                     form.on('submit(form_jws_submit)', function (data) {
                         var formData = data.field;
-                        formData.yuanSha = yuansha_add;
+                        formData.yuanSha = {};
+                        formData.yuanSha.id = yuansha_add.id;
+                        // formData.yuanSha = yuansha_add;
                         if (onClickId == 'jsxx_add') {//纬纱添加
                             formData.jingsha = [{id: currentHeYeHao.id}];
                         } else if (onClickId == 'wsxx_add') {//经纱添加
@@ -297,7 +299,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         layer.confirm('确定要修改经纬纱信息么?'
                             , function (i) {
                                 var formData = data.field;
-                                formData.yuanSha = yuansha_edit;
+                                formData.yuanSha = {};
+                                formData.yuanSha.id = yuansha_edit.id;
                                 $.ajax({
                                     url: layui.setter.host + 'dingdanguanli/heyuehaoyuansha/update',
                                     contentType: "application/json;charset=utf-8",
