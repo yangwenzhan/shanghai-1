@@ -3,7 +3,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/demo.css}" media="all">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/ztree/metroStyle.css}" media="all">
-	<div th:replace="/common/links::header"></div>
+	<div th:replace="common/links::header"></div>
 	<title>权限管理</title>
 </head>
 
@@ -143,7 +143,7 @@
 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
 		</script>
 
-		<div th:replace="/common/links::js_footer"></div>
+		<div th:replace="common/links::js_footer"></div>
 		<script th:src="@{/js/ztree/jquery.ztree.core.js}"></script>
 		<script th:src="@{/js/ztree/jquery.ztree.excheck.js}"></script>
 		<script th:src="@{/js/ztree/jquery.ztree.exedit.js}"></script>

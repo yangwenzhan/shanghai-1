@@ -218,7 +218,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         $('#baoshu' + Suffix + ',#baozhong' + Suffix).blur(function () {
             var bs = $('#baoshu' + Suffix).val();
             var bz = $('#baozhong' + Suffix).val();
-            var zzl = new Number(bs*bz).toFixed(2);
+            var zzl = Number(bs*bz).toFixed(2);
             $('#zongzhong' + Suffix).val(zzl);
         });
     }

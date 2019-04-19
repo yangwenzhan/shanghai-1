@@ -26,38 +26,44 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     });
     form.render();
 
-    var cols =  [
-        {field: 'id', title: 'id',hide:true}
-        ,{field: 'heyuehao',sort:true, title: '合约号',width:120,fixed:true}
-        ,{field: 'zhouhao',sort:true, title: '织轴号',width:120,fixed:true}
-        ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
-        ,{field: 'zongjingchang',sort:true, title: '总经长',width:80}
-        ,{field: 'jixing',sort:true, title: '机型',width:120}
-        ,{field: 'zt',sort:true, title: '织轴状态',width:120}
-        ,{field: 'jitaihao',sort:true, title: '机台号',width:80}
-        ,{field: 'jingchang',sort:true, title: '剩余经长',width:120}
-        ,{field: 'chuanzong_flag',sort:true, title: '是否穿综',width:100}
-        ,{field: 'weizhi',sort:true, title: '位置',width:80}
-        ,{field: 'scsj',sort:true, title: '上车时间',width:120}
-        ,{field: 'buji_xiaji_time',sort:true, title: '布机下车时间',width:120}
-        ,{field: 'last_modify_ren',sort:true, title: '最后更新人',width:120}
-        ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
-    ];
+    function initZhiZhou() {
+        var cols =  [
+            {field: 'id', title: 'id',hide:true}
+            ,{field: 'heyuehao',sort:true, title: '合约号',width:120,fixed:true}
+            ,{field: 'zhouhao',sort:true, title: '织轴号',width:120,fixed:true}
+            ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
+            ,{field: 'zongjingchang',sort:true, title: '总经长',width:80}
+            ,{field: 'jixing',sort:true, title: '机型',width:120}
+            ,{field: 'zt',sort:true, title: '织轴状态',width:120}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:80}
+            ,{field: 'jingchang',sort:true, title: '剩余经长',width:120}
+            ,{field: 'chuanzong_flag',sort:true, title: '是否穿综',width:100}
+            ,{field: 'weizhi',sort:true, title: '位置',width:80}
+            ,{field: 'scsj',sort:true, title: '上车时间',width:120}
+            ,{field: 'buji_xiaji_time',sort:true, title: '布机下车时间',width:120}
+            ,{field: 'last_modify_ren',sort:true, title: '最后更新人',width:120}
+            ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
+        ];
 
-    cols = formatColumns(cols);
+        cols = formatColumns(cols);
 
-    table.render({
-        elem: '#table'
-        ,limit:100000
-        ,method:'GET'
-        ,url: layui.setter.host + 'shishishuju/cur_zhizhou/cur_zhizhou'
-        ,where:{zt_id:$('#zz_zt').val(),
-            heyuehao:$('#hyh').val(),
-            zhouhao:$('#zz_bh').val(),
-            weizhi:$('#zz_wz').val()
-        }
-        ,cols: [cols]
-    });
+        table.render({
+            elem: '#table'
+            ,limit:100000
+            ,method:'GET'
+            ,url: layui.setter.host + 'shishishuju/cur_zhizhou/cur_zhizhou'
+            ,where:{zt_id:$('#zz_zt').val(),
+                heyuehao:$('#hyh').val(),
+                zhouhao:$('#zz_bh').val(),
+                weizhi:$('#zz_wz').val()
+            }
+            ,cols: [cols]
+        });
+    }
+    initZhiZhou();
+    setInterval(function(){
+        initZhiZhou();
+    }, 30000);
 
 
     form.on('submit(form_search)',function(data){

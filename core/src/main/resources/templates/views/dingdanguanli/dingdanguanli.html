@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:replace="/common/links::header"></div>
+    <div th:replace="common/links::header"></div>
     <title>订单管理</title>
 </head>
 
@@ -85,12 +85,12 @@
 </div>
 
 <!-- 添加订单 -->
-<div th:include="/views/dingdanguanli/addOrder::addFragment"></div>
+<div th:include="views/dingdanguanli/addOrder::addFragment"></div>
 
 <!-- 修改订单 -->
-<div th:include="/views/dingdanguanli/editOrder::editFragment"></div>
+<div th:include="views/dingdanguanli/editOrder::editFragment"></div>
 
-<div th:replace="/common/links::js_footer"></div>
+<div th:replace="common/links::js_footer"></div>
 <script>
     layui.config({
         base: "/layuiadmin/" //静态资源所在路径

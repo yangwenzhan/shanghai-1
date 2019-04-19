@@ -3,7 +3,7 @@
 <head>
 	<title>通知公告管理</title>
 	<meta charset="utf-8" />
-	<div th:replace="/common/links::header"></div>
+	<div th:replace="common/links::header"></div>
 	<link rel="stylesheet" type="text/css" th:href="@{/js/kindeditor/themes/default/default.css}" media="all">
 	<link rel="stylesheet" type="text/css" th:href="@{/js/kindeditor/plugins/code/prettify.css}" media="all">
 	<script th:inline="javascript">
@@ -55,7 +55,7 @@
 		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
 	</script>
 
-	<div th:replace="/common/links::js_footer"></div>
+	<div th:replace="common/links::js_footer"></div>
 	<script th:src="@{/js/kindeditor/kindeditor.js}"></script>
 	<script th:src="@{/js/kindeditor/lang/zh_CN.js}"></script>
 	<script th:src="@{/js/kindeditor/plugins/code/prettify.js}"></script>

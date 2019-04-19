@@ -308,8 +308,28 @@ layui.define(function(exports){
             });
         }
 
-
-
+        var zhijijixing=args.filter(function(item){return item.code == "zhijijixing"});
+        if(zhijijixing.length>0){
+            $.ajax({
+                url:layui.setter.host + 'common/findZhiJiJiXing',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(zhijijixing[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(zhijijixing[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+zhijijixing[0].code+"']").append(html);
+                }
+            });
+        }
 
 
 
@@ -375,6 +395,13 @@ layui.define(function(exports){
         }else{
             return false;
         }
+    };
+    //判断空对象{}
+    isEmptyObject = function (obj) {
+        for (var key in obj){
+            return false;//返回false，不为空对象
+        }
+        return true;//返回true，为空对象
     };
 
 
@@ -607,7 +634,7 @@ layui.define(function(exports){
         for (var i = 0; i < arrObj.length; i++) {
             $(arrObj[i]).val("");
         }
-    }
+    };
 
     //对外暴露的接口
   exports('common', {});

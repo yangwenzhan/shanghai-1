@@ -31,12 +31,12 @@ public class LoginController {
     @RequestMapping("/login-error.html")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/login.html")
     public String login() {
-        return "/login";
+        return "login";
     }
 
 
@@ -44,7 +44,7 @@ public class LoginController {
 
     @RequestMapping("/")
     public String index(Model model){
-        return "/main";
+        return "main";
     }
 
 
@@ -56,7 +56,7 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login.html";
+        return "redirect:login.html";
     }
 
 
