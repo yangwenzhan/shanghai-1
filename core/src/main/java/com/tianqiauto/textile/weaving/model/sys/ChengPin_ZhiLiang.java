@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_chenpin_zhiliang")
+@Entity(name = "sys_chengpin_zhiliang")
 @EqualsAndHashCode(exclude = {"banci","heyuehao","jitaihao"})
 @ToString(exclude = {"banci","heyuehao","jitaihao"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
