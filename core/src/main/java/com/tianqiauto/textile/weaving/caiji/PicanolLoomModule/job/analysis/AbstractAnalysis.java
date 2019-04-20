@@ -56,7 +56,11 @@ public abstract class AbstractAnalysis{
     abstract void analysisPcn(PCN responsePcn);
 
     private PCN send(String ip, int number, PCN requestPcn){
-        byte[] message = Client.send(ip,number,requestPcn.toString());
-        return new PCN(message);
+        byte[] message = Client.sendMessage(ip,number,requestPcn);
+        if(null == message){
+            return null;
+        }else{
+            return new PCN(message);
+        }
     }
 }
