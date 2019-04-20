@@ -100,7 +100,9 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         // 为echarts对象加载数据
         myChart.clear();
         myChart.setOption(option);
-        myChart.resize();
+        setTimeout(function() {
+            myChart.resize();
+        }, 200);
     }
 
     function showTable(data){

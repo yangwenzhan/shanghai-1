@@ -39,7 +39,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             arr_sysc.push(dataObj.luobushijian==null?"":dataObj.luobushijian);
             arr_lbsk.push(dataObj.lbsk==null?"":dataObj.lbsk);
         }
-        var myChart = echarts.init(document.getElementById('show_tubiao'));
+        var myChart = echarts.init(document.getElementById('show_tubiao_luobu'));
         var option = {
             tooltip: {
                 show:true,
@@ -100,7 +100,9 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         // 为echarts对象加载数据
         myChart.clear();
         myChart.setOption(option);
-        myChart.resize();
+        setTimeout(function() {
+            myChart.resize();
+        }, 200);
     }
 
     function showTable(data){
@@ -135,14 +137,14 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     }
 
     $('#tubiao_btn').on('click',function(){
-        $('#tubiao_div').css("display","block");
+        $('#tubiao_div_luobu').css("display","block");
         $('#shuju_div').css("display","none");
         $('#tubiao_btn').removeClass("layui-btn-primary");
         $('#shuju_btn').addClass("layui-btn-primary");
         showEcharts(datas);
     });
     $('#shuju_btn').on('click',function(){
-        $('#tubiao_div').css("display","none");
+        $('#tubiao_div_luobu').css("display","none");
         $('#shuju_div').css("display","block");
         $('#tubiao_btn').addClass("layui-btn-primary");
         $('#shuju_btn').removeClass("layui-btn-primary");
