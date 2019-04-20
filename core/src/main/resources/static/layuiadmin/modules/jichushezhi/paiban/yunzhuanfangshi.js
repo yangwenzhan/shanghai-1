@@ -79,6 +79,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                 ,{field: 'sort', width:150, title: '排序号'}
                 ,{title: '班次', width: 150, templet: repNull('banci.name')}
                 ,{title: '轮班', width: 150, templet: repNull('lunban.name')}
+                ,{title: '班次开始时间', width: 200, field: 'kaishishijian'}
+                ,{title: '班次结束时间', width: 200, field: 'jieshushijian'}
             ]]
         });
     }
@@ -93,6 +95,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             ,{field: 'sort', width:150, title: '排序号'}
             ,{title: '班次', width: 150, templet: repNull('banci.name')}
             ,{title: '轮班', width: 150, templet: repNull('lunban.name')}
+            ,{title: '班次开始时间', width: 200, field: 'kaishishijian'}
+            ,{title: '班次结束时间', width: 200, field: 'jieshushijian'}
         ];
 
         cols = fixedColumn(cols);
@@ -113,6 +117,22 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                 }
             });
         }
+        //渲染时分秒组件
+        for(var i = 0; i < yz_data.length; i++) {
+            var start_time = yz_data[i].kaishishijian;
+            var end_time = yz_data[i].jieshushijian;
+            laydate.render({
+                elem: '#ks_time' + (i + 1),
+                type: 'time',
+                value: start_time
+            });
+            laydate.render({
+                elem: '#js_time' + (i + 1),
+                type: 'time',
+                value: end_time
+            });
+        }
+
     }
 
     function upd_yzfsInfo(data, index){
@@ -133,21 +153,25 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
             var pxh = tdArr.eq(1).text();
             var lbid = tdArr.eq(3).find('div').find('select').val();
+            var start_time = $('#ks_time' + (i + 1)).val();
+            var end_time = $('#js_time' + (i + 1)).val();
 
             //将要修改的字段  yzfs_id,pxh,lbid 封装到对象中，并把对象放入arry数组
-            var obj = {};
+            var obj = new Object();
             /*运转详情对象*/
             obj.lunban_id = lbid;
             obj.yzfs_id = id;
             obj.sort = pxh;
+            obj.kaishishijian = start_time;
+            obj.jieshushijian = end_time;
 
             arry.push(obj);
         }
 
-        var YunZhuanXiangQing = [],YunZhuanFangShi={};
+        var YunZhuanXiangQing = [], YunZhuanFangShi= new Object();
         for(var i=0;i<arry.length;i++){
             var lunban = {id:arry[i].lunban_id};
-            var yunZhuanFangShi_xiangqingSet = {sort:arry[i].sort,lunban:lunban};
+            var yunZhuanFangShi_xiangqingSet = {sort:arry[i].sort,lunban:lunban,kaishishijian:arry[i].kaishishijian,jieshushijian:arry[i].jieshushijian};
             YunZhuanXiangQing.push(yunZhuanFangShi_xiangqingSet);
         }
         YunZhuanFangShi = {id:id,yunZhuanFangShi_xiangqingSet:YunZhuanXiangQing};
@@ -209,7 +233,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             shade: [0.5, '#aaa']
         });
 
-        var arry = [];
         var obj = {};//运转方式对象
 
         //存储新增的运转方式
@@ -219,9 +242,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         obj.name = yzfs_name;
         obj.paibanshu = yzfs_bc;
         obj.lunbanshu = yzfs_lb;
-
-        //放第一步的数据信息
-        //arry.push(obj);
 
         //获取班次起始时间  数据库暂未存班次起始时间
         var yzbc_num = $('#bcqz_sj').children().length;
@@ -233,9 +253,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             bc_obj.jssj = $('#jssj' + i).val();
             bc_arr.push(bc_obj);
         }
-
-        //放第三步的班次时间信息
-        //arry.push(bc_arr);
 
         //放第二步的详细排班信息     pai_table获取该table下td的轮班信息
         var lb_arr = [];
@@ -267,13 +284,12 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             }
             var lunban_obj = {id:lb_obj.lb_id};
             var banci_obj = {id:lb_obj.bc_id};
-            var xq_obj = {sort:lb_obj.pxh,lunban:lunban_obj,banci:banci_obj};
-            lb_arr.push(xq_obj)
-            // lb_arr.push(lb_obj);
+            var xq_obj = {sort:lb_obj.pxh,lunban:lunban_obj,banci:banci_obj,kaishishijian:bc_arr[i].kssj,jieshushijian:bc_arr[i].jssj};
+            lb_arr.push(xq_obj);
         });
 
         obj.yunZhuanFangShi_xiangqingSet=lb_arr;
-        //arry.push(lb_arr);
+
         $.ajax({
             url:layui.setter.host+'jichushezhi/paiban/yunzhuanfangshi/add_new_yzfs',
             type:'post',
@@ -516,6 +532,12 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             var col = cols[i];
             if(reg.test(col.templet)) {
                 col.templet = "<div><select id='{{d.sort}}' lay-ignore style='width:80%;height:95%;border:#ccc 1px slide'>" + str.html() + "</select></div>";
+            }
+            if(col.field == 'kaishishijian') {
+                col.templet = "<div class='layui-input-inline'><input class='layui-input' id='ks_time{{d.sort}}' placeholder='HH:mm:ss' type='text' /></div>";
+            }
+            if(col.field == 'jieshushijian') {
+                col.templet = "<div class='layui-input-inline'><input class='layui-input' id='js_time{{d.sort}}' placeholder='HH:mm:ss' type='text' /></div>";
             }
         }
         return cols;
