@@ -11,6 +11,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         ,{code:"zhijijixing",hasNull:true,defaultValue:""}
     );
 
+    $('#yunxingzhuangtai').append("<option value='0'>离线</option>");
+
     $.ajax({
         url:layui.setter.host+'shishishuju/cur_zhizhou/cur_zhizhou_hyh',
         type:'get',
@@ -34,6 +36,16 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         }, 30000);
 
     function initBuJi(){
+
+        //在线
+        var online = '',yxzt_id='';
+        if($("#yunxingzhuangtai  option:selected").text() == '离线'){
+            //离线
+            online = 0;
+        }else{
+            yxzt_id = $('#yunxingzhuangtai').val();
+        }
+
         $.ajax({
             url:layui.setter.host+'shishishuju/cur_gongxu/cur_buji',
             type:'get',
@@ -41,7 +53,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             data:{
                 hyh_id:$('#hyh').val(),
                 jx_id:$('#jixing').val(),
-                yxzt_id:$('#yunxingzhuangtai').val()
+                yxzt_id:yxzt_id,
+                online:online
             },
             success:function (data) {
                 var cols =  [

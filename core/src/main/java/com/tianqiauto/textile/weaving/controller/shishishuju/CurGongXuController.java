@@ -26,8 +26,8 @@ public class CurGongXuController {
 
     @GetMapping("cur_buji")
     @ApiOperation(value = "查询布机实时数据")
-    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id){
-        return curDataService.cur_buji(jx_id, hyh_id, yxzt_id);
+    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id,String online){
+        return curDataService.cur_buji(jx_id, hyh_id, yxzt_id, online);
     }
 
     @GetMapping("findHisDataBtn")
