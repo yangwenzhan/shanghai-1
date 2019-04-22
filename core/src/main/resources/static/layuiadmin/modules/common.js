@@ -332,7 +332,28 @@ layui.define(function(exports){
             });
         }
 
-
+        var heyuehao=args.filter(function(item){return item.code == "heyuehao"});
+        if(heyuehao.length>0){
+            $.ajax({
+                url:layui.setter.host + 'common/findHeYueHao',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(heyuehao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(heyuehao[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+heyuehao[0].code+"']").append(html);
+                }
+            });
+        }
 
 
 

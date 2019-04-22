@@ -6,6 +6,8 @@ import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,7 +26,7 @@ public class YuanShaZhiLiangController {
 
     @GetMapping("findAll")
     @ApiOperation(value = "查询原纱质量信息")
-    public Result findAll(String pihao, String pinming, Pageable pageable){
+    public Result findAll(String pihao, String pinming,@PageableDefault( sort = { "createTime" }, direction = Sort.Direction.DESC) Pageable pageable){
         return Result.ok(yuanShaZhiLiangService.findAll(pihao, pinming, pageable));
     }
 
@@ -32,7 +34,7 @@ public class YuanShaZhiLiangController {
     @ApiOperation(value = "更新原纱质量")
     public Result updYuanShaZhiLiang(@RequestBody YuanSha yuanSha){
         yuanShaZhiLiangService.updYuanShaZhiLiang(yuanSha);
-        return Result.ok("",yuanSha);
+        return Result.ok("修改成功",yuanSha);
     }
 
 

@@ -93,4 +93,11 @@ public class CommonController {
         return Result.ok("查询成功",list);
     }
 
+    @GetMapping("findHeYueHao")
+    @ApiOperation(value = "查询所有的合约号")
+    public Result findHeYueHao(){
+        List<Map<String,Object>> list = commonService.findHeYueHao();
+        return Result.ok("查询成功",list);
+    }
+
 }

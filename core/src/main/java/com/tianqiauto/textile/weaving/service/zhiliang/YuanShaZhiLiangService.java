@@ -1,6 +1,5 @@
 package com.tianqiauto.textile.weaving.service.zhiliang;
 
-import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.model.sys.YuanSha_ZhiLiang;
 import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
@@ -36,7 +35,7 @@ public class YuanShaZhiLiangService {
 
 
     public Specification getSpecification(String pihao, String pinming){
-        return (Specification<User>) (root, criteriaQuery, criteriaBuilder) -> {
+        return (Specification<YuanSha>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList();
             if(!StringUtils.isEmpty(pinming)) {
                 predicates.add(criteriaBuilder.like(root.get("pinming"),"%"+pinming+"%"));

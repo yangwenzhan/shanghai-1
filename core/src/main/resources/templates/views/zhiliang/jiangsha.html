@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<title>浆纱质量</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">合约号</label>
+						<div class="layui-input-inline">
+							<select name="heyuehao" lay-search="" id="hyh" lay-filter="hyh">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+						</button>
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-add-circle layuiadmin-button-btn">新增</i>
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>质量修改</a>
+	</script>
+
+	<!--新增-->
+	<div id="add_form_div" style="display: none;">
+		<div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-inline">
+						<select name="heyuehao" lay-search="" id="heyuehao" lay-filter="heyuehao">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">缸号</label>
+					<div class="layui-input-inline">
+						<select name="ganghao" lay-search="" id="ganghao" lay-filter="ganghao">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">粘度秒</label>
+					<div class="layui-input-block">
+						<input type="text" name="niandumiao" id="niandumiao" placeholder="粘度秒" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆桶含固率</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangtonghangulv" id="jiangtonghangulv" placeholder="浆桶含固率" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆槽含固率</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangcaohangulv" id="jiangcaohangulv" placeholder="浆槽含固率" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆率%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianglv" id="shangjianglv" placeholder="上浆率%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆后强力cn</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianghouqiangli" id="shangjianghouqiangli" placeholder="上浆后强力cn" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">强力增强%</label>
+					<div class="layui-input-block">
+						<input type="text" name="qianglizengqiang" id="qianglizengqiang" placeholder="强力增强%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆回潮%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianghuichao" id="shangjianghuichao" placeholder="上浆回潮%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">整经重长度m</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhengjingzongchangdu" id="zhengjingzongchangdu" placeholder="整经重长度m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆纱总长度m</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangshazongchangdu" id="jiangshazongchangdu" placeholder="浆纱总长度m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">伸长%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shenchang" id="shenchang" placeholder="伸长%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!--修改-->
+	<div id="edit_form_div" style="display: none;">
+		<div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-block">
+						<input type="text" name="heyuehao" disabled/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">缸号</label>
+					<div class="layui-input-block">
+						<input type="text" name="ganghao" disabled/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">粘度秒</label>
+					<div class="layui-input-block">
+						<input type="text" name="niandumiao" id="upd_niandumiao" placeholder="粘度秒" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆桶含固率</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangtonghangulv" id="upd_jiangtonghangulv" placeholder="浆桶含固率" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆槽含固率</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangcaohangulv" id="upd_jiangcaohangulv" placeholder="浆槽含固率" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆率%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianglv" id="upd_shangjianglv" placeholder="上浆率%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆后强力cn</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianghouqiangli" id="upd_shangjianghouqiangli" placeholder="上浆后强力cn" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">强力增强%</label>
+					<div class="layui-input-block">
+						<input type="text" name="qianglizengqiang" id="upd_qianglizengqiang" placeholder="强力增强%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">上浆回潮%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shangjianghuichao" id="upd_shangjianghuichao" placeholder="上浆回潮%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">整经重长度m</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhengjingzongchangdu" id="upd_zhengjingzongchangdu" placeholder="整经重长度m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">浆纱总长度m</label>
+					<div class="layui-input-block">
+						<input type="text" name="jiangshazongchangdu" id="upd_jiangshazongchangdu" placeholder="浆纱总长度m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">伸长%</label>
+					<div class="layui-input-block">
+						<input type="text" name="shenchang" id="upd_shenchang" placeholder="伸长%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<div th:replace="common/links::js_footer"></div>
+
+	</body>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,jiangsha:'zhiliang/jiangsha'
+		}).use(['index','jiangsha',],function () {
+		});
+	</script>
+
+</html>
