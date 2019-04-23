@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_chewei")
+@Entity(name = "sys_chewei_history")
 @EqualsAndHashCode(exclude = {"users","jitaihao","lunban","banci"})
 @ToString(exclude = {"users","jitaihao","lunban","banci"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -45,7 +45,7 @@ public class CheWei_History {
     private Dict lunban;  //轮班
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "sys_chewei_yuangong", joinColumns = @JoinColumn(name = "chewei_id"),
+    @JoinTable(name = "sys_chewei_history_yuangong", joinColumns = @JoinColumn(name = "chewei_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
