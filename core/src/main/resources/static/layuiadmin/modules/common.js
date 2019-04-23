@@ -9,7 +9,8 @@ layui.define(function(exports){
   ,setter = layui.setter
   ,view = layui.view
   ,admin = layui.admin
-  ,form = layui.form;
+  ,form = layui.form
+  ,layutil = layui.util;
 
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
@@ -393,6 +394,34 @@ layui.define(function(exports){
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 日期格式化,只传日期默认格式化成年月日格式
+     * 年月日 时分秒 格式 :  yyyy-MM-dd HH:mm:ss
+     * */
+    formatDate = function(dt,format){
+        if(!dt) dt = new Date();
+        if(!format) format = 'yyyy-MM-dd';
+        if(!layutil) layutil = layui.util;
+        return layutil.toDateString(dt,format);
+    },
+
+    /**
+     * 日期加减计算
+     * 传入日期或者日期字符串，返回Date 类型
+     *  例如 ：
+     *  	TIS.addDate('2018-05-06',10)
+     *  	TIS.addDate(new Date(),-10)
+     **/
+    addDate = function(date,days){
+        if(!Number(days)) days = 0;
+        if(date == null)
+            date = new Date();
+        else
+            date = new Date(date) - (-3600*24*1000*days);
+
+        return date;
+    },
 
 
     //验证消息弹窗

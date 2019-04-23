@@ -14,7 +14,7 @@
 					<div class="layui-inline">
 						<label class="layui-form-label" style="width: auto;">合约号</label>
 						<div class="layui-input-inline">
-							<select name="heyuehao" lay-search="" id="hyh" lay-filter="hyh">
+							<select name="heyuehao" lay-search="" id="heyuehao" lay-filter="heyuehao">
 							</select>
 						</div>
 					</div>
@@ -23,7 +23,7 @@
 						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
 							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
 						</button>
-						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search" id="add_btn">
 							<i class="layui-icon layui-icon-add-circle layuiadmin-button-btn">新增</i>
 						</button>
 					</div>
@@ -36,7 +36,7 @@
 	</div>
 
 	<script type="text/html" id="barDemo">
-		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>质量修改</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
 	</script>
 
 	<!--新增-->
@@ -47,7 +47,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">合约号</label>
 					<div class="layui-input-inline">
-						<select name="heyuehao" lay-search="" id="heyuehao" lay-filter="heyuehao">
+						<select name="heyuehao" lay-search="" id="add_heyuehao" lay-filter="add_heyuehao">
 						</select>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">缸号</label>
 					<div class="layui-input-inline">
-						<select name="ganghao" lay-search="" id="ganghao" lay-filter="ganghao">
+						<select name="ganghao" lay-search="" id="add_ganghao" lay-filter="ganghao">
 						</select>
 					</div>
 				</div>
@@ -130,6 +130,13 @@
 					</div>
 				</div>
 
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea type="text" name="beizhu" id="beizhu" placeholder="备注" class="layui-input" autocomplete="off"></textarea>
+					</div>
+				</div>
+
 				<div class="layui-hide">
 					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
 				</div>
@@ -147,14 +154,14 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">合约号</label>
 					<div class="layui-input-block">
-						<input type="text" name="heyuehao" disabled/>
+						<input type="text" class="layui-input" autocomplete="off" name="heyuehao.name" disabled/>
 					</div>
 				</div>
 
 				<div class="layui-inline">
 					<label class="layui-form-label">缸号</label>
 					<div class="layui-input-block">
-						<input type="text" name="ganghao" disabled/>
+						<input type="text" class="layui-input" autocomplete="off" name="ganghao" disabled/>
 					</div>
 				</div>
 
@@ -225,6 +232,13 @@
 					<label class="layui-form-label">伸长%</label>
 					<div class="layui-input-block">
 						<input type="text" name="shenchang" id="upd_shenchang" placeholder="伸长%" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea type="text" name="beizhu" id="upd_beizhu" placeholder="备注" class="layui-input" autocomplete="off"></textarea>
 					</div>
 				</div>
 

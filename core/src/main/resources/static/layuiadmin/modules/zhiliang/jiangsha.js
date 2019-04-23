@@ -4,8 +4,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         ,form = layui.form;
 
     //筛选条件
-    //工序
-    function getGongXu(downID, selectedId, isAll) {
+    function getHeYueHao(downID, selectedId, isAll) {
         var reg = RegExp(/,/);
         var downId_arr=[];
         if(downID==null){
@@ -27,151 +26,154 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             }
         });
     }
-
-
-
-    function initZhiZhou() {
-        var cols =  [
-            {field: 'id', title: 'id',hide:true}
-            ,{field: 'heyuehao',sort:true, title: '合约号',width:120,fixed:true}
-            ,{field: 'zhouhao',sort:true, title: '织轴号',width:120,fixed:true}
-            ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
-            ,{field: 'zongjingchang',sort:true, title: '总经长m',width:100}
-            ,{field: 'jixing',sort:true, title: '机型',width:120}
-            ,{field: 'zt',sort:true, title: '织轴状态',width:120}
-            ,{field: 'jitaihao',sort:true, title: '机台号',width:120}
-            ,{field: 'jingchang',sort:true, title: '剩余经长m',width:120}
-            ,{field: 'chuanzong_flag',sort:true, title: '是否穿综',width:100}
-            ,{field: 'weizhi',sort:true, title: '位置',width:80}
-            ,{field: 'scsj',sort:true, title: '上车时间',width:220}
-            ,{field: 'buji_xiaji_time',sort:true, title: '布机下车时间',width:220}
-            ,{field: 'last_modify_ren',sort:true, title: '最后更新人',width:120}
-            ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:220}
-        ];
-
-        cols = formatColumns(cols);
-
-        table.render({
-            elem: '#table'
-            ,limit:100000
-            ,method:'GET'
-            ,url: layui.setter.host + 'shishishuju/cur_zhizhou/cur_zhizhou'
-            ,where:{zt_id:$('#zz_zt').val(),
-                heyuehao:$('#hyh').val(),
-                zhouhao:$('#zz_bh').val(),
-                weizhi:$('#zz_wz').val()
+    function getGangHao(downID, selectedId, isAll,hyh_id){
+        var reg = RegExp(/,/);
+        var downId_arr=[];
+        if(downID==null){
+            downId_arr=null;
+        }else if(reg.test(downID)){
+            downId_arr = downID.split(',');
+        }else{
+            downId_arr.push(downID);
+        }
+        $.ajax({
+            url: layui.setter.host + 'zhiliang/jiangshazhiliang/findGangHao',
+            type: 'get',
+            async: false,
+            data: {
+                "heyuehao_id": hyh_id
+            },
+            success: function (data) {
+                for(var i = 0;i<downId_arr.length;i++){
+                    initDownList(data, downId_arr[i], selectedId, 'ganghao', 'ganghao', isAll);
+                }
+                layui.form.render();
             }
-            ,cols: [cols]
         });
     }
-    initZhiZhou();
-    setInterval(function(){
-        initZhiZhou();
-    }, 30000);
+    getHeYueHao("heyuehao", null, true);
+
+    var cols =  [
+        {field: 'id', title: 'id',hide:true}
+        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'),fixed:true, width:100}
+        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),fixed:true, width:170}
+        ,{field: 'ganghao',sort:true, title: '缸号',fixed:true, width:80}
+        ,{field: 'niandumiao',sort:true, title: '粘度秒',width:100}
+        ,{field: 'jiangtonghangulv',sort:true, title: '浆桶含固率',width:120}
+        ,{field: 'jiangcaohangulv',sort:true, title: '浆槽含固率',width:120}
+        ,{field: 'shangjianglv',sort:true, title: '上浆率%',width:100}
+        ,{field: 'shangjianghouqiangli',sort:true, title: '上浆后强力cn',width:120}
+        ,{field: 'qianglizengqiang',sort:true, title: '强力增强%',width:120}
+        ,{field: 'shangjianghuichao',sort:true, title: '上浆回潮%',width:120}
+        ,{field: 'zhengjingzongchangdu',sort:true, title: '整经重长度m',width:120}
+        ,{field: 'jiangshazongchangdu',sort:true, title: '浆纱总长度m',width:120}
+        ,{field: 'shenchang',sort:true, title: '伸长%',width:100}
+        ,{field: 'beizhu',sort:true, title: '备注',width:100}
+        ,{align: 'center',title: '操作',toolbar: '#barDemo',width:100, fixed: 'right'}
+    ];
+    cols = formatColumns(cols);
+
+    initTable("table", 'zhiliang/jiangshazhiliang/findAll', 'get',[cols], table, "form");
 
 
+    form.on('select(add_heyuehao)', function() {
+        getGangHao("add_ganghao", null, false, $('#add_heyuehao').val());
+    });
     form.on('submit(form_search)',function(data){
-        var field = {
-            zt_id:$('#zz_zt').val(),
-            heyuehao:$('#hyh').val(),
-            zhouhao:$('#zz_bh').val(),
-            weizhi:$('#zz_wz').val()
-        };
-        table.reload('table',{where:field});
-        return false;
-    });
-
-
-    //按合约号汇总
-    $('#heyuehaohuizong_btn').on("click",function(){
-        $.ajax({
-            url:layui.setter.host+'shishishuju/cur_zhizhou/cur_zhizhou_hyshz',
-            type:'get',
-            success:function(data){
-                if(data.code==0){
-                    var cols = [
-                        {field: 'heyuehao',sort:true,width:200, title: '合约号'}
-                        ,{field: 'pibuguige',sort:true, width:200,title: '坯布规格'}
-                        ,{field: 'zhoushu',sort:true,width:200, title: '织轴个数'}
-                        ,{field: 'zongjingchang',sort:true,width:200, title: '总经长(米)'}
-                        ,{field: 'zzbh',sort:true,width:200, title: '织轴号'}
-                    ];
-                    cols = formatColumns(cols);
-                    table.render({
-                        elem: '#hyh_dataGrid',
-                        id: 'hyh_dataGrid',
-                        data: data.data,
-                        cols: [cols],
-                        skin: 'row', // 表格风格
-                        even: true,
-                        limit: 10000
-                    });
-                    layer.open({
-                        type: 1,
-                        title: ['按合约号汇总 '],
-                        content: $("#hyh_hz_tck"),
-                        shade: 0.8,
-                        area: ['70%', '90%'],
-                        offset: "10px"
-                    });
-                }else{
-                    layer.open({
-                        title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
-                        btn1:function(index){
-                            layer.open({content:data.data});
-                            layer.close(index);
-                        }
-                    });
-                }
-            }
+        var field = data.field;
+        table.reload('table', {
+            where: field
         });
         return false;
     });
 
-    //按状态汇总
-    $('#zhuangtaihuizong_btn').on("click",function(){
-        $.ajax({
-            url:layui.setter.host+'shishishuju/cur_zhizhou/cur_zhizhou_zthz',
-            type:'get',
-            success:function(data){
-                if(data.code==0){
-                    var cols = [
-                        {field: 'zt',sort:true,width:200, title: '织轴状态'}
-                        ,{field: 'zhoushu',sort:true,width:200, title: '织轴个数'}
-                        ,{field: 'zongjingchang',sort:true,width:200, title: '总经长(米)'}
-                        ,{field: 'zzbh',sort:true,width:200, title: '经轴号'}
-                    ];
-                    cols = formatColumns(cols);
-                    table.render({
-                        elem: '#zt_dataGrid',
-                        id: 'zt_dataGrid',
-                        data: data.data,
-                        cols: [cols],
-                        skin: 'row', // 表格风格
-                        even: true,
-                        limit: 10000
+    //新增
+    $('#add_btn').on('click',function(){
+        getHeYueHao("add_heyuehao", $('#heyuehao').val(), false);
+        getGangHao("add_ganghao", null, false, $('#add_heyuehao').val());
+        layer.open({
+            type: 1,
+            title: ['新增参数类别', 'font-size:12px;'],
+            content: $("#add_form_div"),
+            shadeClose: true, //点击遮罩关闭层
+            shade: 0.8,
+            offset:'auto',
+            area: ['80%', '90%'],
+            btn: ['确定', '取消'],
+            btnAlign: 'c',
+            yes: function(index, layero) {
+                layer.confirm('确定新增?'
+                    ,function(i){
+                        form.on('submit(form_add_submit)', function (data) {
+                            var formData = data.field;
+                            formData.heyuehao = {id:$('#add_heyuehao').val()};
+                            $.ajax({
+                                url:layui.setter.host+'zhiliang/jiangshazhiliang/updJiangShaZhiLiang',
+                                type:'post',
+                                contentType:"application/json;charset=utf-8",
+                                data:JSON.stringify(formData),
+                                success:function(data){
+                                    ajaxSuccess(data,table);
+                                    layer.close(i);layer.close(index);
+                                }
+                            });
+                        });
+                        $("#form_add_submit").trigger('click');
                     });
-                    layer.open({
-                        type: 1,
-                        title: ['按状态汇总 '],
-                        content: $("#zt_hz_tck"),
-                        shade: 0.8,
-                        area: ['70%', '90%'],
-                        offset: "10px"
-                    });
-                }else{
-                    layer.open({
-                        title:"消息提醒",content:data.message,skin:"layui-layer-molv",btn:["查看错误信息"],anim: -1,icon:5,
-                        btn1:function(index){
-                            layer.open({content:data.data});
-                            layer.close(index);
-                        }
-                    });
-                }
             }
         });
-        return false;
+
     });
+
+    //修改
+    table.on('tool(table)',function(obj) {
+        var data = obj.data;
+        var js_id = data.id;
+        var hyh_id = data.heyuehao.id;
+
+        if(obj.event === 'edit'){
+            layer.open({
+                type: 1
+                ,title: '编辑合约号: '+data.heyuehao.name+' 缸号: '+data.ganghao+' 浆纱质量信息'
+                ,content: $('#edit_form_div')
+                ,offset:'auto'
+                ,area: ['80%', '80%']
+                ,btn: ['修改', '取消']
+                ,btnAlign: 'c'
+                ,btn1: function(index, layero) {
+                    layer.confirm('确定修改合约号: '+data.heyuehao.name+' 缸号: '+data.ganghao+' 质量信息?'
+                        ,function(i){
+
+                            form.on('submit(form_edit_submit)', function (data) {
+                                var formData = data.field;
+                                formData.id = js_id;
+                                formData.heyuehao = {id:hyh_id}
+                                $.ajax({
+                                    url:layui.setter.host+'zhiliang/jiangshazhiliang/updJiangShaZhiLiang',
+                                    type:'post',
+                                    contentType:"application/json;charset=utf-8",
+                                    data:JSON.stringify(formData),
+                                    success:function(data){
+                                        ajaxSuccess(data,table);
+                                        layer.close(i);layer.close(index);
+                                    }
+                                });
+                            });
+
+                            $("#form_edit_submit").trigger('click');
+                        });
+                },
+                success:function(){
+                    //渲染表格数据
+                    fromSetVel(form, 'form_edit', data);
+                    // form.val('form_edit',data);
+                },
+            });
+        }
+    });
+
+
+
 
     //合约号详情
     form.on('submit(heyuehao_filter)',function(data){
@@ -201,8 +203,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             area: ['90%', '90%'],
             offset: "10px"
         });
-
-
         return false;
     });
 
@@ -228,16 +228,31 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
     // 丰富列配置功能
     function formatColumns(cols) {
+        var reg = RegExp(/heyuehao.name/);
         for(var i = 0; i < cols.length; i++) {
             var col = cols[i];
-            if(col.field == 'zt') {
-                col.templet ="#mysfxx";
-            }
-            if(col.field == 'heyuehao'){
-                col.templet = "<div><div id='{{d.heyuehao_id}}' lay-submit lay-filter='heyuehao_filter' title=\"点击查看合约号详情\">{{d.heyuehao}}</div></div>"
+            if(reg.test(col.templet)) {
+                col.templet = "<div><div id='{{d.heyuehao.id}}' lay-submit lay-filter='heyuehao_filter' title=\"点击查看合约号详情\">{{d.heyuehao.name}}</div></div>"
             }
         }
         return cols;
+    }
+
+    function fromSetVel(from, formId, data) {
+        var arrObj = $('#' + formId).find(":input[name *= '.']");
+        for (var i = 0; i < arrObj.length; i++) {
+            var name = arrObj[i].name;
+            var arr = name.split('.');
+            if (arr.length <= 1) continue;
+            var currentObj = data;
+            for (var j = 0; j < arr.length; j++) {
+                if (currentObj != undefined && null != currentObj)
+                    currentObj = currentObj[arr[j]]
+            }
+            if (currentObj != undefined && null != currentObj)
+                data[name] = currentObj;
+        }
+        form.val(formId, data);
     }
 
     exports('jiangsha', {})

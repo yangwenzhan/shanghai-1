@@ -19,21 +19,22 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         ,{field: 'pihao',sort:true, title: '批号',fixed:true,width:120}
         ,{field: 'pinming',sort:true, title: '品名',fixed:true,width:120}
         ,{title: '实际号数tex',sort:true, templet: repNull('yuanSha_zhiLiang.shijihaoshu'),width:120}
-        ,{title: '克重回潮',sort:true, templet: repNull('yuanSha_zhiLiang.kezhonghuichao'),width:120}
+        ,{title: '克重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.kezhonghuichao'),width:120}
         ,{title: '号数偏差率%',sort:true, templet: repNull('yuanSha_zhiLiang.haoshupianchalv'),width:120}
         ,{title: '单强cn',sort:true, templet: repNull('yuanSha_zhiLiang.danqiang'),width:120}
         ,{title: '条干CV%',sort:true, templet: repNull('yuanSha_zhiLiang.tiaogan'),width:120}
         ,{title: '细节-50%',sort:true, templet: repNull('yuanSha_zhiLiang.xijie'),width:120}
         ,{title: '粗结+50%',sort:true, templet: repNull('yuanSha_zhiLiang.cujie'),width:120}
         ,{title: '棉节+200%',sort:true, templet: repNull('yuanSha_zhiLiang.mianjie'),width:120}
-        ,{title: '每包实重',sort:true, templet: repNull('yuanSha_zhiLiang.meibaoshizhong'),width:120}
-        ,{title: '每包偏差',sort:true, templet: repNull('yuanSha_zhiLiang.meibaopiancha'),width:120}
-        ,{title: '盈亏重量',sort:true, templet: repNull('yuanSha_zhiLiang.yingkuizhongliang'),width:120}
+        ,{title: '每包实重kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaoshizhong'),width:120}
+        ,{title: '每包偏差kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaopiancha'),width:120}
+        ,{title: '盈亏重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.yingkuizhongliang'),width:120}
         ,{title: '称重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.chengzhonghuichao'),width:120}
-        ,{title: '包装带重量',sort:true, templet: repNull('yuanSha_zhiLiang.baozhuangdaizhongliang'),width:120}
-        ,{title: '纸管重量',sort:true, templet: repNull('yuanSha_zhiLiang.zhiguanzhongliang'),width:120}
+        ,{title: '包装带重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.baozhuangdaizhongliang'),width:120}
+        ,{title: '纸管重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.zhiguanzhongliang'),width:120}
         ,{title: '每包筒子个数',sort:true, templet: repNull('yuanSha_zhiLiang.tongzigeshu'),width:120}
-        ,{align: 'center',title: '操作',toolbar: '#barDemo',width:120, fixed: 'right'}
+        ,{title: '备注',sort:true, templet: repNull('yuanSha_zhiLiang.beizhu'),width:120}
+        ,{align: 'center',title: '操作',toolbar: '#barDemo',width:100, fixed: 'right'}
     ]];
 
     initTable("table", 'zhiliang/yuanshazhiliang/findAll', 'get',cols, table, "form");
@@ -48,14 +49,14 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
     table.on('tool(table)',function(obj) {
         var data = obj.data;
-        var yg_id = data.id;
+        var ys_id = data.id;
 
         var yszl_data = data.yuanSha_zhiLiang;
 
         if(obj.event === 'edit'){
             layer.open({
                 type: 1
-                ,title: '编辑原纱 '+data.pihao+' '+data.pinming+' 质量信息'
+                ,title: '编辑 '+data.pihao+' '+data.pinming+' 原纱质量信息'
                 ,content: $('#edit_form_div')
                 ,offset:'auto'
                 ,area: ['80%', '80%']
@@ -71,7 +72,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                                 if(yszl_data != null){
                                     formData.id=yszl_data.id;
                                 }
-                                yuansha = {id:yg_id,yuanSha_zhiLiang:formData};
+                                yuansha = {id:ys_id,yuanSha_zhiLiang:formData};
 
                                 $.ajax({
                                     url:layui.setter.host+'zhiliang/yuanshazhiliang/updYuanShaZhiLiang',

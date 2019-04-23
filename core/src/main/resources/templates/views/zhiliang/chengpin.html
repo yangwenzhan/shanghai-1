@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<title>成品质量</title>
+</head>
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<!--开始日期-->
+					<div class="layui-inline">
+                        <label class="layui-form-label">开始日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="kaishiriqi" name="kaishiriqi" placeholder="开始日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+					<!--结束日期-->
+					<div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="jieshuriqi" name="jieshuriqi" placeholder="结束日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">合约号</label>
+						<div class="layui-input-inline">
+							<select name="heyuehao.id" lay-search="" id="heyuehao" lay-filter="heyuehao">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">机台号</label>
+						<div class="layui-input-inline">
+							<select name="jitaihao.id" lay-search="" id="jitaihao" lay-filter="jitaihao">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="layui-card-body">
+				<div style="padding-bottom: 10px;">
+					<button class="layui-btn" id="add_btn"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+				</div>
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+	</script>
+
+	<!--单条新增-->
+	<div id="add_form_div" style="display: none;">
+		<div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>基础信息选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">日期</label>
+					<div class="layui-input-inline">
+						<input type="text" id="add_riqi" name="riqi" placeholder="日期" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">班次</label>
+					<div class="layui-input-inline">
+						<select name="banci.id" lay-search="" id="add_banci" lay-filter="add_banci">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-inline">
+						<select name="heyuehao.id" lay-search="" id="add_heyuehao" lay-filter="add_heyuehao">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">坯布规格</label>
+					<div class="layui-input-block">
+						<input type="text" name="pibuguige" id="pibuguige" placeholder="坯布规格" class="layui-input" autocomplete="off" disabled/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label" style="width: auto;">机台号</label>
+					<div class="layui-input-inline">
+						<select name="jitaihao.id" lay-search="" id="add_jitaihao" lay-filter="add_jitaihao">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>质量信息录入</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">经密</label>
+					<div class="layui-input-block">
+						<input type="text" name="jingmi" id="jingmi" placeholder="经密" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">纬密</label>
+					<div class="layui-input-block">
+						<input type="text" name="weimi" id="weimi" placeholder="纬密" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">布幅/cm</label>
+					<div class="layui-input-block">
+						<input type="text" name="bufu" id="bufu" placeholder="布幅/cm" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">折幅/cm</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhefu" id="zhefu" placeholder="折幅/cm" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">米数m</label>
+					<div class="layui-input-block">
+						<input type="text" name="mishu" id="mishu" placeholder="米数m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">重量kg</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhongliang" id="zhongliang" placeholder="重量kg" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">克重</label>
+					<div class="layui-input-block">
+						<input type="text" name="kezhong" id="kezhong" placeholder="克重" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea type="text" name="beizhu" id="beizhu" placeholder="备注" class="layui-input" autocomplete="off"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!--修改-->
+	<div id="edit_form_div" style="display: none;">
+		<div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>基础信息选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">日期</label>
+					<div class="layui-input-inline">
+						<input type="text" id="upd_riqi" name="riqi" placeholder="日期" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">班次</label>
+					<div class="layui-input-inline">
+						<select name="banci.id" lay-search="" id="upd_banci" lay-filter="upd_banci">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-inline">
+						<select name="heyuehao.id" lay-search="" id="upd_heyuehao" lay-filter="upd_heyuehao">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">坯布规格</label>
+					<div class="layui-input-block">
+						<input type="text" name="pibuguige" id="upd_pibuguige" class="layui-input" autocomplete="off" disabled/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-inline">
+						<select name="jitaihao.id" lay-search="" id="upd_jitaihao" lay-filter="upd_jitaihao">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>质量信息录入</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">经密</label>
+					<div class="layui-input-block">
+						<input type="text" name="jingmi" id="upd_jingmi" placeholder="经密" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">纬密</label>
+					<div class="layui-input-block">
+						<input type="text" name="weimi" id="upd_weimi" placeholder="纬密" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">布幅/cm</label>
+					<div class="layui-input-block">
+						<input type="text" name="bufu" id="upd_bufu" placeholder="布幅/cm" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">折幅/cm</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhefu" id="upd_zhefu" placeholder="折幅/cm" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">米数m</label>
+					<div class="layui-input-block">
+						<input type="text" name="mishu" id="upd_mishu" placeholder="米数m" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">重量kg</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhongliang" id="upd_zhongliang" placeholder="重量kg" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">克重</label>
+					<div class="layui-input-block">
+						<input type="text" name="kezhong" id="upd_kezhong" placeholder="克重" class="layui-input" autocomplete="off"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea type="text" name="beizhu" id="upd_beizhu" placeholder="备注" class="layui-input" autocomplete="off"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<div th:replace="common/links::js_footer"></div>
+	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+
+	</body>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,chengpin:'zhiliang/chengpin'
+		}).use(['index','chengpin',],function () {
+		});
+	</script>
+
+</html>

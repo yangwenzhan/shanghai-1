@@ -45,6 +45,7 @@ public class JiangSha_ZhiLiang {
     private String jiangshazongchangdu;  //浆纱总长度m
     private String shenchang;  //伸长
 
+    private String beizhu; //备注
 
 
 
