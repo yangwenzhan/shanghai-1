@@ -13,23 +13,23 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     InitSelect('heyuehao_sele', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
     InitSelect('yingxiaoyuan_sele', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
     dictInitSele(initSele,false);
-    form.render();
-    laydate.render({
-        elem: '#yaoqiulingyongshijian_add'
-    });
-    laydate.render({
-        elem: '#yaoqiulingyongshijian_edit'
-    });
-    // var date = new Date();
+    // form.render();
     // laydate.render({
-    //     elem: '#jieshuriqi_sele',
-    //     value: date
+    //     elem: '#yaoqiulingyongshijian_add'
     // });
     // laydate.render({
-    //     elem: '#kaishiriqi_sele',
-    //     value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
+    //     elem: '#yaoqiulingyongshijian_edit'
     // });
-    //
+    // // var date = new Date();
+    // // laydate.render({
+    // //     elem: '#jieshuriqi_sele',
+    // //     value: date
+    // // });
+    // // laydate.render({
+    // //     elem: '#kaishiriqi_sele',
+    // //     value: (date.getFullYear()-1)+'-'+(date.getMonth()+1)+'-'+date.getDate()
+    // // });
+    // //
     //监听搜索
     form.on('submit(form_search)', function (data) {
         var field = data.field;
@@ -51,103 +51,20 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '收货地址',templet: repNull('chengpinchuku.shouhuodizhi')}
         , {title: '出库类型',templet: repNull('chengpinchuku.chukuleixing.name')}
         , {title: '营销员',templet: repNull('chengpinchuku.yingxiaoyuan.xingming')}
-        , {title: '申请状态',templet: repNull('status.name')}
         , {title: '申请长度', field: 'changdu',sort: true}
         , {title: '申请备注',field: 'beizhu'}
         , {title: '要求领用时间',templet: repNull('chengpinchuku.yaoqiulingyongshijian'),field: 'chengpinchuku.yaoqiulingyongshijian', sort: true}
-        , {title: '实际长度',templet: repNull('chengpinchuku.changdu')}
-        , {title: '确认备注',templet: repNull('chengpinchuku.beizhu')}
-        , {title: '确认时间',templet: repNull('chengpinchuku.cangkuquerenshijian')}
-        , {title: '仓库确认人',templet: repNull('chengpinchuku.cangkuquerenren.xingming')}
         , {title: '操作', toolbar: '#caozuo', fixed: 'right',width:180}
     ]];
 
     //初始化表格
-    initTable("table", 'chengpinguanli/chengpinchukushenqing/query_page', 'get', cols, table,"from");
-
-    //添加
-    $("#add").click(function () {
-        var initSele = [
-            {eleId:'chukuleixing_add',dictCode:'cp_chukuleixing',val:'id',CheckVal:"1",isAll:false}
-        ];
-        InitSelect('yingxiaoyuan_add', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
-        dictInitSele(initSele,false);
-        form.render();
-        layer.open({
-            type: 1
-            , title: '成品出库申请'
-            , content: $('#div_form_add')
-            , area: ['70%', '70%']
-            , btn: ['添加', '取消']
-            , btn1: function (index, layero) {
-
-                if(null == chengpinCurrent_add){
-                    layer.msg('合约号不能为空！', {
-                        time: 20000, //20s后自动关闭
-                        btnAlign: 'c',
-                        btn: ['知道了']
-                    });
-                    return false;
-                }
-                if(chengpinCurrent_add.changdu < $('#changdu_add').val()){
-                    layer.msg('合约号'+chengpinCurrent_add.heyuehao.name+'成品库存不足！', {
-                        time: 20000, //20s后自动关闭
-                        btnAlign: 'c',
-                        btn: ['知道了']
-                    });
-                    return false;
-                }
-                form.on('submit(form_add_submit)', function (data) {
-                    var formData = data.field;
-                    formData.chengpinchuku = {};
-                    formData.chengpinchuku.heyuehao = {};
-                    formData.chengpinchuku.heyuehao.id = chengpinCurrent_add.heyuehao.id;
-                    encObject(formData);
-                    $.ajax({
-                        url: layui.setter.host + 'chengpinguanli/chengpinchukushenqing/add',
-                        contentType: "application/json;charset=utf-8",
-                        type: 'POST',
-                        data: JSON.stringify(formData),
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                            layer.close(index);
-                            fromClear("form_add");
-                            chengpinCurrent_add==null;
-                        }
-                    });
-                });
-                $("#form_add_submit").trigger('click');
-            }
-            , success: function () { //弹出层打开成功时的回调。
-                // laydate.render({
-                //     elem: '#goururiqi_add',
-                //     value: new Date()
-                // });
-            }
-        });
-    });
+    initTable("table", 'chengpinguanli/chengpinchukuqueren/query_page', 'get', cols, table,"from");
 
     //监听操作列
     table.on('tool(table)', function (obj) {
         var data = obj.data;
-        if (obj.event === 'del') {
-            layer.confirm(
-                "确定要删除申请信息吗？",
-                {title: '删除提示'}, function (index) {
-                    $.ajax({
-                        url: layui.setter.host + 'chengpinguanli/chengpinchukushenqing/delete',
-                        type: 'get',
-                        data: {'id': data.id},
-                        success: function (data) {
-                            ajaxSuccess(data, table);
-                        }
-                    });
-                });
-        } else if (obj.event === 'edit') {
-            var initSele = [
-                {eleId:'chukuleixing_edit',dictCode:'cp_chukuleixing',val:'id',CheckVal:"1",isAll:false}
-            ];
-            InitSelect('yingxiaoyuan_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
+       if (obj.event === 'edit') {
+            InitSelect('cangkuquerenren_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
             dictInitSele(initSele,false);
             form.render();
             heyuehao = data.chengpinchuku.heyuehao;
@@ -157,28 +74,19 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 async: false,
                 type: 'POST',
                 data: JSON.stringify(heyuehao),
-                success: function (data1) {
-                    $("#shengyuchangdu_edit").val(data1.data.changdu);
-                    chengpinCurrent_edit = data1.data;
+                success: function (data) {
+                    $("#shengyuchangdu_edit").val(data.data.changdu);
                 }
             });
             editI = layer.open({
                 type: 1
-                , title: '成品出库申请信息编辑'
+                , title: '成品出库申请信息确认'
                 , content: $('#div_form_edit')
                 , area: ['70%', '60%']
                 , btn: ['修改', '取消']
                 , btn1: function (editIndex, layero) {
-                    if(null == chengpinCurrent_edit){
-                        layer.msg('合约号不能为空！', {
-                            time: 20000, //20s后自动关闭
-                            btnAlign: 'c',
-                            btn: ['知道了']
-                        });
-                        return false;
-                    }
-                    if(chengpinCurrent_edit.changdu < $('#changdu_edit').val()){
-                        layer.msg('合约号'+chengpinCurrent_edit.heyuehao.name+'成品库存不足！', {
+                    if($("#shengyuchangdu_edit").val() < $('#changdu_edit').val()){
+                        layer.msg('合约号'+heyuehao.name+'成品库存不足！', {
                             time: 20000, //20s后自动关闭
                             btnAlign: 'c',
                             btn: ['知道了']
@@ -186,21 +94,17 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                         return false;
                     }
                     form.on('submit(form_edit_submit)', function (data) {
-                        layer.confirm('确定要修改申请信息么?'
+                        layer.confirm('确定要登记申请信息么?'
                             , function (i) {
                                 var formData = data.field;
-                                formData.chengpinchuku = {};
-                                formData.chengpinchuku.heyuehao = {};
-                                formData.chengpinchuku.heyuehao.id = chengpinCurrent_edit.heyuehao.id;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'chengpinguanli/chengpinchukushenqing/update',
+                                    url: layui.setter.host + 'chengpinguanli/chengpinchukuqueren/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
                                     success: function (data) {
                                         ajaxSuccess(data, table);
-                                        chengpinCurrent_edit = null;
                                     }
                                 });
                                 layer.close(i);
@@ -266,5 +170,5 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     }
 
 
-    exports('chengpinchukushenqing', {})
+    exports('chengpinchukuqueren', {})
 });
