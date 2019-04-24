@@ -1,5 +1,8 @@
 package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.socket;
 
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -8,6 +11,7 @@ import java.net.UnknownHostException;
  * 客户端请求 bjw
  * @Date 2019/1/21 11:03
  */
+@Slf4j
 public class Client {
     //ip
     //端口
@@ -47,5 +51,39 @@ public class Client {
         }
         return bytes;
     }
+
+
+    public static byte[] sendMessage(String ip, int port,PCN pcn) {
+        byte[] request = pcn.toString().getBytes();
+        byte[] res = null;
+        try (
+                Socket socket = new Socket(ip, port);
+                InputStream is = socket.getInputStream();
+                OutputStream os =  socket.getOutputStream();
+        ){
+            socket.setSoTimeout(15000);//15秒连接不上就放弃
+            os.write(request);
+            os.flush();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int count = 0;
+            do {
+                count = is.read(buffer);
+                bos.write(buffer, 0, count);
+            } while (is.available() != 0);
+            res = bos.toByteArray();
+            log.error("【IP："+ip+":"+port+"】"+pcn.getBody().getId()+"请求成功！");
+        } catch (UnknownHostException e) {
+           log.error("主机连接异常：【IP："+ip+":"+port+"】"+e.getMessage());
+        } catch (IOException e) {
+            if(e.getMessage().indexOf("Connection timed out: connect") != -1){
+                log.error("【IP："+ip+":"+port+"】"+pcn.getBody().getId()+"链接超时！"+e.getMessage());
+            }else{
+                log.error("【IP："+ip+":"+port+"】"+pcn.getBody().getId()+"数据异常！"+e.getMessage());
+            }
+        }
+        return res;
+    }
+
 
 }

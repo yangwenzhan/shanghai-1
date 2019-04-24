@@ -108,9 +108,9 @@ public class CurDataService {
     }
 
     //布机实时数据
-    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id){
+    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id, String online){
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
-        ppu.addInInteger(jx_id).addInInteger(hyh_id).addInInteger(yxzt_id);
+        ppu.addInInteger(jx_id).addInInteger(hyh_id).addInInteger(yxzt_id).addInInteger(online);
         ProcedureContext pro=baseService.callProcedure("pc_cur_buji", ppu.getList());
         return Result.ok(pro.getDatas());
     }
@@ -166,8 +166,41 @@ public class CurDataService {
         return Result.ok("查询成功",proc.getDatas());
     }
 
+    //温湿度数据查询
+    public List<Map<String,Object>> cur_wenshidu_findAll(){
+        String sql = "select id,cast(last_modified_date as varchar(50)) last_modified_date,name,shidu,wendu,weizhi from sys_wenshidu";
+        return jdbcTemplate.queryForList(sql);
+    }
 
+    //整经总览
+    public Result cur_zhengjing(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_zhengjing");
+        return Result.ok("查询成功",proc.getDatas());
+    }
 
+    //浆纱总览
+    public Result cur_jiangsha(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_jiangsha");
+        return Result.ok("查询成功",proc.getDatas());
+    }
+
+    //穿综
+    public Result cur_chuanzong(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_chuanzong");
+        return Result.ok("查询成功",proc.getDatas());
+    }
+
+    //了机预测
+    public Result cur_liaojiyuce(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_liaojiyuce");
+        return Result.ok("查询成功",proc.getDatas());
+    }
+
+    //落布预测
+    public Result cur_luobuyuce(){
+        ProcedureContext proc = baseService.callProcedureWithOutParams("pc_cur_luobuyuce");
+        return Result.ok("查询成功",proc.getDatas());
+    }
 
 
 }

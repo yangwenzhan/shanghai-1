@@ -32,17 +32,17 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             ,{field: 'heyuehao',sort:true, title: '合约号',width:120,fixed:true}
             ,{field: 'zhouhao',sort:true, title: '织轴号',width:120,fixed:true}
             ,{field: 'pibuguige',sort:true,title: '坯布规格',width:120}
-            ,{field: 'zongjingchang',sort:true, title: '总经长',width:80}
+            ,{field: 'zongjingchang',sort:true, title: '总经长m',width:100}
             ,{field: 'jixing',sort:true, title: '机型',width:120}
             ,{field: 'zt',sort:true, title: '织轴状态',width:120}
-            ,{field: 'jitaihao',sort:true, title: '机台号',width:80}
-            ,{field: 'jingchang',sort:true, title: '剩余经长',width:120}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:120}
+            ,{field: 'jingchang',sort:true, title: '剩余经长m',width:120}
             ,{field: 'chuanzong_flag',sort:true, title: '是否穿综',width:100}
             ,{field: 'weizhi',sort:true, title: '位置',width:80}
-            ,{field: 'scsj',sort:true, title: '上车时间',width:120}
-            ,{field: 'buji_xiaji_time',sort:true, title: '布机下车时间',width:120}
+            ,{field: 'scsj',sort:true, title: '上车时间',width:220}
+            ,{field: 'buji_xiaji_time',sort:true, title: '布机下车时间',width:220}
             ,{field: 'last_modify_ren',sort:true, title: '最后更新人',width:120}
-            ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:120}
+            ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:220}
         ];
 
         cols = formatColumns(cols);
