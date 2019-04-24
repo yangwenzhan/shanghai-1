@@ -41,6 +41,10 @@ public class PB_YunZhuanFangShi_Xiangqing {
     @JoinColumn(name="yunzhuanfangshi_id")
     private PB_YunZhuanFangShi yunZhuanFangShi;
 
+    private String kaishishijian;
+
+    private String jieshushijian;
+
 
 
 }
