@@ -53,4 +53,18 @@ public class CommonService {
         }
         return map;
     }
+
+    //查询员工
+    public List<Map<String,Object>> findUser(String gxid, String lbid, String roleid){
+        gxid = StringUtils.isEmpty(gxid)?null:gxid;
+        lbid = StringUtils.isEmpty(lbid)?null:lbid;
+        roleid = StringUtils.isEmpty(roleid)?null:roleid;
+        String sql = "select distinct a.id,username,xingming,username+'  '+xingming as ygxm from base_user a " +
+                "left join base_user_role b on a.id=b.user_id " +
+                "where shifouzaizhi=1 " +
+                "and (gongxu_id=isnull(?,gongxu_id) or isnull(?,gongxu_id) is null) " +
+                "and (lunban_id=isnull(?,lunban_id) or isnull(?,lunban_id) is null) " +
+                "and (b.role_id=isnull(?,b.role_id) or isnull(?,b.role_id) is null) ";
+        return jdbcTemplate.queryForList(sql,gxid,gxid,lbid,lbid,roleid,roleid);
+    }
 }

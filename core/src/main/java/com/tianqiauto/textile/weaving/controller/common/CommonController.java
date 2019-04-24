@@ -35,7 +35,6 @@ public class CommonController {
     @Autowired
     private CommonService commonService;
 
-
     @GetMapping("findAllGX")
     @ApiOperation(value = "查询所有工序")
     public Result findAllGX(){
@@ -85,6 +84,13 @@ public class CommonController {
         Set<String> set = new HashSet<>(Arrays.asList(codes));
         Map<String,Set<Dict>> map = commonService.DictFindAllByCodes(set);
         return Result.ok("查询成功!",map);
+    }
+
+    @GetMapping("findUser")
+    @ApiOperation(value = "查询员工信息")
+    public Result findUser(String gxid, String lbid, String roleid){
+        List<Map<String,Object>> list = commonService.findUser(gxid, lbid, roleid);
+        return Result.ok("查询成功",list);
     }
 
 }

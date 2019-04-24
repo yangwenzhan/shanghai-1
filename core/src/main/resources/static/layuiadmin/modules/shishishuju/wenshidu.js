@@ -10,7 +10,7 @@ layui.define(['table', 'form'], function(exports){
             ,{field: 'weizhi',sort:true, title: '位置'}
             ,{field: 'wendu',sort:true, title: '温度'}
             ,{field: 'shidu',sort:true, title: '湿度'}
-            ,{field: 'lastModifiedDate',sort:true, title: '更新时间'}
+            ,{field: 'last_modified_date',sort:true, title: '更新时间'}
             ,{align: 'center',title: '操作',toolbar: '#barDemo'}
         ];
 
