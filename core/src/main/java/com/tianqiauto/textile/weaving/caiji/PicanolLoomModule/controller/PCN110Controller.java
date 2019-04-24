@@ -13,6 +13,6 @@ public class PCN110Controller extends AbstractBispenser {
 
     @Override
     public void analysis(PCN request) {
-
+        System.out.println(request.toString());
     }
 }

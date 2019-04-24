@@ -32,4 +32,5 @@ public class PicanolParam {
     private String name;           //参数名
     private String value;          //参数值
 
+    private String paramNumber;   //参数编号
 }

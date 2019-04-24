@@ -39,22 +39,22 @@ public class PCN030Thread extends AbstractAnalysis {
         byte preselectionUnits = data[1];
         switch (preselectionUnits){
             case 1:
-                ParamVo.addParam(sourceId,"当前布长单位","picks"); break;
+                ParamVo.addParam(sourceId,"当前布长单位","picks","010"); break;
             case 2:
-                ParamVo.addParam(sourceId,"当前布长单位","meters"); break;
+                ParamVo.addParam(sourceId,"当前布长单位","meters","010"); break;
             case 3:
-                ParamVo.addParam(sourceId,"当前布长单位","yards"); break;
+                ParamVo.addParam(sourceId,"当前布长单位","yards","010"); break;
             case 7:
-                ParamVo.addParam(sourceId,"当前布长单位","jacquard patterns"); break;
+                ParamVo.addParam(sourceId,"当前布长单位","jacquard patterns","010"); break;
             case 8:
-                ParamVo.addParam(sourceId,"当前布长单位","dobby patterns"); break;
+                ParamVo.addParam(sourceId,"当前布长单位","dobby patterns","010"); break;
             case 9:
-                ParamVo.addParam(sourceId,"当前布长单位","color patterns"); break;
-            default: ParamVo.addParam(sourceId,"当前布长单位","");
+                ParamVo.addParam(sourceId,"当前布长单位","color patterns","010"); break;
+            default: ParamVo.addParam(sourceId,"当前布长单位","","010");
         }
         byte[]  setPreselection =  Arrays.copyOfRange(data,2,6);//定长
-        ParamVo.addParam(sourceId,"当前布辊定长",String.valueOf(BytesUtil.bytesToLongWord(setPreselection)));
+        ParamVo.addParam(sourceId,"当前布辊定长",String.valueOf(BytesUtil.bytesToLongWord(setPreselection)),"011");
         byte[]  clothLength =  Arrays.copyOfRange(data,6,10);//定长
-        ParamVo.addParam(sourceId,"当前布辊长度",String.valueOf(BytesUtil.bytesToLongWord(clothLength)));
+        ParamVo.addParam(sourceId,"当前布辊长度",String.valueOf(BytesUtil.bytesToLongWord(clothLength)),"012");
     }
 }

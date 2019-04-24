@@ -37,8 +37,8 @@ public class PCN110Thread extends AbstractAnalysis {
         String sourceId = responsePcn.getHeader().getSourceId();
         byte[] data = responsePcn.getBody().getData();
         byte[]  estimated =  Arrays.copyOfRange(data,2,4);//定长
-        ParamVo.addParam(sourceId,"速度-estimated",String.valueOf(BytesUtil.bytesToWord(estimated)));
+        ParamVo.addParam(sourceId,"速度-estimated",String.valueOf(BytesUtil.bytesToWord(estimated)),"097");
         byte[]  measured =  Arrays.copyOfRange(data,4,6);//定长
-        ParamVo.addParam(sourceId,"速度-measured",String.valueOf(BytesUtil.bytesToWord(measured)));
+        ParamVo.addParam(sourceId,"速度-measured",String.valueOf(BytesUtil.bytesToWord(measured)),"098");
     }
 }
