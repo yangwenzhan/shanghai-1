@@ -30,7 +30,7 @@ public class ParamDao {
         Iterator<PicanolParam> interator = paramList.iterator();
         while (interator.hasNext()){
             PicanolParam pp = interator.next();
-            Object[] array = {pp.getValue(),pp.getMachineNumber()+pp.getName()};
+            Object[] array = {pp.getValue(),pp.getMachineNumber()+pp.getParamNumber()};
             list.add(array);
         }
         long start = System.currentTimeMillis();

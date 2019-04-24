@@ -149,7 +149,7 @@ public class ModelUtil<T>{
             return param;
         }
         String[] arr = paramReference.split("\\.");
-        Path<Object> path = root.get(arr[0]);//第一次的数据库字段地址匹配
+        Path<T> path = root.get(arr[0]);//第一次的数据库字段地址匹配
         Object currentObject = obj;         //对象
         Boolean isEmpty = false;             //对象默认为不是
         int arrEnd = arr.length-1;
@@ -174,7 +174,7 @@ public class ModelUtil<T>{
             }
         }
 
-        Param p = new Param(isEmpty,currentObject,path);
+        Param<T> p = new Param<T>(isEmpty,currentObject,path);
         paramMap.put(paramReference,p);
         return p;
     }
