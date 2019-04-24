@@ -44,13 +44,17 @@ public class BuGun {
     @JoinColumn(name = "banci_id")
     private Dict banci;
 
-    private Date luobushijian;
+    private Date luobushijian;//落布时间
+
+    private String xuhao;   //日期班次
 
     @ManyToOne
     @JoinColumn(name = "jitai_id")     //预计换轴时间： 查询当前机台轴的上机时间，查询出时间大于上机时间的落布信息+当前机台布辊长度，预测轴剩余经长。
     private SheBei jitaihao;
 
     private Double changdu; //落布长度
+
+    private Double shedingchangdu; //设定长度
 
     @ManyToOne
     @JoinColumn(name = "heyuehao_id")
