@@ -114,6 +114,7 @@ layui.define(function(exports){
       , url: layui.setter.host+url
       , method: method
       , cellMinWidth: 80
+      , limit: 1000000
       , cols: cols
       ,where:getParams(formId)
       , done: function (res) {
@@ -407,6 +408,15 @@ layui.define(function(exports){
 
 
     //ajax请求成功处理下拉框函数
+    /**
+     * @param data        请求回来的数据
+     * @param downID      要渲染select下拉框的id
+     * @param selectedId  默认被选中的值id, 格式：1,2,3
+     * @param valueName   下拉框中展示的值
+     * @param valueID    下拉框中值对应的id
+     * @param isall       是否有全部 true 或 false
+     * @returns {boolean}
+     */
     initDownList = function(data,downID,selectedId,valueName,valueID,isall){
         $('#' + downID).html("");
         if(data.code == 0) {
@@ -554,6 +564,14 @@ layui.define(function(exports){
                     return "只能输入数字类型！";
                 }
             },
+            Tel: function (value, item) {
+                var sj = /^1[34578]\d{9}$/.test(value);
+                var dh = /^\d{3,4}-\d{7,8}$/.test(value)
+                var jy = !(dh || sj);
+                if (jy) {
+                    return "请输入正确的手机或电话号码！";
+                }
+            },
             length: function (value, item) { //校验字符长度，配合tq_length 标签。
                 var valueSize = value ? value.length : 0;
                 var maxNumber = $(item).attr('tq_length');
@@ -602,7 +620,7 @@ layui.define(function(exports){
         var async = async == undefined ? true : async;
         var codes = "?";//参数拼接
         for(var i in seleArr){
-            codes += "codes="+seleArr[i].dictCode+"&";
+            codes += ("codes="+seleArr[i].dictCode+"&");
         }
         $.ajax({
             url: layui.setter.host + 'common/DictFindAllByCodes'+codes+"ran="+Math.random(),
@@ -635,6 +653,40 @@ layui.define(function(exports){
             $(arrObj[i]).val("");
         }
     };
+
+
+    /**
+     * 2019/03/23 bjw
+     * 添加和更新处理关联对象
+     * @param obj
+     */
+    encObject = function (obj) {
+        $.each(obj, function (key, val) {
+            val = !val ? "''" : "'"+val+"'";
+            var arr = key.split('.');
+            if (arr.length <= 1) {
+                return true;
+            }
+            var textObj = 'obj';
+            var currentObj = obj; //当前对象
+            for (var i = 0; i < arr.length; i++) {
+                if (i == arr.length - 1) {
+                    eval(textObj + "." + arr[i] + "=" + val);
+                } else {
+                    textObj += ('.' + arr[i]);
+                    var unde = (currentObj[arr[i]] == undefined);
+                    var nul = (null == currentObj[arr[i]]);
+                    if ( unde || nul) {
+                        eval(textObj + '= {}');
+                    }
+                    currentObj = currentObj[arr[i]];
+                }
+            }
+        });
+    }
+
+
+
 
     //对外暴露的接口
   exports('common', {});

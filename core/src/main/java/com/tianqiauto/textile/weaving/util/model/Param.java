@@ -6,14 +6,14 @@ import javax.persistence.criteria.Path;
  * @Author bjw
  * @Date 2019/4/16 20:54
  */
-public class Param {
+public class Param<T> {
     private boolean isEmpty;
 
     private Object value;
 
-    private Path<Object> path;
+    private Path<T> path;
 
-    public Param(boolean isEmpty, Object value, Path<Object> path) {
+    public Param(boolean isEmpty, Object value, Path<T> path) {
         this.isEmpty = isEmpty;
         this.value = value;
         this.path = path;
@@ -27,7 +27,7 @@ public class Param {
         return value;
     }
 
-    public Path<Object> getPath() {
+    public Path<T> getPath() {
         return path;
     }
 }

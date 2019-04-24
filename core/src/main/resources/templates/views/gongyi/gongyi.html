@@ -95,6 +95,12 @@
                 </div>
             </div>
             <div class="layui-inline">
+                <label class="layui-form-label">织缩率</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="add_zhisuolv" name="zhisuolv" placeholder="织缩率" lay-verify="number"  lay-verType="tips" class="layui-input" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="layui-inline">
                 <label class="layui-form-label">地经</label>
                 <div class="layui-input-inline">
                     <input type="text" id="add_dijing" name="dijing" placeholder="地经" lay-verify="required|number"  lay-verType="tips" value="0" class="layui-input" autocomplete="off"/>
@@ -119,6 +125,19 @@
 
 
 
+<!--新增工艺（工艺经排排花）-->
+<div style="display: none;padding: 20px 0 0 20px;" id="div_form_add_jingpai" >
+        <button class="layui-btn" id="select_jingpai"><i class="layui-icon layui-icon-util">原纱选择</i></button>
+</div>
+
+<!--新增工艺（原纱选择）-->
+<div style="display: none;padding: 20px 0 0 20px;" id="div_form_add_yuansha" >
+    <table id="table_yuansha" lay-filter="table_yuansha"></table>
+</div>
+
+
+
+
 <div th:replace="common/links::js_footer"></div>
 
 
@@ -130,6 +149,8 @@
         index: 'lib/index' //主入口模块
         ,gongyi:'gongyi/gongyi'
     }).use(['index','gongyi'],function () {
+
+        $("#add_zongjing").html("");
 
         $("#add_dijing").on("input",function(e){
             if(!isNaN(e.delegateTarget.value)){

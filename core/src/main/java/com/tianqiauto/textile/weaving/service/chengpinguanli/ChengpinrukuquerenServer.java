@@ -6,6 +6,7 @@ import com.tianqiauto.textile.weaving.model.sys.Chengpin_RuKu_Shenqing;
 import com.tianqiauto.textile.weaving.repository.ChengpinrukuRepository;
 import com.tianqiauto.textile.weaving.repository.ChengpinrukushenqingRepository;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
+import com.tianqiauto.textile.weaving.repository.dao.ChengpinCurrentDao;
 import com.tianqiauto.textile.weaving.repository.dao.DictDao;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
 import com.tianqiauto.textile.weaving.util.model.ModelUtil;
@@ -65,6 +66,8 @@ public class ChengpinrukuquerenServer {
     private DictDao dictDao;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ChengpinCurrentDao chengpinCurrentDao;
 
     public void update(Chengpin_RuKu_Shenqing chengpinRuKuShenqing) {
         Chengpin_RuKu chengpinRuKu = chengpinRuKuShenqing.getChengpinruku();
@@ -77,5 +80,7 @@ public class ChengpinrukuquerenServer {
         Dict dict = dictDao.findByTypecodeAndValue("cp_rukushenqingzhuangtai","20");
         chengpinRuKuShenqingDB.setStatus(dict);
         chengpinrukushenqingRepository.save(chengpinRuKuShenqingDB);
+        //更新当前库存量
+        chengpinCurrentDao.addChengpin(chengpinRuKuDB.getHeyuehao(),chengpinRuKuDB.getChangdu());
     }
 }

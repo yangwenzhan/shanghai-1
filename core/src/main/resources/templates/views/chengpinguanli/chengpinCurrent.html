@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="chengpinCurrentFragment">
+
+    <div class="layui-card" style="display: none" id="chengpinxinxiXZ">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <!--订单号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">订单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.order.dingdanhao"  placeholder="订单号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--合约号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">合约号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.name"  placeholder="订单号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--客户编号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">客户编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.kehubianhaomiaoshu"  placeholder="客户编号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search_cp">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!--查询表格-->
+        <div class="layui-card-body">
+            <table id="chengpinCurrent_table" lay-filter="chengpinCurrent_table"></table>
+            <script type="text/html" id="chegping_caozhuo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="xuanzeCP"><i
+                        class="layui-icon layui-icon-ok"></i>选择</a>
+            </script>
+        </div>
+
+    </div>
+</div>
+
+</html>

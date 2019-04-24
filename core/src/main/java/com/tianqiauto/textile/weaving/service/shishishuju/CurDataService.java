@@ -108,9 +108,9 @@ public class CurDataService {
     }
 
     //布机实时数据
-    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id){
+    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id, String online){
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
-        ppu.addInInteger(jx_id).addInInteger(hyh_id).addInInteger(yxzt_id);
+        ppu.addInInteger(jx_id).addInInteger(hyh_id).addInInteger(yxzt_id).addInInteger(online);
         ProcedureContext pro=baseService.callProcedure("pc_cur_buji", ppu.getList());
         return Result.ok(pro.getDatas());
     }

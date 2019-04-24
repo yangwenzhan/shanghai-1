@@ -27,8 +27,6 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Current_BuJi {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,20 +53,35 @@ public class Current_BuJi {
 
     private Double chesu; //车速
 
-    private Double buchang; //布长
+    private Double dangbanbuchang; //当班布长
 
+    private Double buchang; //当前布辊布长
     private Double shedingbuchang; //设定布长
 
     private Integer luobushijian; //预计落布时间
-
-
     private Integer liaojishijian;  //预计了机时间
 
 
 
-    private Integer jingting;//经停
-    private Integer weiting;//纬停
-    private Integer zongting;//总停
+
+    private Integer jingting;//当班经停次数
+    private Integer weiting;//当班纬停次数
+    private Integer zongting;//当班总停次数
+
+    private Integer yunxingshijian; //运行时间
+
+    private Integer jingtingshijian; //当班经停时间（秒）
+    private Integer weitingshijian; //当班纬停时间（秒）
+    private Integer zongtingshijian; //当班总停时间（秒）
+
+    private Integer shiwanweiweiting; //十万纬纬停次数   setter
+
+
+    private Double weimi; //纬密 根/inch
+
+    private Double daweicishu; //当班打纬次数
+
+    private Double suolv; //缩率
 
 
     @ManyToOne
@@ -76,11 +89,7 @@ public class Current_BuJi {
     private User dangchegong;  //挡车工
 
 
-    private Double xiaolv;//效率
-
-
-
-    //工艺id
+    private Double xiaolv;//当班效率   //结合当班运行时间，当班开始时间
 
 
     private Date lastModifyTime;
