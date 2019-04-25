@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/links::header"></div>
+    <title>原纱质量</title>
+</head>
+<body>
+
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+                <div class="layui-form-item">
+
+                    <!--开始日期-->
+                    <!--<div class="layui-inline">
+                        <label class="layui-form-label">开始日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="ksrq" name="ksrq" placeholder="开始日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>-->
+                    <!--结束日期-->
+                    <!--<div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="jsrq" name="jsrq" placeholder="结束日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>-->
+                    <!--批号-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">批号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="pihao" placeholder="原纱批号" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <!--品名-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">品名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="pinming" placeholder="原纱品名" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn">查询</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="layui-card-body">
+                <table id="table" lay-filter="table"></table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+    </script>
+
+    <!--编辑原纱质量弹出框-->
+    <div id="edit_form_div" style="display: none;">
+        <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">实际号数tex</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="shijihaoshu" id="shijihaoshu" placeholder="实际号数tex" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">克重回潮%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="kezhonghuichao" id="kezhonghuichao" placeholder="克重回潮%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">号数偏差率%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="haoshupianchalv" id="haoshupianchalv" placeholder="号数偏差率%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">单强cn</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="danqiang" id="danqiang" placeholder="单强cn" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">条干CV%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tiaogan" id="tiaogan" placeholder="条干CV%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">细节-50%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="xijie" id="xijie" placeholder="细节-50%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">粗结+50%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cujie" id="cujie" placeholder="粗结+50%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">棉节+200%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="mianjie" id="mianjie" placeholder="棉节+200%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">每包实重kg</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="meibaoshizhong" id="meibaoshizhong" placeholder="每包实重kg" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">每包偏差kg</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="meibaopiancha" id="meibaopiancha" placeholder="每包偏差kg" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">盈亏重量kg</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="yingkuizhongliang" id="yingkuizhongliang" placeholder="盈亏重量kg" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">称重回潮%</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="chengzhonghuichao" id="chengzhonghuichao" placeholder="称重回潮%" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">包装带重量kg</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="baozhuangdaizhongliang" id="baozhuangdaizhongliang" placeholder="包装带重量kg" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">纸管重量kg</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="zhiguanzhongliang" id="zhiguanzhongliang" placeholder="纸管重量kg" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">每包筒子个数</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tongzigeshu" id="tongzigeshu" placeholder="每包筒子个数" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea type="text" name="beizhu" id="beizhu" placeholder="备注" class="layui-input" autocomplete="off"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-hide">
+                    <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="common/links::js_footer"></div>
+
+    <script>
+        layui.config({
+            base:"/layuiadmin/" //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+            ,yuansha:'zhiliang/yuansha'
+        }).use(['index','yuansha',],function () {
+        });
+    </script>
+
+
+</body>
+
+</html>

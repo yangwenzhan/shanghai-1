@@ -9,7 +9,8 @@ layui.define(function(exports){
   ,setter = layui.setter
   ,view = layui.view
   ,admin = layui.admin
-  ,form = layui.form;
+  ,form = layui.form
+  ,layutil = layui.util;
 
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
@@ -332,7 +333,28 @@ layui.define(function(exports){
             });
         }
 
-
+        var heyuehao=args.filter(function(item){return item.code == "heyuehao"});
+        if(heyuehao.length>0){
+            $.ajax({
+                url:layui.setter.host + 'common/findHeYueHao',
+                type: 'get',
+                async:false,
+                success: function (data) {
+                    var html = '';
+                    if(heyuehao[0].hasNull){
+                        html+='<option value= "" >全部</option>';
+                    }
+                    for(var i = 0;i<data.data.length;i++){
+                        if(heyuehao[0].defaultValue == data.data[i].name){
+                            html+='<option selected value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }else {
+                            html+='<option value= "'+data.data[i].id+'" >'+data.data[i].name+'</option>';
+                        }
+                    }
+                    $("select[name='"+heyuehao[0].code+"']").append(html);
+                }
+            });
+        }
 
 
 
@@ -372,6 +394,34 @@ layui.define(function(exports){
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 日期格式化,只传日期默认格式化成年月日格式
+     * 年月日 时分秒 格式 :  yyyy-MM-dd HH:mm:ss
+     * */
+    formatDate = function(dt,format){
+        if(!dt) dt = new Date();
+        if(!format) format = 'yyyy-MM-dd';
+        if(!layutil) layutil = layui.util;
+        return layutil.toDateString(dt,format);
+    },
+
+    /**
+     * 日期加减计算
+     * 传入日期或者日期字符串，返回Date 类型
+     *  例如 ：
+     *  	TIS.addDate('2018-05-06',10)
+     *  	TIS.addDate(new Date(),-10)
+     **/
+    addDate = function(date,days){
+        if(!Number(days)) days = 0;
+        if(date == null)
+            date = new Date();
+        else
+            date = new Date(date) - (-3600*24*1000*days);
+
+        return date;
+    },
 
 
     //验证消息弹窗
