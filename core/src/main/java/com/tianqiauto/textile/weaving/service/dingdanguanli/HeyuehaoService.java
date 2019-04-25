@@ -12,6 +12,7 @@ import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,6 +98,7 @@ public class HeyuehaoService {
     }
 
     public List<Heyuehao> findAll(){
-        return heYueHaoRepository.findAll();
+        String sql = "SELECT id,beizhu,luru_ren,name,order_id,kehubianhaomiaoshu,zhisuo FROM sys_heyuehao";
+        return jdbcTemplate.query(sql,new BeanPropertyRowMapper<Heyuehao>(Heyuehao.class));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -67,6 +68,9 @@ public class Heyuehao {
     @OneToOne
     @JoinColumn(name = "gongyi_id")
     private GongYi gongYi;
+
+    @Column(precision = 18, scale = 4)
+    private BigDecimal zhisuo;//织缩
 
 
     @Column

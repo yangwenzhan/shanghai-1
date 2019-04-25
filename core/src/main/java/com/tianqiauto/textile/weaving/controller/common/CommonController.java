@@ -3,6 +3,7 @@ package com.tianqiauto.textile.weaving.controller.common;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
+import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.GongXuRepository;
 import com.tianqiauto.textile.weaving.service.common.CommonService;
@@ -49,6 +50,13 @@ public class CommonController {
         return Result.ok("查询成功!",list);
     }
 
+    @GetMapping("findByShebei_zhibu")
+    @ApiOperation(value = "查询机型下的所有织布机设备")
+    public Result findByShebei_zhibu(String jixing_id){
+        List<SheBei> list = commonService.findByShebei_zhibu(jixing_id);
+        return Result.ok("查询成功!",list);
+    }
+
     @GetMapping("findAllCSLB")
     @ApiOperation(value = "根据工序机型查询参数类别")
     public Result findAllCSLB(String gongxu, String jixing){
@@ -82,7 +90,7 @@ public class CommonController {
     @ApiOperation(value = "根据数据字典类型的code查询出dict数据并封装成map类型返回，key=code，val=Set<dict> ",notes = "传入查询需要的多个code，codes是数组对象")
     public Result DictFindAllByCodes(String[] codes){
         Set<String> set = new HashSet<>(Arrays.asList(codes));
-        Map<String,Set<Dict>> map = commonService.DictFindAllByCodes(set);
+        Map<String,List<Dict>> map = commonService.DictFindAllByCodes(set);
         return Result.ok("查询成功!",map);
     }
 
@@ -90,6 +98,20 @@ public class CommonController {
     @ApiOperation(value = "查询员工信息")
     public Result findUser(String gxid, String lbid, String roleid){
         List<Map<String,Object>> list = commonService.findUser(gxid, lbid, roleid);
+        return Result.ok("查询成功",list);
+    }
+
+    @GetMapping("findHeYueHao")
+    @ApiOperation(value = "查询所有的合约号")
+    public Result findHeYueHao(Long id){
+        List<Map<String,Object>> list = commonService.findHeYueHao(id);
+        return Result.ok("查询成功",list);
+    }
+
+    @GetMapping("findJiTaiHao")
+    @ApiOperation(value = "传入工序机型名称，查询机台号，可传空")
+    public Result findJiTaiHao(String gongxu,String jixing){
+        List<Map<String,Object>> list = commonService.findJiTaiHao(gongxu, jixing);
         return Result.ok("查询成功",list);
     }
 

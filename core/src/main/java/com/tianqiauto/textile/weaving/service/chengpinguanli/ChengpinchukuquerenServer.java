@@ -4,8 +4,10 @@ import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
 import com.tianqiauto.textile.weaving.model.sys.Chengpin_ChuKu;
 import com.tianqiauto.textile.weaving.model.sys.Chengpin_ChuKu_Shenqing;
+import com.tianqiauto.textile.weaving.model.sys.Chengpin_Current;
 import com.tianqiauto.textile.weaving.repository.ChengpinchukuRepository;
 import com.tianqiauto.textile.weaving.repository.ChengpinchukushenqingRepository;
+import com.tianqiauto.textile.weaving.repository.ChengpincurrentRepository;
 import com.tianqiauto.textile.weaving.repository.UserRepository;
 import com.tianqiauto.textile.weaving.repository.dao.DictDao;
 import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
@@ -79,7 +81,10 @@ public class ChengpinchukuquerenServer {
     @Autowired
     private UserRepository userRepository;
 
-    public void update(Chengpin_ChuKu_Shenqing chengpinChuKuShenqing) {
+    @Autowired
+    private ChengpincurrentRepository chengpincurrentRepository;
+
+    public void update(Chengpin_ChuKu_Shenqing chengpinChuKuShenqing,Chengpin_Current chengpin_current) {
         Chengpin_ChuKu_Shenqing chengpinChuKuShenqingDB = chengpinchukushenqingRepository.findById(chengpinChuKuShenqing.getId()).get();
         Chengpin_ChuKu chengpin_chuKuDB = chengpinChuKuShenqingDB.getChengpinchuku();
         Chengpin_ChuKu chengpinchukuKu = chengpinChuKuShenqing.getChengpinchuku();
@@ -89,5 +94,6 @@ public class ChengpinchukuquerenServer {
         chengpinChuKuShenqingDB.setChengpinchuku(chengpin_chuKuDB);
         chengpinChuKuShenqingDB.setStatus(dictDao.findByTypecodeAndValue("cp_chukushenqingzhuangtai","20"));
         chengpinchukushenqingRepository.save(chengpinChuKuShenqingDB);
+        chengpincurrentRepository.save(chengpin_current);
     }
 }

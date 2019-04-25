@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="common/links::header"></div>
+    <title>成品库存查看</title>
+</head>
+<body class="layui-layout-body">
+
+    <div class="layui-card" id="chengpinxinxiXZ">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <!--订单号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">订单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.order.dingdanhao"  placeholder="订单号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--合约号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">合约号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.name"  placeholder="订单号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <!--客户编号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">客户编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="heyuehao.kehubianhaomiaoshu"  placeholder="客户编号" class="layui-input" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search_cp">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search" id="excelBtn">
+                        <i class="layui-icon layui-icon-download-circle layuiadmin-button-btn">导出</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!--查询表格-->
+        <div class="layui-card-body">
+            <table id="chengpinCurrent_table" lay-filter="chengpinCurrent_table"></table>
+        </div>
+
+
+
+    </div>
+
+
+<div th:replace="common/links::js_footer"></div>
+<script th:inline="javascript">
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , chengpinkucunchakan: 'chengpinguanli/chengpinkucunchakan'
+    }).use(['index', 'chengpinkucunchakan'], function () {
+
+    });
+</script>
+</body>
+</html>

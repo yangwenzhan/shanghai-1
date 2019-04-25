@@ -53,6 +53,8 @@ public class Current_BuJi {
 
     private Double chesu; //车速
 
+    private Double daweicishu; //当班打纬次数
+
     private Double dangbanbuchang; //当班布长
 
     private Double buchang; //当前布辊布长
@@ -79,7 +81,7 @@ public class Current_BuJi {
 
     private Double weimi; //纬密 根/inch
 
-    private Double daweicishu; //当班打纬次数
+
 
     private Double suolv; //缩率
 
