@@ -25,12 +25,12 @@ public class ParamDao {
 
     @Transactional
     public void batchUpdateParam(Collection<PicanolParam> paramList) {
-        String sql = " UPDATE picanol_param SET value = ? , last_modify_time = GETDATE() WHERE updateKey = ? ";
+        String sql = " UPDATE picanol_param SET value = ? , last_modify_time = ? WHERE updateKey = ? ";
         List<Object[]> list = new ArrayList();
         Iterator<PicanolParam> interator = paramList.iterator();
         while (interator.hasNext()){
             PicanolParam pp = interator.next();
-            Object[] array = {pp.getValue(),pp.getMachineNumber()+pp.getParamNumber()};
+            Object[] array = {pp.getValue(),pp.getLastModifyTime(),pp.getMachineNumber()+pp.getParamNumber()};
             list.add(array);
         }
         long start = System.currentTimeMillis();

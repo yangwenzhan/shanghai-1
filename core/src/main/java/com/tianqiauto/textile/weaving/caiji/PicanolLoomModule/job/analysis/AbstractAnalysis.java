@@ -2,7 +2,9 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job.analysis;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.Cache;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.socket.Client;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -25,9 +27,9 @@ public abstract class AbstractAnalysis{
             //2.循环发送
             for(PicanolHost host:picanolHostList){
                 requestPcn.getHeader().setDestinationId(host.getMachineNumber());//fixme 上线考虑
-                PCN pcn = send(host.getIp(),host.getPort(),requestPcn);
+                PCN pcn = send(host,requestPcn);
                 //3.解析报文放入获取Param放到List容器中。
-                analysisPcn(pcn);
+                analysisPcn(pcn,host.getCurrentBuJi());
             }
         };
         new Thread(run).start();//一切为了单例
@@ -53,13 +55,15 @@ public abstract class AbstractAnalysis{
      * 解析请求内容
      * @Date 2019/3/7 11:00
      **/
-    abstract void analysisPcn(PCN responsePcn);
+    abstract void analysisPcn(PCN responsePcn,Current_BuJi currentBuJi);
 
-    private PCN send(String ip, int number, PCN requestPcn){
-        byte[] message = Client.sendMessage(ip,number,requestPcn);
+    private PCN send(PicanolHost host, PCN requestPcn){
+        byte[] message = Client.sendMessage(host.getIp(),host.getPort(),requestPcn);
         if(null == message){
+            host.getCurrentBuJi().setOnlineflag(Cache.ONLINEFLAG_LIXIAN);
             return null;
         }else{
+            host.getCurrentBuJi().setOnlineflag(Cache.ONLINEFLAG_ZAIXIAN);
             return new PCN(message);
         }
     }

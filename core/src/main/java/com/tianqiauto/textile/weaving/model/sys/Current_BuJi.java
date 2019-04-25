@@ -79,7 +79,7 @@ public class Current_BuJi {
 
     private Double weimi; //纬密 根/inch
 
-    private Double daweicishu; //当班打纬次数
+    private Long daweicishu; //当班打纬次数
 
     private Double suolv; //缩率
 

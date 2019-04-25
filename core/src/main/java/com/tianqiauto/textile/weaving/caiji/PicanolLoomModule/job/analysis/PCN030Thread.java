@@ -2,7 +2,11 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job.analysis;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
+import com.tianqiauto.textile.weaving.repository.dao.DictDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,7 +34,7 @@ public class PCN030Thread extends AbstractAnalysis {
      * @Date 2019/3/7 15:24
      **/
     @Override
-    protected void analysisPcn(PCN responsePcn) {
+    protected void analysisPcn(PCN responsePcn,Current_BuJi currentBuJi) {
         if (null == responsePcn || responsePcn.toString().trim().length() < 1) {
             return;
         }
@@ -53,8 +57,12 @@ public class PCN030Thread extends AbstractAnalysis {
             default: ParamVo.addParam(sourceId,"当前布长单位","","010");
         }
         byte[]  setPreselection =  Arrays.copyOfRange(data,2,6);//定长
-        ParamVo.addParam(sourceId,"当前布辊定长",String.valueOf(BytesUtil.bytesToLongWord(setPreselection)),"011");
+        long dingchang = BytesUtil.bytesToLongWord(setPreselection);
+        ParamVo.addParam(sourceId,"当前布辊定长",String.valueOf(dingchang),"011");
+        currentBuJi.setShedingbuchang((double)dingchang);
         byte[]  clothLength =  Arrays.copyOfRange(data,6,10);//定长
-        ParamVo.addParam(sourceId,"当前布辊长度",String.valueOf(BytesUtil.bytesToLongWord(clothLength)),"012");
+        long buchang = BytesUtil.bytesToLongWord(clothLength);
+        ParamVo.addParam(sourceId,"当前布辊长度",String.valueOf(buchang),"012");
+        currentBuJi.setBuchang((double)buchang);
     }
 }
