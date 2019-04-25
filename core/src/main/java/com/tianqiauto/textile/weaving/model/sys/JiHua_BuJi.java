@@ -7,6 +7,7 @@ import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,8 +24,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_jihua_buji")
-@EqualsAndHashCode(exclude = {"banci","leixing","jitaihao","zhizhou","heyuehao","status"})
-@ToString(exclude = {"banci","leixing","jitaihao","zhizhou","heyuehao","status"})
+@EqualsAndHashCode(exclude = {"banci","leixing","jitaihao","zhizhou","heyuehao","status","danshuangzhou","zhiXingBuJi"})
+@ToString(exclude = {"banci","leixing","jitaihao","zhizhou","heyuehao","status","danshuangzhou","zhiXingBuJi"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class JiHua_BuJi {
 
@@ -50,19 +51,18 @@ public class JiHua_BuJi {
     @JoinColumn(name = "shebei_id")
     private SheBei jitaihao;  //机台号
 
-
-    @ManyToOne
-    @JoinColumn(name="zhou_id")
-    private Beam_ZhiZhou zhizhou;
+    private String zhizhou;
 
 
     @ManyToOne
     @JoinColumn(name = "heyuehao_id")
     private Heyuehao heyuehao;
 
-    private String danshuangzhou;  //单轴/双轴
+    @ManyToOne
+    @JoinColumn(name = "danshuangzhou_id")
+    private Dict danshuangzhou;  //单轴/双轴
 
-    private Integer Youxianji; //优先级
+    private Integer youxianji; //优先级
 
     private Integer deleted; //删除标识
     @ManyToOne
@@ -70,7 +70,9 @@ public class JiHua_BuJi {
     private Dict status;//状态
 
 
-
+    @OneToOne(mappedBy="jiHua_buJi")
+    @JsonIgnoreProperties("jiHua_buJi")
+    private ZhiXing_BuJi zhiXingBuJi;
 
 
 
@@ -87,5 +89,12 @@ public class JiHua_BuJi {
 
     private String beizhu;   //备注
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
 
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 }

@@ -3,6 +3,7 @@ package com.tianqiauto.textile.weaving.controller.common;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.base.Gongxu;
+import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.GongXuRepository;
 import com.tianqiauto.textile.weaving.service.common.CommonService;
@@ -35,7 +36,6 @@ public class CommonController {
     @Autowired
     private CommonService commonService;
 
-
     @GetMapping("findAllGX")
     @ApiOperation(value = "查询所有工序")
     public Result findAllGX(){
@@ -47,6 +47,13 @@ public class CommonController {
     @ApiOperation(value = "查询工序下机型")
     public Result findAllJX(Long gongxu){
         List<Gongxu> list = gongXuRepository.findAllByParentGongxu(gongxu);
+        return Result.ok("查询成功!",list);
+    }
+
+    @GetMapping("findByShebei_zhibu")
+    @ApiOperation(value = "查询机型下的所有织布机设备")
+    public Result findByShebei_zhibu(String jixing_id){
+        List<SheBei> list = commonService.findByShebei_zhibu(jixing_id);
         return Result.ok("查询成功!",list);
     }
 
@@ -83,7 +90,7 @@ public class CommonController {
     @ApiOperation(value = "根据数据字典类型的code查询出dict数据并封装成map类型返回，key=code，val=Set<dict> ",notes = "传入查询需要的多个code，codes是数组对象")
     public Result DictFindAllByCodes(String[] codes){
         Set<String> set = new HashSet<>(Arrays.asList(codes));
-        Map<String,Set<Dict>> map = commonService.DictFindAllByCodes(set);
+        Map<String,List<Dict>> map = commonService.DictFindAllByCodes(set);
         return Result.ok("查询成功!",map);
     }
 

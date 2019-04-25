@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,9 +36,7 @@ public class ZhiXing_BuJi {
     private JiHua_BuJi jiHua_buJi;
 
 
-    @ManyToOne
-    @JoinColumn(name="zhizhou_id")
-    private Beam_ZhiZhou zhizhou; //织轴信息
+    private String zhizhou; //织轴信息
 
     private String beizhu; //上机备注信息
     private Date riqi; //上机日期
@@ -50,6 +49,13 @@ public class ZhiXing_BuJi {
     private User shangzhougong; //上轴工
 
 
+    //查询使用条件
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date kaishiriqi;//开始日期
 
+    @Transient
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jieshuriqi;//结束日期
 
 }
