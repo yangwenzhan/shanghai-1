@@ -139,7 +139,6 @@ layui.define(['table', 'form'], function(exports){
                     ,function(i){
                         form.on('submit(form_add_submit)', function (data) {
                             var formData = data.field;
-                            var formData = data.field;
                             var gongxu = {id:$('#add_gongxu').val()};
                             var jixing = {id:$('#add_jixing').val()};
                             formData.gongxu=gongxu;

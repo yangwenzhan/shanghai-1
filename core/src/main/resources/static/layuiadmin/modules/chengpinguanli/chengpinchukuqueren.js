@@ -7,13 +7,13 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //查询表头部初始化
     var initSele = [
-        {eleId:'chukuleixing_sele',dictCode:'cp_chukuleixing',val:'id'},
-        {eleId:'status_sele',dictCode:'cp_chukushenqingzhuangtai',val:'id'}
+        {eleId:'chukuleixing_sele',dictCode:'cp_chukuleixing',val:'id'}
+        // {eleId:'status_sele',dictCode:'cp_chukushenqingzhuangtai',val:'id'}
     ];
     InitSelect('heyuehao_sele', null, 'dingdanguanli/heyuehaoguanli/findAll', 'get', {}, 'name', 'id');
     InitSelect('yingxiaoyuan_sele', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
     dictInitSele(initSele,false);
-    // form.render();
+    form.render();
     // laydate.render({
     //     elem: '#yaoqiulingyongshijian_add'
     // });

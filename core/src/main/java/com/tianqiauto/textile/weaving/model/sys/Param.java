@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tianqiauto.textile.weaving.model.base.Gongxu;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,10 +46,6 @@ public class Param {
 
     private Integer cunchushichang; //存储时长 单位为小时
 
-
-
-
     private Integer xuhao;  //参数类别展示顺序
-
 
 }
