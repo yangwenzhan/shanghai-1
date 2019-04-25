@@ -1,14 +1,11 @@
 package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tianqiauto.textile.weaving.model.sys.Current;
+import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -19,6 +16,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Picanol_Param")
+@EqualsAndHashCode(exclude = {"current"})
+@ToString(exclude = {"current"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PicanolParam {
 
     @Id
@@ -33,4 +33,8 @@ public class PicanolParam {
     private String value;          //参数值
 
     private String paramNumber;   //参数编号
+
+    @OneToOne
+    @JoinColumn(name = "current_id")
+    private Current current;
 }
