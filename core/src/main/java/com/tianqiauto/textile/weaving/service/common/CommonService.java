@@ -2,8 +2,10 @@ package com.tianqiauto.textile.weaving.service.common;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Dict_Type;
+import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -45,15 +47,27 @@ public class CommonService {
     }
 
     @Transactional
-    public Map<String,Set<Dict>> DictFindAllByCodes(Set<String> codes) {
-        Map<String,Set<Dict>> map = new HashMap<>();
+    public Map<String,List<Dict>> DictFindAllByCodes(Set<String> codes) {
+        String sql = "SELECT id,name,sort,[value] FROM base_dict WHERE exists(SELECT 1 FROM base_dict_type WHERE base_dict.type_id = base_dict_type.id AND base_dict_type.code = ? ) ORDER BY sort";
+        Map<String,List<Dict>> map = new HashMap<>();
         for (String code:codes){
-            Dict_Type dist_type = dict_typeRepository.findByCode(code);
-            map.put(code,dist_type.getDicts());
+            List dicts = jdbcTemplate.query(sql,new BeanPropertyRowMapper<Dict>(Dict.class),code);
+            map.put(code,dicts);
         }
         return map;
     }
 
+    public List<SheBei> findByShebei_zhibu(String jixing_id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT id,jitaihao,sort,zhizaoshang,gongxu_id FROM base_shebei WHERE  exists ");
+        sb.append("( select 1 from base_gongxu where parent_id=(select id from base_gongxu where name='织布') AND base_shebei.gongxu_id = base_gongxu.id) AND deleted = 0 ");
+        if(!StringUtils.isEmpty(jixing_id)){
+            sb.append(" AND gongxu_id = '"+jixing_id+"' ");
+        }
+        sb.append("order BY sort ");
+        return jdbcTemplate.query(sb.toString(),new BeanPropertyRowMapper<SheBei>(SheBei.class));
+    }
+  
     //查询员工
     public List<Map<String,Object>> findUser(String gxid, String lbid, String roleid){
         gxid = StringUtils.isEmpty(gxid)?null:gxid;

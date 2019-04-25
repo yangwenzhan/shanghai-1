@@ -1,5 +1,6 @@
 package com.tianqiauto.textile.weaving.service.jichushezhi;
 
+import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.Permission;
 import com.tianqiauto.textile.weaving.model.base.Role;
 import com.tianqiauto.textile.weaving.model.base.User;
@@ -9,6 +10,7 @@ import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -157,6 +159,8 @@ public class UserService {
 
 
     public List<User> getByZaizhi(Integer sfzz) {
-        return userRepository.findByShifouzaizhi(sfzz);
+        String sql = "SELECT id,birthday,username,xingming,sex,mobile,email,version,create_date,created_by,modified_by,zu,zaizhi FROM base_user WHERE shifouzaizhi = ?";
+        List<User> users = jdbcTemplate.query(sql,new BeanPropertyRowMapper<User>(User.class),sfzz);
+        return users;
     }
 }

@@ -610,13 +610,13 @@ layui.define(function(exports){
      * 	 |key		select需要显示的key  	非必填,默认是name					|
      * 	 |val		Select隐式的value		非必填,默认是value					|
      * 	 |CheckVal 	设置默认选中的val		非必填,可以不写,默认为null			|
-     * 	 |isAll		Select是否需要选择全部 	非必填,true是, false否 默认选中		|
+     * 	 |isAll		Select是否需要选择全部 	非必填,true是, false否       		|
      *   |----------------------------------------------------------------------|
      *
      *
      * @param async 调用获取数据字典参数的异步请求是否需要同步，【true：异步/false:同步】 默认是true异步
      */
-    dictInitSele = function(seleArr,async) {
+    dictInitSele = function(seleArr,async,form) {
         var async = async == undefined ? true : async;
         var codes = "?";//参数拼接
         for(var i in seleArr){
@@ -637,6 +637,9 @@ layui.define(function(exports){
                     var isAll = seleArr[i].isAll==undefined ? true : seleArr[i].isAll;
                     var dict_data = {code: 0, data: dictMap[dictCode]};
                     initDownList(dict_data, eleId, CheckVal, key, val, isAll);
+                    if(form){
+                        form.render();
+                    }
                 }
             }
         });
@@ -685,8 +688,78 @@ layui.define(function(exports){
         });
     }
 
+    /**
+     *  bjw 2019.03.30
+     * 请求初始化select选项框,
+     *
+     * @param seleObj 这是一个参数对象，数组中的对象包含以下属性
+     *   |----------------------------------------------------------------------|
+     *   |eleId 	Select的id				必填属性							|
+     *   |data      查询传入的参数			非必填,默认是{}
+     * 	 |url       查询的请求的路径        必填属性
+     * 	 |key		select需要显示的key  	必填属性					        |
+     * 	 |val		Select隐式的value		必填属性					        |
+     * 	 |type		请求类型		        非必填,	默认是get			        |
+     * 	 |CheckVal 	设置默认选中的val		非必填,可以不写,默认为null			|
+     * 	 |isAll		Select是否需要选择全部 	非必填,true是, false否 		        |
+     * 	 |async 调用获取数据字典参数的异步请求是否需要同步，【true：异步/false:同步】 默认是同步
+     *   |----------------------------------------------------------------------|
+     */
+    initSelectObj = function (eleId,url,key,val){
+        var obj = {};
+        obj.eleId = eleId;
+        obj.type = 'GET';
+        obj.data = {};
+        obj.url = url;
+        obj.key = key;
+        obj.val = val;
+        obj.checkVal = null;
+        obj.isAll = true;
+        obj.async = false;
+        return obj;
+    };
+    InitSelect = function (obj,form) {
+        var errMsg = '';
+        if(!obj.eleId) errMsg += "[eleId]";
+        if(!obj.url) errMsg += "[url]";
+        if(!obj.key) errMsg += "[key]";
+        if(!obj.val) errMsg += "[val]";
+        if(errMsg != '') throw new Error(errMsg+'是必填属性不能为NULL！');
+        $.ajax({
+            url: layui.setter.host + obj.url,
+            async: obj.async,
+            data: obj.data,
+            type: obj.type,
+            success: function (data) {
+                initDownList(data, obj.eleId, obj.CheckVal, obj.key, obj.val, obj.isAll);
+                form.render();
+            }
+        });
+    }
 
 
+    /**
+     * 2019/03/24 bjw
+     * 处理根据对象默认select选择列表。
+     * @param formId  表单div的id
+     * @param ObjVal  值对象
+     */
+    fromSetVel = function (from, formId, data) {
+        var arrObj = $('#' + formId).find(":input[name *= '.']");
+        for (var i = 0; i < arrObj.length; i++) {
+            var name = arrObj[i].name;
+            var arr = name.split('.');
+            if (arr.length <= 1) continue;
+            var currentObj = data;
+            for (var j = 0; j < arr.length; j++) {
+                if (currentObj != undefined && null != currentObj)
+                    currentObj = currentObj[arr[j]]
+            }
+            if (currentObj != undefined && null != currentObj)
+                data[name] = currentObj;
+        }
+        from.val(formId, data);
+    }
 
     //对外暴露的接口
   exports('common', {});
