@@ -4,6 +4,13 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         ,form = layui.form
         ,laydate = layui.laydate
         ,formSelects = layui.formSelects;
+
+    var gongxu_jiangsha_id = 2;
+    var gongxu_jiangsha = "浆纱";
+
+    //获取浆纱当前日期班次轮班
+    var current = currentBanCiLunBan(gongxu_jiangsha);
+
     //筛选条件初始化
     var initValue = formatDate(addDate(new Date(),0));
     laydate.render({
@@ -56,16 +63,17 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         laydate.render({
             elem: '#dj_rq',
             type: 'date',
-            value: initValue
+            value: current.riqi
         });
-        $('#rq').val(initValue);
-        dictInitSelect('dj_bc', null, 'banci', 'name', 'id', false);
+        $('#rq').val(current.riqi);
+        dictInitSelect('dj_bc', current.banci.id, 'banci', 'name', 'id', false);
         //fixme  end
+
         //工序传浆纱工序id 2
         InitSelect('dj_hyh', null, 'jiaoban/zhengjingdengji/findHeYueHao', 'get', {}, 'name', 'id',false);
-        InitSelect('dj_jth', null, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:2}, 'jitaihao', 'id',false);
-        InitSelect('dj_ssgx', 2, 'common/findAllGX', 'get', {}, 'name', 'id',true);
-        InitSelect('dj_jsg', null, 'common/findUser', 'get', {gxid:2}, 'ygxm', 'id',false);
+        InitSelect('dj_jth', null, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:gongxu_jiangsha_id}, 'jitaihao', 'id',false);
+        InitSelect('dj_ssgx', gongxu_jiangsha_id, 'common/findAllGX', 'get', {}, 'name', 'id',true);
+        InitSelect('dj_jsg', null, 'common/findUser', 'get', {gxid:gongxu_jiangsha_id}, 'ygxm', 'id',false);
         formSelects.render('addUser');
         formSelects.value('addUser',[$('#id').val()]);
 
@@ -130,7 +138,7 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         //fixme  end
         //工序传浆纱工序id 2
         InitSelect('xg_dj_hyh', data.heyuehao_id, 'jiaoban/zhengjingdengji/findHeYueHao', 'get', {}, 'name', 'id',false);
-        InitSelect('xg_dj_jth', data.jitaihao_id, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:2}, 'jitaihao', 'id',false);
+        InitSelect('xg_dj_jth', data.jitaihao_id, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:gongxu_jiangsha_id}, 'jitaihao', 'id',false);
         InitSelect('xg_dj_ssgx', null, 'common/findAllGX', 'get', {}, 'name', 'id',true);
         InitSelect('xg_dj_jsg', data.users_id, 'common/findUser', 'get', {}, 'ygxm', 'id',false);
         formSelects.render('editUser');

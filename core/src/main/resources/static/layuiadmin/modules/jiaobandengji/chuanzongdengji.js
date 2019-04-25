@@ -4,6 +4,13 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         ,form = layui.form
         ,laydate = layui.laydate
         ,formSelects = layui.formSelects;
+
+    var gongxu_chuanzong_id = 3;
+    var gongxu_chuanzong = "穿综";
+
+    //获取穿综当前日期班次轮班
+    var current = currentBanCiLunBan(gongxu_chuanzong);
+
     //筛选条件初始化
     var initValue = formatDate(addDate(new Date(),0));
     laydate.render({
@@ -57,18 +64,19 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         laydate.render({
             elem: '#dj_rq',
             type: 'date',
-            value: initValue
+            value: current.riqi
         });
-        $('#rq').val(initValue);
-        dictInitSelect('dj_bc', null, 'banci', 'name', 'id', false);
+        $('#rq').val(current.riqi);
+        dictInitSelect('dj_bc', current.banci.id, 'banci', 'name', 'id', false);
         //fixme  end
+
         //工序传穿综工序id 3
         InitSelect('dj_hyh', null, 'jiaoban/zhengjingdengji/findHeYueHao', 'get', {}, 'name', 'id',false);
-        InitSelect('dj_jth', null, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:3}, 'jitaihao', 'id',false);
+        InitSelect('dj_jth', null, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:gongxu_chuanzong_id}, 'jitaihao', 'id',false);
         $('#dj_jth').append("<option value='人工穿综'>人工穿综</option>");
         InitSelect('dj_zh', null, 'jichushuju/zhou/zhizhou/findAllZhiZhou', 'get', {}, 'zhouhao', 'id',false);
-        InitSelect('dj_ssgx', 3, 'common/findAllGX', 'get', {}, 'name', 'id',true);
-        InitSelect('dj_zjg', null, 'common/findUser', 'get', {gxid:3}, 'ygxm', 'id',false);
+        InitSelect('dj_ssgx', gongxu_chuanzong_id, 'common/findAllGX', 'get', {}, 'name', 'id',true);
+        InitSelect('dj_zjg', null, 'common/findUser', 'get', {gxid:gongxu_chuanzong_id}, 'ygxm', 'id',false);
         formSelects.render('addUser');
         formSelects.value('addUser',[$('#id').val()]);
 
@@ -139,7 +147,7 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
         //fixme  end
         //工序传穿综工序id 3
         InitSelect('xg_dj_hyh', data.heyuehao_id, 'jiaoban/zhengjingdengji/findHeYueHao', 'get', {}, 'name', 'id',false);
-        InitSelect('xg_dj_jth', data.jitaihao_id, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:3}, 'jitaihao', 'id',false);
+        InitSelect('xg_dj_jth', data.jitaihao_id, 'jichushuju/shebei/shebei/findAllSheBei', 'get', {gongxu:gongxu_chuanzong_id}, 'jitaihao', 'id',false);
         $('#xg_dj_jth').append("<option value='人工穿综'>人工穿综</option>");
         InitSelect('xg_dj_zh', data.zhiZhou_id, 'jichushuju/zhou/zhizhou/findAllZhiZhou', 'get', {}, 'zhouhao', 'id',false);
         InitSelect('xg_dj_ssgx', null, 'common/findAllGX', 'get', {}, 'name', 'id',true);

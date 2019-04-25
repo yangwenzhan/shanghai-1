@@ -811,6 +811,29 @@ layui.define(function(exports){
         from.val(formId, data);
     }
 
+    /**
+     * 2019/04/25 lrj
+     * 传入工序名称 获取工序当前班次轮班
+     */
+    currentBanCiLunBan = function(name){
+        var obj;
+        $.ajax({
+            url: layui.setter.host + 'common/findCurrentBCLB',
+            type: 'GET',
+            async:false,
+            data:{
+                name:name
+            },
+            success: function (data) {
+                if(data.code==0){
+                    obj =  data.data;
+                }
+            }
+        });
+        return obj;
+    }
+
+
     //对外暴露的接口
   exports('common', {});
 });

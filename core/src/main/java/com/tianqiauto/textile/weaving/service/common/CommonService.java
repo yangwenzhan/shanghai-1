@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.service.common;
 
 import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.Dict_Type;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +94,12 @@ public class CommonService {
                 " and id in (select id from base_gongxu where name=isnull(?,name)) " +
                 " )";
         return jdbcTemplate.queryForList(sql,StringUtils.isEmpty(gongxu)?null:gongxu,StringUtils.isEmpty(jixing)?null:jixing);
+    }
+
+    //查询工序id
+    public Integer findGongXuID(String name){
+        String sql = "select top 1 id from base_gongxu where name=?";
+        return jdbcTemplate.queryForObject(sql,Integer.class,name);
     }
 
 }

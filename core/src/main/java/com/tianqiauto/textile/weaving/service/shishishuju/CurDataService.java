@@ -141,6 +141,14 @@ public class CurDataService {
         return Result.ok("查询成功",list);
     }
 
+    //查询详细参数--从布机实时表中查询
+    public Result queryXxcs_curBuji(String jt_id){
+        ProcedureParamUtlis ppu=new ProcedureParamUtlis();
+        ppu.addInInteger(jt_id);
+        ProcedureContext pro=baseService.callProcedure("pc_cur_bujicanshu", ppu.getList());
+        return Result.ok(pro.getDatas());
+    }
+
     //查询报警参数
     public Result queryBjcsByJtid(String jt_id){
         String sql = "select a.value,a.jitai_id,a.param_id,b.danwei,b.name,b.xuhao,b.leibie_id,b.leibie_name,b.lbxh from sys_current as a join " +
