@@ -91,6 +91,7 @@
 	<div th:replace="common/links::js_footer"></div>
 	<script th:src="@{/js/echarts/echarts.min.js}"></script>
 	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+	<script th:src="@{/layuiadmin/modules/shishishuju/windowpop.js}"></script>
 
 	</body>
 
@@ -110,8 +111,7 @@
 		}).extend({
 			index: 'lib/index' //主入口模块
 			,buji:'shishishuju/buji'
-			,windowpop:'shishishuju/windowpop'
-		}).use(['index','buji','windowpop'],function () {
+		}).use(['index','buji'],function () {
 		});
 	</script>
 

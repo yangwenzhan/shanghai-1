@@ -45,6 +45,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
 
 
+
+
     //添加工艺
     $("#add_gongyi_btn").on("click", function() {
         $("#form_add")[0].reset();
@@ -73,8 +75,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                                     content: $("#div_form_add_zongbiao"),
                                     area: ['90%', '90%'],
                                     shade: [0.8, '#393D49'],
-                                    btn: ['保存并继续', '取消'],
-                                    yes:function (index, layero) {
+                                    btn: ['下一步','取消'],
+                                    btn1:function (index, layero) {
                                         form.on('submit(form_add_zongbiao_submit)', function (data) {
                                             var formData = data.field;
                                             formData.heyuehaoId = localStorage.getItem("gongyi_heyuehao");
@@ -83,14 +85,59 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                                                 data:formData,
                                                 success:function(data){
                                                     layer.close(index);
+                                                    var cols = [[
+                                                        {field: 'id', title: 'id', hide: true}
+                                                        ,{type:'checkbox'}
+                                                        , {field: 'pinming', title: '品名'}
+                                                        , {field: 'pihao', title: '批号'}
+                                                        , {field: 'zhishu', title: '支数'}
+                                                        , {field: 'sehao', title: '色号'}
+                                                        , {field: 'sebie', title: '色别'}
+                                                        , {field: 'kucunliang', title: '库存量'}
+                                                    ]];
 
+                                                    //经排选择
+                                                    $("#select_jingpai").on("click", function() {
+                                                        table.render({
+                                                            elem: "#table_yuansha"
+                                                            ,id: "table_yuansha"
+                                                            , url: layui.setter.host+"gongyi/add_yuansha"
+                                                            , method: "get"
+                                                            , cellMinWidth: 80
+                                                            , cols: cols
+                                                        });
+                                                        layer.open({
+                                                            type: 1,
+                                                            title: ['原纱选择'],
+                                                            content: $("#div_form_add_yuansha"),
+                                                            area: ['90%', '90%'],
+                                                            shade: [0.8, '#393D49'],
+                                                            btn: ['确定','取消'],
+                                                            btn1:function (index, layero) {
+
+                                                            }
+                                                        });
+                                                    });
+
+
+
+
+                                                    layer.open({
+                                                        type: 1,
+                                                        title: ['添加工艺（经排排花）'],
+                                                        content: $("#div_form_add_jingpai"),
+                                                        area: ['90%', '90%'],
+                                                        shade: [0.8, '#393D49'],
+                                                        btn: ['确定','取消'],
+                                                        btn1:function (index, layero) {
+
+                                                        }
+                                                    });
 
 
 
                                                 }
                                             });
-
-
                                         });
                                         $("#form_add_zongbiao_submit").trigger('click');
                                     }

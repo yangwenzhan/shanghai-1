@@ -94,4 +94,11 @@ public class CommonController {
         return Result.ok("查询成功!",map);
     }
 
+    @GetMapping("findUser")
+    @ApiOperation(value = "查询员工信息")
+    public Result findUser(String gxid, String lbid, String roleid){
+        List<Map<String,Object>> list = commonService.findUser(gxid, lbid, roleid);
+        return Result.ok("查询成功",list);
+    }
+
 }

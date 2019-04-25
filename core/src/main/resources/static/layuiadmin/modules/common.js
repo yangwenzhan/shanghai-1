@@ -114,6 +114,7 @@ layui.define(function(exports){
       , url: layui.setter.host+url
       , method: method
       , cellMinWidth: 80
+      , limit: 1000000
       , cols: cols
       ,where:getParams(formId)
       , done: function (res) {
@@ -407,6 +408,15 @@ layui.define(function(exports){
 
 
     //ajax请求成功处理下拉框函数
+    /**
+     * @param data        请求回来的数据
+     * @param downID      要渲染select下拉框的id
+     * @param selectedId  默认被选中的值id, 格式：1,2,3
+     * @param valueName   下拉框中展示的值
+     * @param valueID    下拉框中值对应的id
+     * @param isall       是否有全部 true 或 false
+     * @returns {boolean}
+     */
     initDownList = function(data,downID,selectedId,valueName,valueID,isall){
         $('#' + downID).html("");
         if(data.code == 0) {

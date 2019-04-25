@@ -29,16 +29,16 @@ layui.define(['table', 'form'], function(exports){
     function initJingZhou(){
         var cols =  [
             {field: 'id', title: 'id',hide:true}
-            ,{field: 'zhouhao',sort:true, title: '经轴号'}
-            ,{field: 'zhoukuan',sort:true, title: '轴宽'}
-            ,{field: 'jingchang',sort:true, title: '计长'}
-            ,{field: 'zt',sort:true, title: '状态'}
-            ,{field: 'jitaihao',sort:true, title: '机台号'}
-            ,{field: 'name',sort:true, title: '合约号'}
-            ,{field: 'pibuguige',sort:true, title: '坯布规格'}
-            ,{field: 'beizhu',sort:true, title: '备注'}
-            ,{field: 'last_modify_time',sort:true, title: '最后更新时间'}
-            ,{field: 'last_modify_ren',sort:true, title: '最后更新人'}
+            ,{field: 'zhouhao',sort:true, title: '经轴号',width:90}
+            ,{field: 'zhoukuan',sort:true, title: '轴宽',width:90}
+            ,{field: 'jingchang',sort:true, title: '经长m',width:90}
+            ,{field: 'zt',sort:true, title: '状态',width:120}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:120}
+            ,{field: 'name',sort:true, title: '合约号',width:120}
+            ,{field: 'pibuguige',sort:true, title: '坯布规格',width:120}
+            ,{field: 'beizhu',sort:true, title: '备注',width:120}
+            ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:220}
+            ,{field: 'last_modify_ren',sort:true, title: '最后更新人',width:120}
         ];
 
         cols = formatColumns(cols);

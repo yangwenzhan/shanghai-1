@@ -40,6 +40,9 @@ public class GongYi {
     @Column
     private Integer touliaochangdu; //投料长度
 
+    @Column
+    private Double zhisuolv;  //织缩率
+
 
 
 
