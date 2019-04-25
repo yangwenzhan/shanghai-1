@@ -14,9 +14,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "base_pb_history")
-@EqualsAndHashCode(exclude = {"gongxu"})
-@ToString(exclude = {"gongxu"})
+@Entity(name = "base_pb_current")
+@EqualsAndHashCode(exclude = {"gongxu","lunban","banci"})
+@ToString(exclude = {"gongxu","lunban","banci"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PB_Current {
 
@@ -31,7 +31,11 @@ public class PB_Current {
     private Gongxu gongxu;
 
     private Date  riqi;
+    @ManyToOne
+    @JoinColumn(name = "banci_id")
     private Dict banci;
+    @ManyToOne
+    @JoinColumn(name = "lunban_id")
     private Dict lunban;
 
     private Date bancikaishishijian;
