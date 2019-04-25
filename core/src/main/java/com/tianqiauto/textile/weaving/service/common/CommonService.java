@@ -81,4 +81,20 @@ public class CommonService {
                 "and (b.role_id=isnull(?,b.role_id) or isnull(?,b.role_id) is null) ";
         return jdbcTemplate.queryForList(sql,gxid,gxid,lbid,lbid,roleid,roleid);
     }
+
+    //查询所有合约号
+    public List<Map<String,Object>> findHeYueHao(Long id){
+        String sql = "select a.id,a.name,b.pibuguige from sys_heyuehao a left join sys_order b on a.order_id=b.id where a.id=isnull(?,a.id) order by name desc";
+        return jdbcTemplate.queryForList(sql,id);
+    }
+
+    //根据工序机型名称查询机台号
+    public List<Map<String,Object>> findJiTaiHao(String gongxu,String jixing){
+        String sql = "select * from base_shebei where gongxu_id in ( " +
+                " select id from base_gongxu where parent_id in (select id from base_gongxu where name=isnull(?,name)) " +
+                " and id in (select id from base_gongxu where name=isnull(?,name)) " +
+                " )";
+        return jdbcTemplate.queryForList(sql,StringUtils.isEmpty(gongxu)?null:gongxu,StringUtils.isEmpty(jixing)?null:jixing);
+    }
+
 }
