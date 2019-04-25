@@ -3,10 +3,12 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
+import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @ClassName Shift_Zhengjing
@@ -20,8 +22,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_shift_chuanzong")
-@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao"})
-@ToString(exclude = {"banci","jitaihao","heyuehao"})
+@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","users"})
+@ToString(exclude = {"banci","jitaihao","heyuehao","users"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Shift_ChuanZong {
 
@@ -50,6 +52,12 @@ public class Shift_ChuanZong {
     private Integer genshu; //根数
 
     private Integer shifouwancheng;  //是否完成：为1时完成 为0时未完成
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_shift_chuanzong_user", joinColumns = @JoinColumn(name = "shift_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users;
 
 
 

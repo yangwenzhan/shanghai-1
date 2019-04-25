@@ -2,8 +2,10 @@ package com.tianqiauto.textile.weaving.controller.gongyi;
 
 import com.tianqiauto.textile.weaving.model.sys.GongYi;
 import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
+import com.tianqiauto.textile.weaving.model.sys.YuanSha;
 import com.tianqiauto.textile.weaving.repository.GongYiRepository;
 import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
+import com.tianqiauto.textile.weaving.repository.YuanShaRepository;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class GongYiController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private YuanShaRepository yuanShaRepository;
+
 
     //查找未关联工艺的合约号
    @GetMapping("findHeyuehaoWithoutGongYi")
@@ -59,6 +64,14 @@ public class GongYiController {
 
        return Result.ok("概况新增成功",gongyiSaved);
 
+    }
+
+
+    //工艺：查询仓库中原纱库存>0的
+    @GetMapping("add_yuansha")
+    public Result add_yuansha(){
+        List<YuanSha> list = yuanShaRepository.findAllByKucunliangGreaterThan(0d);
+        return Result.ok(list);
     }
 
 

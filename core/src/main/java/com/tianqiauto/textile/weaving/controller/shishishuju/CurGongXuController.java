@@ -26,8 +26,8 @@ public class CurGongXuController {
 
     @GetMapping("cur_buji")
     @ApiOperation(value = "查询布机实时数据")
-    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id){
-        return curDataService.cur_buji(jx_id, hyh_id, yxzt_id);
+    public Result cur_buji(String jx_id,String hyh_id,String yxzt_id,String online){
+        return curDataService.cur_buji(jx_id, hyh_id, yxzt_id, online);
     }
 
     @GetMapping("findHisDataBtn")
@@ -54,7 +54,35 @@ public class CurGongXuController {
         return curDataService.cur_chejianzonglan();
     }
 
+    @GetMapping("cur_zhengjing")
+    @ApiOperation(value = "查询整经实时总览数据")
+    public Result cur_zhengjing(){
+        return curDataService.cur_zhengjing();
+    }
 
+    @GetMapping("cur_jiangsha")
+    @ApiOperation(value = "查询浆纱实时总览数据")
+    public Result cur_jiangsha(){
+        return curDataService.cur_jiangsha();
+    }
+
+    @GetMapping("cur_chuanzong")
+    @ApiOperation(value = "查询穿综实时总览数据")
+    public Result cur_chuanzong(){
+        return curDataService.cur_chuanzong();
+    }
+
+    @GetMapping("cur_liaojiyuce")
+    @ApiOperation(value = "布机了机预测")
+    public Result cur_liaojiyuce(){
+        return curDataService.cur_liaojiyuce();
+    }
+
+    @GetMapping("cur_luobuyuce")
+    @ApiOperation(value = "布机落布预测")
+    public Result cur_luobuyuce(){
+        return curDataService.cur_luobuyuce();
+    }
 
 
 

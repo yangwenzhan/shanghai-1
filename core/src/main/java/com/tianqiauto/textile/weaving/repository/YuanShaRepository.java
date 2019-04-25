@@ -23,4 +23,7 @@ public interface YuanShaRepository extends JpaRepository<YuanSha,Long> ,JpaSpeci
 
 
     YuanSha findByPihao(String pihao);
+
+
+    List<YuanSha> findAllByKucunliangGreaterThan(Double kucun);
 }
