@@ -1,6 +1,6 @@
 /*
  * 弹出层
- * 详细参数从 sys_current表取
+ * 详细参数从sys_current_buji 取
  */
 
 //绘制机台详细信息表格
@@ -66,33 +66,10 @@ function showXxInfo(jt_id,jth) {
             layer.close(loadingIndex);
             $('#show_xxcs').empty();
             if(data.code==0){
-                if(data.data.length>0) {
-                    //参数类别的index数组
-                    var dataNumberArray = [];
-                    dataNumberArray.push(0);
-                    var newTable = "";
-                    //遍历datas获取所有的不重复的参数类别的开始index
-                    for (var i = 1; i < data.data.length; i++) {
-                        if (data.data[i].leibie_name != data.data[i - 1].leibie_name) {
-                            dataNumberArray.push(i);
-                        }
-                    }
-                    for (var j = 0; j < dataNumberArray.length; j++) {
-                        newTable += darwTable_my(dataNumberArray[j], data);
-                    }
-                    //创建表格
-                    $("#show_xxcs").html(newTable);
-                    //给表格渲染数据render
-                    for (var k = 0; k < dataNumberArray.length; k++) {
-                        if (k == dataNumberArray.length - 1) {
-                            renderTableData(dataNumberArray[k], data.data.length, data);
-                        } else {
-                            renderTableData(dataNumberArray[k], dataNumberArray[k + 1], data);
-                        }
-                    }
-                }else{
-                    $('#show_xxcs').html("<div'>暂无数据!</div>");
-                }
+
+
+
+
                 // 查看
                 layer.open({
                     type: 1,

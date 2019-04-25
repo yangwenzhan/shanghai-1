@@ -750,20 +750,20 @@
 			  <div id="two_list">			  
 			  <!--穿综车间-->			  
 			     <div id="czcj">
-			     	<div class="cz_all">
+			     		<div class="cz_all">
 							<div class='cz'>
 								<!--<span></span>-->
 								<p>穿综001</p>
 							</div>
 							<!--<div class='xl red'>50%</div>-->
 						</div>
-						<div class="cz_all">
+						<!--<div class="cz_all">
 							<div class='cz'>
-								<!--<span></span>-->
+								<span></span>
 								<p>穿综002</p>
 							</div>
-							<!--<div class='xl red'>50%</div>-->
-						</div>
+							<div class='xl red'>50%</div>
+						</div>-->
 			     </div>
 			 <!--经轴库-->
 			     <div id="jzk">
@@ -1089,7 +1089,11 @@
 			<div class="layui-tab-content">
 				<!--详细参数-->
 				<div class="layui-tab-item layui-show" id="xxcs_div">
-					<div class="show_xxcs" id="show_xxcs"></div>
+					<div class="show_xxcs" id="show_xxcs">
+						<!--table 放从sys_current_buji表中取的数据-->
+						<table class="layui-table" id="table" lay-filter="table">
+						</table>
+					</div>
 				</div>
 				<!--故障参数-->
 				<div class="layui-tab-item">
@@ -1127,7 +1131,7 @@
 		<div th:replace="common/links::js_footer"></div>
 		<script th:src="@{/js/echarts/echarts.min.js}"></script>
 		<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
-		<script th:src="@{/layuiadmin/modules/shishishuju/windowpop.js}"></script>
+		<script th:src="@{/layuiadmin/modules/shishishuju/windowpop_new.js}"></script>
 
 	</body>
 
