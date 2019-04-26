@@ -8,9 +8,6 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
     var gongxu_zhengjing_id = 1;
     var gongxu_zhengjing = "整经";
 
-    //获取整经当前日期班次轮班
-    var current = currentBanCiLunBan(gongxu_zhengjing);
-
     //筛选条件初始化
     var initValue = formatDate(addDate(new Date(),0));
     laydate.render({
@@ -61,14 +58,16 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
 
         $('#dj_ts').val("");$('#dj_jc').val("");$('#dj_bz').val("");
 
+        //获取整经当前日期班次轮班
+        var current = currentBanCiLunBan(gongxu_zhengjing);
         //fixme  begin 当前整经工序日期班次
         laydate.render({
             elem: '#dj_rq',
             type: 'date',
             value: current.riqi
         });
-        $('#rq').val(current.riqi);
-        dictInitSelect('dj_bc', current.banci.id, 'banci', 'name', 'id', false);
+        $('#dj_rq').val(current.riqi);
+        dictInitSelect('dj_bc', current.banci_id, 'banci', 'name', 'id', false);
         //fixme  end
 
         //工序传整经工序id 1

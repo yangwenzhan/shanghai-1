@@ -126,4 +126,13 @@ public class CommonController {
         return Result.ok("查询成功",paiBanCurrentRepository.findByGongxu(gongxu));
     }
 
+    @GetMapping("findCurrentBCLB_NativeQuery")
+    @ApiOperation(value = "查询工序当前班次轮班")
+    public Result findCurrentBCLB_NativeQuery(String name){
+        List<Map<String,Object>> list = commonService.findCurrentBCLB_NativeQuery(name);
+        return Result.ok("查询成功",list);
+    }
+
+
+
 }
