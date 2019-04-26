@@ -101,4 +101,18 @@ public class CommonController {
         return Result.ok("查询成功",list);
     }
 
+    @GetMapping("findHeYueHao")
+    @ApiOperation(value = "查询所有的合约号")
+    public Result findHeYueHao(Long id){
+        List<Map<String,Object>> list = commonService.findHeYueHao(id);
+        return Result.ok("查询成功",list);
+    }
+
+    @GetMapping("findJiTaiHao")
+    @ApiOperation(value = "传入工序机型名称，查询机台号，可传空")
+    public Result findJiTaiHao(String gongxu,String jixing){
+        List<Map<String,Object>> list = commonService.findJiTaiHao(gongxu, jixing);
+        return Result.ok("查询成功",list);
+    }
+
 }

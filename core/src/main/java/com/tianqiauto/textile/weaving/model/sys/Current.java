@@ -42,6 +42,7 @@ public class Current {
 
     private String value; //参数值
 
+
     private Date lastModifyTime;
 
 
