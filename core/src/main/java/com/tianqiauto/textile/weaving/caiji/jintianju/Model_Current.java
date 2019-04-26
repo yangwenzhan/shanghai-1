@@ -1,6 +1,7 @@
 package com.tianqiauto.textile.weaving.caiji.jintianju;
 
 import io.github.biezhi.excel.plus.annotation.ExcelColumn;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -36,27 +37,27 @@ public class Model_Current {
     private String status;  //状态
 
     @ExcelColumn(index = 19)  //设定落布长度
-    private Double doffing_length;
+    private Integer doffing_length;
     public Double getDoffing_length() {
         return doffing_length*0.1;
     }
 
-    @ExcelColumn(index = 20)  //运行时间min
-    private Double yunxingshijian;
-    public Double getYunxingshijian() {
-        return yunxingshijian*0.1;
+    @ExcelColumn(index = 20)  //运行时间s
+    private Integer yunxingshijian;
+    public Integer getYunxingshijian() {
+        return yunxingshijian*6;
     }
 
 
     @ExcelColumn(index = 22)  //当前布长
-    private Double buchang;
+    private Integer buchang;
     public Double getBuchang() {
         return buchang*0.1;
     }
 
 
     @ExcelColumn(index = 24)  //轴设定经长
-    private Double jingchang;
+    private Integer jingchang;
     public Double getJingchang() {
         return jingchang*0.1;
     }
