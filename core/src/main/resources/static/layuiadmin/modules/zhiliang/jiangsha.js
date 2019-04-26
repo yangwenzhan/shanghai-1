@@ -93,7 +93,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         getGangHao("add_ganghao", null, false, $('#add_heyuehao').val());
         layer.open({
             type: 1,
-            title: ['新增参数类别', 'font-size:12px;'],
+            title: ['新增浆纱质量', 'font-size:12px;'],
             content: $("#add_form_div"),
             shadeClose: true, //点击遮罩关闭层
             shade: 0.8,
