@@ -34,8 +34,6 @@ public class JiHua_ChuanZong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
     private Date riqi; //计划日期
 
     @ManyToOne

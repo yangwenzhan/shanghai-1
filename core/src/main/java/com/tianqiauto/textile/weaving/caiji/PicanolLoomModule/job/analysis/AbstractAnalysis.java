@@ -26,13 +26,13 @@ public abstract class AbstractAnalysis{
             PCN requestPcn = setRequestPcn();
             //2.循环发送
             for(PicanolHost host:picanolHostList){
-                requestPcn.getHeader().setDestinationId(host.getMachineNumber());//fixme 上线考虑
+                requestPcn.getHeader().setDestinationId(host.getMachineNumber());
                 PCN pcn = send(host,requestPcn);
                 //3.解析报文放入获取Param放到List容器中。
                 analysisPcn(pcn,host.getCurrentBuJi());
             }
         };
-        new Thread(run).start();//一切为了单例
+        new Thread(run).start();
         //---------------------------------------------------------------------------启动线程
     }
 

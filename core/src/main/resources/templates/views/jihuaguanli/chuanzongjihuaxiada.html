@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/links::header"></div>
+    <title>布机计划下达</title>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!-- 查询条件 -->
+        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+            <div class="layui-form-item">
+                <!--开始日期-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">计划开始日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="kaishiriqi_sele" name="kaishiriqi" placeholder="开始日期" class="layui-input"
+                               autocomplete="off"/>
+                    </div>
+                </div>
+                <!--结束日期-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">计划结束日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="jieshuriqi_sele" name="jieshuriqi" placeholder="结束日期" class="layui-input"
+                               autocomplete="off"/>
+                    </div>
+                </div>
+                <!--班次-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">班次</label>
+                    <div class="layui-input-inline">
+                        <select name="banci.id" id="banci_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--类型-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-inline">
+                        <select name="leixing.id" id="leixing_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--机型-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">机型</label>
+                    <div class="layui-input-inline">
+                        <select name="jitaihao.gongxu.id" lay-search="" id="jixing_sele" lay-filter="jixing_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--机台号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">机台号</label>
+                    <div class="layui-input-inline">
+                        <select name="jitaihao.id" id="jitaihao_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--合约号-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">合约号</label>
+                    <div class="layui-input-inline">
+                        <select name="heyuehao.id" id="heyuehao_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--单双轴-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">单双轴</label>
+                    <div class="layui-input-inline">
+                        <select name="danshuangzhou.id" id="danshuangzhou_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--优先级-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">优先级</label>
+                    <div class="layui-input-inline">
+                        <select name="youxianji" id="youxianji_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--状态-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <select name="status.id" id="status_sele">
+                        </select>
+                    </div>
+                </div>
+                <!--查询-->
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                    </button>
+                </div>
+                <!--新增-->
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" type="button" id="add">
+                        <i class="layui-icon layuiadmin-button-btn">&#xe608;</i> 新增计划
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 查询表格-->
+        <!--<div class="layui-card-body">
+            <table id="table" lay-filter="table"></table>
+            <script type="text/html" id="caozuo">
+                {{#  if(d.status.value == 1){ }}
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+                {{#  } }}
+            </script>
+        </div>-->
+
+        <!-- 添加信息 -->
+       <!-- <div style="display: none" id="div_form_add">
+            <div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 10px">
+                <div class="layui-form-item">
+                    &lt;!&ndash; 计划日期 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">计划日期<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="riqi" id="jihuariqi_add" lay-verify="required" placeholder="计划日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 班次 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">班次<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="banci.id" id="banci_add" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 类型 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类型<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="leixing.id" id="leixing_add" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 机型 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">机型</label>
+                        <div class="layui-input-inline">
+                            <select name="jixing.id" id="jixing_add" lay-filter="jixing_add" >
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 机台号 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">机台号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="jitaihao.id" id="jitaihao_add" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 织轴 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">织轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="zhizhou" id="zhizhou_add" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 合约号 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="heyuehao.id" id="heyuehao_add" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 单双轴 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">单双轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="danshuangzhou.id" id="danshuangzhou_add" >
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 优先级 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">优先级<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="youxianji" lay-verify="int|length" tq_length="1^10" placeholder="优先级" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 备注 === 不是必输项&ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-inline">
+                            <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 确认 &ndash;&gt;
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- 修改信息 -->
+       <!-- <div style="display: none" id="div_form_edit">
+            <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
+                <div class="layui-form-item">
+                    &lt;!&ndash; 计划日期 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">计划日期<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="riqi" id="jihuariqi_edit" lay-verify="required" placeholder="计划日期" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 班次 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">班次<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="banci.id" id="banci_edit" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 类型 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类型<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="leixing.id" id="leixing_edit" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 机型 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">机型</label>
+                        <div class="layui-input-inline">
+                            <select name="jitaihao.gongxu.id" id="jixing_edit" lay-filter="jixing_edit" >
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 机台号 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">机台号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="jitaihao.id" id="jitaihao_edit" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 织轴 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">织轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="zhizhou" id="zhizhou_edit" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 合约号 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="heyuehao.id" id="heyuehao_edit" lay-verify="required">
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 单双轴 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">单双轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <select name="danshuangzhou.id" id="danshuangzhou_edit" >
+                            </select>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 优先级 &ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">优先级<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="youxianji" lay-verify="int|length" tq_length="1^10" placeholder="优先级" class="layui-input" autocomplete="off"/>
+                        </div>
+                    </div>
+                    &lt;!&ndash; 备注 === 不是必输项&ndash;&gt;
+                    <div class="layui-inline">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-inline">
+                            <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    &lt;!&ndash; ID &ndash;&gt;
+                    <div class="layui-form-item layui-hide">
+                        <input type="text" name="id">
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>
+
+
+<div th:replace="common/links::js_footer"></div>
+<script>
+    layui.config({
+        base: "/layuiadmin/" //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , bujijihuaxiada: 'jihuaguanli/bujijihuaxiada'
+    }).use(['index', 'bujijihuaxiada'], function () {
+
+    });
+
+</script>
+</body>
+</html>

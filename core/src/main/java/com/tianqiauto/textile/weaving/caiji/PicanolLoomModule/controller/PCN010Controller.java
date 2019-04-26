@@ -2,9 +2,14 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.controller;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.dao.repository.PicanolHostRepository;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.StringUtils;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.dispenser.AbstractBispenser;
+import com.tianqiauto.textile.weaving.model.sys.BuGun;
+import com.tianqiauto.textile.weaving.repository.BugunRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
@@ -17,9 +22,14 @@ import java.util.Arrays;
 @Controller
 public class PCN010Controller extends AbstractBispenser {
 
+    @Autowired
+    private BugunRepository bugunRepository;
+
+    @Autowired
+    private PicanolHostRepository picanolHostRepository;
 
     @Override
-    public void analysis(PCN request){
+    public void analysis(PCN request,String ip){
         PCN.Body body = request.getBody();
         String sourceId = request.getHeader().getSourceId();
         byte cnt = body.getCnt();
@@ -53,11 +63,30 @@ public class PCN010Controller extends AbstractBispenser {
                     default: ParamVo.addParam(sourceId,"落布长度单位","","007");
                 }
                 byte[] clothLength = Arrays.copyOfRange(body.getData(),4,8);
-                ParamVo.addParam(sourceId,"落布布长", String.valueOf(BytesUtil.bytesToLongWord(clothLength)),"008");
-                ParamVo.addParam(sourceId,"落布时间", StringUtils.NewDateToString("yyyy-MM-dd HH:mm ss"),"009");
+                long buchang = BytesUtil.bytesToLongWord(clothLength);
+                String luobushijian = StringUtils.NewDateToString("yyyy-MM-dd HH:mm ss");
+                ParamVo.addParam(sourceId,"落布布长", String.valueOf(buchang),"008");
+                ParamVo.addParam(sourceId,"落布时间", luobushijian,"009");
+                insertBugun(ip,buchang);
             }
         }
     }
 
+    private void insertBugun(String ip, long buchang){
+        PicanolHost picanolHost = picanolHostRepository.findByIp(ip);
+
+        BuGun buGun = new BuGun();
+//        buGun.setBanci();
+//        buGun.setChangdu((double)buchang);
+//        buGun.setHeyuehao();
+//        buGun.setJitaihao();
+//        buGun.setLuoburen();
+//        buGun.setLuobushijian();
+//        buGun.setRiqi();
+//        buGun.setShedingchangdu();
+//        buGun.set
+
+
+    }
 
 }

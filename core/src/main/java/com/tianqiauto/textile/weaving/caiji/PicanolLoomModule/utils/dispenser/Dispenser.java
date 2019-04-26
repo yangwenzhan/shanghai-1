@@ -23,14 +23,14 @@ public class Dispenser {
      * 利用反射执行分发
      * @Date 2019/3/6 10:02 bjw
      **/
-    public PCN executionDistribution(String msg) {
+    public PCN executionDistribution(String msg,String ip) {
         PCN requestMsg = new PCN(msg);
         short id = requestMsg.getBody().getIdToShort();
         String path = StringUtils.add0Before(3, id);
         String servlerClassName = controllerStandard.replaceAll("\\*",path);
         try {
             AbstractBispenser basBis = (AbstractBispenser) SpringUtil.getBean(servlerClassName);
-            basBis.run(requestMsg);
+            basBis.run(requestMsg,ip);
         } catch (Exception e) {
             log.error("功能码："+path+"未找到！",e);
         }
