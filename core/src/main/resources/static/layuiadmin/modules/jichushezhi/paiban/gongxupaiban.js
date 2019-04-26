@@ -29,7 +29,8 @@ layui.define(['table', 'form'], function(exports){
                 if(data.length>0){
                     data = data.sort(sortPXH);
                     var cols = [
-                        {field:'cur_num', width:150, fixed:'left',title:'当前运转位置'}
+                        {field: 'id', title: 'id',hide:true}
+                        ,{field:'cur_num', width:150, fixed:'left',title:'当前运转位置'}
                         ,{field: 'sort', width:150, title:"排序"}
                         ,{title: '班次', width: 150, templet: repNull('banci.name')}
                         ,{title: '轮班', width: 150, templet: repNull('lunban.name')}
@@ -160,15 +161,14 @@ layui.define(['table', 'form'], function(exports){
         form.render();
     }
 
-    form.on('radio(radioInput)', function(data){
+    form.on('radio(radioInput)', function(){
         localStorage.removeItem("cur_position");
-        localStorage.setItem("cur_position",data.value);
+        localStorage.setItem("cur_position",$(this).context.id);
     });
 
     //修改运转方式
     function updGx_Yzfs(data, index) {
         var cur_position = localStorage.getItem("cur_position");
-
         if(cur_position == null) {
             layer.open({
                 title:"消息提醒",content:"请选择运转开始位置！",skin:"layui-layer-molv",offset: 'auto',btn:[],time:3000,shade: 0,anim: -1,icon:5

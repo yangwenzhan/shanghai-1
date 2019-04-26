@@ -26,8 +26,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_shift_buji")
-@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","users"})
-@ToString(exclude = {"banci","jitaihao","heyuehao","users"})
+@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","dangchegong"})
+@ToString(exclude = {"banci","jitaihao","heyuehao","dangchegong"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Shift_BuJi {
 
@@ -87,10 +87,9 @@ public class Shift_BuJi {
 
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "sys_shift_buji_user", joinColumns = @JoinColumn(name = "shift_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User dangchegong;  //挡车工
 
 
 

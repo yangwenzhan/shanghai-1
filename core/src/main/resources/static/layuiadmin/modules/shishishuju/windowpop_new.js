@@ -1,47 +1,7 @@
 /*
  * 弹出层
- * 详细参数从 sys_current表取
+ * 详细参数从sys_current_buji 取
  */
-
-//绘制机台详细信息表格
-function darwTable_my(startIndex, data) {
-    var table = $("<table/>");
-    table.attr("id", "xxcs" + startIndex);
-    table.attr("class", "layui-table");
-    if(data.data.length > 0){
-        table.append("<caption>" + data.data[startIndex].leibie_name + "</caption>");
-    }
-    var result = $("<div/>");
-    result.append(table);
-    result.append("<div id='show_xxcs" + startIndex + "'/>	");
-    return result.html();
-}
-
-//render数据
-function renderTableData(startIndex, endIndex, data) {
-    var tbdata = [];
-    for (var i = startIndex; i < endIndex; i++) {
-        tbdata.push(data.data[i]);
-    }
-    var t = layui.table;
-    t.render({
-        elem: '#show_xxcs' + startIndex,
-        height: 'auto',
-        data: tbdata,
-        cols: [[{
-            field: 'name', title: '参数名',width:'250'
-        }, {
-            field: 'value', title: '参数值',width:'250'
-        }, {
-            field: 'danwei', title: '单位',width:'250'
-        }]],
-        skin: 'row', // 表格风格
-        even: true
-        , page: false //是否显示分页
-        , limit: 10000
-    });
-}
-
 
 //查询实时数据详细参数
 function showXxInfo(jt_id,jth) {
@@ -57,42 +17,25 @@ function showXxInfo(jt_id,jth) {
     $('#s_tubiao .layui-tab-content #xxcs_div').addClass('layui-show');
 
     $.ajax({
-        url:layui.setter.host+'shishishuju/cur_gongxu/queryXxcsByJtid',
+        url:layui.setter.host+'shishishuju/cur_gongxu/queryXxcs_curBuji',
         type:'get',
         data:{
             jt_id:jt_id
         },
         success:function (data) {
             layer.close(loadingIndex);
-            $('#show_xxcs').empty();
             if(data.code==0){
-                if(data.data.length>0) {
-                    //参数类别的index数组
-                    var dataNumberArray = [];
-                    dataNumberArray.push(0);
-                    var newTable = "";
-                    //遍历datas获取所有的不重复的参数类别的开始index
-                    for (var i = 1; i < data.data.length; i++) {
-                        if (data.data[i].leibie_name != data.data[i - 1].leibie_name) {
-                            dataNumberArray.push(i);
-                        }
-                    }
-                    for (var j = 0; j < dataNumberArray.length; j++) {
-                        newTable += darwTable_my(dataNumberArray[j], data);
-                    }
-                    //创建表格
-                    $("#show_xxcs").html(newTable);
-                    //给表格渲染数据render
-                    for (var k = 0; k < dataNumberArray.length; k++) {
-                        if (k == dataNumberArray.length - 1) {
-                            renderTableData(dataNumberArray[k], data.data.length, data);
-                        } else {
-                            renderTableData(dataNumberArray[k], dataNumberArray[k + 1], data);
-                        }
-                    }
-                }else{
-                    $('#show_xxcs').html("<div'>暂无数据!</div>");
-                }
+                var cols = [
+                    {field: 'csm', width: 200, title: '参数名'}
+                    , {field: 'csz', width: 200, title: '参数值'}
+                ];
+                layui.table.render({
+                    elem: '#xxcs_table'
+                    ,data:data.data
+                    ,limit:10000
+                    ,cols: [cols]
+                });
+
                 // 查看
                 layer.open({
                     type: 1,
