@@ -87,6 +87,7 @@ public class PCN010Controller extends AbstractBispenser {
         buGun.setRiqi(new Date());
         buGun.setShedingchangdu(currentBJ.getShedingbuchang());
 //        buGun.set Fixme 织轴问题
+        bugunRepository.save(buGun);
 
     }
 

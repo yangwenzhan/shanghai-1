@@ -28,9 +28,6 @@ public class DataWriteBaseJob { //fixme 继承JOB
     @Autowired
     private ParamDao paramDao;
 
-    @Autowired
-    private CurrentBujiRepository currentBujiRepository;
-
     /**
      * 每分钟的第0秒执行一次
      * 把缓存数据写入数据库中...
@@ -49,7 +46,7 @@ public class DataWriteBaseJob { //fixme 继承JOB
                 cbjs.add(bj);
             }
         }
-        currentBujiRepository.saveAll(cbjs);
+        paramDao.saveAll_Current_BuJi(cbjs);
         long end = System.currentTimeMillis();
         log.info("数据存入数据库共耗时："+(end-start)+"毫秒！");
     }
