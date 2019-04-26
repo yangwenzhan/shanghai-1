@@ -10,8 +10,11 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.dispenser.Ab
 import com.tianqiauto.textile.weaving.model.sys.BuGun;
 import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import com.tianqiauto.textile.weaving.repository.BugunRepository;
+import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -77,18 +80,35 @@ public class PCN010Controller extends AbstractBispenser {
     private void insertBugun(String ip, long buchang){
         PicanolHost picanolHost = picanolHostRepository.findByIp(ip);
         Current_BuJi currentBJ = picanolHost.getCurrentBuJi();
-        BuGun buGun = new BuGun();
-//        buGun.setBanci();
-        buGun.setChangdu((double)buchang);
-        buGun.setHeyuehao(currentBJ.getHeyuehao());
-        buGun.setJitaihao(currentBJ.getJitaihao());
-        buGun.setLuoburen(currentBJ.getDangchegong());
-        buGun.setLuobushijian(new Date());
-        buGun.setRiqi(new Date());
-        buGun.setShedingchangdu(currentBJ.getShedingbuchang());
-//        buGun.set Fixme 织轴问题
-        bugunRepository.save(buGun);
 
+        long time = findJiTaiHao(currentBJ.getJitaihao().getId());
+        Date currDate = new Date();
+        if(!(time >(currDate.getTime()-5*60*1000))){ //5分钟子内没有记录
+            BuGun buGun = new BuGun();
+//        buGun.setBanci();
+            buGun.setChangdu((double)buchang);
+            buGun.setHeyuehao(currentBJ.getHeyuehao());
+            buGun.setJitaihao(currentBJ.getJitaihao());
+            buGun.setLuoburen(currentBJ.getDangchegong());
+            buGun.setLuobushijian(currDate);
+            buGun.setRiqi(currDate);
+            buGun.setShedingchangdu(currentBJ.getShedingbuchang());
+//        buGun.set Fixme 织轴问题
+            bugunRepository.save(buGun);
+        }
+    }
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    public long findJiTaiHao(Long id){
+        String sql = "SELECT MAX(luobushijian) FROM sys_bugun WHERE jitai_id = ?";
+        Date date = jdbcTemplate.queryForObject(sql,Date.class,id);
+        if(null == date){
+            return 0;
+        }else{
+            return date.getTime();
+        }
     }
 
 }

@@ -51,7 +51,7 @@ public class ParamDao {
                 ",weiting = ?\n" +
                 ",zongting = ?\n" +
                 ",qitingzhuangtai_id = ?\n" +
-                ",yunxingzhaungtai_id = ?\n" +
+                ",yunxingzhangtai_id = ?\n" +
                 ",daweicishu = ?\n" +
                 ",weimi = ?\n" +
                 ",yunxingshijian = ?\n" +
