@@ -28,7 +28,7 @@ public class Model_Current {
     private String  time;
     private Date time_computed;   //时间
     public Date getTime_computed() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/M/d HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(this.date + " " + this.time, dtf);
         return  Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
@@ -49,7 +49,7 @@ public class Model_Current {
     }
 
 
-    @ExcelColumn(index = 22)  //当前布长
+    @ExcelColumn(index = 22)  //当前布辊布长
     private Integer buchang;
     public Double getBuchang() {
         return buchang*0.1;

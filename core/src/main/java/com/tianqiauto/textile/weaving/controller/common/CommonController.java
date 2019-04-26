@@ -6,13 +6,12 @@ import com.tianqiauto.textile.weaving.model.base.Gongxu;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.repository.Dict_TypeRepository;
 import com.tianqiauto.textile.weaving.repository.GongXuRepository;
+import com.tianqiauto.textile.weaving.repository.PaiBanCurrentRepository;
 import com.tianqiauto.textile.weaving.service.common.CommonService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -35,6 +34,9 @@ public class CommonController {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private PaiBanCurrentRepository paiBanCurrentRepository;
 
     @GetMapping("findAllGX")
     @ApiOperation(value = "查询所有工序")
@@ -114,5 +116,23 @@ public class CommonController {
         List<Map<String,Object>> list = commonService.findJiTaiHao(gongxu, jixing);
         return Result.ok("查询成功",list);
     }
+
+    @GetMapping("findCurrentBCLB")
+    @ApiOperation(value = "查询工序当前班次轮班")
+    public Result findCurrentBCLB(String name){
+        Integer id = commonService.findGongXuID(name);
+        Gongxu gongxu = new Gongxu();
+        gongxu.setId(id.longValue());
+        return Result.ok("查询成功",paiBanCurrentRepository.findByGongxu(gongxu));
+    }
+
+    @GetMapping("findCurrentBCLB_NativeQuery")
+    @ApiOperation(value = "查询工序当前班次轮班")
+    public Result findCurrentBCLB_NativeQuery(String name){
+        List<Map<String,Object>> list = commonService.findCurrentBCLB_NativeQuery(name);
+        return Result.ok("查询成功",list);
+    }
+
+
 
 }

@@ -53,7 +53,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     var index = jth["dataIndex"];
                     state = arr_sysc[index];
                     var str = jth.name+"<br>"
-                        +jth.seriesName+":"+state+"分钟<br>"
+                        +jth.seriesName+":"+state+"小时<br>"
                         +"预计了机时刻:"+jth.data;
                     return str;
                 }
@@ -110,7 +110,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         var cols =  [
             {field: 'rownum',width:55,fixed:true}
             ,{field: 'jitaihao',sort:true, title: '机台号',width:90,fixed:true}
-            ,{field: 'liaojishijian',sort:true, title: '了机倒计时min',width:130}
+            ,{field: 'liaojishijian',sort:true, title: '了机倒计时h',width:130}
             ,{field: 'ljsk',sort:true, title: '预计了机时刻',width:170}
             ,{field: 'yxzt',sort:true, title: '运行状态',width:100}
             ,{field: 'jixing',sort:true, title: '机型',width:100}

@@ -616,7 +616,7 @@ layui.define(function(exports){
             },
             Tel: function (value, item) {
                 var sj = /^1[34578]\d{9}$/.test(value);
-                var dh = /^\d{3,4}-\d{7,8}$/.test(value)
+                var dh = /^\d{3,4}-\d{7,8}$/.test(value);
                 var jy = !(dh || sj);
                 if (jy) {
                     return "请输入正确的手机或电话号码！";
@@ -736,7 +736,7 @@ layui.define(function(exports){
                 }
             }
         });
-    }
+    };
 
     /**
      *  bjw 2019.03.30
@@ -785,7 +785,7 @@ layui.define(function(exports){
                 form.render();
             }
         });
-    }
+    };
 
 
     /**
@@ -809,7 +809,39 @@ layui.define(function(exports){
                 data[name] = currentObj;
         }
         from.val(formId, data);
-    }
+    };
+
+    /**
+     * 2019/04/25 lrj
+     * 传入工序名称 获取工序当前班次轮班
+     */
+    currentBanCiLunBan = function(name){
+        var obj;
+        $.ajax({
+            // jpa查询接口
+            // url: layui.setter.host + 'common/findCurrentBCLB',
+            //sql语句查询接口
+            url: layui.setter.host + 'common/findCurrentBCLB_NativeQuery',
+            type: 'GET',
+            async:false,
+            data:{
+                name:name
+            },
+            success: function (data) {
+                if(data.code==0){
+                    // jpa接口查询返回数据
+                    // obj =  data.data;
+
+                    // 原生sql查询返回数据
+                    if(data.data.length>0){
+                        obj = data.data[0];
+                    }
+                }
+            }
+        });
+        return obj;
+    };
+
 
     //对外暴露的接口
   exports('common', {});

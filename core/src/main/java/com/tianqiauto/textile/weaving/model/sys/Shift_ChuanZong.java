@@ -5,6 +5,9 @@ import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,12 +28,14 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","users"})
 @ToString(exclude = {"banci","jitaihao","heyuehao","users"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EntityListeners(AuditingEntityListener.class)
 public class Shift_ChuanZong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date riqi;
     @ManyToOne
     @JoinColumn(name = "banci_id")
@@ -59,9 +64,11 @@ public class Shift_ChuanZong {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
+    private String beizhu;   //备注
 
-
-
+    @Column
+    @CreatedDate
+    private Date createTime;
 
 
 }
