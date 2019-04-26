@@ -818,7 +818,10 @@ layui.define(function(exports){
     currentBanCiLunBan = function(name){
         var obj;
         $.ajax({
-            url: layui.setter.host + 'common/findCurrentBCLB',
+            // jpa查询接口
+            // url: layui.setter.host + 'common/findCurrentBCLB',
+            //sql语句查询接口
+            url: layui.setter.host + 'common/findCurrentBCLB_NativeQuery',
             type: 'GET',
             async:false,
             data:{
@@ -826,7 +829,13 @@ layui.define(function(exports){
             },
             success: function (data) {
                 if(data.code==0){
-                    obj =  data.data;
+                    // jpa接口查询返回数据
+                    // obj =  data.data;
+
+                    // 原生sql查询返回数据
+                    if(data.data.length>0){
+                        obj = data.data[0];
+                    }
                 }
             }
         });
