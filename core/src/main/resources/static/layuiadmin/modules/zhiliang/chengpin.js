@@ -380,28 +380,6 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         return cols;
     }
 
-
-    function encObject(obj) {
-        $.each(obj, function (key, val) {
-            val = !val ? "''" : "'"+val+"'";
-            var arr = key.split('.');
-            if (arr.length <= 1) {
-                return true;
-            }
-            var textObj = 'obj';
-            var currentObj = obj; //当前对象
-            for (var i = 0; i < arr.length; i++) {
-                if (i == arr.length - 1) {
-                    eval(textObj + "." + arr[i] + "=" + val);
-                } else {
-                    textObj += '.' + arr[i];
-                    if (currentObj[arr[i]] == undefined || null == currentObj[arr[i]]) {
-                        eval(textObj + '= {}');
-                    }
-                }
-            }
-        });
-    }
     function fromSetVel(from, formId, data) {
         var arrObj = $('#' + formId).find(":input[name *= '.']");
         for (var i = 0; i < arrObj.length; i++) {

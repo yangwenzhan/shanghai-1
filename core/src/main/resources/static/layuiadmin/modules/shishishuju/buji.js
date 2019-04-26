@@ -67,15 +67,20 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     ,{field: 'zhou_name',sort:true, title: '织轴号',width:90}
                     ,{field: 'jingchang',sort:true, title: '当前经长m',width:120}
                     ,{field: 'zz_zjc',sort:true, title: '总经长m',width:100}
-                    ,{field: 'buchang',sort:true, title: '当前布长m',width:120}
+                    ,{field: 'dangbanbuchang',sort:true, title: '当班布长m',width:140}
+                    ,{field: 'buchang',sort:true, title: '当前布辊布长m',width:140}
                     ,{field: 'shedingbuchang',sort:true, title: '设定布长m',width:120}
                     ,{field: 'luobushijian',sort:true, title: '落布倒计时min',width:150}
-                    ,{field: 'liaojishijian',sort:true, title: '了机倒计时min',width:150}
+                    ,{field: 'liaojishijian',sort:true, title: '了机倒计时h',width:150}
                     ,{field: 'jingting',sort:true, title: '经停',width:80}
                     ,{field: 'weiting',sort:true, title: '纬停',width:80}
                     ,{field: 'zongting',sort:true, title: '总停',width:80}
                     ,{field: 'chesu',sort:true, title: '车速',width:80}
                     ,{field: 'xiaolv',sort:true, title: '效率',width:80}
+                    ,{field: 'daweicishu',sort:true, title: '打纬次数',width:120}
+                    ,{field: 'suolv',sort:true, title: '缩率',width:80}
+                    ,{field: 'shiwanweiweiting',sort:true, title: '十万纬停',width:120}
+                    ,{field: 'yunxingshijian',sort:true, title: '运行时间m',width:120}
                     ,{field: 'ygxm',sort:true, title: '员工',width:120}
                     ,{field: 'last_modify_time',sort:true, title: '最后更新时间',width:220}
                 ];

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/formSelects.css}" media="all">
+	<title>整经交班产量登记</title>
+</head>
+
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<div class="layui-inline" style="display: none;">
+						<div class="layui-input-inline">
+							<input type="text" id="id" th:value="${#authentication.getPrincipal().getUser().getId()}" autocomplete="off" class="layui-input" readonly>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">日期</label>
+						<div class="layui-input-inline">
+							<input type="text" name="riqi" lay-verify="required" placeholder="日期" id="rq" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">班次</label>
+						<div class="layui-input-inline">
+							<select name="banci" lay-search="" id="banci" lay-filter="banci">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+						</button>
+					</div>
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-list" type="button" id="add_btn">
+							<i class="layui-icon layuiadmin-button-btn" >&#xe608;</i>产量登记
+						</button>
+					</div>
+
+				</div>
+			</form>
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>修改</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i class="layui-icon layui-icon-delete"></i>删除</a>
+	</script>
+
+	<!--整经交班产量登记弹出框-->
+	<div id="add_form_div" style="display: none;">
+		<div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 20px 30px 0 0;">
+			<div class="layui-form-item">
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>日期班次选择</legend>
+				</fieldset>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">日期</label>
+					<div class="layui-input-inline">
+						<input type="text" name="riqi" lay-verify="required" placeholder="日期" id="dj_rq" class="layui-input" autocomplete="off" />
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">班次</label>
+					<div class="layui-input-inline">
+						<select name="banci" id="dj_bc" lay-filter="dj_bc">
+						</select>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>产量信息登记</legend>
+				</fieldset>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-inline">
+						<select name="heyuehao" lay-search="" id="dj_hyh" lay-filter="dj_hyh">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-inline">
+						<select name="jitaihao" id="dj_jth" lay-filter="dj_jth">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">轴/桶</label>
+					<div class="layui-input-inline">
+						<select name="flag" id="dj_zht" lay-filter="dj_zht">
+							<option value="1">轴</option>
+							<option value="2">桶</option>
+						</select>
+					</div>
+				</div>
+
+				<!--<div class="layui-inline" id="dj_jzz_div">
+					<label class="layui-form-label">经/织轴</label>
+					<div class="layui-input-inline">
+						<select name="jingzhizhou" id="dj_jzz" lay-filter="dj_jzz">
+							<option value="1">经轴</option>
+							<option value="2">织轴</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline" id="dj_zh_div">
+					<label class="layui-form-label">轴号</label>
+					<div class="layui-input-inline">
+						<select name="zhouhao" lay-search="" id="dj_zh" lay-filter="dj_zh">
+						</select>
+					</div>
+				</div>-->
+
+				<div class="layui-inline">
+					<label class="layui-form-label">经长m</label>
+					<div class="layui-input-inline">
+						<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="number" name="changdu" class="layui-input" id="dj_jc" lay-verify="required" autocomplete="off" placeholder="请输入经长"/>
+					</div>
+				</div>
+
+				<div class="layui-inline" style="display: none;" id="dj_ts_div">
+					<label class="layui-form-label">条数</label>
+					<div class="layui-input-inline">
+						<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="number" name="tiaoshu" class="layui-input" id="dj_ts" autocomplete="off" placeholder="请输入条数"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-inline">
+						<input type="text" name="beizhu" class="layui-input" id="dj_bz" autocomplete="off" placeholder="请输入备注"/>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>整经工选择</legend>
+				</fieldset>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" id="dj_ssgx" lay-filter="dj_ssgx">
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">整经工</label>
+					<div class="layui-input-inline">
+						<select xm-select="addUser" lay-verify="required" name="users" id="dj_zjg" lay-filter="dj_zjg"></select>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--修改整经交班产量登记弹出框-->
+	<div id="edit_form_div" style="display: none;">
+		<form class="layui-form" lay-filter="form_edit" id="form_edit">
+			<div class="layui-form-item">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>日期班次选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">日期</label>
+					<div class="layui-input-inline">
+						<input type="text" name="riqi" lay-verify="required" placeholder="日期" id="xg_dj_rq" class="layui-input" autocomplete="off" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">班次</label>
+					<div class="layui-input-inline">
+						<select name="banci_id" id="xg_dj_bc" lay-filter="xg_dj_bc">
+						</select>
+					</div>
+				</div>
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>产量信息登记</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">合约号</label>
+					<div class="layui-input-inline">
+						<select name="heyuehao_id" lay-search="" id="xg_dj_hyh" lay-filter="xg_dj_hyh">
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">机台号</label>
+					<div class="layui-input-inline">
+						<select name="jitaihao_id" id="xg_dj_jth" lay-filter="xg_dj_jth">
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">轴/桶</label>
+					<div class="layui-input-inline">
+						<select name="flag" id="xg_dj_zht" lay-filter="xg_dj_zht">
+							<option value="1">轴</option>
+							<option value="2">桶</option>
+						</select>
+					</div>
+				</div>
+				<!--<div class="layui-inline" id="xg_dj_jzz_div">
+					<label class="layui-form-label">经/织轴</label>
+					<div class="layui-input-inline">
+						<select name="jingzhizhou" id="xg_dj_jzz" lay-filter="xg_dj_jzz">
+							<option value="1">经轴</option>
+							<option value="2">织轴</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline" id="xg_dj_zh_div">
+					<label class="layui-form-label">轴号</label>
+					<div class="layui-input-inline">
+						<select name="zhouhao" lay-search="" id="xg_dj_zh" lay-filter="xg_dj_zh">
+						</select>
+					</div>
+				</div>-->
+				<div class="layui-inline">
+					<label class="layui-form-label">经长m</label>
+					<div class="layui-input-inline">
+						<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="number" name="changdu" class="layui-input" id="xg_dj_jc" lay-verify="required" autocomplete="off" placeholder="请输入经长"/>
+					</div>
+				</div>
+				<div class="layui-inline" id="xg_dj_ts_div">
+					<label class="layui-form-label">条数</label>
+					<div class="layui-input-inline">
+						<input onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onblur="this.value=this.value.replace(/[^\d.]/g,'')" type="number" name="tiaoshu" class="layui-input" id="xg_dj_ts" autocomplete="off" placeholder="请输入条数"/>
+					</div>
+				</div>
+
+				<div class="layui-inline">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-inline">
+						<input type="text" name="beizhu" class="layui-input" id="xg_dj_bz" autocomplete="off" placeholder="请输入备注"/>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+					<legend>整经工选择</legend>
+				</fieldset>
+				<div class="layui-inline">
+					<label class="layui-form-label">所属工序</label>
+					<div class="layui-input-inline">
+						<select name="gongxu" lay-search="" id="xg_dj_ssgx" lay-filter="xg_dj_ssgx">
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">整经工</label>
+					<div class="layui-input-inline">
+						<select xm-select="editUser" lay-verify="required" name="users" id="xg_dj_zjg" lay-filter="xg_dj_zjg"></select>
+					</div>
+				</div>
+
+				<div class="layui-hide">
+					<input type="button" lay-submit lay-filter="form_edit_submit" id="form_edit_submit" value="确认">
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<div th:replace="common/links::js_footer"></div>
+	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,zhengjingdengji:'jiaobandengji/zhengjingdengji'
+		}).use(['index','zhengjingdengji','formSelects'],function () {
+		});
+	</script>
+
+</body>
+</html>

@@ -44,7 +44,7 @@
   	<div th:replace="common/links::js_footer"></div>
 
 	<script type="text/html" id="cur_yzfs_num_upd">
-		<input type="radio" class="cur_yzfs_num_upd" lay-filter="radioInput" lay name="radio_upd" value="{{d.sort}}" />
+		<input type="radio" class="cur_yzfs_num_upd" lay-filter="radioInput" name="radio_upd" id="{{d.id}}" value="{{d.sort}}" />
 	</script>
 	<script type="text/html" id="cur_yzfs_num_sel">
 		<input type="radio" class="cur_yzfs_num_sel" name="radio_sel" value="{{d.sort}}" disabled=""/>

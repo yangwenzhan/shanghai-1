@@ -73,7 +73,11 @@
 		<div class="layui-tab-content">
 			<!--详细参数-->
 			<div class="layui-tab-item layui-show" id="xxcs_div">
-				<div class="show_xxcs" id="show_xxcs"></div>
+				<div class="show_xxcs" id="show_xxcs">
+					<!--table 放从sys_current_buji表中取的数据-->
+					<table class="layui-table" id="xxcs_table" lay-filter="xxcs_table">
+					</table>
+				</div>
 			</div>
 			<!--故障参数-->
 			<div class="layui-tab-item">
@@ -91,7 +95,7 @@
 	<div th:replace="common/links::js_footer"></div>
 	<script th:src="@{/js/echarts/echarts.min.js}"></script>
 	<script th:src="@{/js/echarts/TIS-echarts.js}"></script>
-	<script th:src="@{/layuiadmin/modules/shishishuju/windowpop.js}"></script>
+	<script th:src="@{/layuiadmin/modules/shishishuju/windowpop_new.js}"></script>
 
 	</body>
 
