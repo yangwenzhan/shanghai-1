@@ -147,7 +147,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                             form.on('submit(form_edit_submit)', function (data) {
                                 var formData = data.field;
                                 formData.id = js_id;
-                                formData.heyuehao = {id:hyh_id}
+                                formData.heyuehao = {id:hyh_id};
                                 $.ajax({
                                     url:layui.setter.host+'zhiliang/jiangshazhiliang/updJiangShaZhiLiang',
                                     type:'post',

@@ -97,7 +97,7 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
                 var user_id_arr = formSelects.value('addUser', 'val');
                 if(user_id_arr.length == 0){verifyWindow("请选择整经工!");return false;}
 
-                var user_list = [],user_obj=new Object();
+                var user_list = [],user_obj={};
                 for(var i=0; i<user_id_arr.length;i++){
                     user_obj={id:user_id_arr[i]};
                     user_list.push(user_obj);
@@ -179,7 +179,7 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
                     var user_id_arr = formSelects.value('editUser', 'val');
                     if(user_id_arr.length == 0){verifyWindow("请选择整经工!");return false;}
 
-                    var user_list = [],user_obj=new Object();
+                    var user_list = [],user_obj={};
                     for(var i=0; i<user_id_arr.length;i++){
                         user_obj={id:user_id_arr[i]};
                         user_list.push(user_obj);

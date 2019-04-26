@@ -616,7 +616,7 @@ layui.define(function(exports){
             },
             Tel: function (value, item) {
                 var sj = /^1[34578]\d{9}$/.test(value);
-                var dh = /^\d{3,4}-\d{7,8}$/.test(value)
+                var dh = /^\d{3,4}-\d{7,8}$/.test(value);
                 var jy = !(dh || sj);
                 if (jy) {
                     return "请输入正确的手机或电话号码！";
@@ -736,7 +736,7 @@ layui.define(function(exports){
                 }
             }
         });
-    }
+    };
 
     /**
      *  bjw 2019.03.30
@@ -785,7 +785,7 @@ layui.define(function(exports){
                 form.render();
             }
         });
-    }
+    };
 
 
     /**
@@ -809,7 +809,7 @@ layui.define(function(exports){
                 data[name] = currentObj;
         }
         from.val(formId, data);
-    }
+    };
 
     /**
      * 2019/04/25 lrj
@@ -840,7 +840,7 @@ layui.define(function(exports){
             }
         });
         return obj;
-    }
+    };
 
 
     //对外暴露的接口

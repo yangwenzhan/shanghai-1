@@ -5,13 +5,14 @@ import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import com.tianqiauto.textile.weaving.model.base.User;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @ClassName Shift_Zhengjing
@@ -28,7 +29,6 @@ import java.util.Date;
 @EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","dangchegong"})
 @ToString(exclude = {"banci","jitaihao","heyuehao","dangchegong"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EntityListeners(AuditingEntityListener.class)
 public class Shift_BuJi {
 
     @Id
@@ -86,9 +86,11 @@ public class Shift_BuJi {
     private Integer zongtingshijian; //总停时间
 
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User dangchegong;  //挡车工
+
 
 
     @Column

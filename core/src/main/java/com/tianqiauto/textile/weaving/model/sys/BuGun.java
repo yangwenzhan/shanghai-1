@@ -21,8 +21,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_bugun")
-@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","luoburen","zhiZhou"})
-@ToString(exclude = {"banci","jitaihao","heyuehao","luoburen","zhiZhou"})
+@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","luoburen","zhiZhou_left","zhiZhou_right"})
+@ToString(exclude = {"banci","jitaihao","heyuehao","luoburen","zhiZhou_left","zhiZhou_right"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BuGun {
 
@@ -46,10 +46,14 @@ public class BuGun {
 
     private Date luobushijian;//落布时间
 
+    @ManyToOne
+    @JoinColumn(name = "lunban_id")
+    private Dict lunban;
+
     private String xuhao;   //日期班次
 
     @ManyToOne
-    @JoinColumn(name = "jitai_id")     //预计换轴时间： 查询当前机台轴的上机时间，查询出时间大于上机时间的落布信息+当前机台布辊长度，预测轴剩余经长。
+    @JoinColumn(name = "jitai_id")
     private SheBei jitaihao;
 
     private Double changdu; //落布长度
@@ -66,8 +70,12 @@ public class BuGun {
 
 
     @ManyToOne
-    @JoinColumn(name = "zhizhou_id")
-    private Beam_ZhiZhou zhiZhou;
+    @JoinColumn(name = "zhizhou_left_id")
+    private Beam_ZhiZhou zhiZhou_left;
+
+    @ManyToOne
+    @JoinColumn(name = "zhizhou_right_id")
+    private Beam_ZhiZhou zhiZhou_right;
 
 
 
