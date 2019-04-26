@@ -1,31 +1,8 @@
 package com.tianqiauto.textile.weaving.service.jihuaguanli;
 
-import com.tianqiauto.textile.weaving.model.base.Dict;
-import com.tianqiauto.textile.weaving.model.base.SheBei;
-import com.tianqiauto.textile.weaving.model.sys.Heyuehao;
-import com.tianqiauto.textile.weaving.model.sys.JiHua_BuJi;
-import com.tianqiauto.textile.weaving.repository.HeYueHaoRepository;
-import com.tianqiauto.textile.weaving.repository.JihuaBujiRepository;
-import com.tianqiauto.textile.weaving.repository.ShebeiRepository;
-import com.tianqiauto.textile.weaving.repository.dao.DictDao;
-import com.tianqiauto.textile.weaving.util.copy.MyCopyProperties;
-import com.tianqiauto.textile.weaving.util.model.ModelUtil;
-import com.tianqiauto.textile.weaving.util.model.Param;
-import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
-import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
-import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Author bjw

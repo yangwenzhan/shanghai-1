@@ -14,7 +14,6 @@ import com.tianqiauto.textile.weaving.util.model.Param;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
 import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
-import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

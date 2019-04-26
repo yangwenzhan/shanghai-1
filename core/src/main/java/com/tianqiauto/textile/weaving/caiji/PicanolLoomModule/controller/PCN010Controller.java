@@ -8,11 +8,13 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.StringUtils;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.dispenser.AbstractBispenser;
 import com.tianqiauto.textile.weaving.model.sys.BuGun;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import com.tianqiauto.textile.weaving.repository.BugunRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * 生产状态信息
@@ -74,18 +76,17 @@ public class PCN010Controller extends AbstractBispenser {
 
     private void insertBugun(String ip, long buchang){
         PicanolHost picanolHost = picanolHostRepository.findByIp(ip);
-
+        Current_BuJi currentBJ = picanolHost.getCurrentBuJi();
         BuGun buGun = new BuGun();
 //        buGun.setBanci();
-//        buGun.setChangdu((double)buchang);
-//        buGun.setHeyuehao();
-//        buGun.setJitaihao();
-//        buGun.setLuoburen();
-//        buGun.setLuobushijian();
-//        buGun.setRiqi();
-//        buGun.setShedingchangdu();
-//        buGun.set
-
+        buGun.setChangdu((double)buchang);
+        buGun.setHeyuehao(currentBJ.getHeyuehao());
+        buGun.setJitaihao(currentBJ.getJitaihao());
+        buGun.setLuoburen(currentBJ.getDangchegong());
+        buGun.setLuobushijian(new Date());
+        buGun.setRiqi(new Date());
+        buGun.setShedingchangdu(currentBJ.getShedingbuchang());
+//        buGun.set Fixme 织轴问题
 
     }
 

@@ -2,7 +2,6 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job.analysis;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
-import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.Cache;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.StringUtils;
@@ -110,7 +109,7 @@ public class PCN031Thread extends AbstractAnalysis {
     private void analysisShift(byte[] bt, Current_BuJi currentBuJi) {
         byte[] param2 = Arrays.copyOfRange(bt, 6, 10);//参数2 打纬次数
         long param2Str = BytesUtil.bytesToLongWord(param2);
-        currentBuJi.setDaweicishu(param2Str);
+        currentBuJi.setDaweicishu((double)param2Str);
 
 //        byte[] param3 = Arrays.copyOfRange(bt, 10, 14);//参数3 换班经过时间（秒）
 //        long param3Str = BytesUtil.bytesToLongWord(param3);
