@@ -29,6 +29,8 @@ public class Beam_ZhiZhou_Shift {
     private Long id;
 
 
+
+
     @ManyToOne
     @JoinColumn(name = "zhizhou_id")
     private Beam_ZhiZhou zhizhou; //轴
@@ -54,11 +56,14 @@ public class Beam_ZhiZhou_Shift {
 
     private Date jiangsha_time_shangche; //浆纱上机时间
 
+
     @ManyToOne
     @JoinColumn(name = "jth_jiangsha_xiache")
     private SheBei jitaihao_jiangsha_xiache;  //机台号
 
     private Date jiangsha_time_xiache; //浆纱下机时间
+
+    private String ganghao;  // 缸号
 
     @ManyToOne
     @JoinColumn(name = "jth_chuanzong")

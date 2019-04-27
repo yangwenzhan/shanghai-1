@@ -1,7 +1,6 @@
 package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
 
@@ -37,6 +36,8 @@ public class Beam_JingZhou_Shift {
     @JoinColumn(name = "heyuehao_id")
     private Heyuehao heyuehao;
 
+    private String ganghao;  // 缸号
+
     private Double jingchang;  //经长
 
 
@@ -45,10 +46,8 @@ public class Beam_JingZhou_Shift {
     private SheBei jitaihao_zhengjing;  //机台号
     private Date zhengjing_time; //整经下机时间
 
-    @ManyToOne
-    @JoinColumn(name = "jth_jiangsha")
-    private SheBei jitaihao_jiangsha;  //机台号
-    private Date jiangsha_time; //浆纱下机时间
+
+
 
 
 

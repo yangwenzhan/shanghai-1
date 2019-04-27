@@ -117,6 +117,7 @@ layui.define(function(exports){
       , cellMinWidth: 80
       , limit: 1000000
       , cols: cols
+      ,height:'full-180'
       ,where:getParams(formId)
       , done: function (res) {
         if (typeof(doneCallBack) === "function") {
