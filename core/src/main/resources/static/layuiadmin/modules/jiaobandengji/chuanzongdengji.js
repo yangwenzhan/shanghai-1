@@ -8,9 +8,6 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
     var gongxu_chuanzong_id = 3;
     var gongxu_chuanzong = "穿综";
 
-    //获取穿综当前日期班次轮班
-    var current = currentBanCiLunBan(gongxu_chuanzong);
-
     //筛选条件初始化
     var initValue = formatDate(addDate(new Date(),0));
     laydate.render({
@@ -60,14 +57,16 @@ layui.define(['table', 'form', 'laydate','formSelects'], function(exports){
 
         $('#dj_gs').val("");$('#dj_bz').val("");
 
+        //获取穿综当前日期班次轮班
+        var current = currentBanCiLunBan(gongxu_chuanzong);
         //fixme  begin 当前整经工序日期班次
         laydate.render({
             elem: '#dj_rq',
             type: 'date',
             value: current.riqi
         });
-        $('#rq').val(current.riqi);
-        dictInitSelect('dj_bc', current.banci.id, 'banci', 'name', 'id', false);
+        $('#dj_rq').val(current.riqi);
+        dictInitSelect('dj_bc', current.banci_id, 'banci', 'name', 'id', false);
         //fixme  end
 
         //工序传穿综工序id 3
