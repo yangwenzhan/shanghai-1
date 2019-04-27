@@ -7,9 +7,12 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.dao.repository.Pic
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.StringUtils;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.dispenser.AbstractBispenser;
+import com.tianqiauto.textile.weaving.model.base.Dict;
 import com.tianqiauto.textile.weaving.model.sys.BuGun;
 import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import com.tianqiauto.textile.weaving.repository.BugunRepository;
+import com.tianqiauto.textile.weaving.repository.DictRepository;
+import com.tianqiauto.textile.weaving.service.common.CommonService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 生产状态信息
@@ -77,6 +82,12 @@ public class PCN010Controller extends AbstractBispenser {
         }
     }
 
+    @Autowired
+    private CommonService commonService;
+
+    @Autowired
+    private DictRepository dictRepository;
+
     private void insertBugun(String ip, long buchang){
         PicanolHost picanolHost = picanolHostRepository.findByIp(ip);
         Current_BuJi currentBJ = picanolHost.getCurrentBuJi();
@@ -84,8 +95,12 @@ public class PCN010Controller extends AbstractBispenser {
         long time = findJiTaiHao(currentBJ.getJitaihao().getId());
         Date currDate = new Date();
         if(!(time >(currDate.getTime()-5*60*1000))){ //5分钟子内没有记录
+            Map<String,Object> map = commonService.findCurrentBCLB_NativeQuery("织布").get(0);
+            Dict banci = dictRepository.findById((long)map.get("banci_id")).get();
+            Dict lunban = dictRepository.findById((long)map.get("lunban_id")).get();
             BuGun buGun = new BuGun();
-//        buGun.setBanci();
+            buGun.setBanci(banci);
+            buGun.setLunban(lunban);
             buGun.setChangdu((double)buchang);
             buGun.setHeyuehao(currentBJ.getHeyuehao());
             buGun.setJitaihao(currentBJ.getJitaihao());
@@ -93,7 +108,7 @@ public class PCN010Controller extends AbstractBispenser {
             buGun.setLuobushijian(currDate);
             buGun.setRiqi(currDate);
             buGun.setShedingchangdu(currentBJ.getShedingbuchang());
-//        buGun.set Fixme 织轴问题
+//          buGun.set Fixme 织轴问题
             bugunRepository.save(buGun);
         }
     }

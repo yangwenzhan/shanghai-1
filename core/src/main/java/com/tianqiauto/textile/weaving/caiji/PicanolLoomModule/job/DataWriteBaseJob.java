@@ -5,11 +5,9 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.dao.ParamDao;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.Cache;
 import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
-import com.tianqiauto.textile.weaving.repository.CurrentBujiRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
