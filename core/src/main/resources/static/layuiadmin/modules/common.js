@@ -15,14 +15,37 @@ layui.define(function(exports){
   //公共业务的逻辑处理可以写在此处，切换任何页面都会执行
   //……
 
+    /**
+     * 涉及到开始日期班次，结束日期班次的筛选条件查询，封装成开始序号，结束序号
+     * 开始日期：name='kaishiriqi';  开始班次：name='kaishibanci'
+     * 结束日期：name='jieshuriqi';  结束班次：name='jieshubanci'
+     * 若开始班次为全部，处理成了早班value
+     * 若结束班次为全部，处理成了夜班value
+     * @param formId
+     * @returns {{}}
+     */
   getParams = function (formId) {
     var _params = {};
 
+    var kaishiriqi,kaishibanci,kaishixuhao,jieshuriqi,jieshubanci,jieshuxuhao;
+
     $.each($('#' + formId).serializeArray(), function (i, field) {
       if (null != field.value && "" != field.value) {
-      _params[field.name] = field.value;
+        _params[field.name] = field.value;
       }
+      if(field.name == "kaishiriqi") {kaishiriqi = field.value;}
+      if(field.name == "kaishibanci"){kaishibanci = (field.value == "" ? "10" : field.value);}
+      if(field.name == "jieshuriqi") {jieshuriqi = field.value;}
+      if(field.name == "jieshubanci"){jieshubanci = (field.value == "" ? "30" : field.value);}
     });
+    if(kaishiriqi != null && kaishiriqi != ""){
+        kaishixuhao = kaishiriqi.replace(/-/g,'')+kaishibanci;
+        _params.kaishixuhao = kaishixuhao;
+    }
+    if(jieshuriqi != null && jieshuriqi != ""){
+        jieshuxuhao = jieshuriqi.replace(/-/g,'')+jieshubanci;
+        _params.jieshuxuhao = jieshuxuhao;
+    }
     return _params;
   };
 
@@ -384,6 +407,8 @@ layui.define(function(exports){
             html+='<option value= "" >全部</option>';
         }
         var dicts = data.data.dicts;
+        dicts = dicts.sort(sortSort);
+
         for(var i = 0;i<dicts.length;i++){
             if(param.defaultValue == dicts[i].value){
                 html+='<option selected value= "'+dicts[i].id+'" >'+dicts[i].name+'</option>';
@@ -393,6 +418,11 @@ layui.define(function(exports){
         }
         $("select[name='"+param.code+"']").append(html);
     };
+
+    //根据sort排序
+    function sortSort(a,b){
+        return a.sort-b.sort;
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

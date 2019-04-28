@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="common/links::header"></div>
+	<title>布辊产出记录</title>
+</head>
+
+<body>
+
+	<div class="layui-fluid">
+		<div class="layui-card">
+			<form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+				<div class="layui-form-item">
+
+					<!--开始日期-->
+					<div class="layui-inline">
+						<label class="layui-form-label">开始日期</label>
+						<div class="layui-input-inline" style="width:100px;margin: 0;padding: 0;">
+							<input type="text" name="kaishiriqi" placeholder="yyyy-MM-dd" id="kaishiriqi" class="layui-input" autocomplete="off"/>
+						</div>
+						<div class="layui-input-inline" style="width: 80px;margin: 0;padding: 0;">
+							<select name="kaishibanci" id="kaishibanci" lay-filter="kaishibanci">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">结束日期</label>
+						<div class="layui-input-inline" style="width: 100px;margin: 0;padding: 0;">
+							<input type="text" name="jieshuriqi" placeholder="yyyy-MM-dd" id="jieshuriqi" class="layui-input" autocomplete="off"/>
+						</div>
+						<div class="layui-input-inline" style="width: 80px;margin: 0;padding: 0;">
+							<select name="jieshubanci" id="jieshubanci" lay-filter="jieshubanci">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">合约号</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<select name="heyuehao.id" lay-search="" id="heyuehao" lay-filter="heyuehao">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label" style="width: auto;">机台号</label>
+						<div class="layui-input-inline" style="width: 150px;">
+							<select name="jitaihao.id" lay-search="" id="jitaihao" lay-filter="jitaihao">
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="form_search">
+							<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+						</button>
+					</div>
+
+				</div>
+			</form>
+			<div class="layui-card-body">
+				<table id="table" lay-filter="table"></table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/html" id="barDemo">
+
+		{{# if(d.zhiZhou_right != null){ }}
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="left_detail"><i class="layui-icon"></i>左追踪</a>
+			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="right_detail"><i class="layui-icon"></i>右追踪</a>
+		{{# }else{ }}
+			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="left_detail"><i class="layui-icon"></i>追踪</a>
+		{{#} }}
+	</script>
+
+	<!--合约号对应原纱信息弹框-->
+	<div id="hyh_ys_tck" style="display: none;">
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
+		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
+	</div>
+
+	<div th:replace="common/links::js_footer"></div>
+
+	<script>
+		layui.config({
+			base:"/layuiadmin/" //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+			,bugunjilu:'bugun/bugunjilu'
+		}).use(['index','bugunjilu'],function () {
+		});
+	</script>
+
+</body>
+</html>
