@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_gongyi_jiangsha")
+@Entity(name = "sys_gongyi_chuanzong")
 @EqualsAndHashCode(exclude = {"gongYi","gongYi_paramValues"})
 @ToString(exclude = {"gongYi","gongYi_paramValues"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

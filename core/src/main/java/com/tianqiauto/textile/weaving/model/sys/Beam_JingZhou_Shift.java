@@ -49,12 +49,11 @@ public class Beam_JingZhou_Shift {
 
 
 
-
-
-
-
-
     private String beizhu;   //备注
+
+    @OneToOne
+    @JoinColumn(name = "zhixing_id")
+    private ZhiXing_Zhengjing zhiXing_zhengjing;//整经执行记录
 
 
 
