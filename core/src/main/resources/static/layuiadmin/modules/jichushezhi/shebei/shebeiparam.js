@@ -2,8 +2,10 @@ layui.define(['table', 'form'], function(exports){
     var table = layui.table
         ,form = layui.form;
 
+    var gongxu_zhibu_id = 7;
+
     /*待完成：下拉框未初始化值 工序机型参数类别联动*/
-    initGX("gongxu",null,false);
+    initGX("gongxu",gongxu_zhibu_id,false);
     initJX("jixing",null,false);
     initLB("leiBie",null,true);
     function initGX(elemId,selectedId,isAll) {
@@ -64,16 +66,16 @@ layui.define(['table', 'form'], function(exports){
         {fixed:'left',checkbox:true}
         ,{field: 'id', title: 'id',hide:true}
         ,{field: 'rownum', title: '',width:50}
-        ,{field: 'name',sort:true, title: '参数类别'}
-        ,{field: 'csm',sort:true, title: '参数名'}
-        ,{field: 'danwei',sort:true, title: '参数单位'}
-        ,{field: 'cunchuzhouqi',sort:true, title: '存储周期(秒)'}
-        ,{field: 'cunchushichang',sort:true, title: '存储时长(时)'}
-        ,{field: 'baojing_flag',sort:true, title: '是否报警'}
-        ,{field: 'zhanshi_flag',sort:true, title: '是否报警'}
-        ,{field: 'cunchu_flag',sort:true, title: '是否报警'}
-        ,{field: 'xuhao',sort:true, title: '排序号'}
-        ,{align: 'center',title: '操作',toolbar: '#barDemo'}
+        ,{field: 'name',sort:true, title: '参数类别',width:100}
+        ,{field: 'csm',sort:true, title: '参数名',width:180}
+        ,{field: 'danwei',sort:true, title: '参数单位',width:100}
+        ,{field: 'cunchuzhouqi',sort:true, title: '存储周期(秒)',width:120}
+        ,{field: 'cunchushichang',sort:true, title: '存储时长(时)',width:120}
+        ,{field: 'baojing_flag',sort:true, title: '报警',width:80}
+        ,{field: 'zhanshi_flag',sort:true, title: '展示',width:80}
+        ,{field: 'cunchu_flag',sort:true, title: '记录历史曲线',width:120}
+        ,{field: 'xuhao',sort:true, title: '排序号',width:90}
+        ,{align: 'center',title: '操作',toolbar: '#barDemo',width:100}
     ];
     cols = fixedColumn(cols);
 

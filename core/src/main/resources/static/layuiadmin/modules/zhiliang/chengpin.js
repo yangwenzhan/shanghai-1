@@ -90,7 +90,9 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             },
             async: false,
             success: function (data) {
-                var dict_data = {code:data.code,data:data.data.dicts,message:data.message};
+                var dicts = data.data.dicts;
+                dicts = dicts.sort(sortSort);
+                var dict_data = {code:data.code,data:dicts,message:data.message};
                 for(var i = 0;i<downId_arr.length;i++){
                     initDownList(dict_data, downId_arr[i], selectedId, 'name', 'id', isAll);
                 }
@@ -395,6 +397,11 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                 data[name] = currentObj;
         }
         form.val(formId, data);
+    }
+
+    //根据sort排序
+    function sortSort(a,b){
+        return a.sort-b.sort;
     }
 
     exports('chengpin', {})
