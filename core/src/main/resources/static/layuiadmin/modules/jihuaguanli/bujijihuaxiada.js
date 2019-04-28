@@ -52,7 +52,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '类型',templet: repNull('leixing.name'),field: 'leixing.name', sort: true}
         , {title: '机型',templet: repNull('jitaihao.gongxu.name'),field: 'jjitaihao.gongxu.name', sort: true}
         , {title: '机台号',templet: repNull('jitaihao.jitaihao'),field: 'jitaihao.jitaihao', sort: true}
-        , {title: '织轴',field: 'zhizhou'}
+        /*, {title: '织轴',field: 'zhizhou'}*/
         , {title: '合约号',templet: repNull('heyuehao.name'),field: 'heyuehao.name', sort: true}
         , {title: '单双轴',templet: repNull('danshuangzhou.name'),field: 'danshuangzhou.name', sort: true}
         , {title: '优先级',field: 'youxianji', sort: true}

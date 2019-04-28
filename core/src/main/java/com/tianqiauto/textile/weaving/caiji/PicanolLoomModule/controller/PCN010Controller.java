@@ -12,6 +12,7 @@ import com.tianqiauto.textile.weaving.model.sys.BuGun;
 import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import com.tianqiauto.textile.weaving.repository.BugunRepository;
 import com.tianqiauto.textile.weaving.repository.DictRepository;
+import com.tianqiauto.textile.weaving.repository.dao.DictDao;
 import com.tianqiauto.textile.weaving.service.common.CommonService;
 import com.tianqiauto.textile.weaving.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,16 +89,21 @@ public class PCN010Controller extends AbstractBispenser {
     @Autowired
     private DictRepository dictRepository;
 
-    private void insertBugun(String ip, long buchang){
+    @Autowired
+    private DictDao dictDao;
+
+    public void insertBugun(String ip, long buchang){
         PicanolHost picanolHost = picanolHostRepository.findByIp(ip);
         Current_BuJi currentBJ = picanolHost.getCurrentBuJi();
-
+//-------------------------------------------------------------------------------
         long time = findJiTaiHao(currentBJ.getJitaihao().getId());
         Date currDate = new Date();
         if(!(time >(currDate.getTime()-5*60*1000))){ //5分钟子内没有记录
             Map<String,Object> map = commonService.findCurrentBCLB_NativeQuery("织布").get(0);
             Dict banci = dictRepository.findById((long)map.get("banci_id")).get();
             Dict lunban = dictRepository.findById((long)map.get("lunban_id")).get();
+            Date riqi = (Date) map.get("riqi");
+            String xuhao = StringUtils.dateToString(riqi,"yyyyMMdd")+dictDao.findById(map.get("banci_id").toString()).getValue();
             BuGun buGun = new BuGun();
             buGun.setBanci(banci);
             buGun.setLunban(lunban);
@@ -106,9 +112,11 @@ public class PCN010Controller extends AbstractBispenser {
             buGun.setJitaihao(currentBJ.getJitaihao());
             buGun.setLuoburen(currentBJ.getDangchegong());
             buGun.setLuobushijian(currDate);
-            buGun.setRiqi(currDate);
+            buGun.setRiqi(riqi);
             buGun.setShedingchangdu(currentBJ.getShedingbuchang());
-//          buGun.set Fixme 织轴问题
+            buGun.setXuhao(xuhao);
+            buGun.setZhiZhou_left(currentBJ.getZhiZhou_left());
+            buGun.setZhiZhou_right(currentBJ.getZhiZhou_right());
             bugunRepository.save(buGun);
         }
     }
