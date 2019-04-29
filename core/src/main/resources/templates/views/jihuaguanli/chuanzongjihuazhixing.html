@@ -3,99 +3,139 @@
 <head>
     <div th:replace="common/links::header"></div>
     <title>布机计划下达</title>
-    <style>
-       .layui-table-cell{
-            height:auto !important;
-        }
-       .layui-table-cell,.layui-form,.layui-table-box,.layui-table-body{
-           overflow: visible;
-       }
-    </style>
 </head>
 
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
-        <!-- 查询条件 -->
-        <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
-            <div class="layui-form-item">
-                <!--开始日期-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">计划开始日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="kaishiriqi_sele" name="kaishiriqi" placeholder="开始日期" class="layui-input"
-                               autocomplete="off"/>
+
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">未执行计划</li>
+                <li>已执行计划</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!-- 查询条件 -->
+                    <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form">
+                        <div class="layui-form-item">
+                            <!--开始日期-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划开始日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="kaishiriqi_sele" name="kaishiriqi" placeholder="开始日期" class="layui-input"
+                                           autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!--结束日期-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划结束日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="jieshuriqi_sele" name="jieshuriqi" placeholder="结束日期" class="layui-input"
+                                           autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!--合约号-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合约号</label>
+                                <div class="layui-input-inline">
+                                    <select name="heyuehao.id" id="heyuehao_sele">
+                                    </select>
+                                </div>
+                            </div>
+                            <!--优先级-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">优先级</label>
+                                <div class="layui-input-inline">
+                                    <select name="jiHuaChuanZongMain.youxianji.id" id="youxianji_sele">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-hide">
+                                <input type="text" name="status.value" value="10"/>
+                            </div>
+                            <!--查询-->
+                            <div class="layui-inline">
+                                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                                </button>
+                            </div>
+                            <!--新增-->
+                            <!--<div class="layui-inline">
+                                <button class="layui-btn layuiadmin-btn-list" type="button" id="add">
+                                    <i class="layui-icon layuiadmin-button-btn">&#xe608;</i> 新增计划
+                                </button>
+                            </div>-->
+                        </div>
+                    </form>
+                    <!-- 查询表格-->
+                    <div class="layui-card-body">
+                        <table id="table" lay-filter="table"></table>
+                        <script type="text/html" id="caozuo">
+                            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                                    class="layui-icon layui-icon-edit"></i>执行登记</a>
+                        </script>
                     </div>
                 </div>
-                <!--结束日期-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">计划结束日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="jieshuriqi_sele" name="jieshuriqi" placeholder="结束日期" class="layui-input"
-                               autocomplete="off"/>
+                <div class="layui-tab-item">
+                    <!-- 查询条件 -->
+                    <form class="layui-form layui-card-header layuiadmin-card-header-auto" id="form_yzx">
+                        <div class="layui-form-item">
+                            <!--开始日期-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划开始日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="kaishiriqi_sele_yzx" name="kaishiriqi" placeholder="开始日期" class="layui-input"
+                                           autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!--结束日期-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划结束日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="jieshuriqi_sele_yzx" name="jieshuriqi" placeholder="结束日期" class="layui-input"
+                                           autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!--合约号-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合约号</label>
+                                <div class="layui-input-inline">
+                                    <select name="heyuehao.id" id="heyuehao_sele_yzx">
+                                    </select>
+                                </div>
+                            </div>
+                            <!--优先级-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">优先级</label>
+                                <div class="layui-input-inline">
+                                    <select name="jiHuaChuanZongMain.youxianji.id" id="youxianji_sele_yzx">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-hide">
+                                <input type="text" name="status.value" value="20"/>
+                            </div>
+                            <!--查询-->
+                            <div class="layui-inline">
+                                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search_yzx">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 查询表格-->
+                    <div class="layui-card-body">
+                        <table id="table_yzx" lay-filter="table_yzx"></table>
                     </div>
-                </div>
-                <!--班次-->
-               <!-- <div class="layui-inline">
-                    <label class="layui-form-label">班次</label>
-                    <div class="layui-input-inline">
-                        <select name="banci.id" id="banci_sele">
-                        </select>
-                    </div>
-                </div>-->
-                <!--合约号-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">合约号</label>
-                    <div class="layui-input-inline">
-                        <select name="heyuehao.id" id="heyuehao_sele">
-                        </select>
-                    </div>
-                </div>
-                <!--优先级-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">优先级</label>
-                    <div class="layui-input-inline">
-                        <select name="youxianji.id" id="youxianji_sele">
-                        </select>
-                    </div>
-                </div>
-                <!--状态-->
-                <div class="layui-inline">
-                    <label class="layui-form-label">状态</label>
-                    <div class="layui-input-inline">
-                        <select name="status.id" id="status_sele">
-                        </select>
-                    </div>
-                </div>
-                <!--查询-->
-                <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form_search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>查询
-                    </button>
-                </div>
-                <!--新增-->
-                <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" type="button" id="add">
-                        <i class="layui-icon layuiadmin-button-btn">&#xe608;</i> 新增计划
-                    </button>
                 </div>
             </div>
-        </form>
-
-        <!-- 查询表格-->
-        <div class="layui-card-body">
-            <table id="table" lay-filter="table"></table>
-            <script type="text/html" id="caozuo">
-                <a class="layui-btn layui-btn-xs" lay-event="info">
-                    <i class="layui-icon layui-icon-list"></i>详情</a>
-                {{#  if(d.status.value == 10){ }}
-                    <!--<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
-                            class="layui-icon layui-icon-edit"></i>编辑</a>-->
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"> <i
-                            class="layui-icon layui-icon-delete"></i>删除</a>
-                {{#  } }}
-            </script>
         </div>
+
+
+
+
+
 
         <!-- 添加信息 -->
         <div style="display: none" id="div_form_add">
@@ -246,24 +286,6 @@
             </div>
         </div>-->
 
-
-
-        <!-- 穿综计划详情 -->
-        <div style="display: none" id="div_xq">
-            <table id="table_xq" lay-filter="table_xq"></table>
-            <script type="text/html" id="caozuo_xq">
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">
-                    <i class="layui-icon layui-icon-delete"></i>删除</a>
-            </script>
-            <script type="text/html" id="jitaihao">
-                <select name="jitaihao" id="jitaihao_sele" ><!-- lay-ignore=""--> <!--style="width: 100%;height: 100%;"-->
-                    {{#  layui.each(d.jitaihao, function(index, item){ }}
-                        <option value="{{item.id}}">{{item.name}}</option>
-                    {{#  }); }}
-                </select>
-            </script>
-        </div>
-
     </div>
 </div>
 
@@ -274,8 +296,8 @@
         base: "/layuiadmin/" //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-        , chuanzongjihuaxiada: 'jihuaguanli/chuanzongjihuaxiada'
-    }).use(['index', 'chuanzongjihuaxiada'], function () {
+        , chuanzongjihuazhixing: 'jihuaguanli/chuanzongjihuazhixing'
+    }).use(['index', 'chuanzongjihuazhixing'], function () {
 
     });
 

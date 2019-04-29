@@ -57,7 +57,8 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
 
     //设置表格头
     var cols_xq = [[
-         {title: '计划日期',field: 'riqi',width:200}
+        {title: '序号',field: 'xuhao',width:100}
+        ,{title: '计划日期',field: 'riqi',width:200}
         , {title: '班次',field: 'banci.name',width:200}
         , {title: '合约号',field: 'heyuehao.name',width:200}
         , {title: '机台号',toolbar: '#jitaihao',width:200}
@@ -139,6 +140,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 for (var i=0; i<jihua_chuanzong_main.zhoushu; i++){
                     var obj = {};
                     obj.jitaihao = jitaihao;
+                    obj.xuhao = i+1;
                     obj.riqi = jihua_chuanzong_main.riqi;
                     obj['banci.name'] = banci;
                     obj["heyuehao.name"]=heyuehao;
@@ -149,6 +151,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                     elem: "#table_xq"
                     , cols: cols_xq
                     // , height: '90%'
+                    ,limit: arr.length
                     ,data:arr
                 });
                 form.render();

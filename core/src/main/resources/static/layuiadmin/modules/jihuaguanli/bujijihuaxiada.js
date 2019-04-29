@@ -89,9 +89,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         dictInitSele(initSele,false,form);
         var jixingSO = initSelectObj('jixing_add', 'common/findZhiJiJiXing','name','id');
         InitSelect(jixingSO,form);
+
         var jitaihaoSO = initSelectObj('jitaihao_add', 'common/findByShebei_zhibu','jitaihao','id');
         jitaihaoSO.data = {jixing_id:$("#jixing_add").val()};
         InitSelect(jitaihaoSO,form);
+
+
         form.on('select(jixing_add)', function(data) {
             jitaihaoSO.data = {jixing_id:$("#jixing_add").val()};
             InitSelect(jitaihaoSO,form);//根据机型联动机台号

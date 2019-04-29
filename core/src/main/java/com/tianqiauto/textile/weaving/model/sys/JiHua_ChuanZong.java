@@ -24,8 +24,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "sys_jihua_chuanzong")
-@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","status","jiHuaChuanZongMain"})
-@ToString(exclude = {"banci","jitaihao","heyuehao","status","jiHuaChuanZongMain"})
+@EqualsAndHashCode(exclude = {"banci","jitaihao","heyuehao","status","jiHuaChuanZongMain","zhiXing_chuanZong"})
+@ToString(exclude = {"banci","jitaihao","heyuehao","status","jiHuaChuanZongMain","zhiXing_chuanZong"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class JiHua_ChuanZong {
 
@@ -81,10 +81,15 @@ public class JiHua_ChuanZong {
     //查询使用条件
     @Transient
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date xiadankaishiriqi;//下单开始日期
+    private Date  kaishiriqi;//下单开始日期
 
     @Transient
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date xiadanjieshuriqi;//下单结束日期
+    private Date  jieshuriqi;//下单结束日期
+
+
+    @OneToOne(mappedBy="jiHua_chuanZong")
+    @JsonIgnoreProperties("jiHua_chuanZong")
+    private ZhiXing_ChuanZong zhiXing_chuanZong;
 
 }
