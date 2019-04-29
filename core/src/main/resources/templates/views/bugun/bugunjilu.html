@@ -65,8 +65,37 @@
 		</div>
 	</div>
 
-	<script type="text/html" id="barDemo">
+	<div id="zhuizong_div" style="display: none;">
+		<label class="layui-form-label" style="color: #008B8B; width: auto; font-size: 20px">布辊</label>
+		<table class="layui-table" lay-filter="bugun_table" id="bugun_table"></table>
+		<label class="layui-form-label" style="color: #008B8B; width: auto;font-size: 20px">织布</label>
+		<table class="layui-table" lay-filter="zhibu_table" id="zhibu_table"></table>
+		<label class="layui-form-label" style="color: #008B8B; width: auto;font-size: 20px">穿综</label>
+		<table class="layui-table" lay-filter="chuankou_table" id="chuankou_table"></table>
+		<label class="layui-form-label" style="color: #008B8B; width: auto;font-size: 20px">浆纱</label>
+		<table class="layui-table" lay-filter="jiangsha_table" id="jiangsha_table"></table>
+		<label class="layui-form-label" style="color: #008B8B; width: auto;font-size: 20px">整经</label>
+		<table class="layui-table" lay-filter="zhengjinig_table" id="zhengjinig_table"></table>
+		<label class="layui-form-label" style="color: #008B8B; width: auto;font-size: 20px">原纱</label>
+		<table class="layui-table" lay-filter="yuansha_table" id="yuansha_table"></table>
+		<label class="layui-form-label"></label>
+	</div>
 
+	<script type="text/html" id="zhiliang_bar">
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="detail"><i class="layui-icon"></i>质量</a>
+	</script>
+
+	<script type="text/html" id="gongyi_bar">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="gongyi"><i class="layui-icon"></i>工艺</a>
+	</script>
+
+	<script type="text/html" id="gongyi_zhiliang_bar">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="gongyi"><i class="layui-icon"></i>工艺</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="zhiliang"><i class="layui-icon"></i>质量</a>
+	</script>
+
+
+	<script type="text/html" id="barDemo">
 		{{# if(d.zhiZhou_right != null){ }}
 			<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="left_detail"><i class="layui-icon"></i>左追踪</a>
 			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="right_detail"><i class="layui-icon"></i>右追踪</a>
@@ -77,9 +106,9 @@
 
 	<!--合约号对应原纱信息弹框-->
 	<div id="hyh_ys_tck" style="display: none;">
-		<label class="layui-form-label" style="color: #01AAED; width: auto;">经纱</label>
+		<label class="layui-form-label" style="color: #008B8B; width: auto; font-size: 20px">经纱</label>
 		<table class="layui-table" lay-filter="hyh_js_table" id="hyh_js_table"></table>
-		<label class="layui-form-label" style="color: #01AAED; width: auto;">纬纱</label>
+		<label class="layui-form-label" style="color: #008B8B; width: auto; font-size: 20px">纬纱</label>
 		<table class="layui-table" lay-filter="hyh_ws_table" id="hyh_ws_table"></table>
 	</div>
 
