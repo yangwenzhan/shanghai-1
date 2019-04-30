@@ -134,10 +134,10 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     var cols =  [
         {field: 'id', title: 'id',hide:true}
         ,{field: 'riqi',sort:true, title: '日期',fixed:true, width:120}
-        ,{title: '班次',sort:true, templet: repNull('banci.name'),fixed:true, width:80}
-        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'),fixed:true, width:100}
-        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),width:170}
-        ,{title: '机台号',sort:true, templet: repNull('jitaihao.jitaihao'),width:90}
+        ,{title: '班次',sort:true, templet: repNull('banci.name'),fixed:true, width:80, field:'banci.name'}
+        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'),fixed:true, width:100, field:'heyuehao.name'}
+        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),width:170, field:'heyuehao.order.pibuguige'}
+        ,{title: '机台号',sort:true, templet: repNull('jitaihao.jitaihao'),width:90, field:'jitaihao.jitaihao'}
         ,{field: 'jingmi',sort:true, title: '经密',width:100}
         ,{field: 'weimi',sort:true, title: '纬密',width:100}
         ,{field: 'bufu',sort:true, title: '布幅/cm',width:100}

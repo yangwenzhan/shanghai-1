@@ -46,6 +46,7 @@ public class BuGun {
     @JoinColumn(name = "banci_id")
     private Dict banci;
 
+    @Column
     private Date luobushijian;//落布时间
 
     @ManyToOne
