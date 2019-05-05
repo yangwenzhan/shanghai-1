@@ -55,8 +55,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
 
     var cols =  [
         {field: 'id', title: 'id',hide:true}
-        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'),fixed:true, width:100}
-        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),fixed:true, width:170}
+        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'),fixed:true, width:100, field:'heyuehao.name'}
+        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),fixed:true, width:170, field:'heyuehao.order.pibuguige'}
         ,{field: 'ganghao',sort:true, title: '缸号',fixed:true, width:80}
         ,{field: 'niandumiao',sort:true, title: '粘度秒',width:100}
         ,{field: 'jiangtonghangulv',sort:true, title: '浆桶含固率',width:120}

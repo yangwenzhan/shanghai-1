@@ -18,22 +18,22 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         {field: 'id', title: 'id',hide:true}
         ,{field: 'pihao',sort:true, title: '批号',fixed:true,width:120}
         ,{field: 'pinming',sort:true, title: '品名',fixed:true,width:120}
-        ,{title: '实际号数tex',sort:true, templet: repNull('yuanSha_zhiLiang.shijihaoshu'),width:120}
-        ,{title: '克重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.kezhonghuichao'),width:120}
-        ,{title: '号数偏差率%',sort:true, templet: repNull('yuanSha_zhiLiang.haoshupianchalv'),width:120}
-        ,{title: '单强cn',sort:true, templet: repNull('yuanSha_zhiLiang.danqiang'),width:120}
-        ,{title: '条干CV%',sort:true, templet: repNull('yuanSha_zhiLiang.tiaogan'),width:120}
-        ,{title: '细节-50%',sort:true, templet: repNull('yuanSha_zhiLiang.xijie'),width:120}
-        ,{title: '粗结+50%',sort:true, templet: repNull('yuanSha_zhiLiang.cujie'),width:120}
-        ,{title: '棉节+200%',sort:true, templet: repNull('yuanSha_zhiLiang.mianjie'),width:120}
-        ,{title: '每包实重kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaoshizhong'),width:120}
-        ,{title: '每包偏差kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaopiancha'),width:120}
-        ,{title: '盈亏重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.yingkuizhongliang'),width:120}
-        ,{title: '称重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.chengzhonghuichao'),width:120}
-        ,{title: '包装带重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.baozhuangdaizhongliang'),width:120}
-        ,{title: '纸管重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.zhiguanzhongliang'),width:120}
-        ,{title: '每包筒子个数',sort:true, templet: repNull('yuanSha_zhiLiang.tongzigeshu'),width:120}
-        ,{title: '备注',sort:true, templet: repNull('yuanSha_zhiLiang.beizhu'),width:120}
+        ,{title: '实际号数tex',sort:true, templet: repNull('yuanSha_zhiLiang.shijihaoshu'),width:120,field:'yuanSha_zhiLiang.shijihaoshu'}
+        ,{title: '克重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.kezhonghuichao'),width:120,field:'yuanSha_zhiLiang.kezhonghuichao'}
+        ,{title: '号数偏差率%',sort:true, templet: repNull('yuanSha_zhiLiang.haoshupianchalv'),width:120,field:'yuanSha_zhiLiang.haoshupianchalv'}
+        ,{title: '单强cn',sort:true, templet: repNull('yuanSha_zhiLiang.danqiang'),width:120,field:'yuanSha_zhiLiang.danqiang'}
+        ,{title: '条干CV%',sort:true, templet: repNull('yuanSha_zhiLiang.tiaogan'),width:120,field:'yuanSha_zhiLiang.tiaogan'}
+        ,{title: '细节-50%',sort:true, templet: repNull('yuanSha_zhiLiang.xijie'),width:120,field:'yuanSha_zhiLiang.xijie'}
+        ,{title: '粗结+50%',sort:true, templet: repNull('yuanSha_zhiLiang.cujie'),width:120,field:'yuanSha_zhiLiang.cujie'}
+        ,{title: '棉节+200%',sort:true, templet: repNull('yuanSha_zhiLiang.mianjie'),width:120,field:'yuanSha_zhiLiang.mianjie'}
+        ,{title: '每包实重kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaoshizhong'),width:120,field:'yuanSha_zhiLiang.meibaoshizhong'}
+        ,{title: '每包偏差kg',sort:true, templet: repNull('yuanSha_zhiLiang.meibaopiancha'),width:120,field:'yuanSha_zhiLiang.meibaopiancha'}
+        ,{title: '盈亏重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.yingkuizhongliang'),width:120,field:'yuanSha_zhiLiang.yingkuizhongliang'}
+        ,{title: '称重回潮%',sort:true, templet: repNull('yuanSha_zhiLiang.chengzhonghuichao'),width:120,field:'yuanSha_zhiLiang.chengzhonghuichao'}
+        ,{title: '包装带重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.baozhuangdaizhongliang'),width:120,field:'yuanSha_zhiLiang.baozhuangdaizhongliang'}
+        ,{title: '纸管重量kg',sort:true, templet: repNull('yuanSha_zhiLiang.zhiguanzhongliang'),width:120,field:'yuanSha_zhiLiang.zhiguanzhongliang'}
+        ,{title: '每包筒子个数',sort:true, templet: repNull('yuanSha_zhiLiang.tongzigeshu'),width:120,field:'yuanSha_zhiLiang.tongzigeshu'}
+        ,{title: '备注',sort:true, templet: repNull('yuanSha_zhiLiang.beizhu'),width:120,field:'yuanSha_zhiLiang.beizhu'}
         ,{align: 'center',title: '操作',toolbar: '#barDemo',width:100, fixed: 'right'}
     ]];
 

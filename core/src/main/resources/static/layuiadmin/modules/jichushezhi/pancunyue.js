@@ -23,9 +23,9 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         ,{field: 'nian', sort:true,title: '年份'}
         ,{field: 'yue',sort:true, title: '月份'}
         ,{field: 'kaishiriqi',sort:true, title: '开始日期'}
-        ,{templet: repNull('kaishibanci.name'),sort:true, title: '开始班次'}
+        ,{templet: repNull('kaishibanci.name'),sort:true, title: '开始班次', field:'kaishibanci.name'}
         ,{field: 'jieshuriqi',sort:true, title: '结束日期'}
-        ,{templet: repNull('jieshubanci.name'), title: '结束班次'}
+        ,{templet: repNull('jieshubanci.name'), title: '结束班次', field:'jieshubanci.name'}
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
     ];
     initTable("table", 'jichushezhi/pancunyue/findAll', 'get',[cols], table,"form");

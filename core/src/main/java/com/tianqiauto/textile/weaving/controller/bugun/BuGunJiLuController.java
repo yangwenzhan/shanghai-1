@@ -35,6 +35,11 @@ public class BuGunJiLuController {
         return Result.ok("查询成功",buGuns);
     }
 
+    @GetMapping("buGunZhuiSu")
+    @ApiOperation(value = "布辊追溯",notes = "传值：布辊对应的织轴shift_id")
+    public Result buGunZhuiSu(String shift_zhou_id,String type){
+        return buGunJiLuService.buGunZhuiSu(shift_zhou_id,type);
+    }
 
 
 

@@ -6,7 +6,7 @@ layui.define(['table', 'form'], function(exports){
         {field: 'id', title: 'id',hide:true}
         ,{field: 'zhouhao',sort:true, title: '织轴号'}
         ,{field: 'zhoukuan',sort:true, title: '轴宽'}
-        ,{templet: repNull('jixing.name'),sort:true, title: '适用机型'}
+        ,{templet: repNull('jixing.name'),sort:true, title: '适用机型',field:'jixing.name'}
         ,{field: 'beizhu',sort:true, title: '备注'}
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
     ];

@@ -103,16 +103,17 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     var cols =  [
         {field: 'id', title: 'id',hide:true}
         ,{field: 'riqi',sort:true, title: '日期',fixed:true,width:110}
-        ,{title: '班次',sort:true, templet: repNull('banci.name'),fixed:true, width:80}
-        ,{title: '机台号',sort:true, templet: repNull('jitaihao.jitaihao'),width:100}
-        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'), width:100}
-        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),width:170}
-        ,{title: '轮班',sort:true, templet: repNull('lunban.name'), width:80}
-        ,{title: '落布人',sort:true, templet: repNull('luoburen.xingming'), width:80}
-        ,{title: '左织轴号',sort:true, templet: repNull('zhiZhou_left.zhouhao'),width:120}
-        ,{title: '右织轴号',sort:true, templet: repNull('zhiZhou_right.zhouhao'),width:120}
+        ,{title: '班次',sort:true, templet: repNull('banci.name'),fixed:true, width:80,field: 'banci.name'}
+        ,{title: '机台号',sort:true, templet: repNull('jitaihao.jitaihao'),width:100,field: 'jitaihao.jitaihao'}
+        ,{title: '合约号',sort:true, templet: repNull('heyuehao.name'), width:100,field: 'heyuehao.name'}
+        ,{title: '坯布规格',sort:true, templet: repNull('heyuehao.order.pibuguige'),width:170,field: 'heyuehao.order.pibuguige'}
+        ,{title: '轮班',sort:true, templet: repNull('lunban.name'), width:80,field: 'lunban.name'}
+        ,{title: '落布人',sort:true, templet: repNull('luoburen.xingming'), width:80,field: 'luoburen.xingming'}
+        ,{title: '左织轴号',sort:true, templet: repNull('zhiZhou_left.zhouhao'),width:120,field: 'zhiZhou_left.zhouhao'}
+        ,{title: '右织轴号',sort:true, templet: repNull('zhiZhou_right.zhouhao'),width:120,field: 'zhiZhou_right.zhouhao'}
         ,{field: 'changdu',sort:true, title: '落布长度m',width:120}
         ,{field: 'shedingchangdu',sort:true, title: '设定落布长度m',width:140}
+        ,{field: 'luobushijian',sort:true, title: '落布时间',width:170}
         ,{align: 'center',title: '操作',toolbar: '#barDemo',width:150, fixed: 'right'}
     ];
     cols = formatColumns(cols);
@@ -139,20 +140,161 @@ layui.define(['table', 'form', 'laydate'], function(exports){
     //修改
     table.on('tool(table)',function(obj) {
         var data = obj.data;
-
         if(obj.event === 'left_detail'){
-            showZhuiZong(data.zhiZhou_left.id);
+            showZhuiZong(data,data.zhiZhou_left.id,1);
         }else{
-            showZhuiZong(data.zhiZhou_right.id);
+            showZhuiZong(data,data.zhiZhou_right.id,2);
         }
     });
 
-    function showZhuiZong(shift_zhou_id){
+    function showZhuiZong(bugun_obj,shift_zhou_id,type){
+        //布辊数据渲染
+        var bugun_cols = [[
+            {title: '合约号',sort:true, templet: repNull('heyuehao.name'), width:100, field: 'heyuehao.name'},
+            {field: 'riqi',sort:true, title: '落布日期',width:120}
+            ,{title: '落布班次',sort:true, templet: repNull('banci.name'),width:120, field: 'banci.name'}
+            ,{title: '机台号',sort:true, templet: repNull('jitaihao.jitaihao'),width:100, field: 'jitaihao.jitaihao'}
+            ,{field: 'changdu',sort:true, title: '落布长度m',width:120}
+            ,{title: '落布人',sort:true, templet: repNull('luoburen.xingming'), width:80, field: 'luoburen.xingming'}
+            ,{title: '左织轴号',sort:true, templet: repNull('zhiZhou_left.zhouhao'),width:120, field: 'zhiZhou_left.zhouhao'}
+            ,{title: '右织轴号',sort:true, templet: repNull('zhiZhou_right.zhouhao'),width:120, field: 'zhiZhou_right.zhouhao'}
+            ,{field: 'luobushijian',sort:true, title: '落布时间',width:170}
+        ]];
+        initTable_BugunZhuiSu('bugun_table',bugun_cols,[bugun_obj]);
+        var zhibu_cols =[[
+            {field: 'heyuehao',sort:true, title: '合约号',width:120}
+            ,{field: 'riqi',sort:true, title: '上车登记日期',width:120}
+            ,{field: 'banci',sort:true, title: '上车登记班次',width:120}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:100}
+            ,{field: 'zhouName',sort:true, title: '织轴号',width:100}
+            ,{field: 'leixing',sort:true, title: '上车类型',width:100}
+            ,{field: 'buji_shangche_time',sort:true, title: '上车时间',width:170}
+            ,{field: 'xiache_time',sort:true, title: '下车时间',width:170}
+            ,{field: 'ghxm',sort:true, title: '上车登记员工',width:120}
+            ,{align: 'center',title: '操作',toolbar: '#gongyi_bar',width:80, fixed: 'right'}
+        ]];
+        var chuanzong_cols =[[
+            {field: 'heyuehao',sort:true, title: '合约号',width:120}
+            ,{field: 'riqi',sort:true, title: '登记日期',width:120}
+            ,{field: 'banci',sort:true, title: '登记班次',width:100}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:90}
+            ,{field: 'zhouName',sort:true, title: '织轴号',width:90}
+            ,{field: 'koufu',sort:true, title: '扣幅',width:90}
+            ,{field: 'kougao',sort:true, title: '扣高',width:90}
+            ,{field: 'koukuan',sort:true, title: '扣宽',width:90}
+            ,{field: 'xiache_time',sort:true, title: '登记时间',width:170}
+            ,{field: 'ghxm',sort:true, title: '上车登记员工',width:120}
+            ,{align: 'center',title: '操作',toolbar: '#gongyi_bar',width:80, fixed: 'right'}
+        ]];
+        var jiangsha_cols =[[
+            {field: 'heyuehao',sort:true, title: '合约号',width:120}
+            ,{field: 'riqi',sort:true, title: '登记日期',width:120}
+            ,{field: 'banci',sort:true, title: '登记班次',width:120}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:100}
+            ,{field: 'zhouName',sort:true, title: '织轴号',width:100}
+            ,{field: 'changdu',sort:true, title: '织轴长度m',width:120}
+            ,{field: 'ganghao',sort:true, title: '缸号',width:100}
+            ,{field: 'xiache_time',sort:true, title: '登记时间',width:170}
+            ,{field: 'ghxm',sort:true, title: '上车登记员工',width:120}
+            ,{align: 'center',title: '操作',toolbar: '#gongyi_zhiliang_bar',width:130, fixed: 'right'}
+        ]];
+        var zhengjing_cols = [[
+            {field: 'heyuehao',sort:true, title: '合约号',width:100}
+            ,{field: 'riqi',sort:true, title: '登记日期',width:110}
+            ,{field: 'banci',sort:true, title: '登记班次',width:100}
+            ,{field: 'jitaihao',sort:true, title: '机台号',width:110}
+            ,{field: 'zhouName',sort:true, title: '织轴号',width:90}
+            ,{field: 'changdu',sort:true, title: '经轴长度m',width:120}
+            ,{field: 'ganghao',sort:true, title: '缸号',width:90}
+            ,{field: 'duantoushu',sort:true, title: '断头数',width:80}
+            ,{field: 'xiache_time',sort:true, title: '登记时间',width:170}
+            ,{field: 'ghxm',sort:true, title: '上车登记员工',width:120}
+            ,{align: 'center',title: '操作',toolbar: '#gongyi_bar',width:80, fixed: 'right'}
+        ]];
+        var yuansha_cols = [[
+            {field: 'leixing',sort:true, title: '类型',width:100}
+            ,{field: 'genshu',sort:true, title: '根数',width:100}
+            ,{field: 'baozhong',sort:true, title: '包重kg',width:120}
+            ,{field: 'pihao',sort:true, title: '批号',width:120}
+            ,{field: 'pinming',sort:true, title: '品名',width:120}
+            ,{field: 'sebie',sort:true, title: '色别',width:100}
+            ,{field: 'sehao',sort:true, title: '色号',width:100}
+            ,{field: 'zhishu',sort:true, title: '支数',width:100}
+            ,{field: 'baozhuangxingshi',sort:true, title: '包装形式',width:120}
+            ,{field: 'gongyingshang',sort:true, title: '供应商',width:120}
+            ,{align: 'center',title: '操作',toolbar: '#zhiliang_bar',width:80, fixed: 'right'}
+        ]];
 
+        $.ajax({
+            url: layui.setter.host + 'bugun/bugunjilu/buGunZhuiSu',
+            type: 'get',
+            data:{
+                shift_zhou_id:shift_zhou_id,
+                type:type
+            },
+            async: false,
+            success: function (data){
+                var zhibu_data=[],chuanzong_data=[],zhengjing_data=[],jiangsha_data=[],yuansha_data=[];
+                if(data.code==0){
+                    for(var i=0; i<data.data.length;i++){
+                        if(data.data[i].gongxu=="织布"){
+                            zhibu_data.push(data.data[i]);
+                        }else if(data.data[i].gongxu=="穿综"){
+                            chuanzong_data.push(data.data[i]);
+                        }else if(data.data[i].gongxu=="浆纱"){
+                            jiangsha_data.push(data.data[i]);
+                        }else if(data.data[i].gongxu=="整经"){
+                            zhengjing_data.push(data.data[i]);
+                        }else{
+                            //原纱
+                            yuansha_data.push(data.data[i]);
+                        }
+                    }
 
+                    initTable_BugunZhuiSu('zhibu_table',zhibu_cols,zhibu_data);
+                    initTable_BugunZhuiSu('chuankou_table',chuanzong_cols,chuanzong_data);
+                    initTable_BugunZhuiSu('jiangsha_table',jiangsha_cols,jiangsha_data);
+                    initTable_BugunZhuiSu('zhengjinig_table',zhengjing_cols,zhengjing_data);
+                    initTable_BugunZhuiSu('yuansha_table',yuansha_cols,yuansha_data);
 
-
+                    layer.open({
+                        type: 1
+                        ,title: '布辊追踪'
+                        ,content: $('#zhuizong_div')
+                        ,offset:'auto'
+                        ,area: ['95%', '95%']
+                        ,btnAlign: 'c'
+                    });
+                }else{
+                    layer.open({      //系统异常
+                        title:"消息提醒",
+                        content:data.message,
+                        skin:"layui-layer-molv",
+                        btn:["查看错误信息"],
+                        anim: -1,
+                        icon:5,
+                        btn1:function(index){
+                            layer.open({content:data.data});
+                            layer.close(index);
+                        }
+                    });
+                }
+            }
+        });
     }
+
+    //原纱质量
+    table.on('tool(yuansha_table)',function(obj) {
+        var data = obj.data;
+        var yszl_id = data.yuansha_zhiliang_id;
+        var pinming = data.pinming;
+        var pihao = data.pihao;
+
+
+
+
+    });
+
 
 
     //合约号详情
@@ -202,6 +344,18 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     doneCallBack(res);
                 }
             }
+        });
+    }
+
+    //初始化table（不带分页），无ajax请求
+    function initTable_BugunZhuiSu(ele,cols,data){
+        return table.render({
+            elem: '#'+ele,
+            id: ele,
+            data: data,
+            cols: cols,
+            skin: 'row', //表格风格
+            limit: 10000
         });
     }
 
