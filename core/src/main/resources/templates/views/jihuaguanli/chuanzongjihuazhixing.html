@@ -138,17 +138,17 @@
 
 
         <!-- 添加信息 -->
-        <div style="display: none" id="div_form_add">
+        <!--<div style="display: none" id="div_form_add">
             <div class="layui-form" lay-filter="form_add" id="form_add" style="padding: 10px">
                 <div class="layui-form-item">
-                    <!-- 计划日期 -->
+                    &lt;!&ndash; 计划日期 &ndash;&gt;
                     <div class="layui-inline">
                         <label class="layui-form-label">计划日期<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                         <div class="layui-input-inline">
                             <input type="text" name="riqi" id="jihuariqi_add" lay-verify="required" placeholder="计划日期" class="layui-input" autocomplete="off"/>
                         </div>
                     </div>
-                    <!-- 班次 -->
+                    &lt;!&ndash; 班次 &ndash;&gt;
                     <div class="layui-inline">
                         <label class="layui-form-label">班次<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                         <div class="layui-input-inline">
@@ -156,7 +156,7 @@
                             </select>
                         </div>
                     </div>
-                    <!-- 合约号 -->
+                    &lt;!&ndash; 合约号 &ndash;&gt;
                     <div class="layui-inline">
                         <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                         <div class="layui-input-inline">
@@ -164,108 +164,19 @@
                             </select>
                         </div>
                     </div>
-                    <!-- 轴数 -->
+                    &lt;!&ndash; 轴数 &ndash;&gt;
                     <div class="layui-inline">
                         <label class="layui-form-label">轴数<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                         <div class="layui-input-inline">
                             <input type="text" name="zhoushu" lay-verify="int|length" tq_length="1^10" placeholder="轴数" class="layui-input" autocomplete="off"/>
                         </div>
                     </div>
-                    <!-- 优先级 -->
+                    &lt;!&ndash; 优先级 &ndash;&gt;
                     <div class="layui-inline">
                         <label class="layui-form-label">优先级<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
                         <div class="layui-input-inline">
                             <select name="youxianji.id" id="youxianji_add" lay-verify="required">
                             </select>
-                        </div>
-                    </div>
-                    <!-- 备注 === 不是必输项-->
-                    <div class="layui-inline">
-                        <label class="layui-form-label">备注</label>
-                        <div class="layui-input-inline">
-                            <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
-                        </div>
-                    </div>
-                    <!-- 确认 -->
-                    <div class="layui-form-item layui-hide">
-                        <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 修改信息 -->
-       <!-- <div style="display: none" id="div_form_edit">
-            <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px 30px 0 0;">
-                <div class="layui-form-item">
-                    &lt;!&ndash; 计划日期 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">计划日期<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="riqi" id="jihuariqi_edit" lay-verify="required" placeholder="计划日期" class="layui-input" autocomplete="off"/>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 班次 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">班次<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="banci.id" id="banci_edit" lay-verify="required">
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 类型 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">类型<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="leixing.id" id="leixing_edit" lay-verify="required">
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 机型 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">机型</label>
-                        <div class="layui-input-inline">
-                            <select name="jitaihao.gongxu.id" id="jixing_edit" lay-filter="jixing_edit" >
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 机台号 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">机台号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="jitaihao.id" id="jitaihao_edit" lay-verify="required">
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 织轴 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">织轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="zhizhou" id="zhizhou_edit" lay-verify="required">
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 合约号 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">合约号<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="heyuehao.id" id="heyuehao_edit" lay-verify="required">
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 单双轴 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">单双轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <select name="danshuangzhou.id" id="danshuangzhou_edit" >
-                            </select>
-                        </div>
-                    </div>
-                    &lt;!&ndash; 优先级 &ndash;&gt;
-                    <div class="layui-inline">
-                        <label class="layui-form-label">优先级<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="youxianji" lay-verify="int|length" tq_length="1^10" placeholder="优先级" class="layui-input" autocomplete="off"/>
                         </div>
                     </div>
                     &lt;!&ndash; 备注 === 不是必输项&ndash;&gt;
@@ -275,7 +186,104 @@
                             <textarea type="text" name="beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
                         </div>
                     </div>
-                    &lt;!&ndash; ID &ndash;&gt;
+                    &lt;!&ndash; 确认 &ndash;&gt;
+                    <div class="layui-form-item layui-hide">
+                        <input type="button" lay-submit lay-filter="form_add_submit" id="form_add_submit" value="确认">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- 修改信息 -->
+        <div style="display: none" id="div_form_edit">
+            <div class="layui-form" lay-filter="form_edit" id="form_edit" style="padding: 20px;">
+                <div class="layui-form-item">
+
+                    <fieldset class="layui-elem-field">
+                        <legend>穿综计划</legend>
+                        <div class="layui-field-box">
+                            <!-- 计划日期 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="riqi" readonly="readonly" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 班次 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">班次</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="banci.name" readonly="readonly" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 合约号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合约号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="heyuehao.name" readonly="readonly" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 机台号 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">机台号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="jitaihao.jitaihao" readonly="readonly" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field">
+                        <legend>登记执行</legend>
+                        <div class="layui-field-box">
+                            <!-- 穿筘织轴 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">穿筘织轴<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <select name="zhiXing_chuanZong.zhizhou.id" id="zhizhou_edit" lay-verify="required">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- 筘高 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">筘高<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zhiXing_chuanZong.kougao" lay-verify="int|length" tq_length="1^10" placeholder="筘高" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 筘幅 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">筘高<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zhiXing_chuanZong.koufu" lay-verify="int|length" tq_length="1^10" placeholder="筘幅" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 筘宽 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">筘宽<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="zhiXing_chuanZong.koukuan" lay-verify="int|length" tq_length="1^10" placeholder="筘宽" class="layui-input" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <!-- 穿综工 -->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">穿综工<i class="layui-icon layui-icon-snowflake" style="font-size: 10px; color: red;"></i></label>
+                                <div class="layui-input-inline">
+                                    <select name="zhiXing_chuanZong.chuanzonggong.id" id="chuanzonggong_edit" lay-verify="required">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- 备注 === 不是必输项-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">执行备注</label>
+                                <div class="layui-input-inline">
+                                    <textarea type="text" name="zhiXing_chuanZong.beizhu" lay-verify="length" tq_length="^255" placeholder="请输入备注" class="layui-input" autocomplete="off"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- ID -->
                     <div class="layui-form-item layui-hide">
                         <input type="text" name="id">
                     </div>
@@ -284,7 +292,7 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
 
     </div>
 </div>

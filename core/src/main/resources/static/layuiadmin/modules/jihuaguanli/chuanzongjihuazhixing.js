@@ -50,15 +50,19 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     //监听操作列
     table.on('tool(table)', function (obj) {
         var data = obj.data;
-       if (obj.event === 'edit') {
-            var initSele = [
-                {eleId:'chukuleixing_edit',dictCode:'cp_chukuleixing',val:'id',CheckVal:"1",isAll:false}
-            ];
-            InitSelect('yingxiaoyuan_edit', null, 'dingdanguanli/dingdanguanli/getUser', 'get', {}, 'ghxm', 'id');
-            dictInitSele(initSele,false);
-            form.render();
-            heyuehao = data.chengpinchuku.heyuehao;
+        if(null == data.jitaihao || null == data.jitaihao.jitaihao){
+            data['jitaihao.jitaihao'] = "手动穿综";
+        }
 
+       if (obj.event === 'edit') {
+           var chuanzonggongSO = initSelectObj('chuanzonggong_edit', 'dingdanguanli/dingdanguanli/getUser','ghxm','id');
+           InitSelect(chuanzonggongSO,form);
+           // zhizhou_edit 穿筘织轴
+           var zhizhouSO = initSelectObj('zhizhou_edit', 'jihuaguanli/chuanzongjihuazhixing/getZhizhou','zhouhao','id');
+           zhizhouSO.data={
+               heyuehao_id:data.heyuehao.id
+           };
+           InitSelect(zhizhouSO,form);
             editI = layer.open({
                 type: 1
                 , title: '穿综计划登记'
@@ -66,23 +70,18 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                 , area: ['70%', '60%']
                 , btn: ['登记', '取消']
                 , btn1: function (editIndex, layero) {
-
                     form.on('submit(form_edit_submit)', function (data) {
                         layer.confirm('确定要登记信息么?'
                             , function (i) {
                                 var formData = data.field;
-                                formData.chengpinchuku = {};
-                                formData.chengpinchuku.heyuehao = {};
-                                formData.chengpinchuku.heyuehao.id = chengpinCurrent_edit.heyuehao.id;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'chengpinguanli/chengpinchukushenqing/update',
+                                    url: layui.setter.host + 'chengpinguanli/chengpinchukuzhixing/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
                                     success: function (data) {
                                         ajaxSuccess(data, table);
-                                        chengpinCurrent_edit = null;
                                     }
                                 });
                                 layer.close(i);

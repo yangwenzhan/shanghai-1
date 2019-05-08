@@ -1,14 +1,13 @@
 package com.tianqiauto.textile.weaving.service.jihuaguanli;
 
-import com.tianqiauto.textile.weaving.model.base.SheBei;
-import com.tianqiauto.textile.weaving.model.sys.JiHua_ChuanZong;
-import com.tianqiauto.textile.weaving.model.sys.JiHua_ChuanZong_Main;
-import com.tianqiauto.textile.weaving.repository.JihuaChuanzongMainRepository;
-import com.tianqiauto.textile.weaving.repository.JihuaChuanzongRepository;
-import com.tianqiauto.textile.weaving.repository.ShebeiRepository;
+import com.tianqiauto.textile.weaving.model.base.Dict;
+import com.tianqiauto.textile.weaving.model.sys.*;
+import com.tianqiauto.textile.weaving.repository.*;
+import com.tianqiauto.textile.weaving.repository.dao.BeamzhizhoushiftDao;
 import com.tianqiauto.textile.weaving.repository.dao.DictDao;
 import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.model.Param;
+import com.tianqiauto.textile.weaving.util.procedure.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +37,10 @@ public class ChuanzongjihuazhixingServer {
 
     @Autowired
     private JihuaChuanzongRepository jihuaChuanzongRepository;
+
+    @Autowired
+    private ZhixingchuanzongRepository zhixingchuanzongRepository;
+
 
     public Page<JiHua_ChuanZong> findAll(JiHua_ChuanZong jiHuaChuanZong, Pageable pageable) {
         Specification<JiHua_ChuanZong> specification = (root, criteriaQuery, criteriaBuilder) -> {
@@ -70,41 +74,58 @@ public class ChuanzongjihuazhixingServer {
         return jihuaChuanzongRepository.findAll(specification,pageable);
     }
 
-//    public List<Map<String,Object>> query_chuanzongji() {
-//        String sql = "SELECT null AS id,'手工穿综' AS name UNION SELECT id,jitaihao FROM base_shebei WHERE EXISTS (SELECT 1 FROM base_gongxu WHERE parent_id = (SELECT id FROM base_gongxu WHERE name = '穿综') and base_gongxu.id = base_shebei.gongxu_id ) AND deleted = 0 ";
-//        return jdbcTemplate.queryForList(sql);
-//    }
-//
+
+    @Autowired
+    private BaseService baseService;
+
+    public List<Map<String,Object>> getZhizhou(String heyuehao_id) {
+        String sql = "SELECT sys_beam_zhizhou.id,sys_beam_zhizhou.zhouhao FROM sys_beam_zhizhou_current "+
+                "LEFT JOIN sys_beam_zhizhou ON sys_beam_zhizhou_current.zhizhou_id = sys_beam_zhizhou.id "+
+                "LEFT JOIN base_dict ON base_dict.id = sys_beam_zhizhou_current.status_id "+
+                "WHERE sys_beam_zhizhou_current.heyuehao_id = ? "+
+                "AND base_dict.id IN ('30','36') ";
+        return jdbcTemplate.queryForList(sql,heyuehao_id);
+    }
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private DictDao dictDao;
+
+    @Autowired
+    private BeamzhizhoucurrentRepository beanzhizhoucurrentRepository;
 //    @Autowired
-//    private DictDao dictDao;
-//
-//    @Autowired
-//    private ShebeiRepository shebeiRepository;
-//
-//    public JiHua_ChuanZong_Main save(JiHua_ChuanZong_Main jiHuaChuanZongMain) {
-//        jiHuaChuanZongMain.setStatus(dictDao.findByTypecodeAndValue("czjh_main_zhuangtai","10"));
-//        List<JiHua_ChuanZong> chuanzongs = jiHuaChuanZongMain.getJiHua_chuanZongs();
-//        if(null != chuanzongs){
-//            for (JiHua_ChuanZong chuanzong : chuanzongs){
-//                chuanzong.setBanci(jiHuaChuanZongMain.getBanci());
-//                chuanzong.setDeleted(0);
-//                chuanzong.setHeyuehao(jiHuaChuanZongMain.getHeyuehao());
-//                chuanzong.setStatus(dictDao.findByTypecodeAndValue("czjh_xq_zhuangtai","10"));
-//                chuanzong.setRiqi(jiHuaChuanZongMain.getRiqi());
-//                if(null != chuanzong.getJitaihao().getId()){
-//                    SheBei sheBei = shebeiRepository.findById(chuanzong.getJitaihao().getId()).get();
-//                    chuanzong.setJitaihao(sheBei);
-//                }else{
-//                    chuanzong.setJitaihao(null);
-//                }
-//            }
-//        }
-//        jiHuaChuanZongMain = jihuaChuanzongMainRepository.save(jiHuaChuanZongMain);
-//        return jiHuaChuanZongMain;
-//    }
-//
-//    public void deleteById(Long id) {
-//        jihuaChuanzongMainRepository.deleteById(id);
-//    }
+    private BeamzhizhoushiftDao beamzhizhoushiftDao;
+
+    private BeamzhizhoushiftRepository beamzhizhoushiftRepository;
+
+    public ZhiXing_ChuanZong update(JiHua_ChuanZong jiHuaChuanZong) {
+        JiHua_ChuanZong jihua = jihuaChuanzongRepository.findById(jiHuaChuanZong.getId()).get();
+        ZhiXing_ChuanZong zhixing = jiHuaChuanZong.getZhiXing_chuanZong();
+        zhixing.setJiHua_chuanZong(jihua);
+        zhixing.setChuanzonggong(userRepository.findAllById(zhixing.getChuanzonggong().getId()));//初始化穿综工
+        zhixing = zhixingchuanzongRepository.save(zhixing);
+        //改变织轴状态Beam_ZhiZhou_Current
+        Beam_ZhiZhou_Current beamZhiZhouCurrent = beanzhizhoucurrentRepository.findById(zhixing.getZhizhou().getId()).get();
+
+        String value = beamZhiZhouCurrent.getStatus().getValue();
+        if(value == "30"){//机下满未穿综。
+            Dict dict = dictDao.findByTypecodeAndValue("zhizhouzhuangtai","20");
+            beamZhiZhouCurrent.setStatus(dict);
+        }else if(value == "40"){
+            Dict dict = dictDao.findByTypecodeAndValue("zhizhouzhuangtai","60");
+            beamZhiZhouCurrent.setStatus(dict);
+        }
+        beanzhizhoucurrentRepository.save(beamZhiZhouCurrent);
+        //  Beam_ZhiZhou_Shift 判断穿综时间是否填充，没有填充的填充。 判断创建时间最大的那一条
+        Beam_ZhiZhou_Shift beamzhizhoushift = beamzhizhoushiftDao.findByHeyuehaoAndZhizhou(jihua.getHeyuehao().getId(), zhixing.getZhizhou().getId());
+        Date chuanzongTime = beamzhizhoushift.getChuanzong_time();
+        if(null == chuanzongTime){
+            beamzhizhoushiftDao.updateChuanzongTime(beamzhizhoushift.getId(),new Date());
+        }
+        //fixme Shift_ChuanZong 挡车工问题和
+        return zhixing;
+    }
 
 }
