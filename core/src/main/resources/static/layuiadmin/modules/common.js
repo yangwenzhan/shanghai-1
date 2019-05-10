@@ -589,9 +589,11 @@ layui.define(function(exports){
      * 2019/03/22 bjw
      * 通过三目运算符处理thymeleaf表达式中的内容有NULL异常
      * @param name 数据取值参数
+     * @param rep 为null时的替换值
      * @returns {string} 取值内容
      */
-    repNull = function(name) {
+    repNull = function(name,rep) {
+        var repStr = !rep  ?  '' : rep;
         var arr = name.split('.');
         var tem = "<div>{{ ";
         var currentObj = 'd';
@@ -599,7 +601,7 @@ layui.define(function(exports){
         for (var i = 0; i < arr.length; i++) {
             currentObj += '.' + arr[i];
             if (i == (arr.length - 1)) {
-                smbds += currentObj + "== null) ? '' : " + currentObj;
+                smbds += currentObj + "== null) ? '"+repStr+"' : " + currentObj;
             } else {
                 smbds += currentObj + "== null || ";
             }

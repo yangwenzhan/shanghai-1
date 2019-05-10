@@ -8,10 +8,10 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
  */
 public abstract class AbstractBispenser {
 
-    public void run(PCN pcn){
-        analysis(pcn);
+    public void run(PCN pcn,String ip){
+        analysis(pcn,ip);
     }
 
-    public abstract void analysis(PCN request);
+    public abstract void analysis(PCN request,String ip);
 
 }

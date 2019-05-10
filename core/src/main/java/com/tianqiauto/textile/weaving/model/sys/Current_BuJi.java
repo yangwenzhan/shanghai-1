@@ -81,8 +81,6 @@ public class Current_BuJi {
 
     private Double weimi; //纬密 根/inch
 
-
-
     private Double suolv; //缩率
 
 

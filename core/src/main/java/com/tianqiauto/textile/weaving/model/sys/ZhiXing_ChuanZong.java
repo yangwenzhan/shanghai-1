@@ -32,6 +32,7 @@ public class ZhiXing_ChuanZong {
 
     @OneToOne
     @JoinColumn(name = "jihua_chuanzong_id")
+    @JsonIgnoreProperties("zhiXing_chuanZong")
     private JiHua_ChuanZong jiHua_chuanZong;
 
 
@@ -53,8 +54,6 @@ public class ZhiXing_ChuanZong {
     private String kougao; //筘高
     private String koufu; //筘幅
     private String koukuan; //筘宽
-
-
 
 
 }

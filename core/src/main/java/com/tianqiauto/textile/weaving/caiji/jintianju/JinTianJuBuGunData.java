@@ -25,7 +25,7 @@ public class JinTianJuBuGunData {
     private JdbcTemplate jdbcTemplate;
 
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(cron = "0 0/1 * * * ?")
     public void getBuGun() {
 
 

@@ -1,12 +1,18 @@
 package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.dao.ParamDao;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.Cache;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * bjw
@@ -28,6 +34,17 @@ public class DataWriteBaseJob { //fixme 继承JOB
     private void run(){
         long start = System.currentTimeMillis();
         paramDao.batchUpdateParam(ParamVo.getCollection());
+        //---------------------------------以下写入布机事实数据表
+        List<Current_BuJi> cbjs = new ArrayList<>();
+        List<List<PicanolHost>> hostss = Cache.picanolHost;
+        for(List<PicanolHost> hosts: hostss){
+            for(PicanolHost host:hosts){
+                Current_BuJi bj = host.getCurrentBuJi();
+                bj.setLastModifyTime(new Date());
+                cbjs.add(bj);
+            }
+        }
+        paramDao.saveAll_Current_BuJi(cbjs);
         long end = System.currentTimeMillis();
         log.info("数据存入数据库共耗时："+(end-start)+"毫秒！");
     }

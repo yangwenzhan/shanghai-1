@@ -4,6 +4,7 @@ import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.dao.repository.PicanolHostRepository;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.Cache;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.socket.Server;
+import com.tianqiauto.textile.weaving.repository.dao.DictDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,10 @@ public class ApplicationStartListener implements CommandLineRunner {
         else log.info("----------必佳乐织机采集程序配置关闭，未启动！-------------");        //启动必佳乐采集程序服务端
     }
 
+
+    @Autowired
+    private DictDao dictDao;
+
     private void initCache() {
         List<List<PicanolHost>> picanolHostLists = Cache.picanolHost;
         List<PicanolHost> list = picanolHostRepository.findAll();
@@ -52,6 +57,8 @@ public class ApplicationStartListener implements CommandLineRunner {
                 temp = new ArrayList<>();
             }
         }
+        Cache.tingzhi = dictDao.findByTypecodeAndValue("yunxingzhuangtai","0");
+        Cache.yunxing = dictDao.findByTypecodeAndValue("yunxingzhuangtai","1");
         log.info("Cache initialization succeeded...");
     }
 }

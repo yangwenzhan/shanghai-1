@@ -2,7 +2,9 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job.analysis;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,15 +32,17 @@ public class PCN110Thread extends AbstractAnalysis {
      * @Date 2019/3/7 15:24
      **/
     @Override
-    protected void analysisPcn(PCN responsePcn) {
+    protected void analysisPcn(PCN responsePcn,Current_BuJi currentBuJi) {
         if (null == responsePcn || responsePcn.toString().trim().length() < 1) {
             return;
         }
         String sourceId = responsePcn.getHeader().getSourceId();
         byte[] data = responsePcn.getBody().getData();
-        byte[]  estimated =  Arrays.copyOfRange(data,2,4);//定长
+        byte[]  estimated =  Arrays.copyOfRange(data,10,12);
+//        ParamVo.addParam(sourceId,"速度-estimated",String.valueOf(BytesUtil.bytesToWord(estimated)),"097");
         ParamVo.addParam(sourceId,"速度-estimated",String.valueOf(BytesUtil.bytesToWord(estimated)),"097");
-        byte[]  measured =  Arrays.copyOfRange(data,4,6);//定长
+        byte[]  measured =  Arrays.copyOfRange(data,10,12);
         ParamVo.addParam(sourceId,"速度-measured",String.valueOf(BytesUtil.bytesToWord(measured)),"098");
+        currentBuJi.setChesu((double)BytesUtil.bytesToWord(measured));
     }
 }
