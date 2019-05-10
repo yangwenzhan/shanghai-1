@@ -57,12 +57,13 @@ public class PCN030Thread extends AbstractAnalysis {
             default: ParamVo.addParam(sourceId,"当前布长单位","","010");
         }
         byte[]  setPreselection =  Arrays.copyOfRange(data,2,6);//定长
-        long dingchang = BytesUtil.bytesToLongWord(setPreselection);
+        long dingchang = BytesUtil.byteToDe(setPreselection);
         ParamVo.addParam(sourceId,"当前布辊定长",String.valueOf(dingchang),"011");
         currentBuJi.setShedingbuchang((double)dingchang);
         byte[]  clothLength =  Arrays.copyOfRange(data,6,10);//定长
-        long buchang = BytesUtil.bytesToLongWord(clothLength);
+        long buchang = BytesUtil.byteToDe(clothLength);
         ParamVo.addParam(sourceId,"当前布辊长度",String.valueOf(buchang),"012");
         currentBuJi.setBuchang((double)buchang);
     }
+
 }

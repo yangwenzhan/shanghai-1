@@ -25,7 +25,7 @@ public class ShiftJOB {
     @Autowired
     private BaseService baseService;
 
-    @Scheduled(cron = "0 11 07 ? * *")
+//    @Scheduled(cron = "0 11 07 ? * *")
     private void run(){
         ProcedureParamUtlis ppu=new ProcedureParamUtlis();
         baseService.callProcedure("picanol_shift_bj_job",ppu.getList());

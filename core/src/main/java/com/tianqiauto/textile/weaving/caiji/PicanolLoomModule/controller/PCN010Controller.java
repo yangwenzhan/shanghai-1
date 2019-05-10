@@ -74,7 +74,7 @@ public class PCN010Controller extends AbstractBispenser {
                     default: ParamVo.addParam(sourceId,"落布长度单位","","007");
                 }
                 byte[] clothLength = Arrays.copyOfRange(body.getData(),4,8);
-                long buchang = BytesUtil.bytesToLongWord(clothLength);
+                long buchang = BytesUtil.byteToDe(clothLength);
                 String luobushijian = StringUtils.NewDateToString("yyyy-MM-dd HH:mm ss");
                 ParamVo.addParam(sourceId,"落布布长", String.valueOf(buchang),"008");
                 ParamVo.addParam(sourceId,"落布时间", luobushijian,"009");
