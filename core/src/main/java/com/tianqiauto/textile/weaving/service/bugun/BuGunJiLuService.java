@@ -1,7 +1,7 @@
 package com.tianqiauto.textile.weaving.service.bugun;
 
 import com.tianqiauto.textile.weaving.model.sys.BuGun;
-import com.tianqiauto.textile.weaving.repository.BuGunRepository;
+import com.tianqiauto.textile.weaving.repository.BugunRepository;
 import com.tianqiauto.textile.weaving.util.model.ModelUtil;
 import com.tianqiauto.textile.weaving.util.procedure.core.ProcedureParamUtlis;
 import com.tianqiauto.textile.weaving.util.procedure.model.ProcedureContext;
@@ -29,7 +29,7 @@ import java.util.List;
 public class BuGunJiLuService {
 
     @Autowired
-    private BuGunRepository buGunRepository;
+    private BugunRepository buGunRepository;
 
     @Autowired
     private BaseService baseService;

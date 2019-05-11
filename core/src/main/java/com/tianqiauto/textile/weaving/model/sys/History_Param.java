@@ -3,6 +3,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,9 +19,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "sys_history_wenshidu")
-@EqualsAndHashCode(exclude = {"param"})
-@ToString(exclude = {"param"})
+@Entity(name = "sys_history_param")
+@EqualsAndHashCode(exclude = {"param","jitaihao"})
+@ToString(exclude = {"param","jitaihao"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class History_Param {
 
@@ -28,13 +29,22 @@ public class History_Param {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private Date shijian;  //时间
+
+    @ManyToOne
+    @JoinColumn(name = "jitai_id")
+    private SheBei jitaihao;
 
     @ManyToOne
     @JoinColumn(name = "param_id")
     private Param param;
 
     private String  value;
+
+    @Column
+    @CreatedDate
+    private Date createTime;
 
 
 
