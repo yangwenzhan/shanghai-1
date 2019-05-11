@@ -52,7 +52,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         , {title: '类型',templet: repNull('leixing.name'),field: 'leixing.name', sort: true}
         , {title: '机型',templet: repNull('jitaihao.gongxu.name'),field: 'jjitaihao.gongxu.name', sort: true}
         , {title: '机台号',templet: repNull('jitaihao.jitaihao'),field: 'jitaihao.jitaihao', sort: true}
-        , {title: '织轴',field: 'zhizhou'}
+        /*, {title: '织轴',field: 'zhizhou'}*/
         , {title: '合约号',templet: repNull('heyuehao.name'),field: 'heyuehao.name', sort: true}
         , {title: '单双轴',templet: repNull('danshuangzhou.name'),field: 'danshuangzhou.name', sort: true}
         , {title: '优先级',field: 'youxianji', sort: true}
@@ -89,9 +89,12 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
         dictInitSele(initSele,false,form);
         var jixingSO = initSelectObj('jixing_add', 'common/findZhiJiJiXing','name','id');
         InitSelect(jixingSO,form);
+
         var jitaihaoSO = initSelectObj('jitaihao_add', 'common/findByShebei_zhibu','jitaihao','id');
         jitaihaoSO.data = {jixing_id:$("#jixing_add").val()};
         InitSelect(jitaihaoSO,form);
+
+
         form.on('select(jixing_add)', function(data) {
             jitaihaoSO.data = {jixing_id:$("#jixing_add").val()};
             InitSelect(jitaihaoSO,form);//根据机型联动机台号

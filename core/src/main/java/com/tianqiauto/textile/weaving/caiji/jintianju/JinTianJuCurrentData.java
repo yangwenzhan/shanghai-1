@@ -34,7 +34,7 @@ public class JinTianJuCurrentData {
 
     //更新实时数据
 
-    @Scheduled(cron = "20/30 * * * * ?")
+//    @Scheduled(cron = "20/30 * * * * ?")
     public void getCurrent(){
 
         String sql = "select top 1 * from base_pb_history where gongxu_id = (select id from base_gongxu where name='织布') and  bancijieshushijian = ?";

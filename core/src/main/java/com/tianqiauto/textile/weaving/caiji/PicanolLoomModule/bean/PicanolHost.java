@@ -1,14 +1,12 @@
 package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tianqiauto.textile.weaving.model.sys.Current;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
+import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -19,6 +17,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "picanol_host")
+@EqualsAndHashCode(exclude = {"currentBuJi"})
+@ToString(exclude = {"currentBuJi"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PicanolHost {
 
     @Id
@@ -33,5 +34,9 @@ public class PicanolHost {
     private String machineNumber;
 
     private int port;
+
+    @OneToOne
+    @JoinColumn(name = "currentBuJi_id")
+    private Current_BuJi currentBuJi;
 
 }

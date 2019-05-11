@@ -31,4 +31,10 @@ public class DictDao{
         }
     }
 
+    public Dict findById(String id){
+        String sql = "SELECT  id,  name,  [value] FROM base_dict WHERE id = ? ";
+        Dict dict = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<Dict>(Dict.class),id);
+        return dict;
+    }
+
 }

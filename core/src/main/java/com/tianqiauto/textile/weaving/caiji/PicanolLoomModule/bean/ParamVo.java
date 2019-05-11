@@ -1,6 +1,7 @@
 package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class ParamVo {
         parm.setName(name);
         parm.setValue(value);
         parm.setParamNumber(param_number);
+        parm.setLastModifyTime(new Date());
         map.put(machineNumber+param_number,parm);
     }
 

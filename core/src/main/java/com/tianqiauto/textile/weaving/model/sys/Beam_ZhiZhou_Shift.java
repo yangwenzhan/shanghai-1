@@ -3,6 +3,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tianqiauto.textile.weaving.model.base.SheBei;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -87,7 +88,8 @@ public class Beam_ZhiZhou_Shift {
 
     private String beizhu;   //备注
 
-
+    @CreatedDate
+    private Date createTime;
 
 
 }

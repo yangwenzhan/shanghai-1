@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 public class PCN110Controller extends AbstractBispenser {
 
     @Override
-    public void analysis(PCN request) {
+    public void analysis(PCN request,String ip) {
         System.out.println(request.toString());
     }
 }
