@@ -41,7 +41,7 @@ public class ServiceThread {
                 info.append(temp);
             }
             //log.info("服务端接收数据："+info);
-            PCN pcn = dispenser.executionDistribution(info.toString());  //执行分发  一切为了单例
+            PCN pcn = dispenser.executionDistribution(info.toString(),socket.getInetAddress().getHostAddress());  //执行分发
             //log.info("服务端响应数据："+pcn);
             bw.write(pcn.toString());
             bw.newLine();

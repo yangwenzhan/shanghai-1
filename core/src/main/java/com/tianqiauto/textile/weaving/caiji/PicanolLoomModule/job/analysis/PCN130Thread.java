@@ -2,7 +2,9 @@ package com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.job.analysis;
 
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PCN;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.ParamVo;
+import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.bean.PicanolHost;
 import com.tianqiauto.textile.weaving.caiji.PicanolLoomModule.utils.BytesUtil;
+import com.tianqiauto.textile.weaving.model.sys.Current_BuJi;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -31,7 +33,7 @@ public class PCN130Thread extends AbstractAnalysis {
      * @Date 2019/3/7 15:24
      **/
     @Override
-    protected void analysisPcn(PCN responsePcn) {
+    protected void analysisPcn(PCN responsePcn,Current_BuJi currentBuJi) {
         if (null == responsePcn || responsePcn.toString().trim().length() < 1) {
             return;
         }
@@ -49,6 +51,7 @@ public class PCN130Thread extends AbstractAnalysis {
         }
         byte[]  pickdensity =  Arrays.copyOfRange(data,4,6);//定长
         ParamVo.addParam(sourceId,"打纬密度",String.valueOf(BytesUtil.bytesToWord(pickdensity)),"095");
+        currentBuJi.setWeimi((double)BytesUtil.byteToFraction(pickdensity));
         ParamVo.addParam(sourceId,"纬密-correction",String.valueOf(BytesUtil.bytesToShort(data[6])),"096");
     }
 }

@@ -15,14 +15,10 @@ import java.util.List;
  * bjw
  * @Date 2019/3/7 10:38
  */
-
 @Slf4j
 @Component
 @EnableScheduling
 public class PCNJob { //fixme 继承JOB
-
-
-
 
     @Autowired
     private PCN030Thread pcn030Thread;
@@ -33,50 +29,17 @@ public class PCNJob { //fixme 继承JOB
     @Autowired
     private PCN130Thread pcn130Thread;
 
-    /**
-     * 每分钟的第0秒执行一次
-     * 读取打纬次数及布长
-     * @Date 2019/3/11 8:51
-     **/
-//    @Scheduled(cron="0 0/1 * * * ?")
-    private void run030(){
-        run(pcn030Thread);
-    }
-
-    /**
-     * 每分钟的第10秒执行一次
-     * 读取最近6个班的数据
-     * @Date 2019/3/11 8:51
-     **/
-//    @Scheduled(cron="10 0/1 * * * ?")
-    private void run031(){
-        run(pcn031Thread);
-    }
-
-    /**
-     * 每分钟的第20秒执行一次
-     * 请求获取机器速度
-     * @Date 2019/3/11 8:51
-     **/
-//    @Scheduled(cron="20 0/1 * * * ?")
-    private void run110(){
-        run(pcn110Thread);
-    }
-
-    /**
-     * 每分钟的第30秒执行一次
-     * 请求获取打纬密度
-     * @Date 2019/3/11 8:51
-     **/
-//    @Scheduled(cron="30 0/1 * * * ?")
-    private void run130(){
-        run(pcn130Thread);
-    }
-
-    private void run(AbstractAnalysis abstractAnalysis) {
+//    @Scheduled(fixedRate=100000)
+    private void run() throws InterruptedException {
         List<List<PicanolHost>> hostLists = Cache.picanolHost;
         for(List<PicanolHost> list : hostLists){
-            abstractAnalysis.init(list);
+            pcn030Thread.init(list);
+            Thread.sleep(3000);
+            pcn031Thread.init(list);
+            Thread.sleep(3000);
+            pcn110Thread.init(list);
+            Thread.sleep(3000);
+            pcn130Thread.init(list);
         }
     }
 }
