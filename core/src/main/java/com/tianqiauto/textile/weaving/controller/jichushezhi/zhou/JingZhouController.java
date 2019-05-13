@@ -50,8 +50,7 @@ public class JingZhouController {
     @ApiOperation(value = "修改经轴信息")
     public Result updateJingZhou(@RequestBody Beam_JingZhou jingZhou){
         String beizhu = StringUtils.isEmpty(jingZhou.getBeizhu())?null:jingZhou.getBeizhu();
-
-        jingZhouRepository.updateJingZhou(jingZhou.getZhoukuan(), beizhu, jingZhou.getId());
+        jingZhouRepository.updateJingZhou(beizhu, jingZhou.getId());
         return Result.ok("修改成功",jingZhou);
     }
 

@@ -5,7 +5,7 @@ layui.define(['table', 'form'], function(exports){
     var cols =  [
         {field: 'id', title: 'id',hide:true}
         ,{field: 'zhouhao',sort:true, title: '织轴号'}
-        ,{field: 'zhoukuan',sort:true, title: '轴宽'}
+        // ,{field: 'zhoukuan',sort:true, title: '轴宽'}
         ,{templet: repNull('jixing.name'),sort:true, title: '适用机型',field:'jixing.name'}
         ,{field: 'beizhu',sort:true, title: '备注'}
         ,{align: 'center',title: '操作',toolbar: '#barDemo'}
@@ -29,7 +29,7 @@ layui.define(['table', 'form'], function(exports){
     $("#add_btn").on("click", function() {
         initJX("add_jixing",null,true);
         $('#add_zhouhao').val("");
-        $('#add_zhoukuan').val("");
+        // $('#add_zhoukuan').val("");
         $('#add_beizhu').val("");
         layer.open({
             type: 1,
@@ -48,15 +48,15 @@ layui.define(['table', 'form'], function(exports){
                     $('#add_zhouhao').focus();
                     return false;
                 }
-                if($('#add_zhoukuan').val()==""){
+                /*if($('#add_zhoukuan').val()==""){
                     layer.open({
                         title:"消息提醒",content:"轴宽不能为空",skin:"layui-layer-molv",offset: 'auto',time:1500,btn:[],shade: 0,anim: -1,icon:5
                     });
                     $('#add_zhoukuan').focus();
                     return false;
-                }
+                }*/
 
-                layer.confirm('确定新增经轴?'
+                layer.confirm('确定新增织轴?'
                     ,function(i){
                         form.on('submit(form_add_submit)', function (data) {
                             var formData = data.field;
@@ -104,13 +104,13 @@ layui.define(['table', 'form'], function(exports){
                 ,btn: ['修改', '取消']
                 ,btnAlign: 'c'
                 ,btn1: function(index, layero) {
-                    if($('#zhoukuan').val()==""){
+                    /*if($('#zhoukuan').val()==""){
                         layer.open({
                             title:"消息提醒",content:"轴宽不能为空",skin:"layui-layer-molv",offset: 'auto',time:3000,btn:[],shade: 0,anim: -1,icon:5
                         });
                         $('#zhoukuan').focus();
                         return false;
-                    }
+                    }*/
                     layer.confirm('确定要修改'+data.zhouhao+'信息吗?'
                         ,function(i){
                             form.on('submit(form_edit_submit)', function (data) {
