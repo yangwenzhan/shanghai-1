@@ -83,7 +83,7 @@ function queryLsqxBtn(jt_id) {
                 var btnList = $("#show_btn").html();
                 for (var i = 0; i < data.data.length; i++) {
                     qxList += "<div class='echarts'  id='echarts" + i + "'></div>";
-                    btnList += "<button class='layui-btn' onclick=\"showLsqx('" + data.data[i].id + "','"+data.data[i].name+"')\">" + data.data[i].name + "</button>";
+                    btnList += "<button class='layui-btn' onclick=\"showLsqx('" + data.data[i].id + "','"+data.data[i].name+"','"+jt_id+"')\">" + data.data[i].name + "</button>";
                 }
                 $("#show_lsqx").html(qxList);
                 $("#show_btn").html(btnList);
@@ -103,15 +103,15 @@ function queryLsqxBtn(jt_id) {
 
 //查询历史曲线
 //fixme 假数据
-function showLsqx(id,csm) {
-
-    console.log(id);
-    console.log(csm);
+function showLsqx(id,csm,jt_id) {
 
     $.ajax({
-        url: layui.setter.host+'shishishuju/cur_wenshidu/findHistory',
+        url: layui.setter.host+'shishishuju/cur_gongxu/queryLsqx',
         type: "get",
-        data:{id:1},
+        data:{
+            param_id:id,
+            jth_id:jt_id
+        },
         success:function(data){
             if(data.code==0){
                 var config = {
@@ -119,8 +119,8 @@ function showLsqx(id,csm) {
                     type : 'area',			//图表类型, 可以传递一个数组，例如 type: ['line','bar','scatter'],   可选 line , bar , pie, area , scatter
                     smooth: true,			//不传递默认为false
                     showDataZoom : true ,	//不传递默认为false,是否显示区域缩放的工具条,大多用于渲染历史数据,配合 area 图使用
-                    labels : ['时间','温度'],		//中文名
-                    columns : ["shijian","wendu"],		//字段名
+                    labels : ['时间',csm],		//中文名
+                    columns : ["createTime","value"],		//字段名
                     datas : data.data
                 };
                 TIS.renderEcharts(config);

@@ -91,6 +91,11 @@ public class CurGongXuController {
     }
 
 
+    @GetMapping("queryLsqx")
+    @ApiOperation(value = "根据参数id查询历史曲线")
+    public Result queryLsqx(Long param_id,Long jth_id){
+        return Result.ok("查询成功",curDataService.findLSQX(param_id,jth_id));
+    }
 
 }
 

@@ -2,6 +2,7 @@ package com.tianqiauto.textile.weaving.model.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -37,5 +38,8 @@ public class History_WenShiDu {
 
     private Double shidu; //湿度
 
+    @Column
+    @CreatedDate
+    private Date createTime;
 
 }

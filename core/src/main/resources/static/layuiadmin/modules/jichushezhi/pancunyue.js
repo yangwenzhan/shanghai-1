@@ -13,10 +13,7 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         },
     });
 
-    dynamicForm(
-        {code:"banci",hasNull:false,defaultValue:""}
-    );
-    form.render();
+    dictInitSelect('add_kaishibanci,add_jieshubanci',null, 'banci');
 
     var cols = [
         {field: 'id', title: 'id',hide:true}
@@ -87,8 +84,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                     ,function(i){
                         form.on('submit(form_add_submit)', function (data) {
                             var formData = data.field;
-                            formData.kaishibanci={id:$('#add_kaishibanci').val()};
-                            formData.jieshubanci={id:$('#add_jieshubanci').val()};
+                            formData.kaishibanci={id:$('#add_kaishibanci').val(),value:$('#add_kaishibanci option:selected').attr("name")};
+                            formData.jieshubanci={id:$('#add_jieshubanci').val(),value:$('#add_jieshubanci option:selected').attr("name")};
                             $.ajax({
                                 url:layui.setter.host+'jichushezhi/pancunyue/addPanCunYue',
                                 type:'post',
@@ -122,6 +119,8 @@ layui.define(['table', 'form', 'laydate'], function(exports){
             elem: '#edit_jieshuriqi',
             value: data.jieshuriqi
         });
+        dictInitSelect('edit_kaishibanci',data.kaishibanci.id, 'banci');
+        dictInitSelect('edit_jieshubanci',data.jieshubanci.id, 'banci');
         if(obj.event === 'edit'){
             layer.open({
                 type: 1
@@ -143,8 +142,9 @@ layui.define(['table', 'form', 'laydate'], function(exports){
                         ,function(i){
                             form.on('submit(form_edit_submit)', function (data) {
                                 var formData = data.field;
-                                formData.kaishibanci={id:$('#edit_kaishibanci').val()};
-                                formData.jieshubanci={id:$('#edit_jieshubanci').val()};
+
+                                formData.kaishibanci={id:$('#edit_kaishibanci').val(),value:$('#edit_kaishibanci option:selected').attr("name")};
+                                formData.jieshubanci={id:$('#edit_jieshubanci').val(),value:$('#edit_jieshubanci option:selected').attr("name")};
                                 $.ajax({
                                     url:layui.setter.host+'jichushezhi/pancunyue/updatePanCunYue',
                                     type:'post',
@@ -183,6 +183,52 @@ layui.define(['table', 'form', 'laydate'], function(exports){
         }
     });
 
+    /**
+     * 请求数据字典初始化select选项框
+     * @param eleId
+     * @param selectedId
+     */
+    function dictInitSelect(eleId,selectId, dictCode) {
+        $.ajax({
+            url: layui.setter.host + 'common/findAllDictVal',
+            async: false,
+            data: {
+                code: dictCode
+            },
+            type: 'get',
+            success: function (data) {
+                var dictData = data.data.dicts.sort(sortSort);
+                var reg = RegExp(/,/);
+                var renderSelectId=[];
+                if(reg.test(eleId)) {
+                    renderSelectId = eleId.split(',');
+                }else{
+                    renderSelectId.push(eleId);
+                }
+
+                for(var i=0;i<renderSelectId.length;i++){
+                    $('#' + renderSelectId[i]).html("");
+                    var select = document.getElementById(renderSelectId[i]);
+                    for(var j=0;j<dictData.length;j++){
+                        var option = document.createElement("option");
+                        option.setAttribute("name", dictData[j].value);
+                        option.setAttribute("value", dictData[j].id);
+                        option.innerHTML = dictData[j].name;
+                        if(dictData[j].id==selectId){
+                            option.setAttribute("selected", "selected");
+                        }
+                        select.appendChild(option);
+                    }
+                    form.render();
+                }
+            }
+        });
+    }
+
+    //根据sort排序
+    function sortSort(a,b){
+        return a.sort-b.sort;
+    }
 
     exports('pancunyue', {})
 });
