@@ -102,12 +102,6 @@ public class BytesUtil {
         return new Long(sb.toString());
     }
 
-
-    public static void main(String[] args) {
-        byte[] bytes1 = {1, -62};
-        System.out.println(bytesToWord(bytes1));
-    }
-
     /**
      * Signed Fraction Byte: signed 16-bit-value
      * MSB= signed integer byte value: LSB fractional part of the byte integer value (1/256 of the integer value)(-127,99...+128,996)

@@ -50,7 +50,7 @@ public class PCN130Thread extends AbstractAnalysis {
             default: ParamVo.addParam(sourceId,"纬密单位","","094");
         }
         byte[]  pickdensity =  Arrays.copyOfRange(data,4,6);//定长
-        ParamVo.addParam(sourceId,"打纬密度",String.valueOf(BytesUtil.bytesToWord(pickdensity)),"095");
+        ParamVo.addParam(sourceId,"打纬密度",String.valueOf(BytesUtil.byteToFraction(pickdensity)),"095");
         currentBuJi.setWeimi((double)BytesUtil.byteToFraction(pickdensity));
         ParamVo.addParam(sourceId,"纬密-correction",String.valueOf(BytesUtil.bytesToShort(data[6])),"096");
     }
