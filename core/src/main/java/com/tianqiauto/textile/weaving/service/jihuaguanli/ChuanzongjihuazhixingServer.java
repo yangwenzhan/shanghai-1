@@ -85,7 +85,7 @@ public class ChuanzongjihuazhixingServer {
                 "LEFT JOIN base_dict ON base_dict.id = sys_beam_zhizhou_current.status_id " +
                 "LEFT JOIN base_dict_type ON base_dict_type.id = base_dict.type_id " +
                 "WHERE sys_beam_zhizhou_current.heyuehao_id = ? AND base_dict_type.code = 'zhizhouzhuangtai' " +
-                "AND base_dict.[value] IN ('30','40') ";
+                "AND base_dict.[value] IN ('29','31') ";
                  return jdbcTemplate.queryForList(sql,heyuehao_id);
     }
     @Autowired
