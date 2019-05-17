@@ -9,7 +9,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
     var initSele = [
         /*{eleId:'banci_sele',dictCode:'banci',val:'id'},*/
         {eleId:'youxianji_sele',dictCode:'youxianji',val:'id'},
-        {eleId:'status_sele',dictCode:'czjh_main_zhuangtai',val:'id'}
+        {eleId:'status_sele',dictCode:'czjh_main_zhuangtai',val:'id',isAll:false}
     ];
     dictInitSele(initSele,false,form);
     var heyuehaoSO = initSelectObj('heyuehao_sele', 'dingdanguanli/heyuehaoguanli/findAll','name','id');
