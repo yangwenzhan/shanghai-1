@@ -76,7 +76,7 @@ layui.define(['table', 'laydate', 'form', 'upload'], function (exports) {
                                 var formData = data.field;
                                 encObject(formData);
                                 $.ajax({
-                                    url: layui.setter.host + 'chengpinguanli/chengpinchukuzhixing/update',
+                                    url: layui.setter.host + 'jihuaguanli/chuanzongjihuazhixing/update',
                                     contentType: "application/json;charset=utf-8",
                                     type: 'POST',
                                     data: JSON.stringify(formData),
