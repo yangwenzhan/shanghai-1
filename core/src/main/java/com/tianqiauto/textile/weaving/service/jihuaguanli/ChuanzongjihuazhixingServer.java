@@ -79,14 +79,15 @@ public class ChuanzongjihuazhixingServer {
     private BaseService baseService;
 
     public List<Map<String,Object>> getZhizhou(String heyuehao_id) {
-        String sql = "SELECT sys_beam_zhizhou.id,sys_beam_zhizhou.zhouhao FROM sys_beam_zhizhou_current "+
-                "LEFT JOIN sys_beam_zhizhou ON sys_beam_zhizhou_current.zhizhou_id = sys_beam_zhizhou.id "+
-                "LEFT JOIN base_dict ON base_dict.id = sys_beam_zhizhou_current.status_id "+
-                "WHERE sys_beam_zhizhou_current.heyuehao_id = ? "+
-                "AND base_dict.id IN ('30','36') ";
-        return jdbcTemplate.queryForList(sql,heyuehao_id);
-    }
 
+        String sql= "SELECT sys_beam_zhizhou.id,sys_beam_zhizhou.zhouhao FROM sys_beam_zhizhou_current " +
+                "LEFT JOIN sys_beam_zhizhou ON sys_beam_zhizhou_current.zhizhou_id = sys_beam_zhizhou.id " +
+                "LEFT JOIN base_dict ON base_dict.id = sys_beam_zhizhou_current.status_id " +
+                "LEFT JOIN base_dict_type ON base_dict_type.id = base_dict.type_id " +
+                "WHERE sys_beam_zhizhou_current.heyuehao_id = ? AND base_dict_type.code = 'zhizhouzhuangtai' " +
+                "AND base_dict.[value] IN ('30','40') ";
+                 return jdbcTemplate.queryForList(sql,heyuehao_id);
+    }
     @Autowired
     private UserRepository userRepository;
 
